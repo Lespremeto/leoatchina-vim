@@ -132,18 +132,18 @@ nnoremap <C-y> <C-b>
 " tab control
 set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
-nnoremap <silent>- :tabprevious<CR>
-nnoremap <silent><Tab> :tabnext<CR>
-nnoremap <Leader>tp :tabprevious<CR>
-nnoremap <Leader>tn :tabnext<CR>
-nnoremap <leader>- :tabm -1<CR>
-nnoremap <leader><Tab>  :tabm +1<CR>
-nnoremap <leader><leader>- :tabfirst<CR>
+nnoremap <silent>-             :tabprevious<CR>
+nnoremap <silent><Tab>         :tabnext<CR>
+nnoremap <Leader>tp            :tabprevious<CR>
+nnoremap <Leader>tn            :tabnext<CR>
+nnoremap <leader>-             :tabm -1<CR>
+nnoremap <leader><Tab>         :tabm +1<CR>
+nnoremap <leader><leader>-     :tabfirst<CR>
 nnoremap <leader><leader><Tab> :tablast<CR>
-nnoremap <Leader>te :tabe<Space>
-nnoremap <Leader>ts :tab split<CR>
-nnoremap <Leader>tS :tabs<CR>
-nnoremap <Leader>tm :tabm<Space>
+nnoremap <Leader>te            :tabe<Space>
+nnoremap <Leader>ts            :tab split<CR>
+nnoremap <Leader>tS            :tabs<CR>
+nnoremap <Leader>tm            :tabm<Space>
 " buffer switch
 nnoremap <localleader>] :bn<CR>
 nnoremap <localleader>[ :bp<CR>
@@ -660,7 +660,7 @@ if isdirectory(expand($PLUG_PATH."/tagbar/"))
 endif
 " easy-align
 if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
-    vmap <C-t> <Plug>(EasyAlign)
+    vmap <Cr> <Plug>(EasyAlign)
     nmap <C-t> <Plug>(EasyAlign)
     if !exists('g:easy_align_delimiters')
         let g:easy_align_delimiters = {}
@@ -677,7 +677,7 @@ if count(g:spf13_plug_groups, 'go')
     let g:go_fmt_command = "gofmt"
     let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
     let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    au FileType go imap <C-g> <C-x><C-o>
+    au FileType go imap <C-g>     <C-x><C-o>
     au FileType go nmap <Leader>i <Plug>(go-implements)
     au FileType go nmap <Leader>I <Plug>(go-info)
     au FileType go nmap <Leader>r <Plug>(go-rename)
