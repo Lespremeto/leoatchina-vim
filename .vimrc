@@ -660,8 +660,8 @@ if isdirectory(expand($PLUG_PATH."/tagbar/"))
 endif
 " easy-align
 if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
-    vmap <C-t> <Plug>(EasyAlign)
-    nmap <C-t> <Plug>(EasyAlign)
+    nmap <localleader><Cr> <Plug>(EasyAlign)
+    vmap <localleader><Cr> <Plug>(EasyAlign)
     if !exists('g:easy_align_delimiters')
         let g:easy_align_delimiters = {}
     endif
@@ -692,47 +692,47 @@ endif
 " PyMode
 if isdirectory(expand($PLUG_PATH."/python-mode"))
     " python version
-    if g:python_version == 3
-        let g:pymode_python = 'python3'
+    if g:python_version     == 3
+        let g:pymode_python  = 'python3'
     else
-        let g:pymode_python = 'python'
+        let g:pymode_python  = 'python'
     endif
     " disable pymode_rope and pymode_folding for slow problem
-    let g:pymode_rope = 0
-    let g:pymode_folding = 0
+    let g:pymode_rope             = 0
+    let g:pymode_folding          = 0
     let g:pymode_trim_whiteSpaces = 1
-    let g:pymode_options = 0
+    let g:pymode_options          = 0
     " doc for python
-    let g:pymode_doc = 0
+    let g:pymode_doc              = 0
     " motion
-    let g:pymode_motion = 1
+    let g:pymode_motion           = 1
     " run python
-    let g:pymode_run_bind = '<leader>R'
+    let g:pymode_run_bind         = '<leader>R'
     " breakpoint
-    let g:pymode_breakpoint = 1
-    let g:pymode_breakpoint_bind = '<C-l>t'
-    let g:pymode_breakpoint_cmd = 'import pdb;pdb.set_trace()'
+    let g:pymode_breakpoint       = 1
+    let g:pymode_breakpoint_bind  = '<C-l>t'
+    let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
     " pymode check disable
     if count(g:spf13_plug_groups, 'syntax')
         let g:pymode_lint = 0
     else
         nmap <C-l>l :PymodeLint<CR>
-        let g:pymode_lint = 1
-        let g:pymode_lint_signs = 1
+        let g:pymode_lint            = 1
+        let g:pymode_lint_signs      = 1
         " no check when white
-        let g:pymode_lint_on_write = 0
+        let g:pymode_lint_on_write   = 0
         " check when save
         let g:pymode_lint_unmodified = 0
         " not check of fly
-        let g:pymode_lint_on_fly = 0
+        let g:pymode_lint_on_fly     = 0
         " show message of error line
-        let g:pymode_lint_message = 1
+        let g:pymode_lint_message    = 1
         " checkers
-        let g:pymode_lint_checkers = ['pyflakes','pep8']
+        let g:pymode_lint_checkers   = ['pyflakes','pep8']
         "let g:pymode_lint_checkers = ['pep8']
-        let g:pymode_lint_ignore = "E128,E2,E3,E501"
+        let g:pymode_lint_ignore     = "E128,E2,E3,E501"
         " not Auto open cwindow (quickfix) if any errors have been found
-        let g:pymode_lint_cwindow = 0
+        let g:pymode_lint_cwindow    = 0
     endif
     if isdirectory(expand($PLUG_PATH."/python-syntax"))
         let g:pymode_syntax = 0
