@@ -660,7 +660,7 @@ if isdirectory(expand($PLUG_PATH."/tagbar/"))
 endif
 " easy-align
 if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
-    vmap <Cr> <Plug>(EasyAlign)
+    vmap <C-t> <Plug>(EasyAlign)
     nmap <C-t> <Plug>(EasyAlign)
     if !exists('g:easy_align_delimiters')
         let g:easy_align_delimiters = {}
