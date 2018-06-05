@@ -347,7 +347,7 @@ if !exists('g:spf13_no_views')
         \ ]
 endif
 " tags
-if isdirectory(expand($PLUG_PATH."/ctags")) &&  isdirectory(expand($PLUG_PATH."/vim-gutentags"))
+if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."/vim-gutentags"))
     set tags=./.tags;,.tags
 
     " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
@@ -357,7 +357,7 @@ if isdirectory(expand($PLUG_PATH."/ctags")) &&  isdirectory(expand($PLUG_PATH."/
     let g:gutentags_ctags_tagfile = '.tags'
 
     " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-    let s:vim_tags = expand('~/.cache/tags')
+    let s:vim_tags = expand($PLUG_PATH."/tags")
     let g:gutentags_cache_dir = s:vim_tags
 
     " 配置 ctags 的参数
