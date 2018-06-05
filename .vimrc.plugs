@@ -34,7 +34,7 @@ Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 Plug 'mbbill/undotree'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
@@ -46,6 +46,7 @@ if executable('git')
 endif
 if executable('ctags')
     Plug 'majutsushi/tagbar'
+    Plug 'ludovicchabant/vim-gutentags'
 endif
 " python support
 if has('python3') && executable('python3')
@@ -71,6 +72,14 @@ vmap <C-b> <Nop>
 " input method
 if count(g:spf13_plug_groups, 'pinyin') || count(g:spf13_plug_groups, 'wubi')
     Plug 'leoatchina/ywvim'
+endif
+" txt object
+if count(g:spf13_plug_groups, 'txt')
+	Plug 'kana/vim-textobj-user'
+	Plug 'kana/vim-textobj-indent'
+	Plug 'kana/vim-textobj-syntax'
+	Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java','python'] }
+	Plug 'sgur/vim-textobj-parameter'
 endif
 " biosyntax
 if count(g:spf13_plug_groups, 'bio')
