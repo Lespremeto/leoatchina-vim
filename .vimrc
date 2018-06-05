@@ -10,8 +10,6 @@
 
 " Basics
 set nocompatible        " Must be first line
-nnoremap _ %
-vnoremap _ %
 set encoding=utf-8
 set fileencodings=utf-8,gbk,gb18030,gk2312,chinese,latin-1
 set background=dark     " Assume a dark background
@@ -377,7 +375,6 @@ endif
 if isdirectory(expand($PLUG_PATH."/conflict-marker.vim/"))
     let g:conflict_marker_enable_mappings = 1
 endif
-
 " voom
 if isdirectory(expand($PLUG_PATH."/voom/"))
     let g:conflict_marker_enable_mappings = 1
@@ -664,6 +661,7 @@ endif
 " easy-align
 if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
     vmap <Cr> <Plug>(EasyAlign)
+    nmap <C-t> <Plug>(EasyAlign)
     if !exists('g:easy_align_delimiters')
         let g:easy_align_delimiters = {}
     endif
@@ -694,7 +692,7 @@ endif
 " PyMode
 if isdirectory(expand($PLUG_PATH."/python-mode"))
     " python version
-    if has('python3')
+    if g:python_version == 3
         let g:pymode_python = 'python3'
     else
         let g:pymode_python = 'python'
@@ -712,7 +710,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     let g:pymode_run_bind = '<leader>R'
     " breakpoint
     let g:pymode_breakpoint = 1
-    let g:pymode_breakpoint_bind = '<LocalLeader>p'
+    let g:pymode_breakpoint_bind = '<C-l>t'
     let g:pymode_breakpoint_cmd = 'import pdb;pdb.set_trace()'
     " pymode check disable
     if count(g:spf13_plug_groups, 'syntax')
@@ -743,10 +741,6 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
         let g:pymode_syntax = 1
         let g:pymode_syntax_all = 1
     endif
-endif
-" pytthon syntax highlight
-if isdirectory(expand($PLUG_PATH."/python-syntax"))
-    let g:python_highlight_all = 1
 endif
 " Rainbow
 if isdirectory(expand($PLUG_PATH."/rainbow"))
@@ -1080,7 +1074,7 @@ if v:version > 703
         let g:ale_completion_enabled   = 1
         let g:ale_lint_on_enter        = 0
         let g:ale_lint_on_text_changed = 'always'
-        nmap <C-l>l :ALEToggle<CR>
+        nmap <C-l><C-l> :ALEToggle<CR>
         " signs fo
         let g:ale_sign_column_always   = 1
         let g:ale_set_signs            = 1
@@ -1125,13 +1119,13 @@ if v:version > 703
                 Errors
             endif
         endfunction
-        nnoremap <C-l>l :call ToggleErrors()<cr>
+        nnoremap <C-l><C-l> :call ToggleErrors()<cr>
         nnoremap <C-l>n :lnext<cr>
         nnoremap <C-l>p :lprevious<cr>>
     endif
 
     if isdirectory(expand($PLUG_PATH."/asyncrun.vim")) && g:vim_advance == 1
-        nmap <Leader>tr :AsyncRun
+        nmap <Leader>rr :AsyncRun
         function! RUNIT()
             exec "w"
             cclose

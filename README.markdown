@@ -40,13 +40,13 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 点击setup.cmd
 同时 git clone https://github.com/leoatchina/tools-leoatchina-vim.git
 安装相关的字体,并把exe文件复制到vim安装目录
+然后打开vim或者gvim  , :PlugInstall
 ```
 
 ### 升级到最新版本
 ```bash
   vim +PlugUpdate
   或者在vim里直接  :PlugUpdate
-  或者在clone下来的目录下   ./install.sh  然后按 y
 ```
 
 ## 一些功能
@@ -80,14 +80,12 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 - 加入了6种补全插件：`youcompleteme`,`asyncomplete`,`deoplete`,`completor`,`neocomplete`,`neocomplcache`,默认会在后4种中选择一种。
 
 ## 基本快捷键
-* `<Leader>`键改为空格键,这个在键盘上最大的按键就有了更强的作用;
+* `<Leader>`键改为<Space>,这个在键盘上最大的按键就有了更强的作用;
 * `<localLeader>`改为`\`
-* `C-l`,`C-f`变成了两个`先导键`，其中`C-l`+a代替`C-a`,`C-l`+x代替`C-x`
+* `C-f`,`C-l`变成了两个`先导键`
 * `~`作为进入`ex`模式的快捷键,`Q`键map为`退出当前buffer`
 * `F1`: 为`:h `，方便启动帮助
 * `F2`: 执行 `:Far`
-* `F3`: 执行 `<C-x>`
-* `F4`: 执行 `<C-a>`
 * `F5`: 运行脚本（python、perl、c等）或 `<Leader>R`;
     * 高低版本还有差别
 * `F6`: 打开关闭代码折叠 或 `<Leader>fd`
@@ -97,9 +95,13 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 * `F10`: Voom窗口
 * `F11`: 全屏切换,如果是windows下的gvim,要把本目录下的`gvim_fullscreen.dll`放到`gvim`的安装目录下，此时<S+F11>为切换透明度
 * `F12`: 切换paste模式,或者`<Leader>fp`
+* `<Leader>,`: 执行 `<C-x>`
+* `<Leader>.`: 执行 `<C-a>`
 * 在`Visual`模式下按`.`为退出`Visual`模式
-* n,v,i三种模式下，`Ctrl+e`移到一行的结尾;`Ctrl+a`移到一行的开头;`C-f`往右;`C-b`往左
-* `Ctrl+m`括号之间跳转
+* n,v,i三种模式下，`Ctrl+e`移到一行的结尾;`Ctrl+a`移到一行的开头;
+* i模式下，`C-f`往右;`C-b`往左
+*
+* ``括号之间跳转
 * 标签页控制
 ```
   set tabpagemax=10 " Only show 10 tabs
@@ -140,26 +142,24 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
   " 定义快捷键保存所有窗口内容并退出 vim
   nmap <Leader>WQ :wa<CR>:q<CR>
   " 定义快捷键关闭当前窗口
-  nmap <Leader>q :q<CR>
+  nmap <Leader>q :q!
   " 不做任何保存，直接退出 vim
-  nmap <Leader>Q :qa!<CR>
+  nmap <Leader>Q :qa!
   " 设置分割页面
-  nmap <Leader>- :split<Space>
-  nmap <Leader>\ :vsplit<Space>
-  nmap <Leader>= <C-W>=
+  nmap <leader>\ :vsplit<Space>
+  nmap <Leader><leader>\ :split<Space>
+  nmap <leader>= <C-W>=
   "设置垂直高度减增
-  nmap <Leader>{ :resize -3<CR>
-  nmap <Leader>} :resize +3<CR>
+  nmap <Leader><Down> :resize -3<CR>
+  nmap <Leader><Up>   :resize +3<CR>
   "设置水平宽度减增
-  nmap <Leader>[ :vertical resize -3<CR>
-  nmap <Leader>] :vertical resize +3<CR>
+  nmap <Leader><Left> :vertical resize -3<CR>
+  nmap <Leader><Right>:vertical resize +3<CR>
   " Visual shifting (does not exit Visual mode)
   vnoremap < <gv
   vnoremap > >gv
   nnoremap < <<
   nnoremap > >>
-  nnormemap _ %
-  vnormemap _ %
 ```
 
 ## 插件系统
@@ -196,10 +196,11 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 在侧边显示当前目录，Toggle快捷键为`<Leader>nn`
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011101641847.png)
 
-### [majutsushi/tagbar](https://github.com/majutsushi/tagbar)
+### [majutsushi/tagbar](https://github.com/majutsushi/tagbar) and
 显示文档结构，在`python`,`vim`里肯定有用，要求在系统里安装`ctags`
 用`<Leader>tt`切换在测边显示文档结构.在bar窗口里按`F1`调出帮助窗口
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011102150785.png)
+
 
 
 ### [vim-voom/VOoM](https://github.com/vim-voom/VOoM)
@@ -217,12 +218,10 @@ undotree顾名思义,增强版的回退插件，快捷键`<Leader>u`
 `ywvim`中文输入法,直接在vim里内置,~~无意中发现要和[fcitx](https://github.com/fcitx/fcitx)配合使用否则会有bug~~,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置.`;`临时英文输入法;注意,默认只输入**英文状态**的标点,而且首选是`五笔`;`z`临时拼音;`,.-=`上下翻页;
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011215538461.png)
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011212612850.png)
-
-### [markdown]()
-默认开户对markdown语言的高亮支持,如`.vimrc.before.local`里指定`markdown`支持,按`<leadr>mk`调用`chrome`打开markdown预览,不过这个功能还要仔细测试过.
+x
 
 ### [fugitive](https://github.com/tpope/vim-fugitive)
-对git的支持,具体可以看官方说明,不过我就设置了快捷键`<Leader>gi :Git<Space>`,操作体验接近终端下输入`git`命令
+对git的支持,具体可以看官方说明,设置了快捷键`<Leader>gi :Git<Space>`,操作体验接近终端下输入`git`命令.还有快捷键
 
 ### [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
 注释插件,神器,直接上官方的快捷键,最常用的是`<Leader>c<Space>`
@@ -252,19 +251,19 @@ undotree顾名思义,增强版的回退插件，快捷键`<Leader>u`
   * `[count]<Leader>cu` **|NERDComUncommentLine|**
     Uncomments the selected line(s).
 
-### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
-杀手级插件,引用网上的一段话对它的介绍
-> 在 VIM 世界里，有人是分窗口编辑文件的忠实拥护者，有人则是多文件 tab 页的死忠骨灰粉。但无论哪种人， 在一些大项目内进行编辑工作时，如果要快速打开 './lib/foo/bar/comm/base_utils.py' 这类藏在大山深处的文件，都需像剥粽子一样，一层一层往下找，让人头疼。
-> ctrlp.vim 则完美帮你解决了这个痛点，当你想打开某个文件时，只要按下 Ctrl + p 快捷键，输入文件名。 所有和这个文件名匹配的文件都会被按照优先级列出来，按下 enter 或者 Ctrl + t 就可以在当前 buffer 或者新 tab 页打开你要的文件了。
+### [LeaderF](https://github.com/Yggdroot/LeaderF)
+在高级模式的情况下会选用这个插件
 
-网上找来的图
+
+### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
+杀手级插件，不过有点老，网上找来的图
 ![](http://zuyunfei.com/images/ctrlp-vim-demo.gif)
 
 `ctrl+p`启动插件,`<Leader>fu`启动funksky函数查询功能,在启动后,用`Ctrl+f`,`Ctrl+b`在不同模式中切换.
 在文件列表中,`Ctrl+k/j`或者方向键向上/下选择文件,`t`在新标签里打开文件.其他快捷键见[ctrlp中文介绍](http://blog.codepiano.com/pages/ctrlp-cn.light.html)
 
 ### [Pymode](https://github.com/python-mode/python-mode)
-`python`用的插件,具有语法检查,调试等功能.`F9`: python语法检查,`S+F9`切换语法是否检查.`<Leader>R`:运行脚本;`<Leader>T`:track_point toggle
+`python`用的插件,具有语法检查,调试等功能.`<Leader>R`:运行脚本;`<LocalLeader>p`:track_point toggle
 
 ### [surround](https://github.com/tpope/vim-surround)
 给一段文字加上括号的插件，下面说明文字引用自[vim中的杀手级别的插件：surround](http://zuyunfei.com/2013/04/17/killer-plugin-of-vim-surround/)
