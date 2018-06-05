@@ -92,24 +92,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Some helpers to edit mode
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-" <F9> for toggle the quick fix list
-let g:quickfix_is_open = 0
-function! ToggleQuickfix()
-  if g:quickfix_is_open
-    cclose
-    let g:quickfix_is_open = 0
-    execute g:quickfix_return_to_window . "wincmd w"
-  else
-    let g:quickfix_return_to_window = winnr()
-    copen
-    let g:quickfix_is_open = 1
-  endif
-endfunction
-command! ToggleQuickfix
-      \ call ToggleQuickfix()
-nnoremap <silent><F9> :ToggleQuickfix<cr>
-inoremap <silent><F9> <ESC>:ToggleQuickfix<cr>
-vnoremap <silent><F9> <ESC>:ToggleQuickfix<cr>
 " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
 if !WINDOWS()
     map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
@@ -357,7 +339,7 @@ if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."
     let g:gutentags_ctags_tagfile = '.tags'
 
     " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-    let s:vim_tags = expand($PLUG_PATH."/tags")
+    let s:vim_tags = expand("~/.cache/tags")
     let g:gutentags_cache_dir = s:vim_tags
 
     " 配置 ctags 的参数
@@ -1175,9 +1157,29 @@ if v:version > 703
         endfunction
         nmap <F5> :call RUNIT()<CR>
         nmap <leader><F5> :AsyncStop!<CR>
+        nnoremap <F9> :call asyncrun#quickfix_toggle(6)<cr>
+        let g:asyncrun_open = 6
+        let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     elseif isdirectory(expand($PLUG_PATH."/vim-quickrun")) && g:vim_advance == 0
         nnoremap <F5> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
+        let g:quickfix_is_open = 0
+        function! ToggleQuickfix()
+          if g:quickfix_is_open
+            cclose
+            let g:quickfix_is_open = 0
+            execute g:quickfix_return_to_window . "wincmd w"
+          else
+            let g:quickfix_return_to_window = winnr()
+            copen
+            let g:quickfix_is_open = 1
+          endif
+        endfunction
+        command! ToggleQuickfix
+              \ call ToggleQuickfix()
+        nnoremap <silent><F9> :ToggleQuickfix<cr>
+        inoremap <silent><F9> <ESC>:ToggleQuickfix<cr>
+        vnoremap <silent><F9> <ESC>:ToggleQuickfix<cr>
     endif
 endif
 " Functions

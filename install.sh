@@ -111,6 +111,7 @@ variable_set "$HOME"
 program_must_exist "git"
 program_must_exist "curl"
 mkdir -p "$HOME/.vim/session"
+mkdir -p "$HOME/.cache/tags"
 
 read -p "Do you want to update vimrc and vim-plug (Y for Yes , any other key for No)? " -n 1 -r
 echo
