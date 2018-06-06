@@ -194,11 +194,11 @@ nmap <leader>\ :vsplit<Space>
 nmap <Leader><leader>\ :split<Space>
 nmap <leader>= <C-W>=
 "设置垂直高度减增
-nmap <Leader><Down> :resize -3<CR>
-nmap <Leader><Up>   :resize +3<CR>
+nmap <Leader><Down>  :resize -3<CR>
+nmap <Leader><Up>    :resize +3<CR>
 "设置水平宽度减增
-nmap <Leader><Left> :vertical resize -3<CR>
-nmap <Leader><Right>:vertical resize +3<CR>
+nmap <Leader><Left>  :vertical resize -3<CR>
+nmap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
 vnoremap << <gv
 vnoremap >> >gv
@@ -584,6 +584,11 @@ if has('nvim')
     tnoremap <C-w>j <C-\><C-N><C-w>j
     tnoremap <C-w>k <C-\><C-N><C-w>k
     tnoremap <C-w>l <C-\><C-N><C-w>l
+
+    tnoremap <C-w><right> <C-\><C-N><C-w><right>
+    tnoremap <C-w><left>  <C-\><C-N><C-w><left>
+    tnoremap <C-w><down>  <C-\><C-N><C-w><down>
+    tnoremap <C-w><up>    <C-\><C-N><C-w><up>
     nmap <C-k>v :vsplit term://bash<Cr>
     nmap <C-k>s :split  term://bash<Cr>
     nmap <C-k>t :terminal<Cr>bash<Cr>
