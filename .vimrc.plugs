@@ -113,8 +113,8 @@ if count(g:spf13_plug_groups, 'airline')
 endif
 " FIXME: mabe not support shell
 " shell
-if  !has('nvim')
-    Plug 'shougo/vimproc.vim'
+if count(g:spf13_plug_groups, 'shell') && |WINDOWS()
+    Plug 'shougo/vimproc.vim', {'do':':VimProcInstall'}
     Plug 'shougo/vimshell.vim'
 endif
 " PHP
