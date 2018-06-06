@@ -578,7 +578,18 @@ endif
 
 " Shell
 if has('nvim')
-
+    tnoremap <Esc> <C-\><C-n>
+    tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+    tnoremap <C-w>h <C-\><C-N><C-w>h
+    tnoremap <C-w>j <C-\><C-N><C-w>j
+    tnoremap <C-w>k <C-\><C-N><C-w>k
+    tnoremap <C-w>l <C-\><C-N><C-w>l
+    nmap <C-k>v :vsplit term://bash<Cr>
+    nmap <C-k>s :split  term://bash<Cr>
+    nmap <C-k>t :terminal<Cr>bash<Cr>
+    nmap <C-k>V :vsplit term://
+    nmap <C-k>S :split  term://
+    nmap <C-k>T :terminal<Cr>
 else
     if isdirectory(expand($PLUG_PATH."/vimshell.vim"))
         nmap <C-k>v :vsplit<cr>:VimShell<cr>
