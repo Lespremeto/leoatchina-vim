@@ -49,26 +49,21 @@ if executable('ctags')
     Plug 'ludovicchabant/vim-gutentags'
 endif
 " python support
+let g:python_version = 0
 if has('python3') && executable('python3')
     try
         execute 'py3 import mru'
         let g:python_version = 3
     catch
-        let g:python_version = 0
     endtry
-elseif has('python') && executable('python')
+endif
+if has('python') && executable('python') && g:python_version == 0
     try
-        execute 'py2 import mru'
+        execute 'py import mru'
         let g:python_version = 2
     catch
-        let g:python_version = 0
     endtry
-else
-    let g:python_version = 0
 endif
-
-
-
 
 if g:python_version > 0
     Plug 'vim-voom/VOoM'
