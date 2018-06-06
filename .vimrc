@@ -596,9 +596,8 @@ if isdirectory(expand($PLUG_PATH."/vimshell.vim")) && count(g:spf13_plug_groups,
         let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
         let g:vimshell_force_overwrite_statusline = 1
 elseif has('terminal')
-    tnoremap <Esc> <C-\><C-n>
     tnoremap <C-[> <C-\><C-n>
-    tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+    tnoremap <ESC> <C-\><C-n>
     tnoremap <C-w>h <C-\><C-N><C-w>h
     tnoremap <C-w>j <C-\><C-N><C-w>j
     tnoremap <C-w>k <C-\><C-N><C-w>k
@@ -608,6 +607,7 @@ elseif has('terminal')
     tnoremap <C-w><down>  <C-\><C-N><C-w><down>
     tnoremap <C-w><up>    <C-\><C-N><C-w><up>
     if has('nvim')
+        tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
         nmap <C-k>v :vsplit term://bash<Cr>
         nmap <C-k>s :split  term://bash<Cr>
         nmap <C-k>t :terminal<Cr>bash<Cr>
