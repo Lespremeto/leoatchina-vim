@@ -49,19 +49,24 @@ if executable('ctags')
     Plug 'ludovicchabant/vim-gutentags'
 endif
 " python support
-let g:python_version = 0
 if has('python3') && executable('python3')
-    try
-        execute 'python3 import mru'
-        let g:python_version = 3
-    catch
-    endtry
+    let g:python_version = 3
+elseif has('python') && executable('python')
+    let g:python_version = 2
+else
+    let g:python_version = 0
 endif
-if has('python') && executable('python') && g:python_version == 0
+
+let g:has_mru = 1
+if g:python_version > 0
     try
-        execute 'python import mru'
-        let g:python_version = 2
+        if g:python_version == 3
+            execute('python3 import mru')
+        elseif g:python_version == 2
+            execute('python import mru')
+        endif
     catch
+        let g:has_mru = 0
     endtry
 endif
 
@@ -162,7 +167,7 @@ if count(g:spf13_plug_groups, 'html')
     Plug 'mattn/emmet-vim'
 endif
 " leaderF and ctrlP
-if g:python_version > 0 && (version > 704 || has('nvim')) && executable('gcc')
+if g:python_version > 0 && (version > 704 || has('nvim')) && executable('gcc') && g:has_mru
     if WINDOWS()
         Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
     else
@@ -215,7 +220,7 @@ if version > 703
                     echoe "deoplete need nvim or vim8 with python3 and timers support!"
                 endif
             elseif count(g:spf13_plug_groups, 'completor')
-                if g:python_version > 0 && !has('nvim')
+                if g:python_version > 0 && !has('nvim') && g:has_mru
                     let g:completable = 4
                 else
                     echoe "completor does not support nvim, need vim8 with python2 or python3 support"
@@ -232,7 +237,7 @@ if version > 703
             elseif count(g:spf13_plug_groups, 'smartcomplete')
                 if g:python_version == 3 && has('timers')
                     let g:completable = 3
-                elseif g:python_version > 0 && !has('nvim')
+                elseif g:python_version > 0 && !has('nvim') && g:has_mru
                     let g:completable = 4
                 elseif has('lua')
                     let g:completable = 5
