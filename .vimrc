@@ -580,6 +580,8 @@ endif
 " Shell
 if has('nvim')
     tnoremap <Esc> <C-\><C-n>
+    tnoremap <C-c> <C-\><C-n>
+    tnoremap <C-[> <C-\><C-n>
     tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
     tnoremap <C-w>h <C-\><C-N><C-w>h
     tnoremap <C-w>j <C-\><C-N><C-w>j
