@@ -52,14 +52,14 @@ endif
 let g:python_version = 0
 if has('python3') && executable('python3')
     try
-        execute 'py3 import mru'
+        execute 'python3 import mru'
         let g:python_version = 3
     catch
     endtry
 endif
 if has('python') && executable('python') && g:python_version == 0
     try
-        execute 'py import mru'
+        execute 'python import mru'
         let g:python_version = 2
     catch
     endtry
