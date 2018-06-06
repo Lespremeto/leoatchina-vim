@@ -596,20 +596,18 @@ if isdirectory(expand($PLUG_PATH."/vimshell.vim")) && count(g:spf13_plug_groups,
         let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
         let g:vimshell_force_overwrite_statusline = 1
 elseif has('terminal')
+    tnoremap <Esc> <C-\><C-n>
+    tnoremap <C-[> <C-\><C-n>
+    tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+    tnoremap <C-w>h <C-\><C-N><C-w>h
+    tnoremap <C-w>j <C-\><C-N><C-w>j
+    tnoremap <C-w>k <C-\><C-N><C-w>k
+    tnoremap <C-w>l <C-\><C-N><C-w>l
+    tnoremap <C-w><right> <C-\><C-N><C-w><right>
+    tnoremap <C-w><left>  <C-\><C-N><C-w><left>
+    tnoremap <C-w><down>  <C-\><C-N><C-w><down>
+    tnoremap <C-w><up>    <C-\><C-N><C-w><up>
     if has('nvim')
-        tnoremap <Esc> <C-\><C-n>
-        tnoremap <C-c> <C-\><C-n>
-        tnoremap <C-[> <C-\><C-n>
-        tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-        tnoremap <C-w>h <C-\><C-N><C-w>h
-        tnoremap <C-w>j <C-\><C-N><C-w>j
-        tnoremap <C-w>k <C-\><C-N><C-w>k
-        tnoremap <C-w>l <C-\><C-N><C-w>l
-
-        tnoremap <C-w><right> <C-\><C-N><C-w><right>
-        tnoremap <C-w><left>  <C-\><C-N><C-w><left>
-        tnoremap <C-w><down>  <C-\><C-N><C-w><down>
-        tnoremap <C-w><up>    <C-\><C-N><C-w><up>
         nmap <C-k>v :vsplit term://bash<Cr>
         nmap <C-k>s :split  term://bash<Cr>
         nmap <C-k>t :terminal<Cr>bash<Cr>
@@ -617,6 +615,12 @@ elseif has('terminal')
         nmap <C-k>S :split  term://
         nmap <C-k>T :terminal<Cr>
     else
+        nmap <C-k>v :vertical terminal<cr>bash<cr>
+        nmap <C-k>s :horizontal terminal<cr>bash<cr>
+        nmap <C-k>t :tab terminal<Cr>bash<Cr>
+        nmap <C-k>V :vertical terminal
+        nmap <C-k>S :horizontal terminal
+        nmap <C-k>T :tab terminal
     endif
 endif
 
