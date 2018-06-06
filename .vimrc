@@ -391,15 +391,14 @@ endif
 " multiple-cursors
 if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
     let g:multi_cursor_use_default_mapping=0
-    " Default mapping
     let g:multi_cursor_start_word_key      = '<C-m>'
-    let g:multi_cursor_select_all_word_key = '<C-b>'
-    let g:multi_cursor_start_key           = '<leader><C-m>'
-    let g:multi_cursor_select_all_key      = '<leader><C-b>'
+    let g:multi_cursor_select_all_word_key = '<leader>A'
+    let g:multi_cursor_start_key           = 'g<C-m>'
+    let g:multi_cursor_select_all_key      = 'g<leader>A'
     let g:multi_cursor_next_key            = '<C-m>'
     let g:multi_cursor_prev_key            = '<C-h>'
     let g:multi_cursor_skip_key            = '<C-x>'
-    let g:multi_cursor_quit_key            = '<C-c>'
+    let g:multi_cursor_quit_key            = '<ESC>'
 endif
 " theme
 if (empty($TMUX))
