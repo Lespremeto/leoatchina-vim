@@ -145,6 +145,7 @@ nnoremap <Leader>ts            :tab split<CR>
 nnoremap <Leader>tS            :tabs<CR>
 nnoremap <Leader>tm            :tabm<Space>
 " buffer switch
+nnoremap <localleader><Backspace> :buffers<CR>
 nnoremap <localleader>] :bn<CR>
 nnoremap <localleader>[ :bp<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
