@@ -196,15 +196,15 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 在侧边显示当前目录，Toggle快捷键为`<Leader>nn`
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011101641847.png)
 
-### [majutsushi/tagbar](https://github.com/majutsushi/tagbar) and
-显示文档结构，在`python`,`vim`里肯定有用，要求在系统里安装`ctags`
+### [majutsushi/tagbar](https://github.com/majutsushi/tagbar) and [ludovicchabant/vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
+显示文档结构，要求在系统里安装`ctags`
 用`<Leader>tt`切换在测边显示文档结构.在bar窗口里按`F1`调出帮助窗口
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011102150785.png)
 
 
 
 ### [vim-voom/VOoM](https://github.com/vim-voom/VOoM)
-另一个显示文档结构的插件，和`TagBar`逻辑不一样，`python`里肯定有用，其他语言我还没有测试出来。快捷键`<Leader>vo`打开 `:Voom`命令;`<Leader>vt`为`:VoomToggle`voom状态切换
+另一个显示文档结构的插件，和`TagBar`逻辑不一样，`python`里肯定有用，其他语言我还没有测试出来。快捷键`<F10>`打开 ,用`_`在voom_buffer和代码窗口内切换。
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171012105213969.png)
 
 ### [mbbill/undotree](https://github.com/mbbill/undotree)

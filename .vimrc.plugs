@@ -113,7 +113,7 @@ if count(g:spf13_plug_groups, 'airline')
 endif
 " FIXME: mabe not support shell
 " shell
-if count(g:spf13_plug_groups, 'shell') && !has('nvim')
+if  !has('nvim')
     Plug 'shougo/vimproc.vim'
     Plug 'shougo/vimshell.vim'
 endif

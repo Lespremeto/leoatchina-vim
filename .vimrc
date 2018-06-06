@@ -200,10 +200,8 @@ nmap <Leader><Up>   :resize +3<CR>
 nmap <Leader><Left> :vertical resize -3<CR>
 nmap <Leader><Right>:vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-nnoremap < <<
-nnoremap > >>
+vnoremap << <gv
+vnoremap >> >gv
 " auto close qfixwindows when leave vim
 aug QFClose
     au!
@@ -596,9 +594,9 @@ else
         nmap <C-k>i :VimShellInteractive<Space>
         nmap <C-k>n :VimShellCreate<Space>
         vmap <C-k>  :VimShellSendString<cr>
-        let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+        let g:vimshell_prompt_expr    = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
         let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
-        let g:vimshell_force_overwrite_statusline=1
+        let g:vimshell_force_overwrite_statusline = 1
     endif
 endif
 
