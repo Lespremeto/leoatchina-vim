@@ -114,7 +114,7 @@ endif
 " FIXME: mabe not support shell
 " shell
 if count(g:spf13_plug_groups, 'shell') && !WINDOWS()
-    Plug 'shougo/vimproc.vim', {'do':':VimProcInstall'}
+    Plug 'shougo/vimproc.vim', {'do':"make"}
     Plug 'shougo/vimshell.vim'
 endif
 " PHP
