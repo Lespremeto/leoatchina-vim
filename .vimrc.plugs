@@ -60,13 +60,14 @@ endif
 let g:has_mru = 0
 try
     if g:python_version == 3
-        execute('python3 import mru')
+        python3 import mru
         let g:has_mru = 3
     elseif g:python_version == 2
-        execute('python import mru')
+        python import mru
         let g:has_mru = 2
     endif
 catch
+
 endtry
 
 if g:python_version > 0
