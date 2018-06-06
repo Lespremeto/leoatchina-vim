@@ -50,12 +50,26 @@ if executable('ctags')
 endif
 " python support
 if has('python3') && executable('python3')
-    let g:python_version = 3
+    try
+        execute 'py3 import mru'
+        let g:python_version = 3
+    catch
+        let g:python_version = 0
+    endtry
 elseif has('python') && executable('python')
-    let g:python_version = 2
+    try
+        execute 'py2 import mru'
+        let g:python_version = 2
+    catch
+        let g:python_version = 0
+    endtry
 else
     let g:python_version = 0
 endif
+
+
+
+
 if g:python_version > 0
     Plug 'vim-voom/VOoM'
 endif
@@ -114,7 +128,7 @@ endif
 " FIXME: mabe not support shell
 " shell
 if count(g:spf13_plug_groups, 'shell') && !WINDOWS()
-    Plug 'shougo/vimproc.vim', {'do':"make"}
+    Plug 'shougo/vimproc.vim', {'do':'make'}
     Plug 'shougo/vimshell.vim'
 endif
 " PHP
@@ -153,7 +167,7 @@ if count(g:spf13_plug_groups, 'html')
     Plug 'mattn/emmet-vim'
 endif
 " leaderF and ctrlP
-if g:python_version > 0 && (version > 704 || has('nvim'))&& (WINDOWS() && executable('gcc') || !WINDOWS())
+if g:python_version > 0 && (version > 704 || has('nvim')) && executable('gcc')
     if WINDOWS()
         Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
     else
@@ -312,5 +326,4 @@ if version > 703
 else
     echoe "In order to have grammar check and snippet, you should update to vim7.4+ or neovim!!"
 endif
-
 call plug#end()
