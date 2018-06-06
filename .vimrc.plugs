@@ -57,18 +57,17 @@ else
     let g:python_version = 0
 endif
 
-let g:has_mru = 1
-if g:python_version > 0
-    try
-        if g:python_version == 3
-            execute('python3 import mru')
-        elseif g:python_version == 2
-            execute('python import mru')
-        endif
-    catch
-        let g:has_mru = 0
-    endtry
-endif
+let g:has_mru = 0
+try
+    if g:python_version == 3
+        execute('python3 import mru')
+        let g:has_mru = 3
+    elseif g:python_version == 2
+        execute('python import mru')
+        let g:has_mru = 2
+    endif
+catch
+endtry
 
 if g:python_version > 0
     Plug 'vim-voom/VOoM'
@@ -167,7 +166,7 @@ if count(g:spf13_plug_groups, 'html')
     Plug 'mattn/emmet-vim'
 endif
 " leaderF and ctrlP
-if g:python_version > 0 && (version > 704 || has('nvim')) && executable('gcc') && g:has_mru
+if g:has_mru > 0 && (version > 704 || has('nvim')) && executable('gcc')
     if WINDOWS()
         Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
     else
@@ -220,8 +219,8 @@ if version > 703
                     echoe "deoplete need nvim or vim8 with python3 and timers support!"
                 endif
             elseif count(g:spf13_plug_groups, 'completor')
-                if g:python_version > 0 && !has('nvim') && g:has_mru
-                    let g:completable = 4
+                if g:has_mru == 3 && !has('nvim')
+                   let g:completable = 4
                 else
                     echoe "completor does not support nvim, need vim8 with python2 or python3 support"
                 endif
@@ -237,7 +236,7 @@ if version > 703
             elseif count(g:spf13_plug_groups, 'smartcomplete')
                 if g:python_version == 3 && has('timers')
                     let g:completable = 3
-                elseif g:python_version > 0 && !has('nvim') && g:has_mru
+                elseif g:has_mru == 3 && !has('nvim')
                     let g:completable = 4
                 elseif has('lua')
                     let g:completable = 5
