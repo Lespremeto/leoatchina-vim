@@ -55,8 +55,6 @@ elseif has('python') && executable('python')
 else
     let g:python_version = 0
 endif
-
-
 if g:python_version > 0
     Plug 'vim-voom/VOoM'
 endif
