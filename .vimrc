@@ -84,29 +84,21 @@ filetype on                 " 开启文件类型侦测
 filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
 syntax on
 " Allow using the repeat operator with a visual selection (!)
-vnoremap . :normal .<CR>
+!vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
 cmap w!! w !sudo tee % >/dev/null
 " Some helpers to edit mode
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-" fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
-if !WINDOWS()
-    map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
-else
-    au GUIEnter * simalt ~x
-    " 按 F11 切换全屏
-    noremap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-    " 按 S-F11 切换窗口透明度
-    noremap <S-F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleTransparency', "247,180")<cr>
-endif
-set pastetoggle=<F12>      " pastetoggle (sane indentation on pastes)
 
 " some internal key remap
 map gt <Nop>
 map gT <Nop>
-"FIXME: c-s may cause halt within xshell5
-map  <C-s> <Nop>
+
+xmap  <C-s> <Nop>
+xmap  <C-t> <Nop>
+xmap  <C-q> <Nop>
+xmap  <C-z> <Nop>
 nmap ! :!
 " Q
 nnoremap ~ Q
@@ -148,13 +140,13 @@ nnoremap <Leader>tS            :tabs<CR>
 nnoremap <Leader>tm            :tabm<Space>
 " buffer switch
 nnoremap <localleader><Backspace> :buffers<CR>
-nnoremap <localleader>] :bn<CR>
-nnoremap <localleader>[ :bp<CR>
+nnoremap <localleader>]           :bn<CR>
+nnoremap <localleader>[           :bp<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
-vnoremap  <leader>y  "+y
-nnoremap  <leader>y  "+y
-nnoremap  <leader>Y  "+yg
-nnoremap  <leader>yy  "+yy
+vnoremap <leader>y  "+y
+nnoremap <leader>y  "+y
+nnoremap <leader>Y  "+yg
+nnoremap <leader>yy "+yy
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 " p and P for paste
@@ -170,6 +162,8 @@ noremap <silent>j gj
 noremap <silent>k gk
 nmap <F1> :tab help<Space>
 vmap <F1> <ESC>:tab help<Space>
+imap <F1> <ESC>
+cmap <F1> <ESC>
 autocmd FileType help  setlocal number
 if isdirectory(expand($PLUG_PATH."/far.vim"))
     nmap <F2> :Far<Space>
@@ -185,10 +179,21 @@ nnoremap <F6> :set nofoldenable! nofoldenable?<CR>
 nnoremap <F7> :set nowrap! nowrap?<CR>
 "F8 toggle hlsearch
 nnoremap <F8> :set nohlsearch! nohlsearch?<CR>
-" F9 for brack jump
-nnoremap <F9> %
-vnoremap <F9> %
-inoremap <F9> <ESC>%
+" F10 for brack jump
+nnoremap <F10> %
+vnoremap <F10> %
+inoremap <F10> <ESC>%
+" fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
+if !WINDOWS()
+    map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
+else
+    au GUIEnter * simalt ~x
+    " 按 F11 切换全屏
+    noremap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+    " 按 S-F11 切换窗口透明度
+    noremap <S-F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleTransparency', "247,180")<cr>
+endif
+set pastetoggle=<F12>      " pastetoggle (sane indentation on pastes)
 " 定义快捷键保存当前窗口内容
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
@@ -694,14 +699,14 @@ if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
 endif
 " Go program
 if count(g:spf13_plug_groups, 'go')
-    let g:go_highlight_functions = 1
-    let g:go_highlight_methods = 1
-    let g:go_highlight_structs = 1
-    let g:go_highlight_operators = 1
+    let g:go_highlight_functions         = 1
+    let g:go_highlight_methods           = 1
+    let g:go_highlight_structs           = 1
+    let g:go_highlight_operators         = 1
     let g:go_highlight_build_constraints = 1
-    let g:go_fmt_command = "gofmt"
-    let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-    let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+    let g:go_fmt_command                 = "gofmt"
+    let g:syntastic_go_checkers          = ['golint', 'govet', 'errcheck']
+    let g:syntastic_mode_map             = { 'mode': 'active', 'passive_filetypes': ['go'] }
     au FileType go imap <C-g>     <C-x><C-o>
     au FileType go nmap <Leader>i <Plug>(go-implements)
     au FileType go nmap <Leader>I <Plug>(go-info)
