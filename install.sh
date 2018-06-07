@@ -120,6 +120,7 @@ else
     echo "Install leoatchina's vim config"
 fi
 
+update_setting='0'
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     update_setting='1'
