@@ -46,9 +46,6 @@ if executable('git')
 endif
 if executable('ctags')
     Plug 'majutsushi/tagbar'
-    if g:vim_advance
-        Plug 'ludovicchabant/vim-gutentags'
-    endif
 endif
 " python support
 if has('python3') && executable('python3')
@@ -178,6 +175,9 @@ if version > 703
             Plug 'w0rp/ale'
         endif
         Plug 'skywind3000/asyncrun.vim'
+        if executable('ctags')
+            Plug 'ludovicchabant/vim-gutentags'
+        endif
     else
         let g:vim_advance = 0
         " install run and syntax tools

@@ -201,8 +201,8 @@ nmap <Leader><Up>    :resize +3<CR>
 nmap <Leader><Left>  :vertical resize -3<CR>
 nmap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
-vnoremap << <gv
-vnoremap >> >gv
+vnoremap < <gv
+vnoremap > >gv
 " auto close qfixwindows when leave vim
 aug QFClose
     au!
