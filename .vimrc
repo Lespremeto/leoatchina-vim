@@ -408,6 +408,17 @@ if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
     let g:multi_cursor_prev_key            = '<C-h>'
     let g:multi_cursor_skip_key            = '<C-x>'
     let g:multi_cursor_quit_key            = '<ESC>'
+    function! Multiple_cursors_before()
+      if exists(':NeoCompleteLock')==2
+        exe 'NeoCompleteLock'
+      endif
+    endfunction
+
+    function! Multiple_cursors_after()
+      if exists(':NeoCompleteUnlock')==2
+        exe 'NeoCompleteUnlock'
+      endif
+    endfunction
 endif
 " theme
 if (empty($TMUX))
