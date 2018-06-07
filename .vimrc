@@ -17,13 +17,13 @@ set mouse=a             " Automatically enable mouse usage
 set mousehide           " Hide the mouse cursor while typing
 " Identify platform
 silent function! OSX()
-    return has('macunix')
+return has('macunix')
 endfunction
 silent function! LINUX()
-    return has('unix') && !has('macunix') && !has('win32unix')
+return has('unix') && !has('macunix') && !has('win32unix')
 endfunction
 silent function! WINDOWS()
-    return  (has('win32') || has('win64'))
+return  (has('win32') || has('win64'))
 endfunction
 " Basics
 if !WINDOWS()
@@ -84,7 +84,7 @@ filetype on                 " 开启文件类型侦测
 filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
 syntax on
 " Allow using the repeat operator with a visual selection (!)
-!vnoremap . :normal .<CR>
+vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
 cmap w!! w !sudo tee % >/dev/null
 " Some helpers to edit mode
@@ -284,21 +284,21 @@ set guioptions-=T
 " set laststatus=2
 " sepcial setting for different type of files
 au BufNewFile,BufRead *.py
-    \set shiftwidth=4
-    \set tabstop=4
-    \set softtabstop=4
-    \set expandtab
-    \set autoindent
-    \set foldmethod=indent
+            \set shiftwidth=4
+            \set tabstop=4
+            \set softtabstop=4
+            \set expandtab
+            \set autoindent
+            \set foldmethod=indent
 au FileType python au BufWritePost <buffer> :%retab
 " yaml
 au BufNewFile,BufRead *.yml
-    \set shiftwidth=2
-    \set tabstop=2
-    \set softtabstop=2
-    \set expandtab
-    \set autoindent
-    \set foldmethod=indent
+            \set shiftwidth=2
+            \set tabstop=2
+            \set softtabstop=2
+            \set expandtab
+            \set autoindent
+            \set foldmethod=indent
 " Remove trailing whiteSpaces and ^M chars
 au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
@@ -335,8 +335,8 @@ if !exists('g:spf13_no_views')
     " Add exclusions to mkview and loadview
     " eg: *.*, svn-commit.tmp
     let g:skipview_files = [
-        \ '\[example pattern\]'
-        \ ]
+                \ '\[example pattern\]'
+                \ ]
 endif
 " tags
 if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."/vim-gutentags"))
@@ -355,7 +355,7 @@ if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."
 
     " 检测 ~/.cache/tags 不存在就新建
     if !isdirectory(s:vim_tags)
-       silent! call mkdir(s:vim_tags, 'p')
+        silent! call mkdir(s:vim_tags, 'p')
     endif
 
 endif
@@ -390,12 +390,12 @@ if isdirectory(expand($PLUG_PATH."/voom/"))
     let g:voom_tab_key = "_"
     nmap <leader>vt :VoomToggle<CR>
     let g:voom_ft_modes = {
-        \ 'markdown': 'markdown',
-        \ 'pandoc': 'pandoc',
-        \ 'c': 'fmr2',
-        \ 'cpp': 'fmr2',
-        \ 'python':'python',
-        \ 'tex': 'latex'}
+                \ 'markdown': 'markdown',
+                \ 'pandoc': 'pandoc',
+                \ 'c': 'fmr2',
+                \ 'cpp': 'fmr2',
+                \ 'python':'python',
+                \ 'tex': 'latex'}
 endif
 " multiple-cursors
 if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
@@ -559,14 +559,14 @@ endif
 if isdirectory(expand($PLUG_PATH."/ywvim"))
     if count(g:spf13_plug_groups, 'pinyin')
         let g:ywvim_ims=[
-                \['py', '拼音', 'pinyin.ywvim'],
-                \['wb', '五笔', 'wubi.ywvim'],
-            \]
+                    \['py', '拼音', 'pinyin.ywvim'],
+                    \['wb', '五笔', 'wubi.ywvim'],
+                    \]
     elseif count(g:spf13_plug_groups, 'wubi')
         let g:ywvim_ims=[
-                \['wb', '五笔', 'wubi.ywvim'],
-                \['py', '拼音', 'pinyin.ywvim'],
-            \]
+                    \['wb', '五笔', 'wubi.ywvim'],
+                    \['py', '拼音', 'pinyin.ywvim'],
+                    \]
     endif
     let g:ywvim_py = { 'helpim':'wb', 'gb':0 }
     let g:ywvim_zhpunc = 0
@@ -587,22 +587,22 @@ endif
 
 " Shell
 if isdirectory(expand($PLUG_PATH."/vimshell.vim")) && count(g:spf13_plug_groups, 'shell')
-        nmap <C-k>v :vsplit<cr>:VimShell<cr>
-        nmap <C-k>s :split<cr>:VimShell<cr>
-        nmap <C-k>V :VimShell<Space>
-        nmap <C-k>S :VimShellSendBuffer<Space>
-        nmap <C-k>c :VimShellClose<Cr>
-        nmap <C-k>t :VimShellTab<Space>
-        nmap <C-k>p :VimShellPop<Space>
-        nmap <C-k>d :VimShellCurrentDir<Space>
-        nmap <C-k>b :VimShellBufferDir<Space>
-        nmap <C-k>e :VimShellExecute<Space>
-        nmap <C-k>i :VimShellInteractive<Space>
-        nmap <C-k>n :VimShellCreate<Space>
-        vmap <C-k>  :VimShellSendString<cr>
-        let g:vimshell_prompt_expr    = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
-        let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
-        let g:vimshell_force_overwrite_statusline = 1
+    nmap <C-k>v :vsplit<cr>:VimShell<cr>
+    nmap <C-k>s :split<cr>:VimShell<cr>
+    nmap <C-k>V :VimShell<Space>
+    nmap <C-k>S :VimShellSendBuffer<Space>
+    nmap <C-k>c :VimShellClose<Cr>
+    nmap <C-k>t :VimShellTab<Space>
+    nmap <C-k>p :VimShellPop<Space>
+    nmap <C-k>d :VimShellCurrentDir<Space>
+    nmap <C-k>b :VimShellBufferDir<Space>
+    nmap <C-k>e :VimShellExecute<Space>
+    nmap <C-k>i :VimShellInteractive<Space>
+    nmap <C-k>n :VimShellCreate<Space>
+    vmap <C-k>  :VimShellSendString<cr>
+    let g:vimshell_prompt_expr    = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+    let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
+    let g:vimshell_force_overwrite_statusline = 1
 elseif has('terminal')
     tnoremap <C-[> <C-\><C-n>
     tnoremap <ESC> <C-\><C-n>
@@ -635,32 +635,32 @@ endif
 " startify
 if isdirectory(expand($PLUG_PATH."/vim-startify"))
     let g:startify_custom_header = [
-        \ '+----------------------------------------------------------+',
-        \ '|  Welcome to use leoatchina vim config forked from spf13  |',
-        \ '|                                                          |',
-        \ '|  https://github.com/leoatchina/leoatchina-vim            |',
-        \ '|                                                          |',
-        \ '|  https://github.com/spf13/spf13-vim                      |',
-        \ '+----------------------------------------------------------+',
-        \ ]
+                \ '+----------------------------------------------------------+',
+                \ '|  Welcome to use leoatchina vim config forked from spf13  |',
+                \ '|                                                          |',
+                \ '|  https://github.com/leoatchina/leoatchina-vim            |',
+                \ '|                                                          |',
+                \ '|  https://github.com/spf13/spf13-vim                      |',
+                \ '+----------------------------------------------------------+',
+                \ ]
     let g:startify_session_dir = '~/.vim/session'
     let g:startify_files_number = 5
     let g:startify_session_number = 5
     let g:startify_list_order = [
-        \ ['   最近项目:'],
-        \ 'sessions',
-        \ ['   最近文件:'],
-        \ 'files',
-        \ ['   快捷命令:'],
-        \ 'commands',
-        \ ['   常用书签:'],
-        \ 'bookmarks',
-        \ ]
+                \ ['   最近项目:'],
+                \ 'sessions',
+                \ ['   最近文件:'],
+                \ 'files',
+                \ ['   快捷命令:'],
+                \ 'commands',
+                \ ['   常用书签:'],
+                \ 'bookmarks',
+                \ ]
     let g:startify_commands = [
-        \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
-        \ {'h': ['帮助', 'help howto']},
-        \ {'v': ['版本', 'version']}
-        \ ]
+                \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
+                \ {'h': ['帮助', 'help howto']},
+                \ {'v': ['版本', 'version']}
+                \ ]
 endif
 " PIV
 if isdirectory(expand($PLUG_PATH."/PIV"))
@@ -787,8 +787,8 @@ if g:python_version > 0 && isdirectory(expand($PLUG_PATH."/LeaderF"))
 elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
     let g:ctrlp_working_path_mode = 'ar'
     let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-        \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
     if executable('ag')
         let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
     elseif executable('ack-grep')
@@ -805,12 +805,12 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
         unlet g:ctrlp_user_command
     endif
     let g:ctrlp_user_command = {
-            \ 'types': {
-            \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-            \ },
-            \ 'fallback': s:ctrlp_fallback
-        \ }
+                \ 'types': {
+                \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+                \ },
+                \ 'fallback': s:ctrlp_fallback
+                \ }
     if isdirectory(expand($PLUG_PATH."/ctrlp-funky/"))
         " CtrlP extensions
         let g:ctrlp_extensions = ['funky']
@@ -844,9 +844,9 @@ if v:version > 703
         let g:ycm_key_list_select_completion = ['<C-n>','<Down>']
         let g:ycm_key_list_previous_completion = ['<C-p','<Up>']
         let g:ycm_filetype_blacklist = {
-            \ 'tagbar' : 1,
-            \ 'nerdtree' : 1,
-        \}
+                    \ 'tagbar' : 1,
+                    \ 'nerdtree' : 1,
+                    \}
         " Haskell post write lint and check with ghcmod
         " $ `cabal install ghcmod` if missing and ensure
         " ~/.cabal/bin is in your $PATH.
@@ -860,9 +860,9 @@ if v:version > 703
         let g:ycm_cache_omnifunc=0 " 禁止缓存匹配项,每次都重新生成匹配项
         let g:ycm_seed_identifiers_with_syntax=1   " 语法关键字补全
         let g:ycm_semantic_triggers =  {
-      			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-      			\ 'cs,lua,javascript': ['re!\w{2}'],
-  			\}
+                    \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+                    \ 'cs,lua,javascript': ['re!\w{2}'],
+                    \}
         let g:ycm_add_preview_to_completeopt = 0 " preview里不加入原型
         ""在注释输入中也能补全
         let g:ycm_complete_in_comments = 1
@@ -872,7 +872,7 @@ if v:version > 703
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    " asyncomplete
+        " asyncomplete
     elseif g:completable == 2
         let g:asyncomplete_auto_popup = 1
         let g:asyncomplete_remove_duplicates = 1
@@ -880,40 +880,40 @@ if v:version > 703
         if executable('pyls')
             " pip install python-language-server
             au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ })
+                        \ 'name': 'pyls',
+                        \ 'cmd': {server_info->['pyls']},
+                        \ 'whitelist': ['python'],
+                        \ })
         endif
         " file"
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-            \ 'name': 'file',
-            \ 'whitelist': ['*'],
-            \ 'priority': 10,
-            \ 'completor': function('asyncomplete#sources#file#completor')
-            \ }))
+                    \ 'name': 'file',
+                    \ 'whitelist': ['*'],
+                    \ 'priority': 10,
+                    \ 'completor': function('asyncomplete#sources#file#completor')
+                    \ }))
         " buffer"
         call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-            \ 'name': 'buffer',
-            \ 'whitelist': ['*'],
-            \ 'blacklist': ['go'],
-            \ 'completor': function('asyncomplete#sources#buffer#completor'),
-            \ }))
+                    \ 'name': 'buffer',
+                    \ 'whitelist': ['*'],
+                    \ 'blacklist': ['go'],
+                    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+                    \ }))
 
         if g:use_ultisnips && g:python_version == 3
             call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-              \ 'name': 'ultisnips',
-              \ 'whitelist': ['*'],
-              \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
-              \ }))
+                        \ 'name': 'ultisnips',
+                        \ 'whitelist': ['*'],
+                        \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+                        \ }))
         else
             call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-              \ 'name': 'neosnippet',
-              \ 'whitelist': ['*'],
-              \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
-              \ }))
+                        \ 'name': 'neosnippet',
+                        \ 'whitelist': ['*'],
+                        \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
+                        \ }))
         endif
-    " deoplete
+        " deoplete
     elseif g:completable == 3
         let g:deoplete#enable_at_startup = 1
         set completeopt=menuone,noinsert,noselect
@@ -946,12 +946,12 @@ if v:version > 703
         if g:use_ultisnips
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    " completor
+        " completor
     elseif g:completable == 4
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
         set completeopt=menuone,noinsert,noselect
-    " neocomplete
+        " neocomplete
     elseif g:completable == 5
         let g:acp_enableAtStartup = 1
         let g:neocomplete#enable_at_startup = 1
@@ -986,7 +986,7 @@ if v:version > 703
         endif
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-    " neocomplcache
+        " neocomplcache
     elseif g:completable == 6
         let g:neocomplcache_enable_insert_char_pre = 1
         let g:neocomplcache_enable_at_startup = 1
@@ -1190,18 +1190,18 @@ if v:version > 703
         let g:quickrun_config={"_":{"outputter":"message"}}
         let g:quickfix_is_open = 0
         function! ToggleQuickfix()
-          if g:quickfix_is_open
-            cclose
-            let g:quickfix_is_open = 0
-            execute g:quickfix_return_to_window . "wincmd w"
-          else
-            let g:quickfix_return_to_window = winnr()
-            copen
-            let g:quickfix_is_open = 1
-          endif
+            if g:quickfix_is_open
+                cclose
+                let g:quickfix_is_open = 0
+                execute g:quickfix_return_to_window . "wincmd w"
+            else
+                let g:quickfix_return_to_window = winnr()
+                copen
+                let g:quickfix_is_open = 1
+            endif
         endfunction
         command! ToggleQuickfix
-              \ call ToggleQuickfix()
+                    \ call ToggleQuickfix()
         nnoremap <silent><F4> :ToggleQuickfix<cr>
         inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
