@@ -208,7 +208,7 @@ if version > 703
                     echoe "deoplete need nvim or vim8 with python3 and timers support!"
                 endif
             elseif count(g:spf13_plug_groups, 'completor')
-                if g:python_version == 3 && !has('nvim')
+                if g:python_version >0 && !has('nvim')
                    let g:completable = 4
                 else
                     echoe "completor does not support nvim, need vim8 with python2 or python3 support"
@@ -225,7 +225,7 @@ if version > 703
             elseif count(g:spf13_plug_groups, 'smartcomplete')
                 if g:python_version == 3 && has('timers')
                     let g:completable = 3
-                elseif g:python_version == 3 && !has('nvim')
+                elseif g:python_version >0 && !has('nvim')
                     let g:completable = 4
                 elseif has('lua')
                     let g:completable = 5
