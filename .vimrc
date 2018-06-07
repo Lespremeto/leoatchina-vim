@@ -280,8 +280,6 @@ set guioptions-=R
 " 没有菜单和工具条
 set guioptions-=m
 set guioptions-=T
-" 总是显示状态栏
-" set laststatus=2
 " sepcial setting for different type of files
 au BufNewFile,BufRead *.py
             \set shiftwidth=4
@@ -408,6 +406,8 @@ if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
     let g:multi_cursor_prev_key            = '<C-h>'
     let g:multi_cursor_skip_key            = '<C-x>'
     let g:multi_cursor_quit_key            = '<ESC>'
+    highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
+    highlight link multiple_cursors_visual Visual
     function! Multiple_cursors_before()
       if exists(':NeoCompleteLock')==2
         exe 'NeoCompleteLock'
@@ -427,11 +427,13 @@ if (empty($TMUX))
     endif
 endif
 set background=dark
-"set t_Co=256
+" 总是显示状态栏
+set laststatus=2
 if has('gui_running')
     colorscheme hybrid_material
 else
     colorscheme gruvbox
+    set t_Co=256
 endif
 " vim-airline
 if isdirectory(expand($PLUG_PATH."/vim-airline-themes/"))
@@ -738,6 +740,8 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     else
         let g:pymode_python  = 'python'
     endif
+    let g:pymode_syntax = 0
+    let g:pymode_syntax_all = 0
     " disable pymode_rope and pymode_folding for slow problem
     let g:pymode_rope             = 0
     let g:pymode_folding          = 0
@@ -774,13 +778,6 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
         let g:pymode_lint_ignore     = "E128,E2,E3,E501"
         " not Auto open cwindow (quickfix) if any errors have been found
         let g:pymode_lint_cwindow    = 0
-    endif
-    if isdirectory(expand($PLUG_PATH."/python-syntax"))
-        let g:pymode_syntax = 0
-        let g:pymode_syntax_all = 0
-    else
-        let g:pymode_syntax = 1
-        let g:pymode_syntax_all = 1
     endif
 endif
 " Rainbow
