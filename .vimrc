@@ -401,9 +401,9 @@ endif
 if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
     let g:multi_cursor_use_default_mapping=0
     let g:multi_cursor_start_word_key      = '<C-m>'
-    let g:multi_cursor_select_all_word_key = '<leader>A'
+    let g:multi_cursor_select_all_word_key = '<F9>'
     let g:multi_cursor_start_key           = 'g<C-m>'
-    let g:multi_cursor_select_all_key      = 'g<leader>A'
+    let g:multi_cursor_select_all_key      = 'g<F9>'
     let g:multi_cursor_next_key            = '<C-m>'
     let g:multi_cursor_prev_key            = '<C-h>'
     let g:multi_cursor_skip_key            = '<C-x>'
@@ -784,6 +784,7 @@ if g:python_version > 0 && isdirectory(expand($PLUG_PATH."/LeaderF"))
     nmap <leader>ll :Leaderf
     nmap <leader>lf :LeaderfF
     nmap <leader>lb :LeaderfB
+    nmap <leader>lm :LeaderfM
 elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
     let g:ctrlp_working_path_mode = 'ar'
     let g:ctrlp_custom_ignore = {
