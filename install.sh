@@ -113,8 +113,13 @@ program_must_exist "curl"
 mkdir -p "$HOME/.vim/session"
 mkdir -p "$HOME/.cache/tags"
 
-read -p "Do you want to update vimrc and vim-plug (Y for Yes , any other key for No)? " -n 1 -r
-echo
+if [ -f $HOME/.vim-clean ];then
+    read -p "Do you want to update leoathina's vim config  (Y/y for Yes , any other key for No)? " -n 1 -r
+    echo
+else
+    echo "Install leoatchina's vim config"
+fi
+
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     update_setting='1'
