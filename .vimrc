@@ -328,17 +328,13 @@ endif
 " tags
 if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."/vim-gutentags"))
     set tags=./.tags;,.tags
-
     " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
     let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-
     " 所生成的数据文件的名称
     let g:gutentags_ctags_tagfile = '.tags'
-
     " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
     let s:vim_tags = expand("~/.cache/tags")
     let g:gutentags_cache_dir = s:vim_tags
-
     " 配置 ctags 的参数
     let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
     let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
@@ -381,12 +377,12 @@ if isdirectory(expand($PLUG_PATH."/voom/"))
     let g:voom_tab_key = "_"
     nmap <F10> :VoomToggle<CR>
     let g:voom_ft_modes = {
-                \ 'markdown': 'markdown',
-                \ 'pandoc': 'pandoc',
-                \ 'c': 'fmr2',
-                \ 'cpp': 'fmr2',
-                \ 'python':'python',
-                \ 'tex': 'latex'}
+        \ 'markdown': 'markdown',
+        \ 'pandoc': 'pandoc',
+        \ 'c': 'fmr2',
+        \ 'cpp': 'fmr2',
+        \ 'python':'python',
+        \ 'tex': 'latex'}
 endif
 " multiple-cursors
 if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
@@ -1143,7 +1139,7 @@ if v:version > 703
         endfunction
         nnoremap <C-l><C-l> :call ToggleErrors()<cr>
         nnoremap <C-l>n :lnext<cr>
-        nnoremap <C-l>p :lprevious<cr>>
+        nnoremap <C-l>p :lprevious<cr>
     endif
 
     if isdirectory(expand($PLUG_PATH."/asyncrun.vim")) && g:vim_advance == 1
