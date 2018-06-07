@@ -46,7 +46,9 @@ if executable('git')
 endif
 if executable('ctags')
     Plug 'majutsushi/tagbar'
-    Plug 'ludovicchabant/vim-gutentags'
+    if g:vim_advance
+        Plug 'ludovicchabant/vim-gutentags'
+    endif
 endif
 " python support
 if has('python3') && executable('python3')
