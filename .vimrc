@@ -112,6 +112,8 @@ nmap ! :!
 nnoremap ~ Q
 nnoremap Q :q!<CR>
 " remap c-a/e , for home/end
+nnoremap <Leader>, <C-X>
+nnoremap <Leader>. <C-A>
 nmap <C-a> ^
 smap <C-a> ^
 imap <C-a> <Esc>I
@@ -172,15 +174,21 @@ autocmd FileType help  setlocal number
 if isdirectory(expand($PLUG_PATH."/far.vim"))
     nmap <F2> :Far<Space>
 endif
-
-nnoremap <Leader>, <C-X>
-nnoremap <Leader>. <C-A>
+" F3 show clipboard
+nnoremap <F3> :reg<Cr>
+inoremap <F3> <ESC>:reg<Cr>
+vnoremap <F3> <ESC>:reg<Cr>
+snoremap <F3> <ESC>:reg<Cr>
 "F6 toggleFold
-noremap <F6> :set nofoldenable! nofoldenable?<CR>
+nnoremap <F6> :set nofoldenable! nofoldenable?<CR>
 "F7 toggleWrap
-noremap <F7> :set nowrap! nowrap?<CR>
+nnoremap <F7> :set nowrap! nowrap?<CR>
 "F8 toggle hlsearch
-noremap <F8> :set nohlsearch! nohlsearch?<CR>
+nnoremap <F8> :set nohlsearch! nohlsearch?<CR>
+" F9 for brack jump
+nnoremap <F9> %
+vnoremap <F9> %
+inoremap <F9> <ESC>%
 " 定义快捷键保存当前窗口内容
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
@@ -375,7 +383,7 @@ if isdirectory(expand($PLUG_PATH."/voom/"))
     let g:conflict_marker_enable_mappings = 1
     let g:voom_python_versions = [g:python_version]
     let g:voom_tab_key = "_"
-    nmap <F10> :VoomToggle<CR>
+    nmap <leader>vt :VoomToggle<CR>
     let g:voom_ft_modes = {
         \ 'markdown': 'markdown',
         \ 'pandoc': 'pandoc',
@@ -1169,7 +1177,7 @@ if v:version > 703
         endfunction
         nmap <F5> :call RUNIT()<CR>
         nmap <leader><F5> :AsyncStop!<CR>
-        nnoremap <F9> :call asyncrun#quickfix_toggle(6)<cr>
+        nnoremap <F4> :call asyncrun#quickfix_toggle(6)<cr>
         let g:asyncrun_open = 6
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     elseif isdirectory(expand($PLUG_PATH."/vim-quickrun")) && g:vim_advance == 0
@@ -1189,9 +1197,9 @@ if v:version > 703
         endfunction
         command! ToggleQuickfix
               \ call ToggleQuickfix()
-        nnoremap <silent><F9> :ToggleQuickfix<cr>
-        inoremap <silent><F9> <ESC>:ToggleQuickfix<cr>
-        vnoremap <silent><F9> <ESC>:ToggleQuickfix<cr>
+        nnoremap <silent><F4> :ToggleQuickfix<cr>
+        inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
+        vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
     endif
 endif
 " Functions
