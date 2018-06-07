@@ -770,6 +770,7 @@ endif
 " LeaderF && ctrlp
 if g:python_version > 0 && isdirectory(expand($PLUG_PATH."/LeaderF"))
     let g:Lf_ShortcutF = '<C-P>'
+    let g:Lf_PythonVersion = g:python_version
     let g:Lf_ShortcutB = '<leader>B'
     nmap <leader>ll :Leaderf
     nmap <leader>lf :LeaderfF
