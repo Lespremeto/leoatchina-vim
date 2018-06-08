@@ -145,15 +145,16 @@ nnoremap <localleader>[           :bp<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <leader>y  "+y
 nnoremap <leader>y  "+y
-nnoremap <leader>Y  "+yg
 nnoremap <leader>yy "+yy
-" Yank from the cursor to the end of the line, to be consistent with C and D.
+nnoremap <leader>Y  "*y
+vnoremap <leader>Y  "*y
 nnoremap Y y$
+vnoremap Y *y$
 " p and P for paste
-nnoremap <leader>p "p
-nnoremap <leader>P "+P
+nnoremap <leader>p "+p
+nnoremap <leader>P "*P
 vnoremap <leader>p "+p
-vnoremap <leader>P "+P
+vnoremap <leader>P "*P
 " Easier horizontal scrolling
 map zl zL
 map zh zH
