@@ -113,15 +113,17 @@ program_must_exist "curl"
 mkdir -p "$HOME/.vim/session"
 mkdir -p "$HOME/.cache/tags"
 
+
+install_config='0'
 if [ -f $HOME/.vim-clean ];then
     read -p "Do you want to update leoathina's vim config  (Y/y for Yes , any other key for No)? " -n 1 -r
     echo
 else
-    echo "Install leoatchina's vim config"
+    install_config='1'
 fi
 
 update_setting='0'
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY =~ ^[Yy]$ ]] || [[ $install_config -eq '1' ]]
 then
     update_setting='1'
 fi
