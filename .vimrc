@@ -179,10 +179,6 @@ nnoremap <F6> :set nofoldenable! nofoldenable?<CR>
 nnoremap <F7> :set nowrap! nowrap?<CR>
 "F8 toggle hlsearch
 nnoremap <F8> :set nohlsearch! nohlsearch?<CR>
-" F10 for brack jump
-nnoremap <F10> %
-vnoremap <F10> %
-inoremap <F10> <ESC>%
 " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
 if !WINDOWS()
     map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
@@ -399,9 +395,9 @@ endif
 if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
     let g:multi_cursor_use_default_mapping=0
     let g:multi_cursor_start_word_key      = '<C-m>'
-    let g:multi_cursor_select_all_word_key = '<F9>'
+    let g:multi_cursor_select_all_word_key = '<leader><C-m>'
     let g:multi_cursor_start_key           = 'g<C-m>'
-    let g:multi_cursor_select_all_key      = 'g<F9>'
+    let g:multi_cursor_select_all_key      = '<localleader><C-m>'
     let g:multi_cursor_next_key            = '<C-m>'
     let g:multi_cursor_prev_key            = '<C-h>'
     let g:multi_cursor_skip_key            = '<C-x>'
