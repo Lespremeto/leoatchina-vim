@@ -15,6 +15,7 @@ rm $HOME/.vimrc.local
 rm $HOME/.vimrc.plugs
 rm $HOME/.vimrc.md
 rm $HOME/.config/nvim/init.vim
+rm $HOME/.vim-clean
 
 rm -rf $HOME/.vim
 rm -rf $HOME/.gvim
