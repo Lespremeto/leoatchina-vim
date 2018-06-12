@@ -634,10 +634,10 @@ elseif has('terminal')
         nmap <C-k>T :terminal<Cr>
     else
         nmap <C-k>v :vertical terminal<cr>bash<cr>
-        nmap <C-k>s :horizontal terminal<cr>bash<cr>
+        nmap <C-k>s :terminal<cr>bash<cr>
         nmap <C-k>t :tab terminal<Cr>bash<Cr>
         nmap <C-k>V :vertical terminal
-        nmap <C-k>S :horizontal terminal
+        nmap <C-k>S :terminal
         nmap <C-k>T :tab terminal
     endif
 endif
