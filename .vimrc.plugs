@@ -31,6 +31,7 @@ endif
 call plug#begin($PLUG_PATH)
 " General
 Plug 'mhinz/vim-startify'
+Plug 'google/vim-searchindex'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 Plug 'sheerun/vim-polyglot'
