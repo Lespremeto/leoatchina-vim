@@ -426,11 +426,17 @@ endif
 set background=dark
 " 总是显示状态栏
 set laststatus=2
-if has('gui_running')
-    colorscheme hybrid_material
-else
-    colorscheme gruvbox
-    set t_Co=256
+if isdirectory(expand($PLUG_PATH."/vim-colorschemes/"))
+    if has('gui_running')
+        colorscheme hybrid_material
+    else
+        set t_Co=256
+        if has('nvim')
+            colorscheme wombat256
+        else
+            colorscheme gruvbox
+        endif
+    endif
 endif
 " vim-airline
 if isdirectory(expand($PLUG_PATH."/vim-airline-themes/"))
@@ -789,13 +795,15 @@ if isdirectory(expand($PLUG_PATH."/rainbow"))
 endif
 " ctrlp
 if g:ctrlp_version == 4
-    nnoremap <silent> <C-p> :FZF<CR>
-    nnoremap <silent> <Leader>lb :Buffers<CR>
-    nnoremap <silent> <Leader>lf :Filetypes<CR>
-    nnoremap <silent> <Leader>lg :GFiles?<CR>
-    nnoremap <silent> <Leader>lm :Maps<CR>
-    nnoremap <silent> <Leader>lc :Commits<CR>
-    nnoremap <silent> <Leader>lh :History/<CR>
+    nnoremap <silent>   <C-p>      :FZF<CR>
+    nnoremap <silent>   <Leader>lb :Buffers<CR>
+    nnoremap <Leader>lf :FZF<Space>
+    nnoremap <silent>   <Leader>lt :Filetypes<CR>
+    nnoremap <silent>   <Leader>lg :GFiles?<CR>
+    nnoremap <silent>   <Leader>lm :Maps<CR>
+    nnoremap <silent>   <Leader>lc :Commits<CR>
+    nnoremap <silent>   <Leader>lC :Colors<CR>
+    nnoremap <silent>   <Leader>lh :History/<CR>
     let g:fzf_colors =
     \ { 'fg':      ['fg', 'Normal'],
       \ 'bg':      ['bg', 'Normal'],
