@@ -470,19 +470,18 @@ elseif has('statusline')
         return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
     endfunction
     set statusline=%<%1*[%n:%{Buf_total_num()}]%*
-    set statusline+=%3*\ %F\ %*
-    set statusline+=%4*『\ %{exists('g:loaded_ale')?ALEGetStatusLine():''}』%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
-    set statusline+=%5*\ %m%r%y\ %*
-    set statusline+=%=%6*\ %{&ff}\ \|\%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(%l:%L:%c%V%)%*
-    set statusline+=%7*\ %P\ %*
-    "set statusline+=%=%25([%{&ff}/%Y]\ %p%%\ \ %l/%L:\ %c%)\ %<
+    set statusline+=%2*\ %F\ %*
+    set statusline+=%3*『\ %{exists('g:loaded_ale')?ALEGetStatusLine():''}』%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
+    set statusline+=%4*\ %m%r%y\ %*
+    set statusline+=%=%5*\ %{&ff}\\|\%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(%l:%L\ %c%V%)%*
+    set statusline+=%6*\ %P\ %<
     " default bg for statusline is 236 in space-vim-dark
     hi User1 cterm=bold ctermfg=232 ctermbg=179
-    hi User3 cterm=None ctermfg=251 ctermbg=240
-    hi User4 cterm=bold ctermfg=169 ctermbg=239
-    hi User5 cterm=None ctermfg=208 ctermbg=238
-    hi User6 cterm=None ctermfg=246 ctermbg=237
-    hi User7 cterm=None ctermfg=250 ctermbg=238
+    hi User2 cterm=None ctermfg=251 ctermbg=240
+    hi User3 cterm=bold ctermfg=255 ctermbg=100
+    hi User4 cterm=None ctermfg=208 ctermbg=238
+    hi User5 cterm=None ctermfg=246 ctermbg=237
+    hi User6 cterm=None ctermfg=250 ctermbg=238
 endif
 
 " NerdTree
@@ -788,7 +787,7 @@ endif
 if isdirectory(expand($PLUG_PATH."/rainbow"))
     let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 endif
-" LeaderF && ctrlp
+" ctrlp
 if g:ctrlp_version == 4
     nnoremap <silent> <C-p> :FZF<CR>
     nnoremap <silent> <Leader>lb :Buffers<CR>
@@ -817,13 +816,14 @@ if g:ctrlp_version == 4
       copen
       cc
     endfunction
-
     let g:fzf_action = {
       \ 'ctrl-q': function('s:build_quickfix_list'),
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit' }
 elseif g:ctrlp_version == 3
+    nnoremap <C-p> :Denite file/rec buffer<Cr>
+    nnoremap <leader>lf :Denite
 elseif g:ctrlp_version == 2
     let g:Lf_ShortcutF = '<C-P>'
     let g:Lf_PythonVersion = g:python_version

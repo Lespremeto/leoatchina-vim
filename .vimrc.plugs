@@ -178,9 +178,11 @@ if version > 703
     " enhanced browser tools
     let g:ctrlp_version = 1
     if count(g:spf13_plug_groups, 'fzf')
-        let g:ctrlp_version = 4
+        if !WINDOWS()
+            let g:ctrlp_version = 4
+        endif
     elseif count(g:spf13_plug_groups, 'denite')
-        if g:python_version == 3
+        if g:python_version == 3 && g:vim_advance
             let g:ctrlp_version = 3
         endif
     elseif count(g:spf13_plug_groups, 'leaderF')
