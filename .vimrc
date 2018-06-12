@@ -782,13 +782,48 @@ if isdirectory(expand($PLUG_PATH."/rainbow"))
     let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 endif
 " LeaderF && ctrlp
-if g:python_version > 0 && isdirectory(expand($PLUG_PATH."/LeaderF"))
+if g:ctrlp_version == 4
+    nnoremap <silent> <C-p> :FZF<CR>
+    nnoremap <silent> <Leader>lb :Buffers<CR>
+    nnoremap <silent> <Leader>lf :Filetypes<CR>
+    nnoremap <silent> <Leader>lg :GFiles?<CR>
+    nnoremap <silent> <Leader>lm :Maps<CR>
+    nnoremap <silent> <Leader>lc :Commits<CR>
+    nnoremap <silent> <Leader>lh :History/<CR>
+    let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
+    let g:fzf_layout = { 'down': '~40%' }
+    function! s:build_quickfix_list(lines)
+      call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+      copen
+      cc
+    endfunction
+
+    let g:fzf_action = {
+      \ 'ctrl-q': function('s:build_quickfix_list'),
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit' }
+elseif g:ctrlp_version == 3
+elseif g:ctrlp_version == 2
     let g:Lf_ShortcutF = '<C-P>'
     let g:Lf_PythonVersion = g:python_version
     let g:Lf_ShortcutB = '<leader>B'
-    nmap <leader>ll :Leaderf
-    nmap <leader>lf :LeaderfF
-    nmap <leader>lb :LeaderfB
+    nmap <leader>lf :Leaderf
+    nmap <leader>lff :LeaderfF
+    nmap <leader>lfb :LeaderfB
     nmap <leader>lm :LeaderfM
 elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
     let g:ctrlp_working_path_mode = 'ar'
@@ -821,9 +856,9 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
         " CtrlP extensions
         let g:ctrlp_extensions = ['funky']
         " funky
-        nnoremap <Leader>fu :CtrlPFunky<Cr>
+        nnoremap <Leader>lf :CtrlPFunky<Cr>
     endif
-    nnoremap <leader>mu :CtrlPMRU<CR>
+    nnoremap <leader>lm :CtrlPMRU<CR>
 endif
 
 " UndoTree

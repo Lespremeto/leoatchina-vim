@@ -90,7 +90,10 @@ endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
 else
-    if v:version > 704
+    if !WINDOWS()
+        Plug 'damage220/vim-finder'
+        nmap <C-f>s :finder<Tab>
+    elseif v:version > 704
         Plug 'wsdjeg/FlyGrep.vim'
         nmap <C-f>s :FlyGrep<Cr>
     else
@@ -151,17 +154,6 @@ if count(g:spf13_plug_groups, 'html')
     Plug 'tpope/vim-haml'
     Plug 'mattn/emmet-vim'
 endif
-" leaderF and ctrlP
-if g:python_version > 0 && (version > 704 || has('nvim')) && executable('gcc')
-    if WINDOWS()
-        Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-    else
-        Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-    endif
-else
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'tacahiroy/ctrlp-funky'
-endif
 " complete
 if version > 703
     let g:completable = 0
@@ -183,6 +175,35 @@ if version > 703
         endif
         Plug 'thinca/vim-quickrun'
     endif
+    " enhanced browser tools
+    let g:ctrlp_version = 1
+    if count(g:spf13_plug_groups, 'fzf')
+        let g:ctrlp_version = 4
+    elseif count(g:spf13_plug_groups, 'denite')
+        if g:python_version == 3
+            let g:ctrlp_version = 3
+        endif
+    elseif count(g:spf13_plug_groups, 'leaderF')
+        if g:python_version > 0 && executable('gcc')
+            let g:ctrlp_version = 2
+        endif
+    endif
+    if g:ctrlp_version == 4
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        Plug 'junegunn/fzf.vim'
+    elseif g:ctrlp_version == 3
+        Plug 'shougo/denite.nvim'
+    elseif g:ctrlp_version == 2
+        if WINDOWS()
+            Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+        else
+            Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+        endif
+    else
+        Plug 'ctrlpvim/ctrlp.vim'
+        Plug 'tacahiroy/ctrlp-funky'
+    endif
+
     " YCM for the first
     if count(g:spf13_plug_groups, 'youcompleteme')
         if executable('cmake')
