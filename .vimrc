@@ -613,7 +613,7 @@ if isdirectory(expand($PLUG_PATH."/vimshell.vim")) && count(g:spf13_plug_groups,
     let g:vimshell_prompt_expr    = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
     let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
     let g:vimshell_force_overwrite_statusline = 1
-elseif has('terminal')
+elseif has('terminal') || has('nvim')
     tnoremap <C-[> <C-\><C-n>
     tnoremap <ESC> <C-\><C-n>
     tnoremap <C-w>h <C-\><C-N><C-w>h
