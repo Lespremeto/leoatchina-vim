@@ -38,8 +38,12 @@ else
     set term=win32
     set guifont=YaHei\ Consolas\ Hybrid:h11
 endif
-" Use before config
-if filereadable(expand("~/.vimrc.local"))
+" Use local config
+if filereadable(expand("~/.nvimrc.local")) && has('nvim')
+    source ~/.nvimrc.local
+elseif filereadable(expand("~/.gvimrc.local")) && has('gui_running')
+    source ~/.gvimrc.local
+elseif filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 " Use plugs config
