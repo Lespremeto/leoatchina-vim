@@ -90,12 +90,14 @@ endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
 else
-    if !WINDOWS()
-        Plug 'damage220/vim-finder'
-        nmap <C-f>s :finder<Tab>
-    elseif v:version > 704
-        Plug 'wsdjeg/FlyGrep.vim'
-        nmap <C-f>s :FlyGrep<Cr>
+    if v:version > 704
+        if !WINDOWS()
+            Plug 'damage220/vim-finder'
+            nmap <C-f>s :finder<Tab>
+        else
+            Plug 'wsdjeg/FlyGrep.vim'
+            nmap <C-f>s :FlyGrep<Cr>
+        endif
     else
         nnoremap <C-f>s :vimgrep<Space>
     endif
