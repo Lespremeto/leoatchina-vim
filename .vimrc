@@ -92,17 +92,15 @@ cmap w!! w !sudo tee % >/dev/null
 " Some helpers to edit mode
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-
 " some internal key remap
 map gt <Nop>
 map gT <Nop>
-
 xmap  <C-s> <Nop>
 xmap  <C-t> <Nop>
 xmap  <C-q> <Nop>
 xmap  <C-z> <Nop>
 nmap ! :!
-nnoremap  <C-m> %
+nnoremap <localleader><localleader> %
 " Q
 nnoremap ~ Q
 nnoremap Q :q!<CR>
@@ -117,6 +115,11 @@ smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 
 " C-f/b in insert mode
+nmap <C-f> <Nop>
+vmap <C-f> <Nop>
+nmap <C-b> <Nop>
+vmap <C-b> <Nop>
+
 imap <C-f> <Right>
 imap <C-b> <Left>
 " Find merge conflict markers
@@ -164,11 +167,14 @@ map zh zH
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
+" f1 for help
+autocmd FileType help  setlocal number
 nmap <F1> :tab help<Space>
 vmap <F1> <ESC>:tab help<Space>
 imap <F1> <ESC>
 cmap <F1> <ESC>
-autocmd FileType help  setlocal number
+" F2 toggle hlsearch
+nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
 " F3 show clipboard
 nnoremap <F3> :reg<Cr>
 inoremap <F3> <ESC>:reg<Cr>
@@ -178,8 +184,6 @@ snoremap <F3> <ESC>:reg<Cr>
 nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>fw :set nowrap! nowrap?<CR>
-"F8 toggle hlsearch
-nnoremap <F6> :set nohlsearch! nohlsearch?<CR>
 " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
 if !WINDOWS()
     map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
@@ -202,7 +206,7 @@ nmap <Leader>q :q!
 nmap <Leader>Q :qa!
 " 设置分割页面
 nmap <leader>\ :vsplit<Space>
-nmap <Leader><leader>\ :split<Space>
+nmap <leader><leader>\ :split<Space>
 nmap <leader>= <C-W>=
 "设置垂直高度减增
 nmap <Leader><Down>  :resize -3<CR>
@@ -335,7 +339,7 @@ if !exists('g:spf13_no_views')
 endif
 " far
 if isdirectory(expand($PLUG_PATH."/far.vim"))
-    nmap <F2> :Far<Space>
+    nmap <F6> :Far<Space>
 endif
 " tags
 if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."/vim-gutentags"))
@@ -717,7 +721,7 @@ endif
 " easy-align
 if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
     nmap <localleader><Cr> <Plug>(EasyAlign)
-    vmap <localleader><Cr> <Plug>(EasyAlign)
+    vmap <Cr> <Plug>(EasyAlign)
     if !exists('g:easy_align_delimiters')
         let g:easy_align_delimiters = {}
     endif
@@ -840,9 +844,9 @@ if g:ctrlp_version == 4
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
     if has('nvim')
-        let g:fzf_layout = { 'down': '~40%' }
+        let g:fzf_layout = { 'window': '10split enew' }
     else
-        let g:fzf_layout = { 'window': 'enew' }
+        let g:fzf_layout = { 'down': '~40%' }
     endif
     function! s:build_quickfix_list(lines)
       call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
