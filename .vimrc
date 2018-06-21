@@ -15,15 +15,23 @@ set fileencodings=utf-8,gbk,gb18030,gk2312,chinese,latin-1
 set background=dark     " Assume a dark background
 set mouse=a             " Automatically enable mouse usage
 set mousehide           " Hide the mouse cursor while typing
+set noimdisable
+set timeout
+set timeoutlen=500 ttimeoutlen=50
+" 不同文件类型加载不同插件
+filetype plugin indent on   " Automatically detect file types.
+filetype on                 " 开启文件类型侦测
+filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
+syntax on
 " Identify platform
 silent function! OSX()
-return has('macunix')
+    return has('macunix')
 endfunction
 silent function! LINUX()
-return has('unix') && !has('macunix') && !has('win32unix')
+    return has('unix') && !has('macunix') && !has('win32unix')
 endfunction
 silent function! WINDOWS()
-return  (has('win32') || has('win64'))
+    return  (has('win32') || has('win64'))
 endfunction
 " Basics
 if !WINDOWS()
@@ -34,9 +42,25 @@ if !WINDOWS()
         endif
     endif
 else
-    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
     set term=win32
     set guifont=YaHei\ Consolas\ Hybrid:h11
+endif
+" GUI Settings
+if has('gui_running')
+    set lines=40                " 40 lines of text instead of 24
+endif
+" Clipboard
+if has('clipboard')
+    if has('unnamedplus')  " When possible use + register for copy-paste
+        set clipboard=unnamed,unnamedplus
+    else         " On mac and Windows, use * register for copy-paste
+        set clipboard=unnamed
+    endif
+endif
+" Arrow Key Fix
+" https://github.com/spf13/spf13-vim/issues/780
+if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
+    inoremap <silent> <C-[>OC <RIGHT>
 endif
 " Use local config
 if filereadable(expand("~/.nvimrc.local")) && has('nvim')
@@ -50,27 +74,6 @@ endif
 if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
 endif
-set noimdisable
-" set timeout
-set timeout
-set timeoutlen=500 ttimeoutlen=50
-" GUI Settings
-if has('gui_running')
-    set lines=40                " 40 lines of text instead of 24
-endif
-" Arrow Key Fix
-" https://github.com/spf13/spf13-vim/issues/780
-if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
-    inoremap <silent> <C-[>OC <RIGHT>
-endif
-" Clipboard
-if has('clipboard')
-    if has('unnamedplus')  " When possible use + register for copy-paste
-        set clipboard=unnamed,unnamedplus
-    else         " On mac and Windows, use * register for copy-paste
-        set clipboard=unnamed
-    endif
-endif
 " Key (re)Mappings
 if !exists('g:spf13_leader')
     let mapleader=' '
@@ -82,11 +85,6 @@ if !exists('g:spf13_localleader')
 else
     let maplocalleader=g:spf13_localleader
 endif
-" 不同文件类型加载不同插件
-filetype plugin indent on   " Automatically detect file types.
-filetype on                 " 开启文件类型侦测
-filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
-syntax on
 " Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
@@ -104,6 +102,7 @@ xmap  <C-t> <Nop>
 xmap  <C-q> <Nop>
 xmap  <C-z> <Nop>
 nmap ! :!
+nnoremap  <C-m> %
 " Q
 nnoremap ~ Q
 nnoremap Q :q!<CR>
@@ -170,20 +169,17 @@ vmap <F1> <ESC>:tab help<Space>
 imap <F1> <ESC>
 cmap <F1> <ESC>
 autocmd FileType help  setlocal number
-if isdirectory(expand($PLUG_PATH."/far.vim"))
-    nmap <F2> :Far<Space>
-endif
 " F3 show clipboard
 nnoremap <F3> :reg<Cr>
 inoremap <F3> <ESC>:reg<Cr>
 vnoremap <F3> <ESC>:reg<Cr>
 snoremap <F3> <ESC>:reg<Cr>
-"F6 toggleFold
-nnoremap <F6> :set nofoldenable! nofoldenable?<CR>
-"F7 toggleWrap
-nnoremap <F7> :set nowrap! nowrap?<CR>
+" toggleFold
+nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
+" toggleWrap
+nnoremap <leader>fD :set nowrap! nowrap?<CR>
 "F8 toggle hlsearch
-nnoremap <F8> :set nohlsearch! nohlsearch?<CR>
+nnoremap <F6> :set nohlsearch! nohlsearch?<CR>
 " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
 if !WINDOWS()
     map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
@@ -337,6 +333,10 @@ if !exists('g:spf13_no_views')
                 \ '\[example pattern\]'
                 \ ]
 endif
+" far
+if isdirectory(expand($PLUG_PATH."/far.vim"))
+    nmap <F2> :Far<Space>
+endif
 " tags
 if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."/vim-gutentags"))
     set tags=./.tags;,.tags
@@ -399,13 +399,13 @@ endif
 " multiple-cursors
 if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
     let g:multi_cursor_use_default_mapping=0
-    let g:multi_cursor_start_word_key      = '<C-m>'
-    let g:multi_cursor_select_all_word_key = '<leader><C-m>'
-    let g:multi_cursor_start_key           = 'g<C-m>'
-    let g:multi_cursor_select_all_key      = '<localleader><C-m>'
-    let g:multi_cursor_next_key            = '<C-m>'
-    let g:multi_cursor_prev_key            = '<C-h>'
-    let g:multi_cursor_skip_key            = '<C-x>'
+    let g:multi_cursor_start_word_key      = '<C-n>'
+    let g:multi_cursor_select_all_word_key = '<leader><C-n>'
+    let g:multi_cursor_start_key           = 'g<C-n>'
+    let g:multi_cursor_select_all_key      = '<localleader><C-n>'
+    let g:multi_cursor_next_key            = '<C-n>'
+    let g:multi_cursor_prev_key            = '<C-p>'
+    let g:multi_cursor_skip_key            = '<C-c>'
     let g:multi_cursor_quit_key            = '<ESC>'
     highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
     highlight link multiple_cursors_visual Visual
@@ -799,7 +799,7 @@ if isdirectory(expand($PLUG_PATH."/rainbow"))
 endif
 " ctrlp
 if g:ctrlp_version == 4
-    nnoremap <silent>   <C-p>      :FZF<CR>
+    nnoremap <silent>   <F10>      :FZF<CR>
     nnoremap <silent>   <Leader>lb :Buffers<CR>
     nnoremap <Leader>lf :FZF<Space>
     nnoremap <silent>   <Leader>lt :Filetypes<CR>
@@ -834,7 +834,7 @@ if g:ctrlp_version == 4
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit' }
 elseif g:ctrlp_version == 3
-    nnoremap <C-p> :Denite file/rec buffer<Cr>
+    nnoremap <F10> :Denite file/rec buffer<Cr>
     nnoremap <leader>lf :Denite
     nnoremap <leader>lb :DeniteBufferDir
     nnoremap <leader>lw :DeniteCursorWord
@@ -848,15 +848,12 @@ elseif g:ctrlp_version == 3
     	\ 'auto-accel': 1,
     	\ 'auto-resume': 1,
     	\ })
-
     call denite#custom#option('list', {})
-
     call denite#custom#option('mpc', {
     	\ 'quit': 0,
     	\ 'mode': 'normal',
     	\ 'winheight': 20,
     	\ })
-
     " MATCHERS
     " Default is 'matcher_fuzzy'
     call denite#custom#source('tag', 'matchers', ['matcher_substring'])
@@ -936,7 +933,7 @@ elseif g:ctrlp_version == 3
     endfor
 
 elseif g:ctrlp_version == 2
-    let g:Lf_ShortcutF = '<C-P>'
+    let g:Lf_ShortcutF = '<F10>'
     let g:Lf_PythonVersion = g:python_version
     let g:Lf_ShortcutB = '<leader>B'
     nmap <leader>lf :Leaderf
@@ -944,6 +941,8 @@ elseif g:ctrlp_version == 2
     nmap <leader>lb :LeaderfB
     nmap <leader>lm :LeaderfM
 elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
+    let g:ctrlp_map = '<F10>'
+    let g:ctrlp_cmd = 'CtrlP'
     let g:ctrlp_working_path_mode = 'ar'
     let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
@@ -1342,6 +1341,8 @@ if v:version > 703
         nmap <F5> :call RUNIT()<CR>
         nmap <leader><F5> :AsyncStop!<CR>
         nnoremap <F4> :call asyncrun#quickfix_toggle(6)<cr>
+        vnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
+        nnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
         let g:asyncrun_open = 6
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     elseif isdirectory(expand($PLUG_PATH."/vim-quickrun")) && g:vim_advance == 0
