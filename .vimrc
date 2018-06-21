@@ -800,8 +800,8 @@ endif
 if isdirectory(expand($PLUG_PATH."/rainbow"))
     let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 endif
-" ctrlp
-if g:ctrlp_version == 4
+" browser seris
+if g:ctrlp_version == 4 && isdirectory(expand($PLUG_PATH."/fzf.vim"))
     nnoremap <silent>   <F10>      :FZF<CR>
     nnoremap <silent>   <Leader>lb :Buffers<CR>
     nnoremap <Leader>lf :FZF<Space>
@@ -857,7 +857,7 @@ if g:ctrlp_version == 4
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit' }
-elseif g:ctrlp_version == 3
+elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     nnoremap <F10> :Denite file/rec buffer<Cr>
     nnoremap <leader>lf :Denite
     nnoremap <leader>lb :DeniteBufferDir
@@ -886,11 +886,9 @@ elseif g:ctrlp_version == 3
     		\ 'buffer,file_mru,file_old,file_rec,grep,mpc,line',
     		\ 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
     endif
-
     " SORTERS
     " Default is 'sorter_rank'
     call denite#custom#source('z', 'sorters', ['sorter_z'])
-
     " CONVERTERS
     " Default is none
     call denite#custom#source(
@@ -956,7 +954,7 @@ elseif g:ctrlp_version == 3
     	call denite#custom#map('normal', m[0], m[1], m[2])
     endfor
 
-elseif g:ctrlp_version == 2
+elseif g:ctrlp_version == 2 && isdirectory(expand($PLUG_PATH."/LeaderF"))
     let g:Lf_ShortcutF = '<F10>'
     let g:Lf_PythonVersion = g:python_version
     let g:Lf_ShortcutB = '<leader>B'
