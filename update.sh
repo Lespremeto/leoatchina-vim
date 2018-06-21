@@ -17,6 +17,3 @@ fi
 if program_exists "gvim"; then
   gvim +PlugClean +PlugInstall +PlugUpdate +qall
 fi
-if program_exists "mvim"; then
-  gvim +PlugClean +PlugInstall +PlugUpdate +qall
-fi
