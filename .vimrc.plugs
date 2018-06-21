@@ -85,16 +85,16 @@ if count(g:spf13_plug_groups, 'bio')
     Plug 'bioSyntax/bioSyntax-vim'
 endif
 " external search method
+if g:vim_advance == 2
+    Plug 'wsdjeg/FlyGrep.vim'
+    nmap <C-f>f :FlyGrep<Cr>
+endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
 else
-    if g:vim_advance == 2
-        Plug 'wsdjeg/FlyGrep.vim'
-        nmap <C-f>f :FlyGrep<Cr>
-        if !WINDOWS() && executable('ctags')
-            Plug 'damage220/vim-finder'
-            nmap <C-f>s :finder<Tab>
-        endif
+    if g:vim_advance == 2 && !WINDOWS() && executable('ctags')
+        Plug 'damage220/vim-finder'
+        nmap <C-f>s :finder<Tab>
     else
         nnoremap <C-f>s :vimgrep<Space>
     endif
