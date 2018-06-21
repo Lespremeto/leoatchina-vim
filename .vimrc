@@ -93,12 +93,12 @@ cmap w!! w !sudo tee % >/dev/null
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 " some internal key remap
-map gt <Nop>
-map gT <Nop>
-xmap  <C-s> <Nop>
-xmap  <C-t> <Nop>
-xmap  <C-q> <Nop>
-xmap  <C-z> <Nop>
+map  gt <Nop>
+map  gT <Nop>
+xmap <C-s> <Nop>
+xmap <C-t> <Nop>
+xmap <C-q> <Nop>
+xmap <C-z> <Nop>
 nmap ! :!
 nnoremap <localleader><localleader> %
 " Q
@@ -132,18 +132,18 @@ nnoremap <C-y> <C-b>
 " tab control
 set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
-nnoremap <silent>-             :tabprevious<CR>
-nnoremap <silent><Tab>         :tabnext<CR>
-nnoremap <Leader>tp            :tabprevious<CR>
-nnoremap <Leader>tn            :tabnext<CR>
-nnoremap <leader>-             :tabm -1<CR>
-nnoremap <leader><Tab>         :tabm +1<CR>
-nnoremap <leader><leader>-     :tabfirst<CR>
-nnoremap <leader><leader><Tab> :tablast<CR>
-nnoremap <Leader>te            :tabe<Space>
-nnoremap <Leader>ts            :tab split<CR>
-nnoremap <Leader>tS            :tabs<CR>
-nnoremap <Leader>tm            :tabm<Space>
+nnoremap <silent>-          :tabprevious<CR>
+nnoremap <silent><Tab>      :tabnext<CR>
+nnoremap <Leader>tp         :tabprevious<CR>
+nnoremap <Leader>tn         :tabnext<CR>
+nnoremap <leader>-          :tabm -1<CR>
+nnoremap <leader><Tab>      :tabm +1<CR>
+nnoremap <localleader>-     :tabfirst<CR>
+nnoremap <localleader><Tab> :tablast<CR>
+nnoremap <Leader>te         :tabe<Space>
+nnoremap <Leader>ts         :tab  split<CR>
+nnoremap <Leader>tw         :tabs<CR>
+nnoremap <Leader>tm         :tabm<Space>
 " buffer switch
 nnoremap <localleader><Backspace> :buffers<CR>
 nnoremap <localleader>]           :bn<CR>
@@ -615,7 +615,7 @@ if isdirectory(expand($PLUG_PATH."/ywvim"))
 endif
 
 " Shell
-if isdirectory(expand($PLUG_PATH."/vimshell.vim")) && count(g:spf13_plug_groups, 'shell')
+if isdirectory(expand($PLUG_PATH."/vimshell.vim"))
     nmap <C-k>v :vsplit<cr>:VimShell<cr>
     nmap <C-k>s :split<cr>:VimShell<cr>
     nmap <C-k>V :VimShell<Space>
@@ -646,17 +646,17 @@ elseif has('terminal') || has('nvim')
     if has('nvim')
         tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
         nmap <C-k>v :vsplit term://bash<Cr>
-        nmap <C-k>h :split  term://bash<Cr>
+        nmap <C-k>s :split  term://bash<Cr>
         nmap <C-k>t :terminal<Cr>bash<Cr>
         nmap <C-k>V :vsplit term://
-        nmap <C-k>H :split  term://
+        nmap <C-k>S :split  term://
         nmap <C-k>T :terminal<Cr>
     else
         nmap <C-k>v :vertical terminal<cr>bash<cr>
-        nmap <C-k>h :terminal<cr>bash<cr>
+        nmap <C-k>s :terminal<cr>bash<cr>
         nmap <C-k>t :tab terminal<Cr>bash<Cr>
         nmap <C-k>V :vertical terminal
-        nmap <C-k>H :terminal
+        nmap <C-k>S :terminal
         nmap <C-k>T :tab terminal
     endif
 endif
