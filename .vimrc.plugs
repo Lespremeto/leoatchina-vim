@@ -88,12 +88,13 @@ endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
 else
-    if g:vim_advance == 2 && !WINDOWS() && executable('ctags')
-        Plug 'damage220/vim-finder'
-        nmap <C-f>s :finder<Tab>
-    elseif g:vim_advance
+    if g:vim_advance == 2
         Plug 'wsdjeg/FlyGrep.vim'
-        nmap <C-f>s :FlyGrep<Cr>
+        nmap <C-f>f :FlyGrep<Cr>
+        if !WINDOWS() && executable('ctags')
+            Plug 'damage220/vim-finder'
+            nmap <C-f>s :finder<Tab>
+        endif
     else
         nnoremap <C-f>s :vimgrep<Space>
     endif
