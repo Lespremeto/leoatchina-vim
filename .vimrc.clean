@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 rm -rf ~/.vimswap
 rm -rf ~/.vimviews
 mkdir -p ~/.vimswap

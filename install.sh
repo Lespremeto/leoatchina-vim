@@ -77,11 +77,11 @@ lnif() {
 create_symlinks() {
     local source_path="$1"
     local target_path="$2"
-    lnif "$source_path/.vimrc"              "$target_path/.vimrc"
-    lnif "$source_path/.vimrc.plugs"        "$target_path/.vimrc.plugs"
-    lnif "$source_path/.vim-clean"          "$target_path/.vimrc.clean"
-    lnif "$source_path/update.sh"           "$target_path/.vimrc.update"
-    lnif "$source_path/README.markdown"     "$target_path/.vimrc.md"
+    lnif "$source_path/.vimrc"          "$target_path/.vimrc"
+    lnif "$source_path/.vimrc.plugs"    "$target_path/.vimrc.plugs"
+    lnif "$source_path/.vimrc.clean"    "$target_path/.vimrc.clean"
+    lnif "$source_path/update.sh"       "$target_path/.vimrc.update"
+    lnif "$source_path/README.markdown" "$target_path/.vimrc.md"
     if program_exists "nvim"; then
         mkdir -p "$target_path/.config/nvim"
         lnif "$source_path/.vimrc"          "$target_path/.config/nvim/init.vim"
