@@ -617,16 +617,16 @@ endif
 " Shell
 if isdirectory(expand($PLUG_PATH."/vimshell.vim"))
     nmap <C-k>v :vsplit<cr>:VimShell<cr>
-    nmap <C-k>s :split<cr>:VimShell<cr>
+    nmap <C-k>h :split<cr>:VimShell<cr>
     nmap <C-k>V :VimShell<Space>
-    nmap <C-k>S :VimShellSendBuffer<Space>
     nmap <C-k>c :VimShellClose<Cr>
     nmap <C-k>t :VimShellTab<Space>
+    nmap <C-k>T :VimShellInteractive<Space>
     nmap <C-k>p :VimShellPop<Space>
     nmap <C-k>d :VimShellCurrentDir<Space>
     nmap <C-k>b :VimShellBufferDir<Space>
+    nmap <C-k>B :VimShellSendBuffer<Space>
     nmap <C-k>e :VimShellExecute<Space>
-    nmap <C-k>i :VimShellInteractive<Space>
     nmap <C-k>n :VimShellCreate<Space>
     vmap <C-k>  :VimShellSendString<cr>
     let g:vimshell_prompt_expr    = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
@@ -646,17 +646,17 @@ elseif has('terminal') || has('nvim')
     if has('nvim')
         tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
         nmap <C-k>v :vsplit term://bash<Cr>
-        nmap <C-k>s :split  term://bash<Cr>
+        nmap <C-k>h :split  term://bash<Cr>
         nmap <C-k>t :terminal<Cr>bash<Cr>
         nmap <C-k>V :vsplit term://
-        nmap <C-k>S :split  term://
+        nmap <C-k>H :split  term://
         nmap <C-k>T :terminal<Cr>
     else
         nmap <C-k>v :vertical terminal<cr>bash<cr>
-        nmap <C-k>s :terminal<cr>bash<cr>
+        nmap <C-k>h :terminal<cr>bash<cr>
         nmap <C-k>t :tab terminal<Cr>bash<Cr>
         nmap <C-k>V :vertical terminal
-        nmap <C-k>S :terminal
+        nmap <C-k>H :terminal
         nmap <C-k>T :tab terminal
     endif
 endif
