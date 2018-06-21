@@ -110,7 +110,7 @@ Plug 'mhinz/vim-signify'
 Plug 'tamlok/vim-markdown'
 Plug 'junegunn/vim-easy-align'
 " airline
-if count(g:spf13_plug_groups, 'airline')
+if count(g:spf13_plug_groups, 'airline') || has('gui_running')
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 endif

@@ -196,6 +196,7 @@ else
 endif
 set pastetoggle=<F12>      " pastetoggle (sane indentation on pastes)
 " 定义快捷键保存当前窗口内容
+nnoremap <leader>0 :source ~/.vimrc<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
 " 定义快捷键保存所有窗口内容并退出 vim
@@ -485,8 +486,8 @@ elseif has('statusline')
     set statusline=%<%1*[%n:%{Buf_total_num()}]%*
     set statusline+=%2*\ %F\ %*
     set statusline+=%3*『\ %{exists('g:loaded_ale')?ALEGetStatusLine():''}』%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
-    set statusline+=%4*\ %m%r%y\ %*
-    set statusline+=%=%5*\ %{&ff}\\|\%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(%l:%L\ %c%V%)%*
+    set statusline+=%4*\ \ %m%r%y\ %*
+    set statusline+=%=%5*\ %{&ff}\ \|\ \%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-16.(%c\ %l:%L%)%*
     set statusline+=%6*\ %P\ %<
     " default bg for statusline is 236 in space-vim-dark
     hi User1 cterm=bold ctermfg=232 ctermbg=179
