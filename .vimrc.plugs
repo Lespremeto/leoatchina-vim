@@ -8,16 +8,7 @@
 "        |___/ .__/|_| |_|____/        \_/  |_|_| |_| |_|
 "            |_|
 " You can find spf13's origin config  at http://spf13.com
-" Identify platform
-silent function! OSX()
-    return has('macunix')
-endfunction
-silent function! LINUX()
-    return has('unix') && !has('macunix') && !has('win32unix')
-endfunction
-silent function! WINDOWS()
-    return  (has('win32') || has('win64'))
-endfunction
+"
 " plug install path
 if has('nvim')
     let $PLUG_PATH = '~/.nvim/plug'
@@ -28,8 +19,28 @@ else
         let $PLUG_PATH = '~/.vim/plug'
     endif
 endif
+
+" enhanced browser tools
+let g:ctrlp_version = 1
+let g:completable = 0
+let g:use_ultisnips = 0
+" python support
+let g:python_version = 0
+if has('python3') && executable('python3')
+    let g:python_version = 3
+elseif has('python') && executable('python')
+    let g:python_version = 2
+endif
+" vim_advance judge
+let g:vim_advance = 0
+if has('nvim') || v:version > 799
+    let g:vim_advance = 2
+elseif v:version > 703
+    let g:vim_advance = 1
+endif
+
+" plugins
 call plug#begin($PLUG_PATH)
-" General
 Plug 'mhinz/vim-startify'
 Plug 'google/vim-searchindex'
 Plug 'scrooloose/nerdcommenter'
@@ -42,6 +53,9 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'flazz/vim-colorschemes'
+if g:python_version > 0
+    Plug 'vim-voom/VOoM'
+endif
 if executable('git')
     Plug 'tpope/vim-fugitive'
     Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -49,27 +63,11 @@ endif
 if executable('ctags')
     Plug 'majutsushi/tagbar'
 endif
-" python support
-if has('python3') && executable('python3')
-    let g:python_version = 3
-elseif has('python') && executable('python')
-    let g:python_version = 2
-else
-    let g:python_version = 0
-endif
-if g:python_version > 0
-    Plug 'vim-voom/VOoM'
-endif
 " In your .vimrc.local file
 " list only the plugin groups you will use
 if !exists('g:spf13_plug_groups')
     let g:spf13_plug_groups=['smartcomplete', 'php', 'javascript', 'html','airline']
 endif
-" remap c-f/b to nop in normal/visual mode, use as alternative of leadkey
-nmap <C-f> <Nop>
-vmap <C-f> <Nop>
-nmap <C-b> <Nop>
-vmap <C-b> <Nop>
 " input method
 if count(g:spf13_plug_groups, 'pinyin') || count(g:spf13_plug_groups, 'wubi')
     Plug 'leoatchina/ywvim'
@@ -90,14 +88,12 @@ endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
 else
-    if v:version > 704
-        if !WINDOWS()
-            Plug 'damage220/vim-finder'
-            nmap <C-f>s :finder<Tab>
-        else
-            Plug 'wsdjeg/FlyGrep.vim'
-            nmap <C-f>s :FlyGrep<Cr>
-        endif
+    if g:vim_advance == 2 && !WINDOWS() && executable('ctags')
+        Plug 'damage220/vim-finder'
+        nmap <C-f>s :finder<Tab>
+    elseif g:vim_advance
+        Plug 'wsdjeg/FlyGrep.vim'
+        nmap <C-f>s :FlyGrep<Cr>
     else
         nnoremap <C-f>s :vimgrep<Space>
     endif
@@ -156,12 +152,40 @@ if count(g:spf13_plug_groups, 'html')
     Plug 'tpope/vim-haml'
     Plug 'mattn/emmet-vim'
 endif
+" browser tools
+if count(g:spf13_plug_groups, 'fzf')
+    if !WINDOWS()
+        let g:ctrlp_version = 4
+    endif
+elseif count(g:spf13_plug_groups, 'denite')
+    if g:python_version == 3 && g:vim_advance == 2
+        let g:ctrlp_version = 3
+    endif
+elseif count(g:spf13_plug_groups, 'leaderF')
+    if g:python_version && executable('gcc') && g:vim_advance
+        let g:ctrlp_version = 2
+    endif
+endif
+
+if g:ctrlp_version == 4
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
+elseif g:ctrlp_version == 3
+    Plug 'shougo/denite.nvim'
+elseif g:ctrlp_version == 2
+    if WINDOWS()
+        Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+    else
+        Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+    endif
+else
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'tacahiroy/ctrlp-funky'
+endif
 " complete
-if version > 703
-    let g:completable = 0
+if g:vim_advance
     " vim version
-    if has('nvim') || version>799
-        let g:vim_advance = 1
+    if g:vim_advance == 2
         if count(g:spf13_plug_groups, 'syntax')
             Plug 'w0rp/ale'
         endif
@@ -170,45 +194,13 @@ if version > 703
             Plug 'ludovicchabant/vim-gutentags'
         endif
     else
-        let g:vim_advance = 0
         " install run and syntax tools
         if count(g:spf13_plug_groups, 'syntax')
             Plug 'vim-syntastic/syntastic'
         endif
         Plug 'thinca/vim-quickrun'
     endif
-    " enhanced browser tools
-    let g:ctrlp_version = 1
-    if count(g:spf13_plug_groups, 'fzf')
-        if !WINDOWS()
-            let g:ctrlp_version = 4
-        endif
-    elseif count(g:spf13_plug_groups, 'denite')
-        if g:python_version == 3 && g:vim_advance
-            let g:ctrlp_version = 3
-        endif
-    elseif count(g:spf13_plug_groups, 'leaderF')
-        if g:python_version > 0 && executable('gcc')
-            let g:ctrlp_version = 2
-        endif
-    endif
-    if g:ctrlp_version == 4
-        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-        Plug 'junegunn/fzf.vim'
-    elseif g:ctrlp_version == 3
-        Plug 'shougo/denite.nvim'
-    elseif g:ctrlp_version == 2
-        if WINDOWS()
-            Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-        else
-            Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-        endif
-    else
-        Plug 'ctrlpvim/ctrlp.vim'
-        Plug 'tacahiroy/ctrlp-funky'
-    endif
-
-    " YCM for the first
+    " YCM or asyncomplete
     if count(g:spf13_plug_groups, 'youcompleteme')
         if executable('cmake')
             let g:completable = 1
@@ -216,23 +208,23 @@ if version > 703
             echoe "Inorder to use YCM , you should intall `cmake` first"
         endif
     elseif count(g:spf13_plug_groups, 'asyncomplete')
-        if has('timers') && g:vim_advance
+        if has('timers') && g:vim_advance == 2
             let g:completable = 2
         else
             echoe "asyncomplete need vim8/neovim with timers support!"
         endif
     endif
-
+    " smartcomplete
     if g:completable == 0
-        if g:vim_advance
+        if g:vim_advance == 2
             if count(g:spf13_plug_groups, 'deoplete')
                 if g:python_version == 3 && has('timers')
                     let g:completable = 3
                 else
-                    echoe "deoplete need nvim or vim8 with python3 and timers support!"
+                    echoe "deoplete need neovim/vim8 with python3 and timers support!"
                 endif
             elseif count(g:spf13_plug_groups, 'completor')
-                if g:python_version >0 && !has('nvim')
+                if g:python_version && !has('nvim')
                    let g:completable = 4
                 else
                     echoe "completor does not support nvim, need vim8 with python2 or python3 support"
@@ -249,7 +241,7 @@ if version > 703
             elseif count(g:spf13_plug_groups, 'smartcomplete')
                 if g:python_version == 3 && has('timers')
                     let g:completable = 3
-                elseif g:python_version >0 && !has('nvim')
+                elseif g:python_version && !has('nvim')
                     let g:completable = 4
                 elseif has('lua')
                     let g:completable = 5

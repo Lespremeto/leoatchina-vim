@@ -177,7 +177,7 @@ snoremap <F3> <ESC>:reg<Cr>
 " toggleFold
 nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
-nnoremap <leader>fD :set nowrap! nowrap?<CR>
+nnoremap <leader>fw :set nowrap! nowrap?<CR>
 "F8 toggle hlsearch
 nnoremap <F6> :set nohlsearch! nohlsearch?<CR>
 " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
@@ -808,6 +808,23 @@ if g:ctrlp_version == 4
     nnoremap <silent>   <Leader>lc :Commits<CR>
     nnoremap <silent>   <Leader>lC :Colors<CR>
     nnoremap <silent>   <Leader>lh :History/<CR>
+    " Mapping selecting mappings
+    nmap <leader><tab> <plug>(fzf-maps-n)
+    xmap <leader><tab> <plug>(fzf-maps-x)
+    omap <leader><tab> <plug>(fzf-maps-o)
+    " insert map
+    imap <c-x><c-k> <plug>(fzf-complete-word)
+    imap <c-x><c-f> <plug>(fzf-complete-path)
+    imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+    imap <c-x><c-l> <plug>(fzf-complete-line)
+    " [Buffers] Jump to the existing window if possible
+    let g:fzf_buffers_jump = 1
+    " [[B]Commits] Customize the options used by 'git log':
+    let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+    " [Tags] Command to generate tags file
+    let g:fzf_tags_command = 'ctags -R'
+    " [Commands] --expect expression for directly executing the command
+    let g:fzf_commands_expect = 'alt-enter,ctrl-x'
     let g:fzf_colors =
     \ { 'fg':      ['fg', 'Normal'],
       \ 'bg':      ['bg', 'Normal'],
@@ -822,7 +839,11 @@ if g:ctrlp_version == 4
       \ 'marker':  ['fg', 'Keyword'],
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
-    let g:fzf_layout = { 'down': '~40%' }
+    if has('nvim')
+        let g:fzf_layout = { 'down': '~40%' }
+    else
+        let g:fzf_layout = { 'window': 'enew' }
+    endif
     function! s:build_quickfix_list(lines)
       call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
       copen
