@@ -92,7 +92,7 @@ endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
 else
-    if g:vim_advance == 2 && !WINDOWS() && executable('ctags')
+    if v:version >799 && !WINDOWS() && executable('ctags')
         Plug 'damage220/vim-finder'
         nmap <C-f>s :finder<Tab>
     else
