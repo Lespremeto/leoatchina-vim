@@ -110,14 +110,15 @@ Plug 'mhinz/vim-signify'
 Plug 'tamlok/vim-markdown'
 Plug 'junegunn/vim-easy-align'
 " airline
-if count(g:spf13_plug_groups, 'airline') || has('gui_running')
+if count(g:spf13_plug_groups, 'airline')
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-endif
-" lightline
-if count(g:spf13_plug_groups, 'lightline') && has('statusline')
+elseif count(g:spf13_plug_groups, 'lightline') && has('statusline')
     Plug 'itchyny/lightline.vim'
     Plug 'leoatchina/lightline-powerful'
+    if g:vim_advance == 2
+        Plug 'maximbaz/lightline-ale'
+    endif
 endif
 " shell
 if count(g:spf13_plug_groups, 'shell') && !WINDOWS()

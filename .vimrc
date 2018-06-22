@@ -108,9 +108,11 @@ nnoremap Q :q!<CR>
 nnoremap <Leader>, <C-X>
 nnoremap <Leader>. <C-A>
 nmap <C-a> ^
+vmap <C-a> ^
 smap <C-a> ^
 imap <C-a> <Esc>I
 nmap <C-e> $
+vmap <C-e> $
 smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 
@@ -196,7 +198,7 @@ else
 endif
 set pastetoggle=<F12>      " pastetoggle (sane indentation on pastes)
 " 定义快捷键保存当前窗口内容
-nnoremap <leader>0 :source ~/.vimrc<CR>
+nnoremap <leader><F12> :source ~/.vimrc<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
 " 定义快捷键保存所有窗口内容并退出 vim
@@ -480,6 +482,7 @@ if isdirectory(expand($PLUG_PATH."/vim-airline-themes/"))
     let g:airline_left_alt_sep = '❯'
     let g:airline_right_sep = '◀'
     let g:airline_right_alt_sep = '❮'
+" lightline use leoatchina/lightline.powerful
 elseif isdirectory(expand($PLUG_PATH."/lightline/"))
     set noshowmode
 elseif has('statusline')
