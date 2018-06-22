@@ -480,7 +480,7 @@ if isdirectory(expand($PLUG_PATH."/vim-airline-themes/"))
     let g:airline_left_alt_sep = '❯'
     let g:airline_right_sep = '◀'
     let g:airline_right_alt_sep = '❮'
-if isdirectory(expand($PLUG_PATH."/lightline/"))
+elseif isdirectory(expand($PLUG_PATH."/lightline/"))
     set noshowmode
 elseif has('statusline')
     function! Buf_total_num()

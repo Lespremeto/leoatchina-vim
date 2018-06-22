@@ -117,7 +117,7 @@ endif
 " lightline
 if count(g:spf13_plug_groups, 'lightline') && has('statusline')
     Plug 'itchyny/lightline.vim'
-    Plug 'itchyny/lightline-powerful'
+    Plug 'leoatchina/lightline-powerful'
 endif
 " shell
 if count(g:spf13_plug_groups, 'shell') && !WINDOWS()

@@ -124,7 +124,7 @@ else
 fi
 
 update_setting='0'
-if [ $REPLY =~ ^[Yy]$ ] || [ $install_config -eq '1' ]
+if [[ $REPLY =~ ^[Yy]$ ]] || [[ $install_config -eq '1' ]]
 then
     update_setting='1'
 fi
