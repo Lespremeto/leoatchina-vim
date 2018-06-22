@@ -432,17 +432,20 @@ if (empty($TMUX))
     if (has("nvim"))
         let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
     endif
+    if (has("termguicolors"))
+        set termguicolors
+    endif
 endif
 set background=dark
 " 总是显示状态栏
 set laststatus=2
-if isdirectory(expand($PLUG_PATH."/vim-colorschemes/"))
+if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
     if has('gui_running')
         colorscheme hybrid_material
     else
         set t_Co=256
         if has('nvim')
-            colorscheme wombat256
+            colorscheme onedark
         else
             colorscheme gruvbox
         endif
@@ -816,7 +819,7 @@ if g:ctrlp_version == 4 && isdirectory(expand($PLUG_PATH."/fzf.vim"))
     nnoremap <silent>   <Leader>lg :GFiles?<CR>
     nnoremap <silent>   <Leader>lm :Maps<CR>
     nnoremap <silent>   <Leader>lc :Commits<CR>
-    nnoremap <silent>   <Leader>lC :Colors<CR>
+    nnoremap <silent>   <Leader>lk :Colors<CR>
     nnoremap <silent>   <Leader>lh :History/<CR>
     " Mapping selecting mappings
     nmap <leader><tab> <plug>(fzf-maps-n)
