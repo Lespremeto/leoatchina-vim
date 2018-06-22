@@ -431,9 +431,7 @@ endif
 if (empty($TMUX))
     if (has("nvim"))
         let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-        if (has("termguicolors"))
-            set termguicolors
-        endif
+        set termguicolors
     endif
 endif
 set background=dark
