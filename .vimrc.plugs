@@ -114,6 +114,11 @@ if count(g:spf13_plug_groups, 'airline') || has('gui_running')
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 endif
+" lightline
+if count(g:spf13_plug_groups, 'lightline') && has('statusline')
+    Plug 'itchyny/lightline.vim'
+    Plug 'itchyny/lightline-powerful'
+endif
 " shell
 if count(g:spf13_plug_groups, 'shell') && !WINDOWS()
     Plug 'shougo/vimproc.vim', {'do':'make'}

@@ -116,7 +116,7 @@ mkdir -p "$HOME/.cache/tags"
 
 
 install_config='0'
-if [ -f $HOME/.vim-clean ];then
+if [ -f $HOME/.vimrc.clean ];then
     read -p "Do you want to update leoathina's vim config  (Y/y for Yes , any other key for No)? " -n 1 -r
     echo
 else
@@ -124,7 +124,7 @@ else
 fi
 
 update_setting='0'
-if [[ $REPLY =~ ^[Yy]$ ]] || [[ $install_config -eq '1' ]]
+if [ $REPLY =~ ^[Yy]$ ] || [ $install_config -eq '1' ]
 then
     update_setting='1'
 fi

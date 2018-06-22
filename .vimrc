@@ -448,6 +448,7 @@ if isdirectory(expand($PLUG_PATH."/vim-colorschemes/"))
 endif
 " vim-airline
 if isdirectory(expand($PLUG_PATH."/vim-airline-themes/"))
+    set noshowmode
     let g:airline_theme = 'bubblegum'
     let g:airline_powerline_fonts = 0
     let g:airline_symbols_ascii = 1
@@ -479,6 +480,8 @@ if isdirectory(expand($PLUG_PATH."/vim-airline-themes/"))
     let g:airline_left_alt_sep = '❯'
     let g:airline_right_sep = '◀'
     let g:airline_right_alt_sep = '❮'
+if isdirectory(expand($PLUG_PATH."/lightline/"))
+    set noshowmode
 elseif has('statusline')
     function! Buf_total_num()
         return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
