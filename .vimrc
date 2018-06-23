@@ -433,9 +433,9 @@ set laststatus=2
 if empty($TMUX)
     if has("nvim")
         let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-    endif
-    if has("termguicolors")
-        set termguicolors
+        if has("termguicolors")
+            set termguicolors
+        endif
     endif
 endif
 if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
