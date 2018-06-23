@@ -420,23 +420,22 @@ if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
         exe 'NeoCompleteLock'
       endif
     endfunction
-
     function! Multiple_cursors_after()
       if exists(':NeoCompleteUnlock')==2
         exe 'NeoCompleteUnlock'
       endif
     endfunction
 endif
-" theme
+" dark theme
+set background=dark
+" 总是显示状态栏
+set laststatus=2
 if (empty($TMUX))
     if (has("nvim"))
         let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
         set termguicolors
     endif
 endif
-set background=dark
-" 总是显示状态栏
-set laststatus=2
 if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
     if has('gui_running')
         colorscheme hybrid_material
@@ -504,7 +503,6 @@ elseif has('statusline')
     hi User5 cterm=None ctermfg=246 ctermbg=237
     hi User6 cterm=None ctermfg=250 ctermbg=238
 endif
-
 " NerdTree
 if isdirectory(expand($PLUG_PATH."/nerdtree"))
     nmap <leader>nn :NERDTreeTabsToggle<CR>
@@ -533,16 +531,16 @@ if isdirectory(expand($PLUG_PATH."/nerdtree"))
     " nerdtree-git
     if isdirectory(expand($PLUG_PATH."/nerdtree-git-plugin"))
         let g:NERDTreeIndicatorMapCustom = {
-                    \ "Modified"  : "*",
-                    \ "Staged"    : "+",
-                    \ "Untracked" : "★",
-                    \ "Renamed"   : "→ ",
-                    \ "Unmerged"  : "=",
-                    \ "Deleted"   : "X",
-                    \ "Dirty"     : "●",
-                    \ "Clean"     : "√",
-                    \ "Unknown"   : "?"
-                    \ }
+            \ "Modified"  : "*",
+            \ "Staged"    : "+",
+            \ "Untracked" : "★",
+            \ "Renamed"   : "→ ",
+            \ "Unmerged"  : "=",
+            \ "Deleted"   : "X",
+            \ "Dirty"     : "●",
+            \ "Clean"     : "√",
+            \ "Unknown"   : "?"
+            \ }
     endif
 endif
 
@@ -672,32 +670,32 @@ endif
 " startify
 if isdirectory(expand($PLUG_PATH."/vim-startify"))
     let g:startify_custom_header = [
-                \ '+----------------------------------------------------------+',
-                \ '|  Welcome to use leoatchina vim config forked from spf13  |',
-                \ '|                                                          |',
-                \ '|  https://github.com/leoatchina/leoatchina-vim            |',
-                \ '|                                                          |',
-                \ '|  https://github.com/spf13/spf13-vim                      |',
-                \ '+----------------------------------------------------------+',
-                \ ]
+        \ '+----------------------------------------------------------+',
+        \ '|  Welcome to use leoatchina vim config forked from spf13  |',
+        \ '|                                                          |',
+        \ '|  https://github.com/leoatchina/leoatchina-vim            |',
+        \ '|                                                          |',
+        \ '|  https://github.com/spf13/spf13-vim                      |',
+        \ '+----------------------------------------------------------+',
+        \ ]
     let g:startify_session_dir = '~/.vim/session'
     let g:startify_files_number = 5
     let g:startify_session_number = 5
     let g:startify_list_order = [
-                \ ['   最近项目:'],
-                \ 'sessions',
-                \ ['   最近文件:'],
-                \ 'files',
-                \ ['   快捷命令:'],
-                \ 'commands',
-                \ ['   常用书签:'],
-                \ 'bookmarks',
-                \ ]
+        \ ['   最近项目:'],
+        \ 'sessions',
+        \ ['   最近文件:'],
+        \ 'files',
+        \ ['   快捷命令:'],
+        \ 'commands',
+        \ ['   常用书签:'],
+        \ 'bookmarks',
+        \ ]
     let g:startify_commands = [
-                \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
-                \ {'h': ['帮助', 'help howto']},
-                \ {'v': ['版本', 'version']}
-                \ ]
+        \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
+        \ {'h': ['帮助', 'help howto']},
+        \ {'v': ['版本', 'version']}
+        \ ]
 endif
 " PIV
 if isdirectory(expand($PLUG_PATH."/PIV"))
@@ -837,34 +835,34 @@ if g:ctrlp_version == 4 && isdirectory(expand($PLUG_PATH."/fzf.vim"))
     " [Commands] --expect expression for directly executing the command
     let g:fzf_commands_expect = 'alt-enter,ctrl-x'
     let g:fzf_colors =
-    \ { 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
+        \ { 'fg':      ['fg', 'Normal'],
+          \ 'bg':      ['bg', 'Normal'],
+          \ 'hl':      ['fg', 'Comment'],
+          \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+          \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+          \ 'hl+':     ['fg', 'Statement'],
+          \ 'info':    ['fg', 'PreProc'],
+          \ 'border':  ['fg', 'Ignore'],
+          \ 'prompt':  ['fg', 'Conditional'],
+          \ 'pointer': ['fg', 'Exception'],
+          \ 'marker':  ['fg', 'Keyword'],
+          \ 'spinner': ['fg', 'Label'],
+          \ 'header':  ['fg', 'Comment'] }
     if has('nvim')
         let g:fzf_layout = { 'window': '10split enew' }
     else
         let g:fzf_layout = { 'down': '~40%' }
     endif
     function! s:build_quickfix_list(lines)
-      call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-      copen
-      cc
+        call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+        copen
+        cc
     endfunction
     let g:fzf_action = {
-      \ 'ctrl-q': function('s:build_quickfix_list'),
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-x': 'split',
-      \ 'ctrl-v': 'vsplit' }
+        \ 'ctrl-q': function('s:build_quickfix_list'),
+        \ 'ctrl-t': 'tab split',
+        \ 'ctrl-x': 'split',
+        \ 'ctrl-v': 'vsplit' }
 elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     nnoremap <F10> :Denite file/rec buffer<Cr>
     nnoremap <leader>lf :Denite
@@ -931,7 +929,6 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     			\ ['--ackrc', $HOME.'/.config/ackrc', '-H',
     			\ '--nopager', '--nocolor', '--nogroup', '--column'])
     endif
-
     " KEY MAPPINGS
     let insert_mode_mappings = [
     	\  ['<C-c>', '<denite:enter_mode:normal>', 'noremap'],
@@ -975,8 +972,8 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
     let g:ctrlp_cmd = 'CtrlP'
     let g:ctrlp_working_path_mode = 'ar'
     let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+        \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+        \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
     if executable('ag')
         let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
     elseif executable('ack-grep')
@@ -993,12 +990,12 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
         unlet g:ctrlp_user_command
     endif
     let g:ctrlp_user_command = {
-                \ 'types': {
-                \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-                \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-                \ },
-                \ 'fallback': s:ctrlp_fallback
-                \ }
+        \ 'types': {
+        \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+        \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+        \ },
+        \ 'fallback': s:ctrlp_fallback
+        \ }
     if isdirectory(expand($PLUG_PATH."/ctrlp-funky/"))
         " CtrlP extensions
         let g:ctrlp_extensions = ['funky']
@@ -1016,7 +1013,7 @@ if isdirectory(expand($PLUG_PATH."/undotree/"))
 endif
 
 " language support
-if v:version > 703
+if g:vim_advance
     " Youcompleteme
     if g:completable == 1
         au InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后关闭预览窗口
@@ -1134,12 +1131,12 @@ if v:version > 703
         if g:use_ultisnips
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-        " completor
+    " completor
     elseif g:completable == 4
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
         set completeopt=menuone,noinsert,noselect
-        " neocomplete
+    " neocomplete
     elseif g:completable == 5
         let g:acp_enableAtStartup = 1
         let g:neocomplete#enable_at_startup = 1
@@ -1174,7 +1171,7 @@ if v:version > 703
         endif
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-        " neocomplcache
+    " neocomplcache
     elseif g:completable == 6
         let g:neocomplcache_enable_insert_char_pre = 1
         let g:neocomplcache_enable_at_startup = 1
@@ -1215,7 +1212,7 @@ if v:version > 703
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
         endif
-
+        " ultisnip
         if g:use_ultisnips
             " remap Ultisnips for compatibility
             let g:UltiSnipsListSnippets="<C-l>"
@@ -1289,7 +1286,7 @@ if v:version > 703
             let g:go_snippet_engine = "neosnippet"
         endif
     endif
-    if isdirectory(expand($PLUG_PATH."/ale")) && g:vim_advance == 1
+    if isdirectory(expand($PLUG_PATH."/ale")) && g:vim_advance == 2
         let g:ale_completion_enabled   = 1
         let g:ale_lint_on_enter        = 0
         let g:ale_lint_on_text_changed = 'always'
@@ -1318,7 +1315,7 @@ if v:version > 703
         let b:ale_warn_about_trailing_whiteSpace = 0
         let g:ale_fixers ={}
         nmap <leader>gt :ALEGoToDefinition<CR>
-    elseif isdirectory(expand($PLUG_PATH."/syntastic")) && g:vim_advance ==0
+    elseif isdirectory(expand($PLUG_PATH."/syntastic"))
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'
         let g:syntastic_check_on_open            = 0
@@ -1343,7 +1340,7 @@ if v:version > 703
         nnoremap <C-l>p :lprevious<cr>
     endif
 
-    if isdirectory(expand($PLUG_PATH."/asyncrun.vim")) && g:vim_advance == 1
+    if isdirectory(expand($PLUG_PATH."/asyncrun.vim")) && g:vim_advance == 2
         nmap <Leader>rr :AsyncRun
         function! RUNIT()
             exec "w"
@@ -1375,7 +1372,7 @@ if v:version > 703
         nnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
         let g:asyncrun_open = 6
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-    elseif isdirectory(expand($PLUG_PATH."/vim-quickrun")) && g:vim_advance == 0
+    elseif isdirectory(expand($PLUG_PATH."/vim-quickrun"))
         nnoremap <F5> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let g:quickfix_is_open = 0

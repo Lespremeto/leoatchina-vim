@@ -132,7 +132,7 @@ endif
 " Python
 if count(g:spf13_plug_groups, 'python') && g:python_version > 0
     " when use pymode , shoud pip/pip3 install pylama
-    Plug 'python-mode/python-mode'
+    Plug 'python-mode/python-mode',{ 'branch': 'develop' }
 endif
 " Perl
 if count(g:spf13_plug_groups, 'perl')
