@@ -42,8 +42,11 @@ if !WINDOWS()
         endif
     endif
 else
-    set term=win32
-    set guifont=YaHei\ Consolas\ Hybrid:h11
+    if !has('nvim')
+        set term=win32
+        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+        set guifont=YaHei\ Consolas\ Hybrid:h11
+    endif
 endif
 " GUI Settings
 if has('gui_running')

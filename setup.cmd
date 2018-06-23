@@ -39,22 +39,12 @@ IF NOT EXIST "%HOME%\.nvim" (
     call mkdir -p "%HOME%\.nvim"
 )
 
-IF NOT EXIST "%HOME%\.config" (
-    call mkdir "%HOME%\.config"
-)
 
-IF EXIST "%HOME%\AppData\Local" (
-    IF NOT EXIST "%HOME%\AppData\Local\nvim" (
-        call mkdir -p "%HOME%\AppData\Local\nvim"
-    )
-    IF NOT EXIST "%HOME%\AppData\Local\nvim\init.vim" (
-        call mklink "%HOME%\AppData\Local\nvim\init.vim"  "%APP_PATH%\.vimrc"                 
-    )
-) ELSE (
-    IF NOT EXIST "%HOME%\.config\nvim\init.vim" (
-        call mklink "%HOME%\.config\nvim\init.vim"   "%APP_PATH%\.vimrc"   
-    )
+IF NOT EXIST "%HOME%\AppData\Local\nvim" (
+    call mkdir -p "%HOME%\AppData\Local\nvim"
 )
+call del "%HOME%\AppData\Local\nvim\init.vim"
+call mklink "%HOME%\AppData\Local\nvim\init.vim"  "%APP_PATH%\.vimrc"                 
 
 IF NOT EXIST "%HOME%\.vim\autoload" (
     call git clone https://github.com/junegunn/vim-plug.git "%HOME%\.vim\autoload"
@@ -63,5 +53,10 @@ IF NOT EXIST "%HOME%\.vim\autoload" (
     call git pull
 )
 
-call vim  +BundleInstall! +BundleClean +qall
-call gvim  +BundleInstall! +BundleClean +qall
+IF NOT EXIST "%HOME%\AppData\Local\nvim\autoload" (
+    call git clone https://github.com/junegunn/vim-plug.git "%HOME%\AppData\Local\nvim\autoload"
+) ELSE (
+    call cd "%HOME%\AppData\Local\nvim\autoload"
+    call git pull
+)
+call gvim +PlugClean +PlugInstall +qall 
