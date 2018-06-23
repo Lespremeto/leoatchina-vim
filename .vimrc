@@ -430,9 +430,11 @@ endif
 set background=dark
 " 总是显示状态栏
 set laststatus=2
-if (empty($TMUX))
-    if (has("nvim"))
+if empty($TMUX)
+    if has("nvim")
         let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+    endif
+    if has("termguicolors")
         set termguicolors
     endif
 endif
