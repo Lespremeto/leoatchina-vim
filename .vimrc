@@ -430,24 +430,20 @@ endif
 set background=dark
 " 总是显示状态栏
 set laststatus=2
-if empty($TMUX)
-    if has("nvim")
-        let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
+    if has('nvim')
+        set t_Co=256
         if has("termguicolors")
             set termguicolors
+            colorscheme onedark
+        else
+            colorscheme wombat256mod
         endif
-    endif
-endif
-if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
-    if has('gui_running')
+    elseif has('gui_running')
         colorscheme hybrid_material
     else
         set t_Co=256
-        if has('nvim')
-            colorscheme onedark
-        else
-            colorscheme gruvbox
-        endif
+        colorscheme gruvbox
     endif
 endif
 " vim-airline
