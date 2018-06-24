@@ -41,7 +41,6 @@ if WINDOWS()
         let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
         map <F11> <Esc>:FullscreenToggle<cr>
     else
-        set term=win32
         set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
         au GUIEnter * simalt ~x
         " 切换全屏, need gvim_fullscreen.dll in gvim dir
@@ -446,6 +445,12 @@ if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections/"))
         set t_Co=256
         colorscheme gruvbox
     endif
+endif
+" bufferline
+if isdirectory(expand($PLUG_PATH."/vim-bufferline/"))
+    let g:bufferline_show_bufnr = 0
+    let g:bufferline_rotate = 1
+    let g:bufferline_fixed_index = 0
 endif
 " statusline
 if count(g:spf13_plug_groups, 'airline')
