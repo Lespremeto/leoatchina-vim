@@ -440,7 +440,7 @@ if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
             colorscheme onedark
         else
             set t_Co=256
-            colorscheme wombat256mod
+            colorscheme deus
         endif
     elseif has('gui_running')
         colorscheme hybrid_material
@@ -450,7 +450,7 @@ if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
     endif
     if count(g:spf13_plug_groups, 'airline')
         set noshowmode
-        let g:airline_theme = 'onedark'
+        let g:airline_theme = 'one'
         let g:airline_powerline_fonts = 0
         let g:airline_symbols_ascii = 1
         let g:airline_exclude_preview = 0
@@ -469,24 +469,24 @@ if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
         let g:airline_section_c = "\ %F"
         if !exists('g:airline_symbols')
             let g:airline_symbols = {}
+            let g:airline_symbols.crypt = '🔒'
+            let g:airline_symbols.linenr = '☰'
+            let g:airline_symbols.maxlinenr = ''
+            let g:airline_symbols.branch = '⎇'
+            let g:airline_symbols.paste = 'ρ'
+            let g:airline_symbols.notexists = '∄'
+            let g:airline_symbols.whiteSpace = 'Ξ'
+            let g:airline_left_sep = '▶'
+            let g:airline_left_alt_sep = '❯'
+            let g:airline_right_sep = '◀'
+            let g:airline_right_alt_sep = '❮'
         endif
-        let g:airline_symbols.crypt = '🔒'
-        let g:airline_symbols.linenr = '☰'
-        let g:airline_symbols.maxlinenr = ''
-        let g:airline_symbols.branch = '⎇'
-        let g:airline_symbols.paste = 'ρ'
-        let g:airline_symbols.notexists = '∄'
-        let g:airline_symbols.whiteSpace = 'Ξ'
-        let g:airline_left_sep = '▶'
-        let g:airline_left_alt_sep = '❯'
-        let g:airline_right_sep = '◀'
-        let g:airline_right_alt_sep = '❮'
     " lightline use leoatchina/lightline.powerful
     elseif has('statusline')
         if count(g:spf13_plug_groups, 'lightline')
             set noshowmode
             let g:lightline = {
-              \ 'colorscheme': 'onedark',
+              \ 'colorscheme': 'one',
               \ }
         else
             function! Buf_total_num()
