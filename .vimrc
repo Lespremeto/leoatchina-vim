@@ -435,11 +435,11 @@ set background=dark
 set laststatus=2
 if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
     if has('nvim')
-        set t_Co=256
         if has("gui_running")
-            colorscheme wombat256mod
-        else
             colorscheme onedark
+        else
+            set t_Co=256
+            colorscheme wombat256mod
         endif
     elseif has('gui_running')
         colorscheme hybrid_material
