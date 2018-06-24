@@ -192,7 +192,7 @@ nnoremap <leader>fw :set nowrap! nowrap?<CR>
 " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
 if !WINDOWS()
     map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
-else
+elseif !has('nvim')
     au GUIEnter * simalt ~x
     " 按 F11 切换全屏
     noremap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
