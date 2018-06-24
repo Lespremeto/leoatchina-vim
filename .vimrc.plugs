@@ -63,6 +63,9 @@ endif
 if executable('ctags')
     Plug 'majutsushi/tagbar'
 endif
+if WINDOWS() && has('nvim')
+    Plug 'lambdalisue/vim-fullscreen'
+endif
 " In your .vimrc.local file
 " list only the plugin groups you will use
 if !exists('g:spf13_plug_groups')
