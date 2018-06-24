@@ -52,7 +52,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'rafi/awesome-vim-colorschemes'
+Plug 'leoatchina/vim-colorschemes-collections'
 if g:python_version > 0
     Plug 'vim-voom/VOoM'
 endif

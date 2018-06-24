@@ -433,7 +433,7 @@ endif
 set background=dark
 " 总是显示状态栏
 set laststatus=2
-if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
+if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections/"))
     if has('nvim')
         let $NVIM_TUI_ENABLE_TRUE_COLOR=1
         if has("gui_running")
@@ -448,63 +448,64 @@ if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
         set t_Co=256
         colorscheme gruvbox
     endif
-    if count(g:spf13_plug_groups, 'airline')
+endif
+" statusline
+if count(g:spf13_plug_groups, 'airline')
+    set noshowmode
+    let g:airline_powerline_fonts = 0
+    let g:airline_symbols_ascii = 1
+    let g:airline_exclude_preview = 0
+    let g:airline_highlighting_cache = 1
+    let g:airline#extensions#whiteSpace#enabled = 0
+    " tab序号
+    let g:airline#extensions#tabline#tab_nr_type = 1
+    let g:airline#extensions#tabline#enabled = 1
+    " disable buffers on topright
+    let g:airline#extensions#tabline#tabs_label = ''
+    let g:airline#extensions#tabline#show_splits = 0
+    let g:airline#extensions#tabline#show_close_button = 0
+    let g:airline#extensions#tabline#buffer_nr_show = 0
+    let g:airline#extensions#bufferline#enabled = 1
+    " shw full_path of the file,and the time
+    let g:airline_section_c = "\ %F"
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+        let g:airline_symbols.crypt = '🔒'
+        let g:airline_symbols.linenr = '☰'
+        let g:airline_symbols.maxlinenr = ''
+        let g:airline_symbols.branch = '⎇'
+        let g:airline_symbols.paste = 'ρ'
+        let g:airline_symbols.notexists = '∄'
+        let g:airline_symbols.whiteSpace = 'Ξ'
+        let g:airline_left_sep = '▶'
+        let g:airline_left_alt_sep = '❯'
+        let g:airline_right_sep = '◀'
+        let g:airline_right_alt_sep = '❮'
+    endif
+" lightline use leoatchina/lightline.powerful
+elseif has('statusline')
+    if count(g:spf13_plug_groups, 'lightline')
         set noshowmode
-        let g:airline_powerline_fonts = 0
-        let g:airline_symbols_ascii = 1
-        let g:airline_exclude_preview = 0
-        let g:airline_highlighting_cache = 1
-        let g:airline#extensions#whiteSpace#enabled = 0
-        " tab序号
-        let g:airline#extensions#tabline#tab_nr_type = 1
-        let g:airline#extensions#tabline#enabled = 1
-        " disable buffers on topright
-        let g:airline#extensions#tabline#tabs_label = ''
-        let g:airline#extensions#tabline#show_splits = 0
-        let g:airline#extensions#tabline#show_close_button = 0
-        let g:airline#extensions#tabline#buffer_nr_show = 0
-        let g:airline#extensions#bufferline#enabled = 1
-        " shw full_path of the file,and the time
-        let g:airline_section_c = "\ %F"
-        if !exists('g:airline_symbols')
-            let g:airline_symbols = {}
-            let g:airline_symbols.crypt = '🔒'
-            let g:airline_symbols.linenr = '☰'
-            let g:airline_symbols.maxlinenr = ''
-            let g:airline_symbols.branch = '⎇'
-            let g:airline_symbols.paste = 'ρ'
-            let g:airline_symbols.notexists = '∄'
-            let g:airline_symbols.whiteSpace = 'Ξ'
-            let g:airline_left_sep = '▶'
-            let g:airline_left_alt_sep = '❯'
-            let g:airline_right_sep = '◀'
-            let g:airline_right_alt_sep = '❮'
-        endif
-    " lightline use leoatchina/lightline.powerful
-    elseif has('statusline')
-        if count(g:spf13_plug_groups, 'lightline')
-            set noshowmode
-            let g:lightline = {
-              \ 'colorscheme': 'one',
-              \ }
-        else
-            function! Buf_total_num()
-                return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
-            endfunction
-            set statusline=%<%1*[%n:%{Buf_total_num()}]%*
-            set statusline+=%2*\ %F\ %*
-            set statusline+=%3*『\ %{exists('g:loaded_ale')?ALEGetStatusLine():''}』%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
-            set statusline+=%4*\ \ %m%r%y\ %*
-            set statusline+=%=%5*\ %{&ff}\ \|\ \%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-16.(%c\ %l:%L%)%*
-            set statusline+=%6*\ %P\ %<
-            " default bg for statusline is 236 in space-vim-dark
-            hi User1 cterm=bold ctermfg=232 ctermbg=179
-            hi User2 cterm=None ctermfg=251 ctermbg=240
-            hi User3 cterm=bold ctermfg=255 ctermbg=100
-            hi User4 cterm=None ctermfg=208 ctermbg=238
-            hi User5 cterm=None ctermfg=246 ctermbg=237
-            hi User6 cterm=None ctermfg=250 ctermbg=238
-        endif
+        let g:lightline = {
+          \ 'colorscheme': 'onedark',
+          \ }
+    else
+        function! Buf_total_num()
+            return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+        endfunction
+        set statusline=%<%1*[%n:%{Buf_total_num()}]%*
+        set statusline+=%2*\ %F\ %*
+        set statusline+=%3*『\ %{exists('g:loaded_ale')?ALEGetStatusLine():''}』%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
+        set statusline+=%4*\ \ %m%r%y\ %*
+        set statusline+=%=%5*\ %{&ff}\ \|\ \%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-16.(%c\ %l:%L%)%*
+        set statusline+=%6*\ %P\ %<
+        " default bg for statusline is 236 in space-vim-dark
+        hi User1 cterm=bold ctermfg=232 ctermbg=179
+        hi User2 cterm=None ctermfg=251 ctermbg=240
+        hi User3 cterm=bold ctermfg=255 ctermbg=100
+        hi User4 cterm=None ctermfg=208 ctermbg=238
+        hi User5 cterm=None ctermfg=246 ctermbg=237
+        hi User6 cterm=None ctermfg=250 ctermbg=238
     endif
 endif
 " NerdTree
