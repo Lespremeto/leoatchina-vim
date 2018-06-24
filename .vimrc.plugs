@@ -66,7 +66,7 @@ endif
 " In your .vimrc.local file
 " list only the plugin groups you will use
 if !exists('g:spf13_plug_groups')
-    let g:spf13_plug_groups=['smartcomplete', 'php', 'javascript', 'html','airline']
+    let g:spf13_plug_groups=['smartcomplete', 'php', 'javascript', 'html']
 endif
 " input method
 if count(g:spf13_plug_groups, 'pinyin') || count(g:spf13_plug_groups, 'wubi')
@@ -112,7 +112,6 @@ Plug 'junegunn/vim-easy-align'
 " airline
 if count(g:spf13_plug_groups, 'airline')
     Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
 elseif count(g:spf13_plug_groups, 'lightline') && has('statusline')
     Plug 'itchyny/lightline.vim'
     Plug 'leoatchina/lightline-powerful'
@@ -133,6 +132,7 @@ endif
 if count(g:spf13_plug_groups, 'python') && g:python_version > 0
     " when use pymode , shoud pip/pip3 install pylama
     Plug 'python-mode/python-mode',{ 'branch': 'develop' }
+    Plug 'sillybun/autoformatpythonstatement', {'do': './install.sh'}
 endif
 " Perl
 if count(g:spf13_plug_groups, 'perl')
