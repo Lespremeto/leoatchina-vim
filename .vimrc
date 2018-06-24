@@ -440,7 +440,7 @@ if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
             colorscheme onedark
         else
             set t_Co=256
-            colorscheme deus
+            colorscheme wombat256mod
         endif
     elseif has('gui_running')
         colorscheme hybrid_material
@@ -450,7 +450,6 @@ if isdirectory(expand($PLUG_PATH."/awesome-vim-colorschemes/"))
     endif
     if count(g:spf13_plug_groups, 'airline')
         set noshowmode
-        let g:airline_theme = 'one'
         let g:airline_powerline_fonts = 0
         let g:airline_symbols_ascii = 1
         let g:airline_exclude_preview = 0
