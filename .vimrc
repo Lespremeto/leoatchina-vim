@@ -449,6 +449,12 @@ if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections/"))
         colorscheme gruvbox
     endif
 endif
+" bufferline
+if isdirectory(expand($PLUG_PATH."/vim-bufferline"))
+    let g:bufferline_show_bufnr = 0
+    let g:bufferline_rotate = 1
+    let g:bufferline_fixed_index =  0
+endif
 " statusline
 if count(g:spf13_plug_groups, 'airline')
     set noshowmode
@@ -465,8 +471,8 @@ if count(g:spf13_plug_groups, 'airline')
     let g:airline#extensions#tabline#show_splits = 0
     let g:airline#extensions#tabline#show_close_button = 0
     let g:airline#extensions#tabline#buffer_nr_show = 0
-    let g:airline#extensions#bufferline#enabled = 1
-    " shw full_path of the file,and the time
+    "let g:airline#extensions#bufferline#enabled = 1
+    " shw full_path of the file
     let g:airline_section_c = "\ %F"
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}

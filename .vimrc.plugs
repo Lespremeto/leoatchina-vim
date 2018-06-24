@@ -104,12 +104,12 @@ Plug 'terryma/vim-multiple-cursors'
 " signs
 Plug 'rhysd/conflict-marker.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'bling/vim-bufferline'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'mhinz/vim-signify'
 Plug 'tamlok/vim-markdown'
 Plug 'junegunn/vim-easy-align'
-" airline
+" statusline
+Plug 'bling/vim-bufferline'
 if count(g:spf13_plug_groups, 'airline')
     Plug 'vim-airline/vim-airline'
 elseif count(g:spf13_plug_groups, 'lightline') && has('statusline')
