@@ -34,23 +34,24 @@ silent function! WINDOWS()
     return  (has('win32') || has('win64'))
 endfunction
 " Basics
-if !WINDOWS()
+if WINDOWS()
+    if has('nvim')
+        let g:fullscreen#enable_default_keymap = 0
+        let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
+        let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+        map <silent><F11> <Esc>:FullscreenToggle<cr>
+    else
+        GUIEnter * simalt ~x
+        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+        map <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+    endif
+else
     set shell=/bin/sh
     if !has("gui")
         if !has('nvim')
             set term=$TERM
         endif
     endif
-else
-    if !has('nvim')
-        set term=win32
-        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-        set guifont=YaHei\ Consolas\ Hybrid:h11
-    endif
-endif
-" GUI Settings
-if has('gui_running')
-    set lines=40                " 40 lines of text instead of 24
 endif
 " Clipboard
 if has('clipboard')
@@ -88,6 +89,11 @@ if !exists('g:spf13_localleader')
 else
     let maplocalleader=g:spf13_localleader
 endif
+" pastetoggle (sane indentation on pastes)
+set pastetoggle=<F12>
+" 定义快捷键保存当前窗口内容
+nnoremap <leader><F12> :source ~/.vimrc<CR>
+vnoremap <leader><F12> <ESC>:source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
@@ -189,19 +195,6 @@ snoremap <F3> <ESC>:reg<Cr>
 nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>fw :set nowrap! nowrap?<CR>
-" fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
-if !WINDOWS()
-    map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
-else
-    au GUIEnter * simalt ~x
-    " 按 F11 切换全屏
-    noremap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-    " 按 S-F11 切换窗口透明度
-    noremap <S-F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleTransparency', "247,180")<cr>
-endif
-set pastetoggle=<F12>      " pastetoggle (sane indentation on pastes)
-" 定义快捷键保存当前窗口内容
-nnoremap <leader><F12> :source ~/.vimrc<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
 " 定义快捷键保存所有窗口内容并退出 vim

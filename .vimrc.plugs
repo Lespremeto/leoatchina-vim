@@ -21,7 +21,6 @@ else
 endif
 
 " enhanced browser tools
-let g:ctrlp_version = 1
 let g:completable = 0
 let g:use_ultisnips = 0
 " python support
@@ -41,6 +40,13 @@ endif
 
 " plugins
 call plug#begin($PLUG_PATH)
+if WINDOWS()
+    Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
+    let $PATH.=";".$HOME."\\.vim-windows-tools"
+endif
+if WINDOWS() && has('nvim')
+    Plug 'lambdalisue/vim-fullscreen'
+endif
 Plug 'mhinz/vim-startify'
 Plug 'google/vim-searchindex'
 Plug 'scrooloose/nerdcommenter'
@@ -160,6 +166,7 @@ if count(g:spf13_plug_groups, 'html')
     Plug 'mattn/emmet-vim'
 endif
 " browser tools
+let g:ctrlp_version = 1
 if count(g:spf13_plug_groups, 'fzf')
     if !WINDOWS()
         let g:ctrlp_version = 4
@@ -173,7 +180,7 @@ elseif count(g:spf13_plug_groups, 'leaderF')
         let g:ctrlp_version = 2
     endif
 endif
-
+"
 if g:ctrlp_version == 4
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
