@@ -37,13 +37,15 @@ endfunction
 if WINDOWS()
     set guifont=YaHei\ Consolas\ Hybrid:h11
     if has('nvim')
+        let g:fullscreen#enable_default_keymap = 0
         let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
         let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
-        map <F11> <Esc>:FullscreenToggle<cr>
+        map <silent><F11> <Esc>:FullscreenToggle<cr>
     else
         set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
         au GUIEnter * simalt ~x
-        " 切换全屏, need gvim_fullscreen.dll in gvim dir
+        " 切换全屏, need gvim_fullscreen.dll in gvim dir, clone it from
+        " https://github.com/leoatchina/tools-leoatchina.vim.git
         map <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
     endif
 else
