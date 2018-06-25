@@ -135,9 +135,12 @@ if count(g:spf13_plug_groups, 'php')
     Plug 'arnaud-lb/vim-php-namespace'
 endif
 " Python
-if count(g:spf13_plug_groups, 'python') && g:python_version
-    " when use pymode , shoud pip/pip3 install pylama
-    Plug 'python-mode/python-mode',{ 'branch': 'develop' }
+if count(g:spf13_plug_groups, 'python')
+    if g:python_version == 3
+        Plug 'python-mode/python-mode',{ 'branch': 'develop' }
+    elseif g:python_version == 2
+        Plug 'python-mode/python-mode',{ 'branch': 'master' }
+    endif
 endif
 " Perl
 if count(g:spf13_plug_groups, 'perl')
