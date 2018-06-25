@@ -44,7 +44,7 @@ if WINDOWS()
     Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
     let $PATH.=";".$HOME."\\.vim-windows-tools"
 endif
-if WINDOWS() && has('nvim')
+if (has('nvim') && WINDOWS()) || (has('gui_running') && !WINDOWS())
     Plug 'lambdalisue/vim-fullscreen'
 endif
 Plug 'mhinz/vim-startify'

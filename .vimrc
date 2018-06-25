@@ -35,23 +35,27 @@ silent function! WINDOWS()
 endfunction
 " Basics
 if WINDOWS()
-    if has('nvim')
-        let g:fullscreen#enable_default_keymap = 0
-        let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
-        let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
-        map <silent><F11> <Esc>:FullscreenToggle<cr>
-    else
+    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+    if !has('nvim') && has('gui_running')
         GUIEnter * simalt ~x
-        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
         map <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
     endif
 else
     set shell=/bin/sh
     if !has("gui")
         if !has('nvim')
-            set term=$TERM
+            set term=xterm-256color
         endif
     endif
+endif
+" vim-fullscreen
+if isdirectory(expand($PLUG_PATH."/vim-fullscreen"))
+    if has('nvim')
+        let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
+        let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+    endif
+    let g:fullscreen#enable_default_keymap = 0
+    map <silent><F11> <Esc>:FullscreenToggle<cr>
 endif
 " Clipboard
 if has('clipboard')
