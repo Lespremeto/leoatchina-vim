@@ -135,10 +135,9 @@ if count(g:spf13_plug_groups, 'php')
     Plug 'arnaud-lb/vim-php-namespace'
 endif
 " Python
-if count(g:spf13_plug_groups, 'python') && g:python_version > 0
+if count(g:spf13_plug_groups, 'python') && g:python_version
     " when use pymode , shoud pip/pip3 install pylama
     Plug 'python-mode/python-mode',{ 'branch': 'develop' }
-    Plug 'sillybun/autoformatpythonstatement', {'do': './install.sh'}
 endif
 " Perl
 if count(g:spf13_plug_groups, 'perl')
