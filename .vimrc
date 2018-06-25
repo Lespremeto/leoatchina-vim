@@ -55,7 +55,10 @@ if isdirectory(expand($PLUG_PATH."/vim-fullscreen"))
         let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
     endif
     let g:fullscreen#enable_default_keymap = 0
-    map <silent><F11> <Esc>:FullscreenToggle<cr>
+    nmap <silent><F11> :FullscreenToggle<cr>
+    imap <silent><F11> <Esc>:FullscreenToggle<cr>
+    smap <silent><F11> <Esc>:FullscreenToggle<cr>
+    vmap <silent><F11> <Esc>:FullscreenToggle<cr>
 endif
 " Clipboard
 if has('clipboard')
