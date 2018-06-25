@@ -40,6 +40,13 @@ endif
 
 " plugins
 call plug#begin($PLUG_PATH)
+if WINDOWS()
+    Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
+    let $PATH.=";".$HOME."\\.vim-windows-tools"
+endif
+if WINDOWS() && has('nvim')
+    Plug 'lambdalisue/vim-fullscreen'
+endif
 Plug 'mhinz/vim-startify'
 Plug 'google/vim-searchindex'
 Plug 'scrooloose/nerdcommenter'
@@ -61,9 +68,6 @@ if executable('git')
 endif
 if executable('ctags')
     Plug 'majutsushi/tagbar'
-endif
-if WINDOWS() && has('nvim')
-    Plug 'lambdalisue/vim-fullscreen'
 endif
 " In your .vimrc.local file
 " list only the plugin groups you will use
@@ -162,6 +166,7 @@ if count(g:spf13_plug_groups, 'html')
     Plug 'mattn/emmet-vim'
 endif
 " browser tools
+let g:ctrlp_version = 1
 if count(g:spf13_plug_groups, 'fzf')
     if !WINDOWS()
         let g:ctrlp_version = 4
@@ -174,8 +179,6 @@ elseif count(g:spf13_plug_groups, 'leaderF')
     if g:python_version && executable('gcc') && g:vim_advance
         let g:ctrlp_version = 2
     endif
-else
-    let g:ctrlp_version = 1
 endif
 "
 if g:ctrlp_version == 4

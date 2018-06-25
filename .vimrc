@@ -35,17 +35,14 @@ silent function! WINDOWS()
 endfunction
 " Basics
 if WINDOWS()
-    set guifont=YaHei\ Consolas\ Hybrid:h11
     if has('nvim')
         let g:fullscreen#enable_default_keymap = 0
         let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
         let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
         map <silent><F11> <Esc>:FullscreenToggle<cr>
     else
-        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-        au GUIEnter * simalt ~x
-        " 切换全屏, need gvim_fullscreen.dll in gvim dir, clone it from
-        " https://github.com/leoatchina/tools-leoatchina.vim.git
+        GUIEnter * simalt ~x
+        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
         map <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
     endif
 else
@@ -55,10 +52,6 @@ else
             set term=$TERM
         endif
     endif
-endif
-" GUI Settings
-if has('gui_running')
-    set lines=40                " 40 lines of text instead of 24
 endif
 " Clipboard
 if has('clipboard')
@@ -100,6 +93,7 @@ endif
 set pastetoggle=<F12>
 " 定义快捷键保存当前窗口内容
 nnoremap <leader><F12> :source ~/.vimrc<CR>
+vnoremap <leader><F12> <ESC>:source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
