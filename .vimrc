@@ -37,7 +37,6 @@ endfunction
 if WINDOWS()
     set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
     if !has('nvim') && has('gui_running')
-        GUIEnter * simalt ~x
         map <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
     endif
 else
@@ -50,11 +49,11 @@ else
 endif
 " vim-fullscreen
 if isdirectory(expand($PLUG_PATH."/vim-fullscreen"))
+    let g:fullscreen#enable_default_keymap = 1
     if has('nvim')
         let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
-        let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+        let g:fullscreen#stop_command  = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
     endif
-    let g:fullscreen#enable_default_keymap = 0
     nmap <silent><F11> :FullscreenToggle<cr>
     imap <silent><F11> <Esc>:FullscreenToggle<cr>
     smap <silent><F11> <Esc>:FullscreenToggle<cr>
