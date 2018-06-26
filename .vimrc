@@ -1066,49 +1066,10 @@ if g:vim_advance
         "注释和字符串中的文字也会被收入补全
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
         " asyncomplete
     elseif g:completable == 2
-        let g:asyncomplete_auto_popup = 1
-        let g:asyncomplete_remove_duplicates = 1
-        " python
-        if executable('pyls')
-            " pip install python-language-server
-            au User lsp_setup call lsp#register_server({
-                        \ 'name': 'pyls',
-                        \ 'cmd': {server_info->['pyls']},
-                        \ 'whitelist': ['python'],
-                        \ })
-        endif
-        " file"
-        au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-                    \ 'name': 'file',
-                    \ 'whitelist': ['*'],
-                    \ 'priority': 10,
-                    \ 'completor': function('asyncomplete#sources#file#completor')
-                    \ }))
-        " buffer"
-        call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-                    \ 'name': 'buffer',
-                    \ 'whitelist': ['*'],
-                    \ 'blacklist': ['go'],
-                    \ 'completor': function('asyncomplete#sources#buffer#completor'),
-                    \ }))
-
-        if g:use_ultisnips && g:python_version == 3
-            call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-                        \ 'name': 'ultisnips',
-                        \ 'whitelist': ['*'],
-                        \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
-                        \ }))
-        else
-            call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-                        \ 'name': 'neosnippet',
-                        \ 'whitelist': ['*'],
-                        \ 'completor': function('asyncomplete#sources#neosnippet#completor'),
-                        \ }))
-        endif
-        " deoplete
+        let g:cm_complete_popup_delay = 10
     elseif g:completable == 3
         let g:deoplete#enable_at_startup = 1
         set completeopt=menuone,noinsert,noselect

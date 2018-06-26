@@ -24,18 +24,20 @@ endif
 let g:completable = 0
 let g:use_ultisnips = 0
 " python support
-let g:python_version = 0
 if has('python3') && executable('python3')
     let g:python_version = 3
 elseif has('python') && executable('python')
     let g:python_version = 2
+else
+    let g:python_version = 0
 endif
 " vim_advance judge
-let g:vim_advance = 0
 if has('nvim') || v:version > 799
     let g:vim_advance = 2
 elseif v:version > 703
     let g:vim_advance = 1
+else
+    let g:vim_advance = 0
 endif
 
 " plugins
@@ -77,14 +79,6 @@ endif
 " input method
 if count(g:spf13_plug_groups, 'pinyin') || count(g:spf13_plug_groups, 'wubi')
     Plug 'leoatchina/ywvim'
-endif
-" txt object
-if count(g:spf13_plug_groups, 'txt')
-	Plug 'kana/vim-textobj-user'
-	Plug 'kana/vim-textobj-indent'
-	Plug 'kana/vim-textobj-syntax'
-	Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java','python'] }
-	Plug 'sgur/vim-textobj-parameter'
 endif
 " biosyntax
 if count(g:spf13_plug_groups, 'bio')
@@ -218,44 +212,46 @@ if g:vim_advance
     endif
     " YCM or asyncomplete
     if count(g:spf13_plug_groups, 'youcompleteme')
-        if executable('cmake')
+        if executable('cmake') && g:python_version
             let g:completable = 1
         else
-            echoe "Inorder to use YCM , you should intall `cmake` first"
-        endif
-    elseif count(g:spf13_plug_groups, 'asyncomplete')
-        if has('timers') && g:vim_advance == 2
-            let g:completable = 2
-        else
-            echoe "asyncomplete need vim8/neovim with timers support!"
+            let g:completable = 6
         endif
     endif
     " smartcomplete
     if g:completable == 0
-        if g:vim_advance == 2
-            if count(g:spf13_plug_groups, 'deoplete')
-                if g:python_version == 3 && has('timers')
+        if g:vim_advance
+            if count(g:spf13_plug_groups, 'ncm')
+                if g:python_version == 3 && g:vim_advance == 2
+                    let g:completable = 2
+                else
+                    let g:completable = 6
+                endif
+            elseif count(g:spf13_plug_groups, 'deoplete')
+                if g:python_version == 3 && has('timers') && g:vim_advance == 2
                     let g:completable = 3
                 else
-                    echoe "deoplete need neovim/vim8 with python3 and timers support!"
+                    let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'completor')
-                if g:python_version && !has('nvim')
-                   let g:completable = 4
+                if g:python_version && !has('nvim') && g:vim_advance == 2
+                    let g:completable = 4
                 else
-                    echoe "completor does not support nvim, need vim8 with python2 or python3 support"
+                    let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'neocomplete')
                 if has('lua')
                     let g:completable = 5
                 else
-                    echoe "neocomplete need lua support!"
+                    let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'neocomplcache')
                 let g:completable = 6
             " smart select a complete plugin
             elseif count(g:spf13_plug_groups, 'smartcomplete')
-                if g:python_version == 3 && has('timers')
+                if g:python_version == 3 && has('nvim')
+                    let g:completable = 2
+                elseif g:python_version == 3 && has('timers') && !has('nvim')
                     let g:completable = 3
                 elseif g:python_version && !has('nvim')
                     let g:completable = 4
@@ -270,7 +266,7 @@ if g:vim_advance
                 if has('lua')
                     let g:completable = 5
                 else
-                    echoe "neocomplete need lua support!"
+                    let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'neocomplcache')
                 let g:completable = 6
@@ -294,8 +290,8 @@ if g:vim_advance
             let g:use_ultisnips = 0
             Plug 'Shougo/neosnippet'
             Plug 'Shougo/neosnippet-snippets'
-        " ultisnips not support neovim
-        elseif !has('nvim') && g:python_version > 0
+        " neovim need pip install neovim
+        elseif g:python_version
             let g:use_ultisnips = 1
             Plug 'SirVer/ultisnips'
         else
@@ -308,21 +304,12 @@ if g:vim_advance
     if g:completable == 1
         Plug 'Valloric/YouCompleteMe',{ 'do' : './install.py --gocode-completer --tern-completer' }
     elseif g:completable == 2
-        Plug 'prabirshrestha/asyncomplete.vim'
-        Plug 'prabirshrestha/async.vim'
-        Plug 'prabirshrestha/vim-lsp'
-        Plug 'prabirshrestha/asyncomplete-lsp.vim'
-        Plug 'prabirshrestha/asyncomplete-buffer.vim'
-        Plug 'prabirshrestha/asyncomplete-file.vim'
-        Plug 'prabirshrestha/asyncomplete-tags.vim'
-        if g:use_ultisnips && g:python_version == 3
-            Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-        else
-            let g:use_ultisnips = 0
-            Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
+        Plug 'roxma/nvim-completion-manager'
+        if !has('nvim')
+            Plug 'roxma/vim-hug-neovim-rpc'
         endif
     elseif g:completable == 3
-        Plug 'Shougo/deoplete.nvim'
+        Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins' }
         if !has('nvim')
             Plug 'roxma/vim-hug-neovim-rpc'
             Plug 'roxma/nvim-yarp'
