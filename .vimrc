@@ -1072,12 +1072,8 @@ if g:vim_advance
         let g:cm_complete_popup_delay = 10
     elseif g:completable == 3
         let g:deoplete#enable_at_startup = 1
-        set completeopt=menuone,noinsert,noselect
-        set rtp+=$PLUG_PATH.'/deoplete.nvim/'
         if !has('nvim')
             let g:deoplete#enable_yarp=1
-            set rtp+=$PLUG_PATH.'/nvim-yarp/'
-            set rtp+=$PLUG_PATH.'/vim-hug-neovim-rpc/'
         endif
         let g:deoplete#enable_camel_case=1
         " Enable heavy omni completion.
@@ -1191,11 +1187,7 @@ if g:vim_advance
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
             " Ulti python version
-            if g:python_version == 3
-                let g:UltiSnipsUsePythonVersion = 3
-            else
-                let g:UltiSnipsUsePythonVersion = 2
-            endif
+            let g:UltiSnipsUsePythonVersion = g:python_version
             " tab for ExpandTrigger
             function! g:UltiSnips_Tab()
                 if pumvisible()
@@ -1215,7 +1207,8 @@ if g:vim_advance
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
             " Ulti的代码片段的文件夹
-            let g:UtiSnipsSnippetDirectories=[$PLUG_PATH."/vim-snippets/UltiSnips",$PLUG_PATH."/vim-snippets/snipets"]
+            let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
+            let g:UltiSnipsSnippetDirectories=["UltiSnips"]
             inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
             inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
             inoremap <expr> <PageDown>  pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"

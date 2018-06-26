@@ -19,7 +19,7 @@ else
         let $PLUG_PATH = '~/.vim/plug'
     endif
 endif
-
+set rtp+=$PLUG_PATH
 " enhanced browser tools
 let g:completable = 0
 let g:use_ultisnips = 0
@@ -211,7 +211,7 @@ if g:vim_advance
         Plug 'thinca/vim-quickrun'
     endif
     " YCM or asyncomplete
-    if count(g:spf13_plug_groups, 'youcompleteme')
+    if count(g:spf13_plug_groups, 'youcompleteme') || count(g:spf13_plug_groups, 'YCM')
         if executable('cmake') && g:python_version
             let g:completable = 1
         else
@@ -221,20 +221,20 @@ if g:vim_advance
     " smartcomplete
     if g:completable == 0
         if g:vim_advance
-            if count(g:spf13_plug_groups, 'ncm')
+            if count(g:spf13_plug_groups, 'nvim-complete-manager') || count(g:spf13_plug_groups, 'NCM')
                 if g:python_version == 3 && g:vim_advance == 2
                     let g:completable = 2
                 else
                     let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'deoplete')
-                if g:python_version == 3 && has('timers') && g:vim_advance == 2
+                if g:python_version == 3 && g:vim_advance == 2
                     let g:completable = 3
                 else
                     let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'completor')
-                if g:python_version && !has('nvim') && g:vim_advance == 2
+                if g:python_version && !has('nvim') && version > 799
                     let g:completable = 4
                 else
                     let g:completable = 6
@@ -251,9 +251,9 @@ if g:vim_advance
             elseif count(g:spf13_plug_groups, 'smartcomplete')
                 if g:python_version == 3 && has('nvim')
                     let g:completable = 2
-                elseif g:python_version == 3 && has('timers') && !has('nvim')
+                elseif g:python_version == 3 && !has('nvim')
                     let g:completable = 3
-                elseif g:python_version && !has('nvim')
+                elseif g:python_version == 2 && !has('nvim')
                     let g:completable = 4
                 elseif has('lua')
                     let g:completable = 5
@@ -281,11 +281,17 @@ if g:vim_advance
     endif
     " install snippets plugins
     if g:completable > 0
-        " use honza's snippets collection"
-        Plug 'honza/vim-snippets'
         if count(g:spf13_plug_groups,'ultisnips')
-            let g:use_ultisnips = 1
-            Plug 'SirVer/ultisnips'
+            if g:python_version
+                let g:use_ultisnips = 1
+                Plug 'SirVer/ultisnips'
+                Plug 'honza/vim-snippets'
+                Plug 'leoatchina/leoatchina-snippets'
+            else
+                let g:use_ultisnips = 0
+                Plug 'Shougo/neosnippet'
+                Plug 'Shougo/neosnippet-snippets'
+            endif
         elseif count(g:spf13_plug_groups,'neosnippet')
             let g:use_ultisnips = 0
             Plug 'Shougo/neosnippet'
@@ -294,6 +300,8 @@ if g:vim_advance
         elseif g:python_version
             let g:use_ultisnips = 1
             Plug 'SirVer/ultisnips'
+            Plug 'honza/vim-snippets'
+            Plug 'leoatchina/leoatchina-snippets'
         else
             let g:use_ultisnips = 0
             Plug 'Shougo/neosnippet'
@@ -306,7 +314,7 @@ if g:vim_advance
     elseif g:completable == 2
         Plug 'roxma/nvim-completion-manager'
         if !has('nvim')
-            Plug 'roxma/vim-hug-neovim-rpc'
+            Plug 'roxma/vim-hug-neovim-rpc' ,{ 'do' : 'pip3 install --user neovim jedi psutil setproctitle' }
         endif
     elseif g:completable == 3
         Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins' }
