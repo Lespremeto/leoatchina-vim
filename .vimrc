@@ -1026,6 +1026,9 @@ endif
 " language support
 if g:vim_advance
     " Youcompleteme
+    if g:completable
+        set completeopt=menuone,noinsert,noselect
+    endif
     if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python2'
@@ -1105,7 +1108,6 @@ if g:vim_advance
     elseif g:completable == 4
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-        "set completeopt=menuone,noinsert,noselect
     " neocomplete
     elseif g:completable == 5
         let g:acp_enableAtStartup = 1
