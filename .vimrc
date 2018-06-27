@@ -222,12 +222,13 @@ nmap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
+"离开插入模式后关闭预览窗口
+au InsertLeave * if pumvisible() == 0|pclose|endif
 " auto close qfixwindows when leave vim
 aug QFClose
     au!
     au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
-
 " Formatting
 set number                      " set number"
 set autoindent                  " Indent at the same level of the previous line
@@ -1026,8 +1027,11 @@ endif
 if g:vim_advance
     " Youcompleteme
     if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
-        au InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后关闭预览窗口
-        let g:ycm_python_binary_path = 'python'
+        if g:python_version == 2
+            let g:ycm_python_binary_path = 'python2'
+        else
+            let g:ycm_python_binary_path = 'python3'
+        endif
         let g:acp_enableAtStartup = 0
         "  补全后关键窗口
         let g:ycm_autoclose_preview_window_after_completion = 1
@@ -1048,7 +1052,7 @@ if g:vim_advance
         if !executable("ghcmod")
             au BufWritePost *.hs GhcModCheckAndLintAsync
         endif
-        let g:ycm_confirm_extra_conf=1 "加载.ycm_extra_conf.py提示
+        let g:ycm_confirm_extra_conf=0 "加载.ycm_extra_conf.py提示
         let g:ycm_global_ycm_extra_conf = '$PLUG_PATH/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
         let g:ycm_collect_identifiers_from_tags_files=1    " 开启 YC基于标签引擎
         let g:ycm_min_num_of_chars_for_completion=2   " 从第2个键入字符就开始罗列匹配项
@@ -1067,7 +1071,6 @@ if g:vim_advance
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-        " asyncomplete
     elseif g:completable == 2 && isdirectory(expand($PLUG_PATH."/nvim-completion-manager"))
         let g:cm_complete_popup_delay = 10
     elseif g:completable == 3 && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
@@ -1102,7 +1105,7 @@ if g:vim_advance
     elseif g:completable == 4
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-        set completeopt=menuone,noinsert,noselect
+        "set completeopt=menuone,noinsert,noselect
     " neocomplete
     elseif g:completable == 5
         let g:acp_enableAtStartup = 1

@@ -313,14 +313,14 @@ if g:vim_advance
     endif
     " install complete plugins
     if g:completable == 1
-        Plug 'Valloric/YouCompleteMe',{ 'do' : './install.py --gocode-completer --tern-completer' }
+        Plug 'Valloric/YouCompleteMe',{ 'do' : './install.py --clang-completer' }
     elseif g:completable == 2
         Plug 'roxma/nvim-completion-manager'
         if !has('nvim')
-            Plug 'roxma/vim-hug-neovim-rpc' ,{ 'do' : 'pip3 install --user neovim jedi psutil setproctitle' }
+            Plug 'roxma/vim-hug-neovim-rpc'
         endif
     elseif g:completable == 3
-        Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins' }
+        Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins' , 'do': 'pip3 install --user jedi'}
         Plug 'zchee/deoplete-clang'
         if !has('nvim')
             Plug 'roxma/vim-hug-neovim-rpc'
