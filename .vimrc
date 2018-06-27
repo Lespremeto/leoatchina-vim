@@ -1025,7 +1025,7 @@ endif
 " language support
 if g:vim_advance
     " Youcompleteme
-    if g:completable == 1
+    if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
         au InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后关闭预览窗口
         let g:ycm_python_binary_path = 'python'
         let g:acp_enableAtStartup = 0
@@ -1068,9 +1068,9 @@ if g:vim_advance
         " 跳转到定义处
         nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
         " asyncomplete
-    elseif g:completable == 2
+    elseif g:completable == 2 && isdirectory(expand($PLUG_PATH."/nvim-completion-manager"))
         let g:cm_complete_popup_delay = 10
-    elseif g:completable == 3
+    elseif g:completable == 3 && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         let g:deoplete#enable_at_startup = 1
         if !has('nvim')
             let g:deoplete#enable_yarp=1
