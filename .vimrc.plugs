@@ -216,12 +216,14 @@ if g:vim_advance
             let g:completable = 1
         else
             let g:completable = 6
+            echoe "Cannot install YCM, install neocomplcache instead."
         endif
     elseif count(g:spf13_plug_groups, 'nvim-completion-manager') || count(g:spf13_plug_groups, 'NCM')
         if g:python_version == 3 && g:vim_advance == 2
             let g:completable = 2
         else
             let g:completable = 6
+            echoe "Cannot install NCM, install neocomplcache instead."
         endif
 
     endif
@@ -232,18 +234,21 @@ if g:vim_advance
                 if g:python_version == 3 && g:vim_advance == 2
                     let g:completable = 3
                 else
+                    echoe "Cannot install deoplete, install neocomplcache instead."
                     let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'completor')
                 if g:python_version && !has('nvim') && version > 799
                     let g:completable = 4
                 else
+                    echoe "Cannot install completor, install neocomplcache instead."
                     let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'neocomplete')
                 if has('lua')
                     let g:completable = 5
                 else
+                    echoe "Cannot install neocomplete, install neocomplcache instead."
                     let g:completable = 6
                 endif
             elseif count(g:spf13_plug_groups, 'neocomplcache')
@@ -265,21 +270,7 @@ if g:vim_advance
                 endif
             endif
         else
-            if count(g:spf13_plug_groups, 'neocomplete')
-                if has('lua')
-                    let g:completable = 5
-                else
-                    let g:completable = 6
-                endif
-            elseif count(g:spf13_plug_groups, 'neocomplcache')
-                let g:completable = 6
-            elseif count(g:spf13_plug_groups, 'smartcomplete')
-                if has('lua')
-                    let g:completable = 5
-                else
-                    let g:completable = 6
-                endif
-            endif
+            echoe "In order to use completion plugs, you need to install Vim7.3+ or Neovim"
         endif
     endif
     " install snippets plugins
@@ -320,7 +311,7 @@ if g:vim_advance
             Plug 'roxma/vim-hug-neovim-rpc'
         endif
     elseif g:completable == 3
-        Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins' , 'do': 'pip3 install --user jedi'}
+        Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
         Plug 'zchee/deoplete-clang'
         if !has('nvim')
             Plug 'roxma/vim-hug-neovim-rpc'

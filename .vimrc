@@ -1360,6 +1360,14 @@ if g:vim_advance
         inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
     endif
+    " after file
+    if filereadable(expand("~/.nvimrc.after")) && has('nvim')
+        source ~/.nvimrc.after
+    elseif filereadable(expand("~/.gvimrc.after")) && has('gui_running')
+        source ~/.gvimrc.after
+    elseif filereadable(expand("~/.vimrc.after"))
+        source ~/.vimrc.after
+    endif
 endif
 " Functions
 " Initialize directories
