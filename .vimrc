@@ -1106,6 +1106,7 @@ if g:vim_advance
     elseif g:completable == 4
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
+        set completeopt=menuone,preview,noselect,noinsert
     " neocomplete
     elseif g:completable == 5
         let g:acp_enableAtStartup = 1

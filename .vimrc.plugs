@@ -270,7 +270,7 @@ if g:vim_advance
         endif
     endif
     " install snippets plugins
-    if g:completable > 0
+    if g:completable
         if count(g:spf13_plug_groups,'ultisnips')
             if g:python_version
                 let g:use_ultisnips = 1
@@ -286,8 +286,7 @@ if g:vim_advance
             let g:use_ultisnips = 0
             Plug 'Shougo/neosnippet'
             Plug 'Shougo/neosnippet-snippets'
-        " neovim need pip install neovim
-        elseif g:python_version
+        elseif g:python_version && (!has('nvim') || has('nvim') && !WINDOWS())
             let g:use_ultisnips = 1
             Plug 'SirVer/ultisnips'
             Plug 'honza/vim-snippets'
