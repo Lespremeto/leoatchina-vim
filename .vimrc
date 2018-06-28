@@ -1023,22 +1023,21 @@ if isdirectory(expand($PLUG_PATH."/undotree/"))
 endif
 " language support
 if g:vim_advance
-    " Youcompleteme
     if g:vim_advance == 2
         set completeopt=menuone,noinsert,noselect
     else
         set completeopt=menuone
     endif
+    " Youcompleteme
     if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python2'
         else
             let g:ycm_python_binary_path = 'python3'
         endif
-        let g:acp_enableAtStartup = 0
-        "  补全后关键窗口
+        "  补全后close窗口
         let g:ycm_autoclose_preview_window_after_completion = 1
-        "  插入后关键窗口
+        "  插入后close窗口
         let g:ycm_autoclose_preview_window_after_insertion = 1
         " enable completion from tags
         let g:ycm_collect_identifiers_from_tags_files = 1
