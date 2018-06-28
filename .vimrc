@@ -1023,10 +1023,12 @@ if isdirectory(expand($PLUG_PATH."/undotree/"))
 endif
 " language support
 if g:vim_advance
-    if g:vim_advance == 2
-        set completeopt=menuone,noinsert,noselect
-    else
-        set completeopt=menuone
+    if !WINDOWS()
+        if g:vim_advance == 2
+            set completeopt=menu,noinsert,noselect
+        else
+            set completeopt=menu
+        endif
     endif
     " Youcompleteme
     if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
@@ -1064,7 +1066,6 @@ if g:vim_advance
                     "\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
                     "\ 'cs,lua,javascript': ['re!\w{2}'],
                     "\}
-        let g:ycm_add_preview_to_completeopt = 0 " preview里不加入原型
         ""在注释输入中也能补全
         let g:ycm_complete_in_comments = 1
         "在字符串输入中也能补全
@@ -1106,7 +1107,6 @@ if g:vim_advance
     elseif g:completable == 4
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-        set completeopt=menuone,preview,noselect,noinsert
     " neocomplete
     elseif g:completable == 5
         let g:acp_enableAtStartup = 1
