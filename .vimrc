@@ -1015,21 +1015,19 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
     endif
     nnoremap <leader>lm :CtrlPMRU<CR>
 endif
-
 " UndoTree
 if isdirectory(expand($PLUG_PATH."/undotree/"))
     nnoremap <silent><Leader>u :UndotreeToggle<CR>
     " If undotree is opened, it is likely one wants to interact with it.
     let g:undotree_SetFocusWhenToggle=1
 endif
-
 " language support
 if g:vim_advance
     " Youcompleteme
     if g:vim_advance == 2
-        set completeopt=menuone,preview,noinsert,noselect
+        set completeopt=menuone,noinsert,noselect
     else
-        set completeopt=menuone,preview
+        set completeopt=menuone
     endif
     if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
         if g:python_version == 2
@@ -1089,7 +1087,6 @@ if g:vim_advance
             let g:deoplete#keyword_patterns = {}
             let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
         endif
-        au FileType go let g:deoplete#complete_method = "omnifunc"
         if !exists('g:deoplete#omni_patterns')
             let g:deoplete#omni_patterns      = {}
             let g:deoplete#omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
