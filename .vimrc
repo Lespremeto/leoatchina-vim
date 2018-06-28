@@ -1026,8 +1026,10 @@ endif
 " language support
 if g:vim_advance
     " Youcompleteme
-    if g:completable
-        set completeopt=menuone,noinsert,noselect
+    if g:vim_advance == 2
+        set completeopt=menuone,preview,noinsert,noselect
+    else
+        set completeopt=menuone,preview
     endif
     if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
         if g:python_version == 2
