@@ -521,7 +521,7 @@ elseif has('statusline')
 			\  [ 'lineinfo' ],
 			\  [ 'percent' ],
 			\  [ 'filetype', 'fileformat', 'fileencoding' ]]
-			\ },
+			\ }
 			let g:lightline.component_expand =  {
 			\  'linter_checking': 'lightline#ale#checking',
 			\  'linter_warnings': 'lightline#ale#warnings',
