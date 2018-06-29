@@ -490,11 +490,42 @@ if count(g:spf13_plug_groups, 'airline')
     endif
 " lightline use leoatchina/lightline.powerful
 elseif has('statusline')
-    if count(g:spf13_plug_groups, 'lightline')
+    if isdirectory(expand($PLUG_PATH."/lightline.vim"))
         set noshowmode
-        let g:lightline = {
-          \ 'colorscheme': 'onedark',
-          \ }
+		let g:lightline = {
+			\ 'active': {
+			\  'left': [ [ 'mode', 'paste' ],
+			\            [ 'gitbranch', 'readonly' ,'filefullpath', 'modified' ] ,
+			\            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]
+			\  ],
+			\  'right': [ [ 'lineinfo' ],
+			\             [ 'percent' ],
+			\             [ 'filetype', 'fileformat', 'fileencoding' ]
+			\  ],
+			\ },
+			\ 'component': {
+			\  'filefullpath': '%F',
+			\ },
+			\ 'component_function': {
+			\  'gitbranch': 'fugitive#head',
+			\  'readonly': 'LightlineReadonly',
+			\ },
+			\ 'component_expand': {
+			\  'linter_checking': 'lightline#ale#checking',
+			\  'linter_warnings': 'lightline#ale#warnings',
+			\  'linter_errors': 'lightline#ale#errors',
+			\  'linter_ok': 'lightline#ale#ok',
+			\ },
+			\ 'component_type': {
+			\  'linter_checking': 'left',
+			\  'linter_warnings': 'warning',
+			\  'linter_errors': 'error',
+			\  'linter_ok': 'left',
+			\ }
+		\ }
+		function! LightlineReadonly()
+		  return &readonly && &filetype !=# 'help' ? 'RO' : ''
+		endfunction
     else
         function! Buf_total_num()
             return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
