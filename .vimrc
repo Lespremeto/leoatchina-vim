@@ -521,7 +521,6 @@ elseif has('statusline')
 			\  [ 'lineinfo' ],
 			\  [ 'percent' ],
 			\  [ 'filetype', 'fileformat', 'fileencoding' ]]
-			\ }
 			let g:lightline.component_expand =  {
 			\  'linter_checking': 'lightline#ale#checking',
 			\  'linter_warnings': 'lightline#ale#warnings',
@@ -1298,7 +1297,7 @@ if g:vim_advance
         let g:ale_completion_enabled   = 1
         let g:ale_lint_on_enter        = 0
         let g:ale_lint_on_text_changed = 'always'
-        nmap <C-l><C-l> :ALEToggle<CR>
+        nmap <C-l><C-l> :ALELint<CR>
         " signs fo
         let g:ale_sign_column_always   = 1
         let g:ale_set_signs            = 1
