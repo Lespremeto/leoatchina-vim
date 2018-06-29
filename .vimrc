@@ -507,7 +507,7 @@ elseif has('statusline')
 		    \   'right': [ [ 'lineinfo' ], [ 'percent' ] ] },
 			\ 'component': {
 			\  'filefullpath': '%F',
-			\  'lineinfo': '%c %l:%L',
+			\  'lineinfo': '%l/%L %c',
 			\ },
 			\ 'component_function': {
 			\  'gitbranch': 'fugitive#head',
@@ -539,7 +539,7 @@ elseif has('statusline')
         set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
         set statusline+=%2*\ %F\ %*
         set statusline+=%3*\ \ %m%r%y\ %*
-        set statusline+=%=%4*\ %{&ff}\ \|\ \%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-16.(%c\ %l:%L%)%*
+        set statusline+=%=%4*\ %{&ff}\ \|\ \%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-16.(%l\/%L%\ %c)%*
         set statusline+=%5*\ %P\ %<
         " default bg for statusline is 236 in space-vim-dark
         hi User1 cterm=bold ctermfg=232 ctermbg=179
