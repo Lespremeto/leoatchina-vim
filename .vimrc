@@ -495,13 +495,10 @@ elseif has('statusline')
 		let g:lightline = {
 			\ 'active': {
 			\  'left': [ [ 'mode', 'paste' ],
-			\            [ 'gitbranch', 'readonly' ,'filefullpath', 'modified' ] ,
-			\            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]
-			\  ],
+			\            [ 'gitbranch', 'readonly' ,'filefullpath', 'modified' ]],
 			\  'right': [ [ 'lineinfo' ],
 			\             [ 'percent' ],
-			\             [ 'filetype', 'fileformat', 'fileencoding' ]
-			\  ],
+			\             [ 'filetype', 'fileformat', 'fileencoding' ]]
 			\ },
 			\ 'component': {
 			\  'filefullpath': '%F',
@@ -510,22 +507,27 @@ elseif has('statusline')
 			\  'gitbranch': 'fugitive#head',
 			\  'readonly': 'LightlineReadonly',
 			\ },
-			\ 'component_expand': {
-			\  'linter_checking': 'lightline#ale#checking',
-			\  'linter_warnings': 'lightline#ale#warnings',
-			\  'linter_errors': 'lightline#ale#errors',
-			\  'linter_ok': 'lightline#ale#ok',
-			\ },
-			\ 'component_type': {
-			\  'linter_checking': 'left',
-			\  'linter_warnings': 'warning',
-			\  'linter_errors': 'error',
-			\  'linter_ok': 'left',
-			\ }
 		\ }
 		function! LightlineReadonly()
 		  return &readonly && &filetype !=# 'help' ? 'RO' : ''
 		endfunction
+        if count(g:spf13_plug_groups, 'syntax') && g:vim_advance == 2
+			let g:lightline.active.left = [ [ 'mode', 'paste' ],
+			\  [ 'gitbranch', 'readonly' ,'filefullpath', 'modified' ] ,
+			\  [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]]
+			let g:lightline.component_expand =  {
+			\  'linter_checking': 'lightline#ale#checking',
+			\  'linter_warnings': 'lightline#ale#warnings',
+			\  'linter_errors': 'lightline#ale#errors',
+			\  'linter_ok': 'lightline#ale#ok'
+			\ }
+			let g:lightline.component_type = {
+			\  'linter_checking': 'left',
+			\  'linter_warnings': 'warning',
+			\  'linter_errors': 'error',
+			\  'linter_ok': 'left'
+			\ }
+        endif
     else
         function! Buf_total_num()
             return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
