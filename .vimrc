@@ -507,7 +507,7 @@ elseif has('statusline')
 		    \   'right': [ [ 'lineinfo' ], [ 'percent' ] ] },
 			\ 'component': {
 			\  'filefullpath': '%F',
-			\  'lineinfo': '%l/%L %c',
+			\  'lineinfo': '%l/%L : %c',
 			\ },
 			\ 'component_function': {
 			\  'gitbranch': 'fugitive#head',
