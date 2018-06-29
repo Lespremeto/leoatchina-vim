@@ -495,13 +495,18 @@ elseif has('statusline')
 		let g:lightline = {
 			\ 'active': {
 			\  'left': [ [ 'mode', 'paste' ],
-			\            [ 'gitbranch', 'readonly' ,'filefullpath', 'modified' ]],
+			\     [ 'gitbranch', 'readonly' ],
+            \     [ 'filefullpath', 'modified' ]],
 			\  'right': [ [ 'lineinfo' ],
-			\             [ 'percent' ],
-			\             [ 'filetype', 'fileformat', 'fileencoding' ]]
+			\     [ 'percent' ],
+			\     [ 'filetype', 'fileformat', 'fileencoding' ]]
 			\ },
+		    \ 'inactive' : {
+		    \   'left': [ [ 'mode', 'paste' ],[ 'filefullpath' ] ],
+		    \   'right': [ [ 'lineinfo' ], [ 'percent' ] ] },
 			\ 'component': {
 			\  'filefullpath': '%F',
+			\  'lineinfo': '%c %l:%L',
 			\ },
 			\ 'component_function': {
 			\  'gitbranch': 'fugitive#head',
@@ -513,8 +518,9 @@ elseif has('statusline')
 		endfunction
         if count(g:spf13_plug_groups, 'syntax') && g:vim_advance == 2
 			let g:lightline.active.left = [ [ 'mode', 'paste' ],
-			\  [ 'gitbranch', 'readonly' ,'filefullpath', 'modified' ] ,
-			\  [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]]
+			\  [ 'gitbranch', 'readonly'],
+            \  ['filefullpath', 'modified' ],
+            \  [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]]
 			let g:lightline.component_expand =  {
 			\  'linter_checking': 'lightline#ale#checking',
 			\  'linter_warnings': 'lightline#ale#warnings',
@@ -522,7 +528,7 @@ elseif has('statusline')
 			\  'linter_ok': 'lightline#ale#ok'
 			\ }
 			let g:lightline.component_type = {
-			\  'linter_checking': 'left',
+			\  'linter_checking': 'right',
 			\  'linter_warnings': 'warning',
 			\  'linter_errors': 'error',
 			\  'linter_ok': 'left'
@@ -534,7 +540,7 @@ elseif has('statusline')
         endfunction
         set statusline=%<%1*[%n:%{Buf_total_num()}]%*
         set statusline+=%2*\ %F\ %*
-        set statusline+=%3*『\ %{exists('g:loaded_ale')?ALEGetStatusLine():''}』%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
+        set statusline+=%3*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
         set statusline+=%4*\ \ %m%r%y\ %*
         set statusline+=%=%5*\ %{&ff}\ \|\ \%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-16.(%c\ %l:%L%)%*
         set statusline+=%6*\ %P\ %<
