@@ -497,8 +497,9 @@ elseif has('statusline')
 			\  'left': [ [ 'mode', 'paste' ],
 			\     [ 'gitbranch', 'readonly' ],
             \     [ 'filefullpath', 'modified' ]],
-			\  'right': [ [ 'lineinfo' ],
+			\  'right': [
 			\     [ 'percent' ],
+            \     [ 'lineinfo' ],
 			\     [ 'filetype', 'fileformat', 'fileencoding' ]]
 			\ },
 		    \ 'inactive' : {
@@ -518,8 +519,8 @@ elseif has('statusline')
 		endfunction
         if count(g:spf13_plug_groups, 'syntax') && g:vim_advance == 2
 			let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-			\  [ 'lineinfo' ],
 			\  [ 'percent' ],
+			\  [ 'lineinfo' ],
 			\  [ 'filetype', 'fileformat', 'fileencoding' ]]
 			let g:lightline.component_expand =  {
 			\  'linter_checking': 'lightline#ale#checking',
