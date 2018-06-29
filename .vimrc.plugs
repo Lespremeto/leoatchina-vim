@@ -129,11 +129,7 @@ if count(g:spf13_plug_groups, 'php')
 endif
 " Python
 if count(g:spf13_plug_groups, 'python')
-    if g:python_version == 3
-        Plug 'python-mode/python-mode',{ 'branch': 'develop' }
-    elseif g:python_version == 2
-        Plug 'python-mode/python-mode',{ 'branch': 'master' }
-    endif
+    Plug 'python-mode/python-mode',{ 'branch': 'develop' }
 endif
 " Perl
 if count(g:spf13_plug_groups, 'perl')

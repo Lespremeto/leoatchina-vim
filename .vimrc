@@ -810,7 +810,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     if g:python_version     == 3
         let g:pymode_python  = 'python3'
     else
-        let g:pymode_python  = 'python'
+        let g:pymode_python  = 'python2'
     endif
     let g:pymode_syntax = 0
     let g:pymode_syntax_all = 0
