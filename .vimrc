@@ -435,7 +435,6 @@ set background=dark
 set laststatus=2
 if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections/"))
     if has('nvim')
-        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
         if has("gui_running")
             colorscheme onedark
         else
@@ -488,19 +487,18 @@ if count(g:spf13_plug_groups, 'airline')
         let g:airline_right_sep = '◀'
         let g:airline_right_alt_sep = '❮'
     endif
-" lightline use leoatchina/lightline.powerful
 elseif has('statusline')
     if isdirectory(expand($PLUG_PATH."/lightline.vim"))
         set noshowmode
 		let g:lightline = {
+            \ 'colorscheme': 'onedark',
 			\ 'active': {
 			\  'left': [ [ 'mode', 'paste' ],
 			\     [ 'gitbranch', 'readonly' ],
             \     [ 'filefullpath', 'modified' ]],
 			\  'right': [
 			\     [ 'percent' ],
-            \     [ 'lineinfo' ],
-			\     [ 'filetype', 'fileformat', 'fileencoding' ]]
+			\     [ 'filetype', 'fileformat', 'fileencoding' , 'lineinfo']]
 			\ },
 		    \ 'inactive' : {
 		    \   'left': [ [ 'mode', 'paste' ],[ 'filefullpath' ] ],
@@ -520,8 +518,7 @@ elseif has('statusline')
         if count(g:spf13_plug_groups, 'syntax') && g:vim_advance == 2
 			let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
 			\  [ 'percent' ],
-			\  [ 'lineinfo' ],
-			\  [ 'filetype', 'fileformat', 'fileencoding' ]]
+			\  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
 			let g:lightline.component_expand =  {
 			\  'linter_checking': 'lightline#ale#checking',
 			\  'linter_warnings': 'lightline#ale#warnings',
