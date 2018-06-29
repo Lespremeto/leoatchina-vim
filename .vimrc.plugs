@@ -112,11 +112,11 @@ Plug 'junegunn/vim-easy-align'
 Plug 'bling/vim-bufferline'
 if count(g:spf13_plug_groups, 'airline')
     Plug 'vim-airline/vim-airline'
-elseif has('statusline') && count(g:spf13_plug_groups, 'syntax')
+elseif has('statusline')
     Plug 'itchyny/lightline.vim'
-    if g:vim_advance == 2
+    if g:vim_advance == 2 && count(g:spf13_plug_groups, 'syntax')
         Plug 'maximbaz/lightline-ale'
-    endif
+    endi
 endif
 " shell
 if count(g:spf13_plug_groups, 'shell') && !WINDOWS()
