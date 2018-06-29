@@ -517,10 +517,11 @@ elseif has('statusline')
 		  return &readonly && &filetype !=# 'help' ? 'RO' : ''
 		endfunction
         if count(g:spf13_plug_groups, 'syntax') && g:vim_advance == 2
-			let g:lightline.active.left = [ [ 'mode', 'paste' ],
-			\  [ 'gitbranch', 'readonly'],
-            \  ['filefullpath', 'modified' ],
-            \  [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]]
+			let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+			\  [ 'lineinfo' ],
+			\  [ 'percent' ],
+			\  [ 'filetype', 'fileformat', 'fileencoding' ]]
+			\ },
 			let g:lightline.component_expand =  {
 			\  'linter_checking': 'lightline#ale#checking',
 			\  'linter_warnings': 'lightline#ale#warnings',
