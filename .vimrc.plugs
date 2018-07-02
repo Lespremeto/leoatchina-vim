@@ -214,7 +214,7 @@ if g:vim_advance
             echoe "Cannot install YCM, install neocomplcache instead."
         endif
     elseif count(g:spf13_plug_groups, 'ncm2')
-        if g:python_version == 3 && has('nvim-0.2.2')
+        if g:python_version == 3 && has('nvim')
             let g:completable = 2
         else
             let g:completable = 6
