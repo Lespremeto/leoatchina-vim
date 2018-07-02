@@ -213,12 +213,12 @@ if g:vim_advance
             let g:completable = 6
             echoe "Cannot install YCM, install neocomplcache instead."
         endif
-    elseif count(g:spf13_plug_groups, 'nvim-completion-manager') || count(g:spf13_plug_groups, 'NCM')
-        if g:python_version == 3 && g:vim_advance == 2
+    elseif count(g:spf13_plug_groups, 'ncm2')
+        if g:python_version == 3 && has('nvim-0.2.2')
             let g:completable = 2
         else
             let g:completable = 6
-            echoe "Cannot install NCM, install neocomplcache instead."
+            echoe "Cannot install ncm2, install neocomplcache instead."
         endif
 
     endif
@@ -300,10 +300,11 @@ if g:vim_advance
             Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
         endif
     elseif g:completable == 2
-        Plug 'roxma/nvim-completion-manager'
-        if !has('nvim')
-            Plug 'roxma/vim-hug-neovim-rpc'
-        endif
+        Plug 'ncm2/ncm2'
+        Plug 'ncm2/nvim-yarp'
+        Plug 'ncm2/ncm2-bufword'
+        Plug 'ncm2/ncm2-tmux'
+        Plug 'ncm2/ncm2-path'
     elseif g:completable == 3
         Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
         Plug 'zchee/deoplete-clang'

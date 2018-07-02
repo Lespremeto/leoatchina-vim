@@ -1057,12 +1057,12 @@ endif
 if g:vim_advance
     if !WINDOWS()
         if g:vim_advance == 2
-            set completeopt=menu,noinsert,noselect
+            set completeopt=menuone,noinsert,noselect
         else
-            set completeopt=menu
+            set completeopt=menuone
         endif
     endif
-    " Youcompleteme
+    " YouCompleteMee
     if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python2'
@@ -1106,8 +1106,18 @@ if g:vim_advance
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:completable == 2 && isdirectory(expand($PLUG_PATH."/nvim-completion-manager"))
-        let g:cm_complete_popup_delay = 10
+    elseif g:completable == 2 && isdirectory(expand($PLUG_PATH."/ncm2"))
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+        set shortmess+=c
+        call ncm2#register_source({'name' : 'css',
+            \ 'priority': 9,
+            \ 'subscope_enable': 1,
+            \ 'scope': ['css','scss'],
+            \ 'mark': 'css',
+            \ 'word_pattern': '[\w\-]+',
+            \ 'complete_pattern': ':\s*',
+            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+        \ })
     elseif g:completable == 3 && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         let g:deoplete#enable_at_startup = 1
         if !has('nvim')
