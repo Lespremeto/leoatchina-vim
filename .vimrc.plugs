@@ -301,7 +301,7 @@ if g:vim_advance
         endif
     elseif g:completable == 2
         Plug 'ncm2/ncm2'
-        Plug 'ncm2/nvim-yarp'
+        Plug 'roxma/nvim-yarp'
         Plug 'ncm2/ncm2-bufword'
         Plug 'ncm2/ncm2-tmux'
         Plug 'ncm2/ncm2-path'
