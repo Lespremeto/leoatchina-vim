@@ -306,12 +306,14 @@ if g:vim_advance
         Plug 'ncm2/ncm2-tmux'
         Plug 'ncm2/ncm2-path'
     elseif g:completable == 3
-        Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
-        Plug 'zchee/deoplete-clang'
-        if !has('nvim')
+        if has('nvim')
+            Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
+        else
+            Plug 'Shougo/deoplete.nvim'
             Plug 'roxma/vim-hug-neovim-rpc'
             Plug 'roxma/nvim-yarp'
         endif
+        Plug 'zchee/deoplete-clang'
         if count(g:spf13_plug_groups, 'python')
             Plug 'zchee/deoplete-jedi'
         endif
