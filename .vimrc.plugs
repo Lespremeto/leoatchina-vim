@@ -220,12 +220,11 @@ if g:vim_advance
             let g:completable = 6
             echoe "Cannot install ncm2, install neocomplcache instead."
         endif
-
     endif
     " smartcomplete
     if g:completable == 0
         if count(g:spf13_plug_groups, 'deoplete')
-            if g:python_version == 3 && g:vim_advance == 2
+            if g:python_version == 3 && g:vim_advance == 2 && has('timers')
                 let g:completable = 3
             else
                 echoe "Cannot install deoplete, install neocomplcache instead."
@@ -250,7 +249,7 @@ if g:vim_advance
         " smart select a complete plugin
         elseif count(g:spf13_plug_groups, 'smartcomplete')
             "deoplete
-            if g:python_version == 3 && has('nvim')
+            if g:python_version == 3 && has('nvim') && has('timers')
                 let g:completable = 3
             "completor
             elseif g:python_version  && !has('nvim') && version > 799

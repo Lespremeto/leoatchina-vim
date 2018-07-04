@@ -1001,7 +1001,6 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     for m in normal_mode_mappings
     	call denite#custom#map('normal', m[0], m[1], m[2])
     endfor
-
 elseif g:ctrlp_version == 2 && isdirectory(expand($PLUG_PATH."/LeaderF"))
     let g:Lf_ShortcutF = '<F10>'
     let g:Lf_PythonVersion = g:python_version
@@ -1225,6 +1224,10 @@ if g:vim_advance
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
         endif
+        inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
+        inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
+        inoremap <expr> <PageDown>  pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
+        inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         " ultisnip
         if g:use_ultisnips
             " remap Ultisnips for compatibility
@@ -1255,23 +1258,14 @@ if g:vim_advance
             " Ulti的代码片段的文件夹
             let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-            inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
-            inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
-            inoremap <expr> <PageDown>  pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
-            inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         else
             let g:neosnippet#enable_completed_snippet=1
             " c-k to expand
             imap <C-k> <Plug>(neosnippet_expand)
             smap <C-k> <Plug>(neosnippet_expand)
-            xmap <C-k> <Plug>(neosnippet_expand_target)
             " c-f to jump
             imap <C-f> <Right><Plug>(neosnippet_jump)
             smap <C-f> <Right><Plug>(neosnippet_jump)
-            inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
-            inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
-            inoremap <expr> <PageDown>  pumvisible() ? "\<C-n>" : "\<PageDown>"
-            inoremap <expr> <PageUp> pumvisible() ? "\<C-p>" : "\<PageUp>"
             function! g:Neo_Snippet_Tab()
                 if pumvisible() "popup menu apeared
                     if neosnippet#expandable()
