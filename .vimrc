@@ -37,7 +37,10 @@ endfunction
 if WINDOWS()
     set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
     if !has('nvim') && has('gui_running')
-        map <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+        nmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+        imap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+        vmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+        smap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
     endif
 else
     set shell=/bin/sh
@@ -186,14 +189,17 @@ noremap <silent>j gj
 noremap <silent>k gk
 " f1 for help
 autocmd FileType help  setlocal number
-nmap <F1> :tab help<Space>
-vmap <F1> <ESC>:tab help<Space>
-imap <F1> <ESC>
-cmap <F1> <ESC>
+nnoremap <F1> <ESC>:tab help<Space>
+inoremap <F1> <ESC>:tab help<Space>
+snoremap <F1> <ESC>:tab help<Space>
+vnoremap <F1> <ESC>:tab help<Space>
 " F2 toggle hlsearch
-nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
+nnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+inoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+vnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+snoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 " F3 show clipboard
-nnoremap <F3> :reg<Cr>
+nnoremap <F3> <ESC>:reg<Cr>
 inoremap <F3> <ESC>:reg<Cr>
 vnoremap <F3> <ESC>:reg<Cr>
 snoremap <F3> <ESC>:reg<Cr>
@@ -274,11 +280,11 @@ set wildmode=list:longest,full  " Command <Tab> completion, list matches, then l
 set whichwrap=b,s,h,l,<,>,[,]   " BackSpace and cursor keys wrap too
 set scrolljump=5                " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
-set nolist
 set shiftwidth=4                " Use indents of 4 Spaces
-set expandtab                   " Tabs are Spaces, not tabs
 set tabstop=4                   " An indentation every four columns
 set softtabstop=4               " Let backSpace delete indent
+set expandtab                   " Tabs are Spaces, not tabs
+set autoindent
 " 没有滚动条
 set guioptions-=l
 set guioptions-=L
@@ -289,27 +295,15 @@ set guioptions-=m
 set guioptions-=T
 " sepcial setting for different type of files
 au BufNewFile,BufRead *.py
-            \set shiftwidth=4
-            \set tabstop=4
-            \set softtabstop=4
-            \set expandtab
-            \set autoindent
             \set foldmethod=indent
 au FileType python au BufWritePost <buffer> :%retab
 " yaml
-au BufNewFile,BufRead *.yml
-            \set shiftwidth=2
-            \set tabstop=2
-            \set softtabstop=2
-            \set expandtab
-            \set autoindent
-            \set foldmethod=indent
+au FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
 " Remove trailing whiteSpaces and ^M chars
 au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
 au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
-au FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
 " preceding line best in a plugin but here for now.
 au BufNewFile,BufRead *.coffee set filetype=coffee
 " Workaround vim-commentary for Haskell
@@ -340,15 +334,18 @@ if !exists('g:spf13_no_views')
     " Add exclusions to mkview and loadview
     " eg: *.*, svn-commit.tmp
     let g:skipview_files = [
-                \ '\[example pattern\]'
-                \ ]
+        \ '\[example pattern\]'
+        \ ]
 endif
 " far
 if isdirectory(expand($PLUG_PATH."/far.vim"))
-    nmap <F6> :Far<Space>
+    nnoremap <F6> <ESC>:Far<Space>
+    snoremap <F6> <ESC>:Far<Space>
+    inoremap <F6> <ESC>:Far<Space>
+    vnoremap <F6> <ESC>:Far<Space>
 endif
 " tags
-if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."/vim-gutentags"))
+if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/vim-gutentags"))
     set tags=./.tags;,.tags
     " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
     let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
@@ -361,22 +358,21 @@ if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."
     let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
     let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
     let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
     " 检测 ~/.cache/tags 不存在就新建
     if !isdirectory(s:vim_tags)
         silent! call mkdir(s:vim_tags, 'p')
     endif
-
 endif
 " ctrlsf
 if isdirectory(expand($PLUG_PATH."/ctrlsf.vim"))
     nmap     <C-F>s <Plug>CtrlSFPrompt
-    vmap     <C-F>f <Plug>CtrlSFVwordPath
-    vmap     <C-F>s <Plug>CtrlSFVwordExec
     nmap     <C-F>n <Plug>CtrlSFCwordPath
     nmap     <C-F>p <Plug>CtrlSFPwordPath
     nnoremap <C-F>o :CtrlSFOpen<CR>
     nnoremap <C-F>t :CtrlSFToggle<CR>
+    " vmap
+    vmap     <C-F>s <Plug>CtrlSFVwordExec
+    vmap     <C-F>f <Plug>CtrlSFVwordPath
     let g:ctrlsf_position='right'
 endif
 " indent_guides
@@ -398,12 +394,12 @@ if isdirectory(expand($PLUG_PATH."/voom/"))
     let g:voom_tab_key = "_"
     nmap <leader>vt :VoomToggle<CR>
     let g:voom_ft_modes = {
-                \ 'markdown': 'markdown',
-                \ 'pandoc': 'pandoc',
-                \ 'c': 'fmr2',
-                \ 'cpp': 'fmr2',
-                \ 'python':'python',
-                \ 'tex': 'latex'}
+        \ 'markdown': 'markdown',
+        \ 'pandoc': 'pandoc',
+        \ 'c': 'fmr2',
+        \ 'cpp': 'fmr2',
+        \ 'python':'python',
+        \ 'tex': 'latex'}
 endif
 " multiple-cursors
 if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
@@ -1177,9 +1173,7 @@ if g:vim_advance
             let g:neocomplete_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
             let g:neocomplete_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
             let g:neocomplete_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-            " let g:neocomplete_omni_patterns.go   = '[^. *\t]\.\w*'
             let g:neocomplete_omni_patterns.go   = '[0-9a-zA-Z_\.]{3,}'
-            " call neocomplete#custom#set('go', 'min_pattern_length', 1)
         endif
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
@@ -1232,7 +1226,6 @@ if g:vim_advance
         if g:use_ultisnips
             " remap Ultisnips for compatibility
             let g:UltiSnipsListSnippets="<C-l>"
-            let g:UltiSnipsExpandTrigger = '<C-k>'
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
             " Ulti python version
@@ -1255,14 +1248,12 @@ if g:vim_advance
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
             " Ulti的代码片段的文件夹
             let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
         else
             let g:neosnippet#enable_completed_snippet=1
-            " c-k to expand
-            imap <C-k> <Plug>(neosnippet_expand)
-            smap <C-k> <Plug>(neosnippet_expand)
             " c-f to jump
             imap <C-f> <Right><Plug>(neosnippet_jump)
             smap <C-f> <Right><Plug>(neosnippet_jump)
@@ -1274,7 +1265,7 @@ if g:vim_advance
                         if empty(v:completed_item) || !len(get(v:completed_item,'menu'))
                             return "\<C-n>"
                         else
-                            return "\<C-j>"
+                            return "\<C-y>"
                         endif
                     endif
                 else
@@ -1282,6 +1273,7 @@ if g:vim_advance
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:Neo_Snippet_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:Neo_Snippet_Tab()<cr>"
             " Use honza's snippets.
             let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
             " Enable neosnippet snipmate compatibility mode
@@ -1369,11 +1361,16 @@ if g:vim_advance
                 exec ":AsyncRun go run %"
             endif
         endfunction
-        nmap <F5> :call RUNIT()<CR>
+        nmap <F5> <ESC>:call RUNIT()<CR>
+        imap <F5> <ESC>:call RUNIT()<CR>
+        vmap <F5> <ESC>:call RUNIT()<CR>
+        smap <F5> <ESC>:call RUNIT()<CR>
         nmap <leader><F5> :AsyncStop!<CR>
         nnoremap <F4> :call asyncrun#quickfix_toggle(6)<cr>
-        vnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
         nnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
+        vnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
+        snoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
+        inoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
         let g:asyncrun_open = 6
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     elseif isdirectory(expand($PLUG_PATH."/vim-quickrun"))
@@ -1396,6 +1393,7 @@ if g:vim_advance
         nnoremap <silent><F4> :ToggleQuickfix<cr>
         inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
+        snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
     endif
     " after file
     if filereadable(expand("~/.nvimrc.after")) && has('nvim')
