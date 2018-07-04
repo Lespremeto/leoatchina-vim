@@ -1101,19 +1101,7 @@ if g:vim_advance
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:completable == 2 && isdirectory(expand($PLUG_PATH."/ncm2"))
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-        set shortmess+=c
-        call ncm2#register_source({'name' : 'css',
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-        \ })
-    elseif g:completable == 3 && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
+    elseif g:completable == 2 && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         let g:deoplete#enable_at_startup = 1
         if !has('nvim')
             let g:deoplete#enable_yarp=1
@@ -1141,11 +1129,11 @@ if g:vim_advance
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
     " completor
-    elseif g:completable == 4
+    elseif g:completable == 3
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
     " neocomplete
-    elseif g:completable == 5
+    elseif g:completable == 4
         let g:acp_enableAtStartup = 1
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
@@ -1154,31 +1142,26 @@ if g:vim_advance
         let g:neocomplete#enable_auto_delimiter = 0
         let g:neocomplete#max_list = 15
         let g:neocomplete#force_overwrite_completefunc = 1
-        " Define dictionary.
-        let g:neocomplete_dictionary_filetype_lists = {
-                    \ 'default' : '',
-                    \ 'vimshell' : $HOME.'/.vimshell_hist',
-                    \ 'scheme' : $HOME.'/.gosh_completions'
-                    \ }
-        " Define keyword.
-        if !exists('g:neocomplete_keyword_patterns')
-            let g:neocomplete_keyword_patterns = {}
-            let g:neocomplete_keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
-        endif
-        " Enable heavy omni completion.
-        if !exists('g:neocomplete_omni_patterns')
-            let g:neocomplete_omni_patterns      = {}
-            let g:neocomplete_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
-            let g:neocomplete_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-            let g:neocomplete_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
-            let g:neocomplete_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-            let g:neocomplete_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-            let g:neocomplete_omni_patterns.go   = '[0-9a-zA-Z_\.]{3,}'
-        endif
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+        " Enable heavy omni completion.
+        if !exists('g:neocomplete_omni_patterns')
+            let g:neocomplete_omni_patterns = {}
+        endif
+        let g:neocomplete_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplete_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplete_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplete_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplete_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        let g:neocomplete_omni_patterns.go   = '[0-9a-zA-Z_\.]{3,}'
+        " Enable omni completion.
+        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     " neocomplcache
-    elseif g:completable == 6
+    elseif g:completable == 5
         let g:neocomplcache_enable_insert_char_pre = 1
         let g:neocomplcache_enable_at_startup = 1
         let g:neocomplcache_enable_auto_select = 0
@@ -1187,27 +1170,39 @@ if g:vim_advance
         let g:neocomplcache_enable_auto_delimiter = 0
         let g:neocomplcache_max_list = 15
         let g:neocomplcache_force_overwrite_completefunc = 1
+        " <BS>: close popup and delete backword char.
+        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
         if !exists('g:neocomplcache_keyword_patterns')
             let g:neocomplcache_keyword_patterns = {}
             let g:neocomplcache_keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
         endif
-        " Define dictionary.
-        let g:neocomplcache_dictionary_filetype_lists = {
-                    \ 'default' : '',
-                    \ 'vimshell' : $HOME.'/.vimshell_hist',
-                    \ 'scheme' : $HOME.'/.gosh_completions'
-                    \ }
         " Enable heavy omni completion.
         if !exists('g:neocomplcache_omni_patterns')
             let g:neocomplcache_omni_patterns = {}
-            let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-            let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-            let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-            let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-            let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         endif
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+        let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        " Enable omni completion.
+        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    elseif g:completable == 6 && isdirectory(expand($PLUG_PATH."/ncm2"))
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+        set shortmess+=c
+        call ncm2#register_source({'name' : 'css',
+            \ 'priority': 9,
+            \ 'subscope_enable': 1,
+            \ 'scope': ['css','scss'],
+            \ 'mark': 'css',
+            \ 'word_pattern': '[\w\-]+',
+            \ 'complete_pattern': ':\s*',
+            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+        \ })
     endif
     " smart completion use neosnippet to expand
     if g:completable > 0
