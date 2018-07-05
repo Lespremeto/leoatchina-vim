@@ -37,7 +37,10 @@ endfunction
 if WINDOWS()
     set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
     if !has('nvim') && has('gui_running')
-        map <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+        nmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+        imap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+        vmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
+        smap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
     endif
 else
     set shell=/bin/sh
@@ -111,7 +114,6 @@ cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 map  gt <Nop>
 map  gT <Nop>
 xmap <C-s> <Nop>
-xmap <C-t> <Nop>
 xmap <C-q> <Nop>
 xmap <C-z> <Nop>
 nmap ! :!
@@ -186,14 +188,17 @@ noremap <silent>j gj
 noremap <silent>k gk
 " f1 for help
 autocmd FileType help  setlocal number
-nmap <F1> :tab help<Space>
-vmap <F1> <ESC>:tab help<Space>
-imap <F1> <ESC>
-cmap <F1> <ESC>
+nnoremap <F1> <ESC>:tab help<Space>
+inoremap <F1> <ESC>:tab help<Space>
+snoremap <F1> <ESC>:tab help<Space>
+vnoremap <F1> <ESC>:tab help<Space>
 " F2 toggle hlsearch
-nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
+nnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+inoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+vnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+snoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 " F3 show clipboard
-nnoremap <F3> :reg<Cr>
+nnoremap <F3> <ESC>:reg<Cr>
 inoremap <F3> <ESC>:reg<Cr>
 vnoremap <F3> <ESC>:reg<Cr>
 snoremap <F3> <ESC>:reg<Cr>
@@ -222,12 +227,13 @@ nmap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
+"离开插入模式后关闭预览窗口
+au InsertLeave * if pumvisible() == 0|pclose|endif
 " auto close qfixwindows when leave vim
 aug QFClose
     au!
     au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
-
 " Formatting
 set number                      " set number"
 set autoindent                  " Indent at the same level of the previous line
@@ -273,11 +279,11 @@ set wildmode=list:longest,full  " Command <Tab> completion, list matches, then l
 set whichwrap=b,s,h,l,<,>,[,]   " BackSpace and cursor keys wrap too
 set scrolljump=5                " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
-set nolist
 set shiftwidth=4                " Use indents of 4 Spaces
-set expandtab                   " Tabs are Spaces, not tabs
 set tabstop=4                   " An indentation every four columns
 set softtabstop=4               " Let backSpace delete indent
+set expandtab                   " Tabs are Spaces, not tabs
+set autoindent
 " 没有滚动条
 set guioptions-=l
 set guioptions-=L
@@ -288,27 +294,15 @@ set guioptions-=m
 set guioptions-=T
 " sepcial setting for different type of files
 au BufNewFile,BufRead *.py
-            \set shiftwidth=4
-            \set tabstop=4
-            \set softtabstop=4
-            \set expandtab
-            \set autoindent
             \set foldmethod=indent
 au FileType python au BufWritePost <buffer> :%retab
 " yaml
-au BufNewFile,BufRead *.yml
-            \set shiftwidth=2
-            \set tabstop=2
-            \set softtabstop=2
-            \set expandtab
-            \set autoindent
-            \set foldmethod=indent
+au FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
 " Remove trailing whiteSpaces and ^M chars
 au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
 au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
-au FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
 " preceding line best in a plugin but here for now.
 au BufNewFile,BufRead *.coffee set filetype=coffee
 " Workaround vim-commentary for Haskell
@@ -339,15 +333,18 @@ if !exists('g:spf13_no_views')
     " Add exclusions to mkview and loadview
     " eg: *.*, svn-commit.tmp
     let g:skipview_files = [
-                \ '\[example pattern\]'
-                \ ]
+        \ '\[example pattern\]'
+        \ ]
 endif
 " far
 if isdirectory(expand($PLUG_PATH."/far.vim"))
-    nmap <F6> :Far<Space>
+    nnoremap <C-f>a <ESC>:Far<Space>
+    snoremap <C-f>a <ESC>:Far<Space>
+    inoremap <C-f>a <ESC>:Far<Space>
+    vnoremap <C-f>a <ESC>:Far<Space>
 endif
 " tags
-if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."/vim-gutentags"))
+if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/vim-gutentags"))
     set tags=./.tags;,.tags
     " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
     let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
@@ -360,22 +357,21 @@ if isdirectory(expand($PLUG_PATH."/tagbar")) &&  isdirectory(expand($PLUG_PATH."
     let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
     let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
     let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
     " 检测 ~/.cache/tags 不存在就新建
     if !isdirectory(s:vim_tags)
         silent! call mkdir(s:vim_tags, 'p')
     endif
-
 endif
 " ctrlsf
 if isdirectory(expand($PLUG_PATH."/ctrlsf.vim"))
     nmap     <C-F>s <Plug>CtrlSFPrompt
-    vmap     <C-F>f <Plug>CtrlSFVwordPath
-    vmap     <C-F>s <Plug>CtrlSFVwordExec
     nmap     <C-F>n <Plug>CtrlSFCwordPath
     nmap     <C-F>p <Plug>CtrlSFPwordPath
     nnoremap <C-F>o :CtrlSFOpen<CR>
     nnoremap <C-F>t :CtrlSFToggle<CR>
+    " vmap
+    vmap     <C-F>s <Plug>CtrlSFVwordExec
+    vmap     <C-F>f <Plug>CtrlSFVwordPath
     let g:ctrlsf_position='right'
 endif
 " indent_guides
@@ -397,12 +393,12 @@ if isdirectory(expand($PLUG_PATH."/voom/"))
     let g:voom_tab_key = "_"
     nmap <leader>vt :VoomToggle<CR>
     let g:voom_ft_modes = {
-                \ 'markdown': 'markdown',
-                \ 'pandoc': 'pandoc',
-                \ 'c': 'fmr2',
-                \ 'cpp': 'fmr2',
-                \ 'python':'python',
-                \ 'tex': 'latex'}
+        \ 'markdown': 'markdown',
+        \ 'pandoc': 'pandoc',
+        \ 'c': 'fmr2',
+        \ 'cpp': 'fmr2',
+        \ 'python':'python',
+        \ 'tex': 'latex'}
 endif
 " multiple-cursors
 if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
@@ -434,7 +430,6 @@ set background=dark
 set laststatus=2
 if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections/"))
     if has('nvim')
-        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
         if has("gui_running")
             colorscheme onedark
         else
@@ -487,30 +482,63 @@ if count(g:spf13_plug_groups, 'airline')
         let g:airline_right_sep = '◀'
         let g:airline_right_alt_sep = '❮'
     endif
-" lightline use leoatchina/lightline.powerful
 elseif has('statusline')
-    if count(g:spf13_plug_groups, 'lightline')
+    if isdirectory(expand($PLUG_PATH."/lightline.vim"))
         set noshowmode
-        let g:lightline = {
-          \ 'colorscheme': 'onedark',
-          \ }
+		let g:lightline = {
+            \ 'colorscheme': 'onedark',
+			\ 'active': {
+			\  'left': [ [ 'mode', 'paste' ],
+			\     [ 'gitbranch', 'readonly' ],
+            \     [ 'filefullpath', 'modified' ]],
+			\  'right': [
+			\     [ 'percent' ],
+			\     [ 'filetype', 'fileformat', 'fileencoding' , 'lineinfo']]
+			\ },
+		    \ 'inactive' : {
+		    \   'left': [ [ 'mode', 'paste' ],[ 'filefullpath' ] ],
+		    \   'right': [ [ 'lineinfo' ], [ 'percent' ] ] },
+			\ 'component': {
+			\  'filefullpath': '%F',
+			\  'lineinfo': '%l/%L : %c',
+			\ },
+			\ 'component_function': {
+			\  'gitbranch': 'fugitive#head',
+			\  'readonly': 'LightlineReadonly',
+			\ },
+		\ }
+		function! LightlineReadonly()
+		  return &readonly && &filetype !=# 'help' ? 'RO' : ''
+		endfunction
+        if count(g:spf13_plug_groups, 'syntax') && g:vim_advance == 2
+			let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+			\  [ 'percent' ],
+			\  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+			let g:lightline.component_expand =  {
+			\  'linter_checking': 'lightline#ale#checking',
+			\  'linter_warnings': 'lightline#ale#warnings',
+			\  'linter_errors': 'lightline#ale#errors',
+			\  'linter_ok': 'lightline#ale#ok'
+			\ }
+			let g:lightline.component_type = {
+			\  'linter_checking': 'right',
+			\  'linter_warnings': 'warning',
+			\  'linter_errors': 'error',
+			\  'linter_ok': 'left'
+			\ }
+        endif
     else
-        function! Buf_total_num()
-            return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
-        endfunction
-        set statusline=%<%1*[%n:%{Buf_total_num()}]%*
+        set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
         set statusline+=%2*\ %F\ %*
-        set statusline+=%3*『\ %{exists('g:loaded_ale')?ALEGetStatusLine():''}』%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
-        set statusline+=%4*\ \ %m%r%y\ %*
-        set statusline+=%=%5*\ %{&ff}\ \|\ \%{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\&&\&bomb)?\",B\":\"\").\"\ \|\"}\ %-16.(%c\ %l:%L%)%*
-        set statusline+=%6*\ %P\ %<
+        set statusline+=%3*\ \ %m%r%y\ %*
+        set statusline+=%=%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(%l\/%L\ %c%)%*
+        set statusline+=%5*\ %P\ %<
         " default bg for statusline is 236 in space-vim-dark
         hi User1 cterm=bold ctermfg=232 ctermbg=179
-        hi User2 cterm=None ctermfg=251 ctermbg=240
-        hi User3 cterm=bold ctermfg=255 ctermbg=100
-        hi User4 cterm=None ctermfg=208 ctermbg=238
-        hi User5 cterm=None ctermfg=246 ctermbg=237
-        hi User6 cterm=None ctermfg=250 ctermbg=238
+        hi User2 cterm=bold ctermfg=255 ctermbg=100
+        hi User3 cterm=None ctermfg=208 ctermbg=238
+        hi User4 cterm=None ctermfg=246 ctermbg=237
+        hi User5 cterm=None ctermfg=250 ctermbg=238
     endif
 endif
 " NerdTree
@@ -770,7 +798,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     if g:python_version     == 3
         let g:pymode_python  = 'python3'
     else
-        let g:pymode_python  = 'python'
+        let g:pymode_python  = 'python2'
     endif
     let g:pymode_syntax = 0
     let g:pymode_syntax_all = 0
@@ -968,7 +996,6 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     for m in normal_mode_mappings
     	call denite#custom#map('normal', m[0], m[1], m[2])
     endfor
-
 elseif g:ctrlp_version == 2 && isdirectory(expand($PLUG_PATH."/LeaderF"))
     let g:Lf_ShortcutF = '<F10>'
     let g:Lf_PythonVersion = g:python_version
@@ -1014,28 +1041,102 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
     endif
     nnoremap <leader>lm :CtrlPMRU<CR>
 endif
-
 " UndoTree
 if isdirectory(expand($PLUG_PATH."/undotree/"))
     nnoremap <silent><Leader>u :UndotreeToggle<CR>
     " If undotree is opened, it is likely one wants to interact with it.
     let g:undotree_SetFocusWhenToggle=1
 endif
-
 " language support
 if g:vim_advance
-    " Youcompleteme
-    if g:completable == 1
-        au InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后关闭预览窗口
-        let g:ycm_python_binary_path = 'python'
-        let g:acp_enableAtStartup = 0
-        "  补全后关键窗口
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    if !WINDOWS()
+        if g:vim_advance == 2
+            set completeopt=menuone,noinsert,noselect
+        else
+            set completeopt=menuone
+        endif
+    endif
+    if g:complete_method == "deoplete"
+        " <BS>: close popup and delete backword char.
+        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+        let g:deoplete#enable_at_startup = 1
+        if !has('nvim')
+            let g:deoplete#enable_yarp=1
+        endif
+        let g:deoplete#enable_camel_case=1
+        " Enable heavy omni completion.
+        if !exists('g:deoplete#keyword_patterns')
+            let g:deoplete#keyword_patterns = {}
+            let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
+        endif
+        if g:complete_snippet == 'ultisnips'
+            call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
+        endif
+    elseif g:complete_method == "completor"
+        let g:completor_set_options = 0
+        let g:completor_auto_trigger = 1
+    elseif g:complete_method == "neocomplete"
+        let g:neocomplete#enable_at_startup = 1
+        let g:neocomplete#enable_smart_case = 1
+        let g:neocomplete#enable_auto_select = 0
+        let g:neocomplete#enable_camel_case = 1
+        let g:neocomplete#enable_auto_delimiter = 0
+        let g:neocomplete#force_overwrite_completefunc = 1
+        " <BS>: close popup and delete backword char.
+        inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+        " Enable heavy omni completion.
+        if !exists('g:neocomplete#force_omni_input_patterns')
+            let g:neocomplete#force_omni_input_patterns = {}
+        endif
+        let g:neocomplete#force_omni_input_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
+    elseif g:complete_method == "neocomplcache"
+        let g:neocomplcache_enable_insert_char_pre = 1
+        let g:neocomplcache_enable_at_startup = 1
+        let g:neocomplcache_enable_auto_select = 0
+        let g:neocomplcache_enable_camel_case_completion = 1
+        let g:neocomplcache_enable_smart_case = 1
+        let g:neocomplcache_enable_auto_delimiter = 0
+        let g:neocomplcache_force_overwrite_completefunc = 1
+        " <BS>: close popup and delete backword char.
+        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+        if !exists('g:neocomplcache_keyword_patterns')
+            let g:neocomplcache_keyword_patterns = {}
+            let g:neocomplcache_keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
+        endif
+        " Enable heavy omni completion.
+        if !exists('g:neocomplcache_omni_patterns')
+            let g:neocomplcache_omni_patterns = {}
+        endif
+        let g:neocomplcache_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplcache_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
+    elseif g:complete_method == "YCM"
+        if g:python_version == 2
+            let g:ycm_python_binary_path = 'python2'
+        else
+            let g:ycm_python_binary_path = 'python3'
+        endif
+        "  补全后close窗口
         let g:ycm_autoclose_preview_window_after_completion = 1
-        "  插入后关键窗口
+        "  插入后close窗口
         let g:ycm_autoclose_preview_window_after_insertion = 1
         " enable completion from tags
         let g:ycm_collect_identifiers_from_tags_files = 1
-        let g:ycm_key_invoke_completion = '<Tab>'
+        let g:ycm_key_invoke_completion = ''
         let g:ycm_key_list_select_completion = ['<C-n>','<Down>']
         let g:ycm_key_list_previous_completion = ['<C-p','<Up>']
         let g:ycm_filetype_blacklist = {
@@ -1048,17 +1149,12 @@ if g:vim_advance
         if !executable("ghcmod")
             au BufWritePost *.hs GhcModCheckAndLintAsync
         endif
-        let g:ycm_confirm_extra_conf=1 "加载.ycm_extra_conf.py提示
+        let g:ycm_confirm_extra_conf=0 "加载.ycm_extra_conf.py提示
         let g:ycm_global_ycm_extra_conf = '$PLUG_PATH/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
         let g:ycm_collect_identifiers_from_tags_files=1    " 开启 YC基于标签引擎
         let g:ycm_min_num_of_chars_for_completion=2   " 从第2个键入字符就开始罗列匹配项
         let g:ycm_cache_omnifunc=0 " 禁止缓存匹配项,每次都重新生成匹配项
         let g:ycm_seed_identifiers_with_syntax=1   " 语法关键字补全
-        let g:ycm_semantic_triggers =  {
-                    \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-                    \ 'cs,lua,javascript': ['re!\w{2}'],
-                    \}
-        let g:ycm_add_preview_to_completeopt = 0 " preview里不加入原型
         ""在注释输入中也能补全
         let g:ycm_complete_in_comments = 1
         "在字符串输入中也能补全
@@ -1067,123 +1163,37 @@ if g:vim_advance
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-        " asyncomplete
-    elseif g:completable == 2
-        let g:cm_complete_popup_delay = 10
-    elseif g:completable == 3
-        let g:deoplete#enable_at_startup = 1
-        if !has('nvim')
-            let g:deoplete#enable_yarp=1
-        endif
-        let g:deoplete#enable_camel_case=1
-        " Enable heavy omni completion.
-        if !exists('g:deoplete#keyword_patterns')
-            let g:deoplete#keyword_patterns = {}
-            let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
-        endif
-        au FileType go let g:deoplete#complete_method = "omnifunc"
-        if !exists('g:deoplete#omni_patterns')
-            let g:deoplete#omni_patterns      = {}
-            let g:deoplete#omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
-            let g:deoplete#omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-            let g:deoplete#omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
-            let g:deoplete#omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-            let g:deoplete#omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-            let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-            let g:deoplete#omni_patterns.go   = '[^. *\t]\.\w*'
-            " call deoplete#custom#set('go', 'min_pattern_length', 1)
-        endif
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
-        if g:use_ultisnips
-            call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
-        endif
-    " completor
-    elseif g:completable == 4
-        let g:completor_set_options = 0
-        let g:completor_auto_trigger = 1
-        set completeopt=menuone,noinsert,noselect
-    " neocomplete
-    elseif g:completable == 5
-        let g:acp_enableAtStartup = 1
-        let g:neocomplete#enable_at_startup = 1
-        let g:neocomplete#enable_smart_case = 1
-        let g:neocomplete#enable_auto_select = 0
-        let g:neocomplete#enable_camel_case = 1
-        let g:neocomplete#enable_auto_delimiter = 0
-        let g:neocomplete#max_list = 15
-        let g:neocomplete#force_overwrite_completefunc = 1
-        " Define dictionary.
-        let g:neocomplete_dictionary_filetype_lists = {
-                    \ 'default' : '',
-                    \ 'vimshell' : $HOME.'/.vimshell_hist',
-                    \ 'scheme' : $HOME.'/.gosh_completions'
-                    \ }
-        " Define keyword.
-        if !exists('g:neocomplete_keyword_patterns')
-            let g:neocomplete_keyword_patterns = {}
-            let g:neocomplete_keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
-        endif
-        " Enable heavy omni completion.
-        if !exists('g:neocomplete_omni_patterns')
-            let g:neocomplete_omni_patterns      = {}
-            let g:neocomplete_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
-            let g:neocomplete_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-            let g:neocomplete_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
-            let g:neocomplete_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-            let g:neocomplete_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-            " let g:neocomplete_omni_patterns.go   = '[^. *\t]\.\w*'
-            let g:neocomplete_omni_patterns.go   = '[0-9a-zA-Z_\.]{3,}'
-            " call neocomplete#custom#set('go', 'min_pattern_length', 1)
-        endif
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-    " neocomplcache
-    elseif g:completable == 6
-        let g:neocomplcache_enable_insert_char_pre = 1
-        let g:neocomplcache_enable_at_startup = 1
-        let g:neocomplcache_enable_auto_select = 0
-        let g:neocomplcache_enable_camel_case_completion = 1
-        let g:neocomplcache_enable_smart_case = 1
-        let g:neocomplcache_enable_auto_delimiter = 0
-        let g:neocomplcache_max_list = 15
-        let g:neocomplcache_force_overwrite_completefunc = 1
-        if !exists('g:neocomplcache_keyword_patterns')
-            let g:neocomplcache_keyword_patterns = {}
-            let g:neocomplcache_keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
-        endif
-        " Define dictionary.
-        let g:neocomplcache_dictionary_filetype_lists = {
-                    \ 'default' : '',
-                    \ 'vimshell' : $HOME.'/.vimshell_hist',
-                    \ 'scheme' : $HOME.'/.gosh_completions'
-                    \ }
-        " Enable heavy omni completion.
-        if !exists('g:neocomplcache_omni_patterns')
-            let g:neocomplcache_omni_patterns = {}
-            let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-            let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-            let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-            let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-            let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-        endif
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+    elseif g:complete_method == "ncm2"
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+        set shortmess+=c
+        call ncm2#register_source({'name' : 'css',
+            \ 'priority': 9,
+            \ 'subscope_enable': 1,
+            \ 'scope': ['css','scss'],
+            \ 'mark': 'css',
+            \ 'word_pattern': '[\w\-]+',
+            \ 'complete_pattern': ':\s*',
+            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+        \ })
     endif
     " smart completion use neosnippet to expand
-    if g:completable > 0
+    if g:complete_method !="None"
         imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
         " headache confict
-        if g:completable==1
+        if g:complete_method=="YCM"
             imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
         endif
+        inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
+        inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
+        inoremap <expr> <PageDown>  pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
+        inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         " ultisnip
-        if g:use_ultisnips
+        if g:complete_snippet == "ultisnips"
             " remap Ultisnips for compatibility
             let g:UltiSnipsListSnippets="<C-l>"
-            let g:UltiSnipsExpandTrigger = '<C-k>'
+            let g:UltiSnipsExpandTrigger = '<F10>'
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
             " Ulti python version
@@ -1206,35 +1216,26 @@ if g:vim_advance
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
             " Ulti的代码片段的文件夹
             let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-            inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
-            inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
-            inoremap <expr> <PageDown>  pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
-            inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-        else
-            let g:neosnippet#enable_completed_snippet=1
-            " c-k to expand
-            imap <C-k> <Plug>(neosnippet_expand)
-            smap <C-k> <Plug>(neosnippet_expand)
-            xmap <C-k> <Plug>(neosnippet_expand_target)
+        elseif g:complete_snippet == "neosnippet"
+            let g:neosnippet#enable_completed_snippet = 1
+			" <F10> for trigger
+            imap <F10> <Plug>(neosnippet_expand)
+            smap <F10> <Plug>(neosnippet_expand)
             " c-f to jump
-            imap <C-f> <Right><Plug>(neosnippet_jump)
             smap <C-f> <Right><Plug>(neosnippet_jump)
-            inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
-            inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
-            inoremap <expr> <PageDown>  pumvisible() ? "\<C-n>" : "\<PageDown>"
-            inoremap <expr> <PageUp> pumvisible() ? "\<C-p>" : "\<PageUp>"
             function! g:Neo_Snippet_Tab()
-                if pumvisible() "popup menu apeared
+                if pumvisible()
                     if neosnippet#expandable()
                         return neosnippet#mappings#expand_impl()
                     else
                         if empty(v:completed_item) || !len(get(v:completed_item,'menu'))
                             return "\<C-n>"
                         else
-                            return "\<C-j>"
+                            return "\<C-y>"
                         endif
                     endif
                 else
@@ -1242,6 +1243,7 @@ if g:vim_advance
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:Neo_Snippet_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:Neo_Snippet_Tab()<cr>"
             " Use honza's snippets.
             let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
             " Enable neosnippet snipmate compatibility mode
@@ -1254,7 +1256,6 @@ if g:vim_advance
         let g:ale_completion_enabled   = 1
         let g:ale_lint_on_enter        = 0
         let g:ale_lint_on_text_changed = 'always'
-        nmap <C-l><C-l> :ALEToggle<CR>
         " signs fo
         let g:ale_sign_column_always   = 1
         let g:ale_set_signs            = 1
@@ -1272,13 +1273,14 @@ if g:vim_advance
         let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
         "highlight clear ALEErrorSign
         "highlight clear ALEWarningSign
-        nmap <silent> <leader>[ <Plug>(ale_previous_wrap)
-        nmap <silent> <leader>] <Plug>(ale_next_wrap)
+        nnoremap <C-l><C-l> :ALELint<CR>
+        nnoremap <silent> <C-l>p <Plug>(ale_previous_wrap)
+        nnoremap <silent> <C-l>n <Plug>(ale_next_wrap)
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
         let g:ale_fixers ={}
-        nmap <leader>gt :ALEGoToDefinition<CR>
+        nmap <C-]> :ALEGoToDefinition<CR>
     elseif isdirectory(expand($PLUG_PATH."/syntastic"))
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'
@@ -1329,11 +1331,16 @@ if g:vim_advance
                 exec ":AsyncRun go run %"
             endif
         endfunction
-        nmap <F5> :call RUNIT()<CR>
+        nmap <F5> <ESC>:call RUNIT()<CR>
+        imap <F5> <ESC>:call RUNIT()<CR>
+        vmap <F5> <ESC>:call RUNIT()<CR>
+        smap <F5> <ESC>:call RUNIT()<CR>
         nmap <leader><F5> :AsyncStop!<CR>
         nnoremap <F4> :call asyncrun#quickfix_toggle(6)<cr>
-        vnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
         nnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
+        vnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
+        snoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
+        inoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
         let g:asyncrun_open = 6
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     elseif isdirectory(expand($PLUG_PATH."/vim-quickrun"))
@@ -1356,6 +1363,15 @@ if g:vim_advance
         nnoremap <silent><F4> :ToggleQuickfix<cr>
         inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
+        snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
+    endif
+    " after file
+    if filereadable(expand("~/.nvimrc.after")) && has('nvim')
+        source ~/.nvimrc.after
+    elseif filereadable(expand("~/.gvimrc.after")) && has('gui_running')
+        source ~/.gvimrc.after
+    elseif filereadable(expand("~/.vimrc.after"))
+        source ~/.vimrc.after
     endif
 endif
 " Functions
