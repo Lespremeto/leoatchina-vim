@@ -1075,7 +1075,7 @@ if g:vim_advance
             let g:deoplete#keyword_patterns = {}
             let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
         endif
-        if g:use_ultisnips
+        if g:complete_snippet == 'ultisnips'
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
     elseif g:complete_method == "completor"
@@ -1190,7 +1190,7 @@ if g:vim_advance
         inoremap <expr> <PageDown>  pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
         inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
         " ultisnip
-        if g:use_ultisnips
+        if g:complete_snippet == "ultisnips"
             " remap Ultisnips for compatibility
             let g:UltiSnipsListSnippets="<C-l>"
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
@@ -1219,7 +1219,7 @@ if g:vim_advance
             " Ulti的代码片段的文件夹
             let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-        else
+        elseif g:complete_snippet == "neosnippet"
             let g:neosnippet#enable_completed_snippet=1
             " c-f to jump
             imap <C-f> <Right><Plug>(neosnippet_jump)
