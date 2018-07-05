@@ -1076,6 +1076,15 @@ if g:vim_advance
             let g:deoplete#keyword_patterns = {}
             let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
         endif
+		call deoplete#custom#option('omni_patterns', {
+            \ 'java' : '[^. *\t]\.\w*',
+            \ 'php'  : '[^. \t]->\h\w*\|\h\w*::',
+            \ 'perl' : '\h\w*->\h\w*\|\h\w*::',
+            \ 'c'    : '[^.[:digit:] *\t]\%(\.\|->\)',
+            \ 'cpp'  : '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
+            \ 'ruby' : '[^. *\t]\.\h\w*\|\h\w*::',
+            \ 'go'   : '\h\w*\.\?',
+		\})
         if g:complete_snippet == 'ultisnips'
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
@@ -1095,6 +1104,7 @@ if g:vim_advance
         if !exists('g:neocomplete#force_omni_input_patterns')
             let g:neocomplete#force_omni_input_patterns = {}
         endif
+        let g:neocomplete#force_omni_input_patterns.java = '[^. \t]\.\w*'
         let g:neocomplete#force_omni_input_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -1102,12 +1112,12 @@ if g:vim_advance
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
     elseif g:complete_method == "neocomplcache"
-        let g:neocomplcache_enable_insert_char_pre = 1
-        let g:neocomplcache_enable_at_startup = 1
-        let g:neocomplcache_enable_auto_select = 0
+        let g:neocomplcache_enable_insert_char_pre       = 1
+        let g:neocomplcache_enable_at_startup            = 1
+        let g:neocomplcache_enable_auto_select           = 0
         let g:neocomplcache_enable_camel_case_completion = 1
-        let g:neocomplcache_enable_smart_case = 1
-        let g:neocomplcache_enable_auto_delimiter = 0
+        let g:neocomplcache_enable_smart_case            = 1
+        let g:neocomplcache_enable_auto_delimiter        = 0
         let g:neocomplcache_force_overwrite_completefunc = 1
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -1119,6 +1129,7 @@ if g:vim_advance
         if !exists('g:neocomplcache_omni_patterns')
             let g:neocomplcache_omni_patterns = {}
         endif
+        let g:neocomplcache_omni_patterns.java = '[^. \t]\.\w*'
         let g:neocomplcache_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
