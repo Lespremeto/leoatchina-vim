@@ -21,7 +21,7 @@ else
 endif
 set rtp+=$PLUG_PATH
 " enhanced browser tools
-let g:completable = 0
+let g:complete_method = 0
 let g:use_ultisnips = 0
 " python support
 if has('python3') && executable('python3')
@@ -207,63 +207,63 @@ if g:vim_advance
     " YCM or asyncomplete
     if count(g:spf13_plug_groups, 'youcompleteme') || count(g:spf13_plug_groups, 'YCM')
         if executable('cmake') && g:python_version
-            let g:completable = 1
+            let g:complete_method = 1
         else
-            let g:completable = 5
+            let g:complete_method = 5
             echoe "Cannot install YCM, install neocomplcache instead."
         endif
     elseif count(g:spf13_plug_groups, 'ncm2')
         if g:python_version == 3 && has('nvim')
-            let g:completable = 6
+            let g:complete_method = 6
         else
-            let g:completable = 5
+            let g:complete_method = 5
             echoe "Cannot install ncm2, install neocomplcache instead."
         endif
     endif
     " smartcomplete
-    if g:completable == 0
+    if g:complete_method == 0
         if count(g:spf13_plug_groups, 'deoplete')
             if g:python_version == 3 && g:vim_advance == 2 && has('timers')
-                let g:completable = 2
+                let g:complete_method = 2
             else
                 echoe "Cannot install deoplete, install neocomplcache instead."
-                let g:completable = 5
+                let g:complete_method = 5
             endif
         elseif count(g:spf13_plug_groups, 'completor')
             if g:python_version && !has('nvim') && version > 799
-                let g:completable = 3
+                let g:complete_method = 3
             else
                 echoe "Cannot install completor, install neocomplcache instead."
-                let g:completable = 5
+                let g:complete_method = 5
             endif
         elseif count(g:spf13_plug_groups, 'neocomplete')
             if has('lua')
-                let g:completable = 4
+                let g:complete_method = 4
             else
                 echoe "Cannot install neocomplete, install neocomplcache instead."
-                let g:completable = 5
+                let g:complete_method = 5
             endif
         elseif count(g:spf13_plug_groups, 'neocomplcache')
-            let g:completable = 5
+            let g:complete_method = 5
         " smart select a complete plugin
         elseif count(g:spf13_plug_groups, 'smartcomplete')
             "deoplete
             if g:python_version == 3 && has('nvim') && has('timers')
-                let g:completable = 2
+                let g:complete_method = 2
             "completor
             elseif g:python_version  && !has('nvim') && version > 799
-                let g:completable = 3
+                let g:complete_method = 3
             "neocomplete
             elseif has('lua')
-                let g:completable = 4
+                let g:complete_method = 4
             "neocomplcache
             else
-                let g:completable = 5
+                let g:complete_method = 5
             endif
         endif
     endif
     " install snippets plugins
-    if g:completable
+    if g:complete_method
         if count(g:spf13_plug_groups,'ultisnips')
             if g:python_version
                 let g:use_ultisnips = 1
@@ -291,13 +291,13 @@ if g:vim_advance
         endif
     endif
     " install complete plugins
-    if g:completable == 1
+    if g:complete_method == 1
         if g:python_version == 2
             Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2 ./install.py --clang-completer' }
         elseif g:python_version == 3
             Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
         endif
-    elseif g:completable == 2
+    elseif g:complete_method == 2
         if has('nvim')
             Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
         else
@@ -312,28 +312,29 @@ if g:vim_advance
         if count(g:spf13_plug_groups, 'go')
             Plug 'zchee/deoplete-go'
         endif
-        if count(g:spf13_plug_groups, 'javascript')
+		if count(g:spf13_plug_groups, 'javascript')
             Plug 'carlitux/deoplete-ternjs'
         endif
-    elseif g:completable == 3
+    elseif g:complete_method == 3
         Plug 'maralla/completor.vim'
         if !g:use_ultisnips
             Plug 'maralla/completor-neosnippet'
         endif
-    elseif g:completable == 4
+    elseif g:complete_method == 4
         Plug 'Shougo/neocomplete.vim'
-    elseif g:completable == 5
+    elseif g:complete_method == 5
         Plug 'Shougo/neocomplcache.vim'
         if g:use_ultisnips == 1
             Plug 'JazzCore/neocomplcache-ultisnips'
         endif
-    elseif g:completable == 6
+    elseif g:complete_method == 6
         Plug 'ncm2/ncm2'
         Plug 'roxma/nvim-yarp'
         Plug 'ncm2/ncm2-bufword'
         Plug 'ncm2/ncm2-tmux'
         Plug 'ncm2/ncm2-path'
-    elseif g:completable == 7
+    elseif g:complete_method == 7
+
     endif
 else
     echoe "In order to have grammar check and snippets completion, you should update to vim7.3+ or neovim!!"

@@ -114,7 +114,6 @@ cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 map  gt <Nop>
 map  gT <Nop>
 xmap <C-s> <Nop>
-xmap <C-t> <Nop>
 xmap <C-q> <Nop>
 xmap <C-z> <Nop>
 nmap ! :!
@@ -339,10 +338,10 @@ if !exists('g:spf13_no_views')
 endif
 " far
 if isdirectory(expand($PLUG_PATH."/far.vim"))
-    nnoremap <F6> <ESC>:Far<Space>
-    snoremap <F6> <ESC>:Far<Space>
-    inoremap <F6> <ESC>:Far<Space>
-    vnoremap <F6> <ESC>:Far<Space>
+    nnoremap <C-f>a <ESC>:Far<Space>
+    snoremap <C-f>a <ESC>:Far<Space>
+    inoremap <C-f>a <ESC>:Far<Space>
+    vnoremap <C-f>a <ESC>:Far<Space>
 endif
 " tags
 if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/vim-gutentags"))
@@ -1050,6 +1049,12 @@ if isdirectory(expand($PLUG_PATH."/undotree/"))
 endif
 " language support
 if g:vim_advance
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     if !WINDOWS()
         if g:vim_advance == 2
             set completeopt=menuone,noinsert,noselect
@@ -1058,7 +1063,7 @@ if g:vim_advance
         endif
     endif
     " YouCompleteMee
-    if g:completable == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
+    if g:complete_method == 1 && isdirectory(expand($PLUG_PATH.'/YouCompleteMe'))
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python2'
         else
@@ -1101,7 +1106,9 @@ if g:vim_advance
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:completable == 2 && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
+    elseif g:complete_method == 2 && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
+        " <BS>: close popup and delete backword char.
+        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
         let g:deoplete#enable_at_startup = 1
         if !has('nvim')
             let g:deoplete#enable_yarp=1
@@ -1112,63 +1119,41 @@ if g:vim_advance
             let g:deoplete#keyword_patterns = {}
             let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
         endif
-        if !exists('g:deoplete#omni_patterns')
-            let g:deoplete#omni_patterns      = {}
-            let g:deoplete#omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
-            let g:deoplete#omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-            let g:deoplete#omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
-            let g:deoplete#omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-            let g:deoplete#omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-            let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-            let g:deoplete#omni_patterns.go   = '[^. *\t]\.\w*'
-            " call deoplete#custom#set('go', 'min_pattern_length', 1)
-        endif
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
         if g:use_ultisnips
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
     " completor
-    elseif g:completable == 3
+    elseif g:complete_method == 3
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
     " neocomplete
-    elseif g:completable == 4
-        let g:acp_enableAtStartup = 1
+    elseif g:complete_method == 4
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
         let g:neocomplete#enable_camel_case = 1
         let g:neocomplete#enable_auto_delimiter = 0
-        let g:neocomplete#max_list = 15
         let g:neocomplete#force_overwrite_completefunc = 1
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
         " Enable heavy omni completion.
-        if !exists('g:neocomplete_omni_patterns')
-            let g:neocomplete_omni_patterns = {}
+        if !exists('g:neocomplete#force_omni_input_patterns')
+            let g:neocomplete#force_omni_input_patterns = {}
         endif
-        let g:neocomplete_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
-        let g:neocomplete_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-        let g:neocomplete_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
-        let g:neocomplete_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-        let g:neocomplete_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-        let g:neocomplete_omni_patterns.go   = '[0-9a-zA-Z_\.]{3,}'
-        " Enable omni completion.
-        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+        let g:neocomplete#force_omni_input_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
     " neocomplcache
-    elseif g:completable == 5
+    elseif g:complete_method == 5
         let g:neocomplcache_enable_insert_char_pre = 1
         let g:neocomplcache_enable_at_startup = 1
         let g:neocomplcache_enable_auto_select = 0
         let g:neocomplcache_enable_camel_case_completion = 1
         let g:neocomplcache_enable_smart_case = 1
         let g:neocomplcache_enable_auto_delimiter = 0
-        let g:neocomplcache_max_list = 15
         let g:neocomplcache_force_overwrite_completefunc = 1
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -1180,18 +1165,13 @@ if g:vim_advance
         if !exists('g:neocomplcache_omni_patterns')
             let g:neocomplcache_omni_patterns = {}
         endif
-        let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-        let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-        let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplcache_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplcache_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-        " Enable omni completion.
-        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    elseif g:completable == 6 && isdirectory(expand($PLUG_PATH."/ncm2"))
+        let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
+    elseif g:complete_method == 6 && isdirectory(expand($PLUG_PATH."/ncm2"))
         autocmd BufEnter * call ncm2#enable_for_buffer()
         set shortmess+=c
         call ncm2#register_source({'name' : 'css',
@@ -1205,10 +1185,10 @@ if g:vim_advance
         \ })
     endif
     " smart completion use neosnippet to expand
-    if g:completable > 0
+    if g:complete_method > 0
         imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
         " headache confict
-        if g:completable==1
+        if g:complete_method==1
             imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
