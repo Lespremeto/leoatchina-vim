@@ -1177,10 +1177,14 @@ if g:vim_advance
         \ })
     endif
     " smart completion use neosnippet to expand
-    if g:complete_method > 0
+    if g:complete_method !="None"
         imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
+        augroup complete
+          autocmd!
+          autocmd CompleteDone * pclose
+        augroup end
         " headache confict
-        if g:complete_method==1
+        if g:complete_method=="YCM"
             imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
@@ -1208,7 +1212,7 @@ if g:vim_advance
                         else
                             return "\<C-y>"
                         endif
-                    endi`f
+                    endif
                 else
                     return "\<Tab>"
                 endif
