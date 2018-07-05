@@ -1138,8 +1138,8 @@ if g:vim_advance
         " enable completion from tags
         let g:ycm_collect_identifiers_from_tags_files = 1
         let g:ycm_key_invoke_completion = ''
-        let g:ycm_key_list_select_completion = ['<C-n>','<Down>']
-        let g:ycm_key_list_previous_completion = ['<C-p','<Up>']
+        let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+        let g:ycm_key_list_previous_completion = ['<C-p', '<Up>']
         let g:ycm_filetype_blacklist = {
                     \ 'tagbar' : 1,
                     \ 'nerdtree' : 1,
@@ -1151,7 +1151,6 @@ if g:vim_advance
             au BufWritePost *.hs GhcModCheckAndLintAsync
         endif
         let g:ycm_confirm_extra_conf=0 "加载.ycm_extra_conf.py提示
-        let g:ycm_global_ycm_extra_conf = '$PLUG_PATH/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
         let g:ycm_collect_identifiers_from_tags_files=1    " 开启 YC基于标签引擎
         let g:ycm_min_num_of_chars_for_completion=2   " 从第2个键入字符就开始罗列匹配项
         let g:ycm_cache_omnifunc=0 " 禁止缓存匹配项,每次都重新生成匹配项
@@ -1193,6 +1192,7 @@ if g:vim_advance
         " ultisnip
         if g:complete_snippet == "ultisnips"
             " remap Ultisnips for compatibility
+            let g:UltiSnipsNoPythonWarning = 0
             let g:UltiSnipsListSnippets="<C-l>"
             let g:UltiSnipsExpandTrigger = '<F10>'
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
