@@ -1193,6 +1193,7 @@ if g:vim_advance
         if g:complete_snippet == "ultisnips"
             " remap Ultisnips for compatibility
             let g:UltiSnipsListSnippets="<C-l>"
+            let g:UltiSnipsExpandTrigger = '<Tab>'
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
             " Ulti python version
@@ -1201,28 +1202,24 @@ if g:vim_advance
             function! g:UltiSnips_Tab()
                 if pumvisible()
                     call UltiSnips#ExpandSnippet()
-                    if g:ulti_expand_res
-                        return "\<Right>"
-                    else
+                    if !g:ulti_expand_res
                         if empty(v:completed_item) || !len(get(v:completed_item,'menu'))
                             return "\<C-n>"
                         else
                             return "\<C-y>"
                         endif
-                    endif
+                    endi`f
                 else
                     return "\<Tab>"
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
-            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
             " Ulti的代码片段的文件夹
             let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
         elseif g:complete_snippet == "neosnippet"
-            let g:neosnippet#enable_completed_snippet=1
+            let g:neosnippet#enable_completed_snippet = 1
             " c-f to jump
-            imap <C-f> <Right><Plug>(neosnippet_jump)
             smap <C-f> <Right><Plug>(neosnippet_jump)
             function! g:Neo_Snippet_Tab()
                 if pumvisible() "popup menu apeared
@@ -1240,7 +1237,6 @@ if g:vim_advance
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:Neo_Snippet_Tab()<cr>"
-            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:Neo_Snippet_Tab()<cr>"
             " Use honza's snippets.
             let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
             " Enable neosnippet snipmate compatibility mode
