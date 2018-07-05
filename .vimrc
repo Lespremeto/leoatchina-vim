@@ -817,6 +817,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     let g:pymode_breakpoint       = 1
     let g:pymode_breakpoint_bind  = '<C-l>t'
     let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
+    let g:pymode_rope_goto_definition_bind = '<C-l>d'
     " pymode check disable
     if count(g:spf13_plug_groups, 'syntax')
         let g:pymode_lint = 0
@@ -833,7 +834,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
         " show message of error line
         let g:pymode_lint_message    = 1
         " checkers
-        let g:pymode_lint_checkers   = ['pyflakes','pep8']
+        let g:pymode_lint_checkers   = ['pyflakes', 'pep8']
         "let g:pymode_lint_checkers = ['pep8']
         let g:pymode_lint_ignore     = "E128,E2,E3,E501"
         " not Auto open cwindow (quickfix) if any errors have been found
@@ -1280,7 +1281,7 @@ if g:vim_advance
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
         let g:ale_fixers ={}
-        nmap <C-]> :ALEGoToDefinition<CR>
+        nnoremap <C-l>g :ALEGoToDefinitionInTab<CR>
     elseif isdirectory(expand($PLUG_PATH."/syntastic"))
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'

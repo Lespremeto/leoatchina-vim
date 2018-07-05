@@ -94,7 +94,7 @@ if executable('ag') || executable('ack') || executable('rg') || executable('pt')
 else
     if v:version >799 && !WINDOWS() && executable('ctags')
         Plug 'damage220/vim-finder'
-        nmap <C-f>s :finder<Tab>
+        nnoremap <C-f>s :finder<Tab>
     else
         nnoremap <C-f>s :vimgrep<Space>
     endif
