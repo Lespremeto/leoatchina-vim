@@ -310,7 +310,7 @@ if g:vim_advance
         Plug 'Shougo/neocomplete.vim'
     elseif g:complete_method == "neocomplcache"
         Plug 'Shougo/neocomplcache.vim'
-        if g:complete_snippet
+        if g:complete_snippet == 'ultisnips'
             Plug 'JazzCore/neocomplcache-ultisnips'
         endif
     elseif g:complete_method == "YCM"
