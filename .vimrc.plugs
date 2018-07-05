@@ -303,7 +303,7 @@ if g:vim_advance
         endif
     elseif g:complete_method == "completor"
         Plug 'maralla/completor.vim'
-        if !g:complete_snippet
+        if g:complete_snippet == "neosnippet"
             Plug 'maralla/completor-neosnippet'
         endif
     elseif g:complete_method == "neocomplete"
