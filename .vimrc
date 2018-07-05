@@ -1179,10 +1179,6 @@ if g:vim_advance
     " smart completion use neosnippet to expand
     if g:complete_method !="None"
         imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
-        augroup complete
-          autocmd!
-          autocmd CompleteDone * pclose
-        augroup end
         " headache confict
         if g:complete_method=="YCM"
             imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
@@ -1197,7 +1193,7 @@ if g:vim_advance
         if g:complete_snippet == "ultisnips"
             " remap Ultisnips for compatibility
             let g:UltiSnipsListSnippets="<C-l>"
-            let g:UltiSnipsExpandTrigger = '<Tab>'
+            let g:UltiSnipsExpandTrigger = '<F10>'
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
             " Ulti python version
@@ -1206,7 +1202,9 @@ if g:vim_advance
             function! g:UltiSnips_Tab()
                 if pumvisible()
                     call UltiSnips#ExpandSnippet()
-                    if !g:ulti_expand_res
+                    if g:ulti_expand_res
+                        return "\<Right>"
+                    else
                         if empty(v:completed_item) || !len(get(v:completed_item,'menu'))
                             return "\<C-n>"
                         else
@@ -1218,15 +1216,19 @@ if g:vim_advance
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
             " Ulti的代码片段的文件夹
             let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
         elseif g:complete_snippet == "neosnippet"
             let g:neosnippet#enable_completed_snippet = 1
+			" <F10> for trigger
+            imap <F10> <Plug>(neosnippet_expand)
+            smap <F10> <Plug>(neosnippet_expand)
             " c-f to jump
             smap <C-f> <Right><Plug>(neosnippet_jump)
             function! g:Neo_Snippet_Tab()
-                if pumvisible() "popup menu apeared
+                if pumvisible()
                     if neosnippet#expandable()
                         return neosnippet#mappings#expand_impl()
                     else
@@ -1241,6 +1243,7 @@ if g:vim_advance
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:Neo_Snippet_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:Neo_Snippet_Tab()<cr>"
             " Use honza's snippets.
             let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
             " Enable neosnippet snipmate compatibility mode
