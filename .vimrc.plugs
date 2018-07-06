@@ -330,3 +330,10 @@ else
     echoe "In order to have grammar check and snippets completion, you should update to vim7.3+ or neovim!!"
 endif
 call plug#end()
+function! s:PlugRenew()
+    :PlugClean
+    :PlugUpgrade
+    :PlugInstall
+    :PlugUpdate
+endfunction
+command! PlugRenew call s:PlugRenew()
