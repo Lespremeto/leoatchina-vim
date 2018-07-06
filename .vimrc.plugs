@@ -102,6 +102,7 @@ endif
 Plug 'brooth/far.vim'
 Plug 'terryma/vim-multiple-cursors'
 " signs
+Plug 'gorodinskiy/vim-coloresque'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -125,34 +126,29 @@ if count(g:spf13_plug_groups, 'shell') && !WINDOWS()
 endif
 " PHP
 if count(g:spf13_plug_groups, 'php')
-    Plug 'arnaud-lb/vim-php-namespace'
+    Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
 endif
 " Python
 if count(g:spf13_plug_groups, 'python')
-    Plug 'python-mode/python-mode', { 'branch': 'develop' }
-endif
-" Perl
-if count(g:spf13_plug_groups, 'perl')
-    Plug 'vim-perl/vim-perl'
+    Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 endif
 " Javascript
 if count(g:spf13_plug_groups, 'javascript')
-    Plug 'elzr/vim-json'
-    Plug 'pangloss/vim-javascript'
-    Plug 'heavenshell/vim-jsdoc'
+    Plug 'elzr/vim-json', {'for': 'javascript'}
+    Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+    Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
 endif
 " Go
 if count(g:spf13_plug_groups, 'go')
-    Plug 'fatih/vim-go', {'do':':GoUpdateBinaries'}
-    Plug 'garyburd/go-explorer'
+    Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
+    Plug 'garyburd/go-explorer', {'for': 'go'}
     if has('nvim')
-        Plug 'jodosha/vim-godebug'
+        Plug 'jodosha/vim-godebug', {'for': 'go'}
     endif
 endif
 " HTML
 if count(g:spf13_plug_groups, 'html')
     Plug 'hail2u/vim-css3-syntax'
-    Plug 'gorodinskiy/vim-coloresque'
     Plug 'tpope/vim-haml'
     Plug 'mattn/emmet-vim'
 endif
