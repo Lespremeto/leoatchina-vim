@@ -1326,10 +1326,9 @@ if g:vim_advance
         nnoremap <C-l>p :lprevious<cr>
     endif
     if isdirectory(expand($PLUG_PATH."/asyncrun.vim")) && g:vim_advance == 2
-        nmap <Leader>as :AsyncRun<Space>
-        function! RUNIT()
+        function! s:RUN_ASYNC()
             exec "w"
-            call asyncrun#quickfix_toggle(1)<cr>
+            call asyncrun#quickfix_toggle(8,1)
             if &filetype == 'c'
                 exec ":AsyncRun g++ % -o %<"
                 exec ":AsyncRun ./%<"
@@ -1349,15 +1348,10 @@ if g:vim_advance
                 exec ":AsyncRun go run %"
             endif
         endfunction
-        nmap <C-l>r call RUNIT()<CR>
-        imap <C-l>r <ESC>:call RUNIT()<CR>
-        vmap <C-l>r <ESC>:call RUNIT()<CR>
-        smap <C-l>r <ESC>:call RUNIT()<CR>
-        nmap <C-l>s :AsyncStop!<CR>
-        imap <C-l>s <ESC>:AsyncStop!<CR>
-        smap <C-l>s <ESC>:AsyncStop!<CR>
-        vmap <C-l>s <ESC>:AsyncStop!<CR>
-        let g:asyncrun_open = 6
+        command! RunAsync call s:RUN_ASYNC()
+        nmap <leader><F5> :RunAsync<CR>
+        nmap <localleader><F5> :AsyncStop<CR>
+        nmap <C-l><F5> :AsyncRun<Space>
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     endif
 
