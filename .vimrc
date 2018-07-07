@@ -1351,16 +1351,16 @@ if g:vim_advance
         command! RunAsync call s:RUN_ASYNC()
         nmap <leader><F5> :RunAsync<CR>
         nmap <localleader><F5> :AsyncStop<CR>
-        nmap <C-l><F5> :AsyncRun<Space>
+        nmap <C-l>r :AsyncRun<Space>
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     endif
-
     if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
         nnoremap <F5> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let g:quickfix_is_open = 0
         function! ToggleQuickfix()
             if g:quickfix_is_open
+                cclose
                 cclose
                 let g:quickfix_is_open = 0
                 execute g:quickfix_return_to_window . "wincmd w"
@@ -1376,14 +1376,6 @@ if g:vim_advance
         inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
-    endif
-    " after file
-    if filereadable(expand("~/.nvimrc.after")) && has('nvim')
-        source ~/.nvimrc.after
-    elseif filereadable(expand("~/.gvimrc.after")) && has('gui_running')
-        source ~/.gvimrc.after
-    elseif filereadable(expand("~/.vimrc.after"))
-        source ~/.vimrc.after
     endif
 endif
 " Functions
@@ -1456,3 +1448,14 @@ command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 function! s:ExpandFilenameAndExecute(command, file)
     execute a:command . " " . expand(a:file, ":p")
 endfunction
+nnoremap <C-k>s :Shell<Space>
+" after file
+if filereadable(expand("~/.nvimrc.after")) && has('nvim')
+    source ~/.nvimrc.after
+endif
+if filereadable(expand("~/.gvimrc.after")) && has('gui_running')
+    source ~/.gvimrc.after
+endif
+if filereadable(expand("~/.vimrc.after"))
+    source ~/.vimrc.after
+endif
