@@ -1325,13 +1325,11 @@ if g:vim_advance
         nnoremap <C-l>n :lnext<cr>
         nnoremap <C-l>p :lprevious<cr>
     endif
-
     if isdirectory(expand($PLUG_PATH."/asyncrun.vim")) && g:vim_advance == 2
-        nmap <Leader>rr :AsyncRun
+        nmap <Leader>as :AsyncRun<Space>
         function! RUNIT()
             exec "w"
-            cclose
-            call asyncrun#quickfix_toggle()
+            call asyncrun#quickfix_toggle(1)<cr>
             if &filetype == 'c'
                 exec ":AsyncRun g++ % -o %<"
                 exec ":AsyncRun ./%<"
@@ -1351,19 +1349,19 @@ if g:vim_advance
                 exec ":AsyncRun go run %"
             endif
         endfunction
-        nmap <F5> <ESC>:call RUNIT()<CR>
-        imap <F5> <ESC>:call RUNIT()<CR>
-        vmap <F5> <ESC>:call RUNIT()<CR>
-        smap <F5> <ESC>:call RUNIT()<CR>
-        nmap <leader><F5> :AsyncStop!<CR>
-        nnoremap <F4> :call asyncrun#quickfix_toggle(6)<cr>
-        nnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
-        vnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
-        snoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
-        inoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
+        nmap <C-l>r call RUNIT()<CR>
+        imap <C-l>r <ESC>:call RUNIT()<CR>
+        vmap <C-l>r <ESC>:call RUNIT()<CR>
+        smap <C-l>r <ESC>:call RUNIT()<CR>
+        nmap <C-l>s :AsyncStop!<CR>
+        imap <C-l>s <ESC>:AsyncStop!<CR>
+        smap <C-l>s <ESC>:AsyncStop!<CR>
+        vmap <C-l>s <ESC>:AsyncStop!<CR>
         let g:asyncrun_open = 6
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-    elseif isdirectory(expand($PLUG_PATH."/vim-quickrun"))
+    endif
+
+    if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
         nnoremap <F5> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let g:quickfix_is_open = 0
