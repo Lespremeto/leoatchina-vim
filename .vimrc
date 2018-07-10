@@ -75,14 +75,6 @@ endif
 if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
     inoremap <silent> <C-[>OC <RIGHT>
 endif
-" Use local config
-if filereadable(expand("~/.nvimrc.local")) && has('nvim')
-    source ~/.nvimrc.local
-elseif filereadable(expand("~/.gvimrc.local")) && has('gui_running')
-    source ~/.gvimrc.local
-elseif filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
 " Use plugs config
 if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
@@ -1449,13 +1441,3 @@ function! s:ExpandFilenameAndExecute(command, file)
     execute a:command . " " . expand(a:file, ":p")
 endfunction
 nnoremap <C-k>s :Shell<Space>
-" after file
-if filereadable(expand("~/.nvimrc.after")) && has('nvim')
-    source ~/.nvimrc.after
-endif
-if filereadable(expand("~/.gvimrc.after")) && has('gui_running')
-    source ~/.gvimrc.after
-endif
-if filereadable(expand("~/.vimrc.after"))
-    source ~/.vimrc.after
-endif

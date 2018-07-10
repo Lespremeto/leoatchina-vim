@@ -42,6 +42,14 @@ endif
 
 " plugins
 call plug#begin($PLUG_PATH)
+" Use local config, some tested feature can be add to it
+if filereadable(expand("~/.nvimrc.local")) && has('nvim')
+    source ~/.nvimrc.local
+elseif filereadable(expand("~/.gvimrc.local")) && has('gui_running')
+    source ~/.gvimrc.local
+elseif filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
 if WINDOWS()
     Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
     let $PATH.=";".$HOME."\\.vim-windows-tools"
@@ -324,6 +332,14 @@ if g:vim_advance
     endif
 else
     echoe "In order to have grammar check and snippets completion, you should update to vim7.3+ or neovim!!"
+endif
+" after file
+if filereadable(expand("~/.nvimrc.after")) && has('nvim')
+    source ~/.nvimrc.after
+elseif filereadable(expand("~/.gvimrc.after")) && has('gui_running')
+    source ~/.gvimrc.after
+elseif filereadable(expand("~/.vimrc.after"))
+    source ~/.vimrc.after
 endif
 call plug#end()
 function! s:PlugRenew()
