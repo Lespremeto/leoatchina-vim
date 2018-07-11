@@ -809,7 +809,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     let g:pymode_breakpoint       = 1
     let g:pymode_breakpoint_bind  = '<C-l>t'
     let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
-    let g:pymode_rope_goto_definition_bind = '<C-l>d'
+    let g:pymode_rope_goto_definition_bind = 'gd'
     " pymode check disable
     if count(g:spf13_plug_groups, 'syntax')
         let g:pymode_lint = 0
@@ -1173,7 +1173,7 @@ if g:vim_advance
         "注释和字符串中的文字也会被收入补全
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif g:complete_method == "ncm2"
         autocmd BufEnter * call ncm2#enable_for_buffer()
         set shortmess+=c
@@ -1292,7 +1292,7 @@ if g:vim_advance
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
         let g:ale_fixers ={}
-        nnoremap <C-l>g :ALEGoToDefinitionInTab<CR>
+        nnoremap go :ALEGoToDefinitionInTab<CR>
     elseif isdirectory(expand($PLUG_PATH."/syntastic"))
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'
@@ -1343,7 +1343,7 @@ if g:vim_advance
         command! RunAsync call s:RUN_ASYNC()
         nmap <leader><F5> :RunAsync<CR>
         nmap <localleader><F5> :AsyncStop<CR>
-        nmap <C-l>r :AsyncRun<Space>
+        nmap gr :AsyncRun<Space>
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     endif
     if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
