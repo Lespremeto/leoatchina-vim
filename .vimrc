@@ -672,13 +672,13 @@ endif
 " startify
 if isdirectory(expand($PLUG_PATH."/vim-startify"))
     let g:startify_custom_header = [
-        \ '+------------------------------------------------------------+',
-        \ '|  Welcome to use leoatchina's vim config forked from spf13  |',
-        \ '|                                                            |',
-        \ '|  https://github.com/leoatchina/leoatchina-vim              |',
-        \ '|                                                            |',
-        \ '|  https://github.com/spf13/spf13-vim                        |',
-        \ '+------------------------------------------------------------+',
+        \ '+---------------------------------------------------------+',
+        \ '|  Welcome to use leoatchina vim config forked from spf13 |',
+        \ '|                                                         |',
+        \ '|  https://github.com/leoatchina/leoatchina-vim           |',
+        \ '|                                                         |',
+        \ '|  https://github.com/spf13/spf13-vim                     |',
+        \ '+---------------------------------------------------------+',
         \ ]
     let g:startify_session_dir = '~/.vim/session'
     let g:startify_files_number = 5
