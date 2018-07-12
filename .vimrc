@@ -1032,7 +1032,7 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
     nnoremap <leader>lm :CtrlPMRU<CR>
 endif
 " UndoTree
-if isdirectory(expand($PLUG_PATH."/undotree/"))
+if isdirectory(expand($PLUG_PATH."/undotree"))
     nnoremap <silent><Leader>u :UndotreeToggle<CR>
     " If undotree is opened, it is likely one wants to interact with it.
     let g:undotree_SetFocusWhenToggle=1
@@ -1052,7 +1052,7 @@ if g:vim_advance
             set completeopt=menuone
         endif
     endif
-    if g:complete_method == "deoplete"
+    if g:complete_method == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
         let g:deoplete#enable_at_startup = 1
@@ -1077,10 +1077,10 @@ if g:vim_advance
         if g:complete_snippet == 'ultisnips'
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif g:complete_method == "completor"
+    elseif g:complete_method == "completor" && isdirectory(expand($PLUG_PATH."/completor.vim"))
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-    elseif g:complete_method == "neocomplete"
+    elseif g:complete_method == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete"))
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1100,7 +1100,7 @@ if g:vim_advance
         let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_method == "neocomplcache"
+    elseif g:complete_method == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache"))
         let g:neocomplcache_enable_insert_char_pre       = 1
         let g:neocomplcache_enable_at_startup            = 1
         let g:neocomplcache_enable_auto_select           = 0
@@ -1125,7 +1125,7 @@ if g:vim_advance
         let g:neocomplcache_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_method == "YCM"
+    elseif g:complete_method == "YCM" && isdirectory(expand($PLUG_PATH."/YouCompleteMe"))
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python2'
         else
@@ -1159,7 +1159,6 @@ if g:vim_advance
         let g:ycm_confirm_extra_conf = 1 "加载.ycm_extra_conf.py提示
         let g:ycm_global_ycm_extra_conf = $PLUG_PATH."/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
         let g:ycm_key_invoke_completion = ''
-
         let g:ycm_collect_identifiers_from_tags_files = 1    " 开启 YC基于标签引擎
         let g:ycm_min_num_of_chars_for_completion = 2   " 从第2个键入字符就开始罗列匹配项
         let g:ycm_seed_identifiers_with_syntax = 1   " 语法关键字补全
@@ -1171,7 +1170,7 @@ if g:vim_advance
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:complete_method == "ncm2"
+    elseif g:complete_method == "ncm2" && isdirectory(expand($PLUG_PATH."/ncm2"))
         autocmd BufEnter * call ncm2#enable_for_buffer()
         set shortmess+=c
         call ncm2#register_source({'name' : 'css',
