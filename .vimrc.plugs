@@ -29,6 +29,7 @@ if has('python3') && executable('python3')
     silent! python3 1
 elseif has('python') && executable('python')
     let g:python_version = 2
+    silent! python2 1
 else
     let g:python_version = 0
 endif
@@ -83,15 +84,15 @@ if executable('ctags')
 endif
 " In your .vimrc.local file
 " list only the plugin groups you will use
-if !exists('g:spf13_plug_groups')
-    let g:spf13_plug_groups=['smartcomplete', 'php', 'javascript', 'html']
+if !exists('g:plug_groups')
+    let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html']
 endif
 " input method
-if count(g:spf13_plug_groups, 'pinyin') || count(g:spf13_plug_groups, 'wubi')
+if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
     Plug 'leoatchina/ywvim'
 endif
 " biosyntax
-if count(g:spf13_plug_groups, 'bio')
+if count(g:plug_groups, 'bio')
     Plug 'bioSyntax/bioSyntax-vim'
 endif
 " external search method
@@ -121,35 +122,35 @@ Plug 'tamlok/vim-markdown'
 Plug 'junegunn/vim-easy-align'
 " statusline
 Plug 'bling/vim-bufferline'
-if count(g:spf13_plug_groups, 'airline')
+if count(g:plug_groups, 'airline')
     Plug 'vim-airline/vim-airline'
 elseif has('statusline')
     Plug 'itchyny/lightline.vim'
-    if g:vim_advance == 2 && count(g:spf13_plug_groups, 'syntax')
+    if g:vim_advance == 2 && count(g:plug_groups, 'syntax')
         Plug 'maximbaz/lightline-ale'
     endi
 endif
 " shell
-if count(g:spf13_plug_groups, 'shell') && !WINDOWS()
+if count(g:plug_groups, 'shell') && !WINDOWS()
     Plug 'shougo/vimproc.vim', {'do':'make'}
     Plug 'shougo/vimshell.vim'
 endif
 " PHP
-if count(g:spf13_plug_groups, 'php')
+if count(g:plug_groups, 'php')
     Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
 endif
 " Python
-if count(g:spf13_plug_groups, 'python')
+if count(g:plug_groups, 'python')
     Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 endif
 " Javascript
-if count(g:spf13_plug_groups, 'javascript')
+if count(g:plug_groups, 'javascript')
     Plug 'elzr/vim-json', {'for': 'javascript'}
     Plug 'pangloss/vim-javascript', {'for': 'javascript'}
     Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
 endif
 " Go
-if count(g:spf13_plug_groups, 'go')
+if count(g:plug_groups, 'go')
     Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
     Plug 'garyburd/go-explorer', {'for': 'go'}
     if has('nvim')
@@ -157,22 +158,22 @@ if count(g:spf13_plug_groups, 'go')
     endif
 endif
 " HTML
-if count(g:spf13_plug_groups, 'html')
+if count(g:plug_groups, 'html')
     Plug 'hail2u/vim-css3-syntax'
     Plug 'tpope/vim-haml'
     Plug 'mattn/emmet-vim'
 endif
 " browser tools
 let g:ctrlp_version = 1
-if count(g:spf13_plug_groups, 'fzf')
+if count(g:plug_groups, 'fzf')
     if !WINDOWS()
         let g:ctrlp_version = 4
     endif
-elseif count(g:spf13_plug_groups, 'denite')
+elseif count(g:plug_groups, 'denite')
     if g:python_version == 3 && g:vim_advance == 2
         let g:ctrlp_version = 3
     endif
-elseif count(g:spf13_plug_groups, 'leaderF')
+elseif count(g:plug_groups, 'leaderF')
     if g:python_version && executable('gcc') && g:vim_advance
         let g:ctrlp_version = 2
     endif
@@ -196,7 +197,7 @@ endif
 if g:vim_advance
     " vim version
     if g:vim_advance == 2
-        if count(g:spf13_plug_groups, 'syntax')
+        if count(g:plug_groups, 'syntax')
             Plug 'w0rp/ale'
         endif
         Plug 'skywind3000/asyncrun.vim'
@@ -205,13 +206,13 @@ if g:vim_advance
         endif
     else
         " install run and syntax tools
-        if count(g:spf13_plug_groups, 'syntax')
+        if count(g:plug_groups, 'syntax')
             Plug 'vim-syntastic/syntastic'
         endif
     endif
     Plug 'thinca/vim-quickrun'
     " select a complete plugin
-    if count(g:spf13_plug_groups, 'smartcomplete')
+    if count(g:plug_groups, 'smartcomplete')
         if g:python_version == 3 && has('nvim') && has('timers')
             let g:complete_method = "deoplete"
         elseif g:python_version  && !has('nvim') && version > 799
@@ -221,31 +222,31 @@ if g:vim_advance
         else
             let g:complete_method = "neocomplcache"
         endif
-    elseif count(g:spf13_plug_groups, 'deoplete')
+    elseif count(g:plug_groups, 'deoplete')
         if g:python_version == 3 && g:vim_advance == 2 && has('timers')
             let g:complete_method = "deoplete"
         else
             echoe "Cannot install deoplete, install neocomplcache instead."
             let g:complete_method = "neocomplcache"
         endif
-    elseif count(g:spf13_plug_groups, 'completor')
+    elseif count(g:plug_groups, 'completor')
         if g:python_version && !has('nvim') && version > 799
             let g:complete_method = "completor"
         else
             echoe "Cannot install completor, install neocomplcache instead."
             let g:complete_method = "neocomplcache"
         endif
-    elseif count(g:spf13_plug_groups, 'neocomplete')
+    elseif count(g:plug_groups, 'neocomplete')
         if has('lua')
             let g:complete_method = "neocomplete"
         else
             echoe "Cannot install neocomplete, install neocomplcache instead."
             let g:complete_method = "neocomplcache"
         endif
-    elseif count(g:spf13_plug_groups, 'neocomplcache')
+    elseif count(g:plug_groups, 'neocomplcache')
         let g:complete_method = "neocomplcache"
     " YCM or asyncomplete
-    elseif count(g:spf13_plug_groups, 'youcompleteme') || count(g:spf13_plug_groups, 'YCM')
+    elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
         if executable('cmake') && g:python_version
             let g:complete_method = "YCM"
         else
@@ -255,7 +256,7 @@ if g:vim_advance
     endif
     " install snippets plugins
     if g:complete_method != "None"
-        if count(g:spf13_plug_groups,'ultisnips')
+        if count(g:plug_groups,'ultisnips')
             if g:python_version
                 let g:complete_snippet = "ultisnips"
                 Plug 'SirVer/ultisnips'
@@ -266,7 +267,7 @@ if g:vim_advance
                 Plug 'Shougo/neosnippet'
                 Plug 'Shougo/neosnippet-snippets'
             endif
-        elseif count(g:spf13_plug_groups,'neosnippet')
+        elseif count(g:plug_groups,'neosnippet')
             let g:complete_snippet = "neosnippet"
             Plug 'Shougo/neosnippet'
             Plug 'Shougo/neosnippet-snippets'
@@ -291,13 +292,13 @@ if g:vim_advance
             Plug 'roxma/nvim-yarp'
         endif
         Plug 'zchee/deoplete-clang'
-        if count(g:spf13_plug_groups, 'python')
+        if count(g:plug_groups, 'python')
             Plug 'zchee/deoplete-jedi'
         endif
-        if count(g:spf13_plug_groups, 'go')
+        if count(g:plug_groups, 'go')
             Plug 'zchee/deoplete-go'
         endif
-		if count(g:spf13_plug_groups, 'javascript')
+		if count(g:plug_groups, 'javascript')
             Plug 'carlitux/deoplete-ternjs'
         endif
     elseif g:complete_method == "completor"

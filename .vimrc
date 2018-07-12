@@ -79,16 +79,8 @@ if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
 endif
 " Key (re)Mappings
-if !exists('g:spf13_leader')
-    let mapleader=' '
-else
-    let mapleader=g:spf13_leader
-endif
-if !exists('g:spf13_localleader')
-    let maplocalleader = '\'
-else
-    let maplocalleader=g:spf13_localleader
-endif
+let mapleader=' '
+let maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
 set pastetoggle=<F12>
 " 定义快捷键保存当前窗口内容
@@ -299,32 +291,19 @@ au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
 au FileType haskell,rust setlocal nospell
 " General
-if !exists('g:spf13_no_autochdir')
-    au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-endif
+au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 " Restore cursor to file position in previous editing session
-if !exists('g:spf13_no_restore_cursor')
-    function! ResCur()
-        if line("'\"") <= line("$")
-            silent! normal! g`"
-            return 1
-        endif
-    endfunction
-    augroup resCur
-        au!
-        au BufWinEnter * call ResCur()
-    augroup END
-endif
-" To disable views add the following to your .vimrc.local file:
-"   let g:spf13_no_views = 1
-if !exists('g:spf13_no_views')
-    " Add exclusions to mkview and loadview
-    " eg: *.*, svn-commit.tmp
-    let g:skipview_files = [
-        \ '\[example pattern\]'
-        \ ]
-endif
+function! ResCur()
+    if line("'\"") <= line("$")
+        silent! normal! g`"
+        return 1
+    endif
+endfunction
+augroup resCur
+    au!
+    au BufWinEnter * call ResCur()
+augroup END
 " far
 if isdirectory(expand($PLUG_PATH."/far.vim"))
     nnoremap <C-f>a <ESC>:Far<Space>
@@ -439,7 +418,7 @@ if isdirectory(expand($PLUG_PATH."/vim-bufferline"))
     let g:bufferline_fixed_index =  0
 endif
 " statusline
-if count(g:spf13_plug_groups, 'airline')
+if count(g:plug_groups, 'airline')
     set noshowmode
     let g:airline_powerline_fonts = 0
     let g:airline_symbols_ascii = 1
@@ -499,7 +478,7 @@ elseif has('statusline')
 		function! LightlineReadonly()
 		  return &readonly && &filetype !=# 'help' ? 'RO' : ''
 		endfunction
-        if count(g:spf13_plug_groups, 'syntax') && g:vim_advance == 2
+        if count(g:plug_groups, 'syntax') && g:vim_advance == 2
 			let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
 			\  [ 'percent' ],
 			\  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
@@ -574,10 +553,6 @@ endif
 " End/Start of line motion keys act relative to row/wrap width in the
 " presence of `:set wrap`, and relative to line for `:set nowrap`.
 " Default vim behaviour is to act relative to text line in both cases
-" If you prefer the default behaviour, add the following to your
-" .vimrc.local file:
-"   let g:spf13_no_wrapRelMotion = 1
-" Same for 0, home, end, etc
 function! WrapRelativeMotion(key, ...)
     let vis_sel=""
     if a:0
@@ -619,12 +594,12 @@ endif
 " Plugins
 " ywvim,vim里的中文输入法
 if isdirectory(expand($PLUG_PATH."/ywvim"))
-    if count(g:spf13_plug_groups, 'pinyin')
+    if count(g:plug_groups, 'pinyin')
         let g:ywvim_ims=[
                     \['py', '拼音', 'pinyin.ywvim'],
                     \['wb', '五笔', 'wubi.ywvim'],
                     \]
-    elseif count(g:spf13_plug_groups, 'wubi')
+    elseif count(g:plug_groups, 'wubi')
         let g:ywvim_ims=[
                     \['wb', '五笔', 'wubi.ywvim'],
                     \['py', '拼音', 'pinyin.ywvim'],
@@ -697,13 +672,13 @@ endif
 " startify
 if isdirectory(expand($PLUG_PATH."/vim-startify"))
     let g:startify_custom_header = [
-        \ '+----------------------------------------------------------+',
-        \ '|  Welcome to use leoatchina vim config forked from spf13  |',
-        \ '|                                                          |',
-        \ '|  https://github.com/leoatchina/leoatchina-vim            |',
-        \ '|                                                          |',
-        \ '|  https://github.com/spf13/spf13-vim                      |',
-        \ '+----------------------------------------------------------+',
+        \ '+------------------------------------------------------------+',
+        \ '|  Welcome to use leoatchina's vim config forked from spf13  |',
+        \ '|                                                            |',
+        \ '|  https://github.com/leoatchina/leoatchina-vim              |',
+        \ '|                                                            |',
+        \ '|  https://github.com/spf13/spf13-vim                        |',
+        \ '+------------------------------------------------------------+',
         \ ]
     let g:startify_session_dir = '~/.vim/session'
     let g:startify_files_number = 5
@@ -760,7 +735,7 @@ if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
     let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
 endif
 " Go program
-if count(g:spf13_plug_groups, 'go')
+if count(g:plug_groups, 'go')
     let g:go_highlight_functions         = 1
     let g:go_highlight_methods           = 1
     let g:go_highlight_structs           = 1
@@ -808,7 +783,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
     let g:pymode_rope_goto_definition_bind = 'gd'
     " pymode check disable
-    if count(g:spf13_plug_groups, 'syntax')
+    if count(g:plug_groups, 'syntax')
         let g:pymode_lint = 0
     else
         nmap <C-l>l :PymodeLint<CR>
@@ -1367,15 +1342,7 @@ function! InitializeDirectories()
         let dir_list['undo'] = 'undodir'
     endif
     " To specify a different directory in which to place the vimbackup,
-    " vimviews, vimundo, and vimswap files/directories, add the following to
-    " your .vimrc.local file:
-    "   let g:spf13_consolidated_directory = <full path to desired directory>
-    "   eg: let g:spf13_consolidated_directory = $HOME . '/.vim/'
-    if exists('g:spf13_consolidated_directory')
-        let common_dir = g:spf13_consolidated_directory . prefix
-    else
-        let common_dir = parent . '/.' . prefix
-    endif
+    let common_dir = parent . '/.' . prefix
     for [dirname, settingname] in items(dir_list)
         let directory = common_dir . dirname . '/'
         if exists("*mkdir")
