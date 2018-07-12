@@ -7,7 +7,6 @@
 "        |___/ .__/|_| |_|____/        \_/  |_|_| |_| |_|
 "            |_|
 " You can find spf13's origin config at http://spf13.com
-
 " Basics
 set nocompatible        " Must be first line
 set encoding=utf-8
@@ -178,8 +177,7 @@ map zh zH
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
-" f1 for help
-autocmd FileType help  setlocal number
+" F1 for help
 nnoremap <F1> <ESC>:tab help<Space>
 inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
@@ -227,7 +225,6 @@ aug QFClose
     au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
 " Formatting
-set number                      " set number"
 set autoindent                  " Indent at the same level of the previous line
 set nojoinspaces                " Prevents inserting two Spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current

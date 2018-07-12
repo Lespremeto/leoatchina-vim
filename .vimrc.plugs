@@ -58,6 +58,7 @@ if (has('nvim') && WINDOWS()) || (has('gui_running') && !WINDOWS())
     Plug 'lambdalisue/vim-fullscreen'
 endif
 Plug 'mhinz/vim-startify'
+Plug 'kshenoy/vim-signature'
 Plug 'google/vim-searchindex'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
