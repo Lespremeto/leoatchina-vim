@@ -26,6 +26,7 @@ let g:complete_snippet = "None"
 " python support
 if has('python3') && executable('python3')
     let g:python_version = 3
+    silent! python3 1
 elseif has('python') && executable('python')
     let g:python_version = 2
 else
