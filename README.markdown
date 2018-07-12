@@ -1,33 +1,27 @@
-# leoatchina的vim配置文件
 This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim).I sincerely thank him for great job. To meet my needs,I have changed lots of settings and plugins.
  You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim
-
-
-[spf13]()对他自己作品的介绍
+ 
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.
 > It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
 > The distribution is completely customisable using a `~/.vimrc.local`, `~/.vimrc.bundles.local`, and `~/.vimrc.before.local` Vim RC files.
 
-## 背景
-本人是生信工程师,主要使用的语言是`python`,`perl`,`shell`,经常要ssh到远程服务器上写代码,因此学习了vim,后来发现了[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim),大大提高了写代码的效率。
-但是,原配置仍然有很多插件和配置不符合我的需要,因此,fork后进行了大量的修改.请访问[leoatchina的vim配置文件](https://github.com/leoatchina/leoatchina-vim).由于本人水平所限,一定有很多错误和bug,望各位指正.
-**注意**使本配置文件后可能会影响vim运行流畅度,介意者要通过学习后,关闭某些特性以提高速度.
 
-## 对使用者的要求
-掌握vim的大部分操作,了解`Leader`,`map`,`hjkl`,`d`,`w`,`s`,`i`,`u`,`:`,`\`等操作命令
-
-## 配置文件
+# 1.  Main files effection
 **各配置文件**
-* `.vimrc`      # 最主要的配置文件,配色、快捷键、显示方式等参数都在这里设置
+* `.vimrc`      
 * `.vimrc.local` # 自定义配置
 * `.vimrc.plug`  # 插件管理文件
 
-## 安装
+# 2. call workflow
+.
+
+
+# 3. 安装
 *安装本配置 需要 Git 1.7+ 和 Vim 7.4+，部分插件如`ale`,`AsyncRun`,需要Vim8.0*
 
-### Linux, \*nix, Mac OSX 下的安装
+## 3.1. Linux, \*nix, Mac OSX 下的安装
 
-需要系统里安装好`git`,`curl`
+need `git`,`curl`
 
 ```bash
   git clone https://github.com/leoatchina/leoatchina-vim.git
@@ -35,7 +29,7 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
   ./install.sh   第一次安装要按`y`
 ```
 
-### windows下的安装
+## 3.2. windows下的安装
 ```
 点击setup.cmd
 同时 git clone https://github.com/leoatchina/tools-leoatchina-vim.git
@@ -43,13 +37,13 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 然后打开vim或者gvim  , :PlugInstall
 ```
 
-### 升级到最新版本
+## 3.3. 升级到最新版本
 ```bash
   vim +PlugUpdate
   或者在vim里直接  :PlugUpdate
 ```
 
-## 一些功能
+# 4. some features
 * 复制内容直接放到系统剪贴本
 * 显示行号,多种语法高亮
 * Visual模式下用`>`,`<`移动文字不会取消选择
@@ -70,7 +64,7 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 * 总是显示状态栏
 * 根据系统情况，自动或手动设定补全插件
 
-## 主要改动
+# 5. 主要改动
 我在spf13的基础上，做了一些*微小*的工作
 - 大量精减，去除了`fork`,`before`功能
 - 用`vim-plug`代替了原来的`vundle`作为插件管理器
@@ -79,7 +73,7 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 - 去除了原来定义的一些函数
 - 加入了6种补全插件：`youcompleteme`,`asyncomplete`,`deoplete`,`completor`,`neocomplete`,`neocomplcache`,默认会在后4种中选择一种。
 
-## 基本快捷键
+# 6. 基本快捷键
 * `<Leader>`键改为<Space>,这个在键盘上最大的按键就有了更强的作用;
 * `<localLeader>`改为`\`
 * `C-f`,`C-l`变成了两个`先导键`
@@ -162,12 +156,12 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
   nnoremap > >>
 ```
 
-## 插件系统
+# 7. 插件系统
 我使用[vim-plug](https://github.com/junegunn/vim-plug)代替了spf13的[vundle](https://github.com/VundleVim/Vundle.vim),安装速度快了数倍。高级功能还在调试中
 
-### 补全插件
+## 7.1. 补全插件
 - 用了6种补全插件,2种代码插件
-#### [YouComplteMe](https://github.com/Valloric/YouCompleteMe)
+### 7.1.1. [YouComplteMe](https://github.com/Valloric/YouCompleteMe)
   ![](https://camo.githubusercontent.com/1f3f922431d5363224b20e99467ff28b04e810e2/687474703a2f2f692e696d6775722e636f6d2f304f50346f6f642e676966)
   - 需要安装一系列编译用软件
   - 具体可参考[Vim 自动补全插件 YouCompleteMe 安装与配置](http://howiefh.github.io/2015/05/22/vim-install-youcompleteme-plugin/).
@@ -176,52 +170,52 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
      cd ~/.vim/bundle/YouCompleteMe
      python install.py
   ```
-#### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
+#### 7.1.1.1. [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 在nvimcompletemangaer停止更新后，另一开发者fork后，直接利用了vim8内置的异步功能进行补全，不再需要python支持
 这个提供了一个框架，补全功能要配合其他插件使用
 
-#### [deoplete](https://github.com/Shougo/deoplete.nvim)
+#### 7.1.1.2. [deoplete](https://github.com/Shougo/deoplete.nvim)
 
-#### [completor](https://github.com/maralla/completor.vim)
+#### 7.1.1.3. [completor](https://github.com/maralla/completor.vim)
 
-#### [neocomplete](https://github.com/Shougo/neocomplete.vim)
+#### 7.1.1.4. [neocomplete](https://github.com/Shougo/neocomplete.vim)
 
-#### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
+#### 7.1.1.5. [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
 
-### 内置多个主题
+### 7.1.2. 内置多个主题
 在有gui时，使用`hybrid_material`, 其他情况时使用`gruvbox`
 使用`:colorscheme ` 再敲`tab`，可以看到内置的主题
 
-### [scrooloose/nerdtree](https://github.com/scrooloose/nerdtree)
+### 7.1.3. [scrooloose/nerdtree](https://github.com/scrooloose/nerdtree)
 在侧边显示当前目录，Toggle快捷键为`<Leader>nn`
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011101641847.png)
 
-### [majutsushi/tagbar](https://github.com/majutsushi/tagbar) and [ludovicchabant/vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
+### 7.1.4. [majutsushi/tagbar](https://github.com/majutsushi/tagbar) and [ludovicchabant/vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
 显示文档结构，要求在系统里安装`ctags`
 用`<Leader>tt`切换在测边显示文档结构.在bar窗口里按`F1`调出帮助窗口
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011102150785.png)
 
-### [vim-voom/VOoM](https://github.com/vim-voom/VOoM)
+### 7.1.5. [vim-voom/VOoM](https://github.com/vim-voom/VOoM)
 另一个显示文档结构的插件，和`TagBar`逻辑不一样，`python`里肯定有用，其他语言我还没有测试出来。快捷键`<F10>`打开 ,用`_`在voom_buffer和代码窗口内切换。
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171012105213969.png)
 
-### [mbbill/undotree](https://github.com/mbbill/undotree)
+### 7.1.6. [mbbill/undotree](https://github.com/mbbill/undotree)
 undotree顾名思义,增强版的回退插件，快捷键`<Leader>u`
 
-### [airline](https://github.com/vim-airline-themes)
+### 7.1.7. [airline](https://github.com/vim-airline-themes)
 漂亮的状态栏,能够显示很多状态。
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011105655369.png)
 
-### [ywvim中文输入法](https://github.com/leoatchina/ywvim)
+### 7.1.8. [ywvim中文输入法](https://github.com/leoatchina/ywvim)
 `ywvim`中文输入法,直接在vim里内置,~~无意中发现要和[fcitx](https://github.com/fcitx/fcitx)配合使用否则会有bug~~,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置.`;`临时英文输入法;注意,默认只输入**英文状态**的标点,而且首选是`五笔`;`z`临时拼音;`,.-=`上下翻页;
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011215538461.png)
 ![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011212612850.png)
 x
 
-### [fugitive](https://github.com/tpope/vim-fugitive)
+### 7.1.9. [fugitive](https://github.com/tpope/vim-fugitive)
 对git的支持,具体可以看官方说明,设置了快捷键`<Leader>gi :Git<Space>`,操作体验接近终端下输入`git`命令.还有快捷键
 
-### [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
+### 7.1.10. [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
 注释插件,神器,直接上官方的快捷键,最常用的是`<Leader>c<Space>`
   * `[count]<Leader>cc` **|NERDComComment|**
     Comment out the current line or text selected in visual mode.
@@ -249,21 +243,21 @@ x
   * `[count]<Leader>cu` **|NERDComUncommentLine|**
     Uncomments the selected line(s).
 
-### [LeaderF](https://github.com/Yggdroot/LeaderF)
+### 7.1.11. [LeaderF](https://github.com/Yggdroot/LeaderF)
 在高级模式的情况下会选用这个插件
 
 
-### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
+### 7.1.12. [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
 杀手级插件，不过有点老，网上找来的图
 ![](http://zuyunfei.com/images/ctrlp-vim-demo.gif)
 
 `ctrl+p`启动插件,`<Leader>fu`启动funksky函数查询功能,在启动后,用`Ctrl+f`,`Ctrl+b`在不同模式中切换.
 在文件列表中,`Ctrl+k/j`或者方向键向上/下选择文件,`t`在新标签里打开文件.其他快捷键见[ctrlp中文介绍](http://blog.codepiano.com/pages/ctrlp-cn.light.html)
 
-### [Pymode](https://github.com/python-mode/python-mode)
+### 7.1.13. [Pymode](https://github.com/python-mode/python-mode)
 `python`用的插件,具有语法检查,调试等功能.`<Leader>R`:运行脚本;`<LocalLeader>p`:track_point toggle
 
-### [surround](https://github.com/tpope/vim-surround)
+### 7.1.14. [surround](https://github.com/tpope/vim-surround)
 给一段文字加上括号的插件，下面说明文字引用自[vim中的杀手级别的插件：surround](http://zuyunfei.com/2013/04/17/killer-plugin-of-vim-surround/)
 ```
    Old text                  Command     New text
@@ -299,10 +293,10 @@ x
     <CTRL-g>s - same as <CTRL-s>
     <CTRL-g>S - same as <CTRL-s><CTRL-s>
 ```
-### [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+### 7.1.15. [vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
 
-### [EasyMotion](https://github.com/easymotion/vim-easymotion)
+### 7.1.16. [EasyMotion](https://github.com/easymotion/vim-easymotion)
  又一个杀手级别的插件
  ![](http://www.wklken.me/imgs/vim/easy_motion_search.gif)
  1. 跳转到当前光标前后,快捷键`<Leader><Leader>w`和`<Leader><Leader>b`

@@ -7,7 +7,6 @@
 "        |___/ .__/|_| |_|____/        \_/  |_|_| |_| |_|
 "            |_|
 " You can find spf13's origin config at http://spf13.com
-
 " Basics
 set nocompatible        " Must be first line
 set encoding=utf-8
@@ -74,14 +73,6 @@ endif
 " https://github.com/spf13/spf13-vim/issues/780
 if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
     inoremap <silent> <C-[>OC <RIGHT>
-endif
-" Use local config
-if filereadable(expand("~/.nvimrc.local")) && has('nvim')
-    source ~/.nvimrc.local
-elseif filereadable(expand("~/.gvimrc.local")) && has('gui_running')
-    source ~/.gvimrc.local
-elseif filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
 endif
 " Use plugs config
 if filereadable(expand("~/.vimrc.plugs"))
@@ -186,8 +177,7 @@ map zh zH
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
-" f1 for help
-autocmd FileType help  setlocal number
+" F1 for help
 nnoremap <F1> <ESC>:tab help<Space>
 inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
@@ -235,7 +225,6 @@ aug QFClose
     au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
 " Formatting
-set number                      " set number"
 set autoindent                  " Indent at the same level of the previous line
 set nojoinspaces                " Prevents inserting two Spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
@@ -817,6 +806,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     let g:pymode_breakpoint       = 1
     let g:pymode_breakpoint_bind  = '<C-l>t'
     let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
+    let g:pymode_rope_goto_definition_bind = 'gd'
     " pymode check disable
     if count(g:spf13_plug_groups, 'syntax')
         let g:pymode_lint = 0
@@ -833,7 +823,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
         " show message of error line
         let g:pymode_lint_message    = 1
         " checkers
-        let g:pymode_lint_checkers   = ['pyflakes','pep8']
+        let g:pymode_lint_checkers   = ['pyflakes', 'pep8']
         "let g:pymode_lint_checkers = ['pep8']
         let g:pymode_lint_ignore     = "E128,E2,E3,E501"
         " not Auto open cwindow (quickfix) if any errors have been found
@@ -1042,7 +1032,7 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
     nnoremap <leader>lm :CtrlPMRU<CR>
 endif
 " UndoTree
-if isdirectory(expand($PLUG_PATH."/undotree/"))
+if isdirectory(expand($PLUG_PATH."/undotree"))
     nnoremap <silent><Leader>u :UndotreeToggle<CR>
     " If undotree is opened, it is likely one wants to interact with it.
     let g:undotree_SetFocusWhenToggle=1
@@ -1062,7 +1052,7 @@ if g:vim_advance
             set completeopt=menuone
         endif
     endif
-    if g:complete_method == "deoplete"
+    if g:complete_method == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
         let g:deoplete#enable_at_startup = 1
@@ -1075,13 +1065,22 @@ if g:vim_advance
             let g:deoplete#keyword_patterns = {}
             let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
         endif
+		call deoplete#custom#option('omni_patterns', {
+            \ 'java' : '[^. *\t]\.\w*',
+            \ 'php'  : '[^. \t]->\h\w*\|\h\w*::',
+            \ 'perl' : '\h\w*->\h\w*\|\h\w*::',
+            \ 'c'    : '[^.[:digit:] *\t]\%(\.\|->\)',
+            \ 'cpp'  : '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
+            \ 'ruby' : '[^. *\t]\.\h\w*\|\h\w*::',
+            \ 'go'   : '\h\w*\.\?',
+		\})
         if g:complete_snippet == 'ultisnips'
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif g:complete_method == "completor"
+    elseif g:complete_method == "completor" && isdirectory(expand($PLUG_PATH."/completor.vim"))
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-    elseif g:complete_method == "neocomplete"
+    elseif g:complete_method == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete"))
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1094,19 +1093,20 @@ if g:vim_advance
         if !exists('g:neocomplete#force_omni_input_patterns')
             let g:neocomplete#force_omni_input_patterns = {}
         endif
+        let g:neocomplete#force_omni_input_patterns.java = '[^. \t]\.\w*'
         let g:neocomplete#force_omni_input_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
         let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_method == "neocomplcache"
-        let g:neocomplcache_enable_insert_char_pre = 1
-        let g:neocomplcache_enable_at_startup = 1
-        let g:neocomplcache_enable_auto_select = 0
+    elseif g:complete_method == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache"))
+        let g:neocomplcache_enable_insert_char_pre       = 1
+        let g:neocomplcache_enable_at_startup            = 1
+        let g:neocomplcache_enable_auto_select           = 0
         let g:neocomplcache_enable_camel_case_completion = 1
-        let g:neocomplcache_enable_smart_case = 1
-        let g:neocomplcache_enable_auto_delimiter = 0
+        let g:neocomplcache_enable_smart_case            = 1
+        let g:neocomplcache_enable_auto_delimiter        = 0
         let g:neocomplcache_force_overwrite_completefunc = 1
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -1118,13 +1118,14 @@ if g:vim_advance
         if !exists('g:neocomplcache_omni_patterns')
             let g:neocomplcache_omni_patterns = {}
         endif
+        let g:neocomplcache_omni_patterns.java = '[^. \t]\.\w*'
         let g:neocomplcache_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
         let g:neocomplcache_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_method == "YCM"
+    elseif g:complete_method == "YCM" && isdirectory(expand($PLUG_PATH."/YouCompleteMe"))
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python2'
         else
@@ -1136,25 +1137,31 @@ if g:vim_advance
         let g:ycm_autoclose_preview_window_after_insertion = 1
         " enable completion from tags
         let g:ycm_collect_identifiers_from_tags_files = 1
-        let g:ycm_key_invoke_completion = ''
-        let g:ycm_key_list_select_completion = ['<C-n>','<Down>']
-        let g:ycm_key_list_previous_completion = ['<C-p','<Up>']
+        let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+        let g:ycm_key_list_previous_completion = ['<C-p', '<Up>']
         let g:ycm_filetype_blacklist = {
-                    \ 'tagbar' : 1,
-                    \ 'nerdtree' : 1,
-                    \}
-        " Haskell post write lint and check with ghcmod
-        " $ `cabal install ghcmod` if missing and ensure
-        " ~/.cabal/bin is in your $PATH.
-        if !executable("ghcmod")
-            au BufWritePost *.hs GhcModCheckAndLintAsync
-        endif
-        let g:ycm_confirm_extra_conf=0 "加载.ycm_extra_conf.py提示
-        let g:ycm_global_ycm_extra_conf = '$PLUG_PATH/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-        let g:ycm_collect_identifiers_from_tags_files=1    " 开启 YC基于标签引擎
-        let g:ycm_min_num_of_chars_for_completion=2   " 从第2个键入字符就开始罗列匹配项
-        let g:ycm_cache_omnifunc=0 " 禁止缓存匹配项,每次都重新生成匹配项
-        let g:ycm_seed_identifiers_with_syntax=1   " 语法关键字补全
+            \ 'tagbar' : 1,
+            \ 'nerdtree' : 1,
+            \}
+        let g:ycm_semantic_triggers =  {
+            \   'c' : ['->', '.'],
+            \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+            \             're!\[.*\]\s'],
+            \   'ocaml' : ['.', '#'],
+            \   'cpp,cuda,objcpp' : ['->', '.', '::'],
+            \   'perl' : ['->'],
+            \   'php' : ['->', '::'],
+            \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \   'ruby' : ['.', '::'],
+            \   'lua' : ['.', ':'],
+            \   'erlang' : [':'],
+            \ }
+        let g:ycm_confirm_extra_conf = 1 "加载.ycm_extra_conf.py提示
+        let g:ycm_global_ycm_extra_conf = $PLUG_PATH."/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+        let g:ycm_key_invoke_completion = ''
+        let g:ycm_collect_identifiers_from_tags_files = 1    " 开启 YC基于标签引擎
+        let g:ycm_min_num_of_chars_for_completion = 2   " 从第2个键入字符就开始罗列匹配项
+        let g:ycm_seed_identifiers_with_syntax = 1   " 语法关键字补全
         ""在注释输入中也能补全
         let g:ycm_complete_in_comments = 1
         "在字符串输入中也能补全
@@ -1162,19 +1169,7 @@ if g:vim_advance
         "注释和字符串中的文字也会被收入补全
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:complete_method == "ncm2"
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-        set shortmess+=c
-        call ncm2#register_source({'name' : 'css',
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-        \ })
+        nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
     endif
     " smart completion use neosnippet to expand
     if g:complete_method !="None"
@@ -1192,6 +1187,7 @@ if g:vim_advance
         " ultisnip
         if g:complete_snippet == "ultisnips"
             " remap Ultisnips for compatibility
+            let g:UltiSnipsNoPythonWarning = 0
             let g:UltiSnipsListSnippets="<C-l>"
             let g:UltiSnipsExpandTrigger = '<F10>'
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
@@ -1280,7 +1276,7 @@ if g:vim_advance
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
         let g:ale_fixers ={}
-        nmap <C-]> :ALEGoToDefinition<CR>
+        nnoremap go :ALEGoToDefinitionInTab<CR>
     elseif isdirectory(expand($PLUG_PATH."/syntastic"))
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'
@@ -1305,13 +1301,10 @@ if g:vim_advance
         nnoremap <C-l>n :lnext<cr>
         nnoremap <C-l>p :lprevious<cr>
     endif
-
     if isdirectory(expand($PLUG_PATH."/asyncrun.vim")) && g:vim_advance == 2
-        nmap <Leader>rr :AsyncRun
-        function! RUNIT()
+        function! s:RUN_ASYNC()
             exec "w"
-            cclose
-            call asyncrun#quickfix_toggle()
+            call asyncrun#quickfix_toggle(8,1)
             if &filetype == 'c'
                 exec ":AsyncRun g++ % -o %<"
                 exec ":AsyncRun ./%<"
@@ -1331,24 +1324,19 @@ if g:vim_advance
                 exec ":AsyncRun go run %"
             endif
         endfunction
-        nmap <F5> <ESC>:call RUNIT()<CR>
-        imap <F5> <ESC>:call RUNIT()<CR>
-        vmap <F5> <ESC>:call RUNIT()<CR>
-        smap <F5> <ESC>:call RUNIT()<CR>
-        nmap <leader><F5> :AsyncStop!<CR>
-        nnoremap <F4> :call asyncrun#quickfix_toggle(6)<cr>
-        nnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
-        vnoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
-        snoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
-        inoremap <F4> <Esc>:call asyncrun#quickfix_toggle(6)<cr>
-        let g:asyncrun_open = 6
+        command! RunAsync call s:RUN_ASYNC()
+        nmap <leader><F5> :RunAsync<CR>
+        nmap <localleader><F5> :AsyncStop<CR>
+        nmap gr :AsyncRun<Space>
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-    elseif isdirectory(expand($PLUG_PATH."/vim-quickrun"))
+    endif
+    if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
         nnoremap <F5> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let g:quickfix_is_open = 0
         function! ToggleQuickfix()
             if g:quickfix_is_open
+                cclose
                 cclose
                 let g:quickfix_is_open = 0
                 execute g:quickfix_return_to_window . "wincmd w"
@@ -1364,14 +1352,6 @@ if g:vim_advance
         inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
-    endif
-    " after file
-    if filereadable(expand("~/.nvimrc.after")) && has('nvim')
-        source ~/.nvimrc.after
-    elseif filereadable(expand("~/.gvimrc.after")) && has('gui_running')
-        source ~/.gvimrc.after
-    elseif filereadable(expand("~/.vimrc.after"))
-        source ~/.vimrc.after
     endif
 endif
 " Functions
@@ -1444,3 +1424,4 @@ command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 function! s:ExpandFilenameAndExecute(command, file)
     execute a:command . " " . expand(a:file, ":p")
 endfunction
+nnoremap <C-k>s :Shell<Space>
