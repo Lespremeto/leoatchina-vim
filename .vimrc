@@ -699,11 +699,6 @@ if isdirectory(expand($PLUG_PATH."/vim-startify"))
         \ {'v': ['版本', 'version']}
         \ ]
 endif
-" PIV
-if isdirectory(expand($PLUG_PATH."/PIV"))
-    let g:DisableAutoPHPFolding = 0
-    let g:PIVAutoClose = 0
-endif
 " fugitive
 if isdirectory(expand($PLUG_PATH."/vim-fugitive"))
     nnoremap + :Git<Space>
