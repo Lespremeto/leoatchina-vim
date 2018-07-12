@@ -251,13 +251,6 @@ if g:vim_advance
             echoe "Cannot install YCM, install neocomplcache instead."
             let g:complete_method = "neocomplcache"
         endif
-    elseif count(g:spf13_plug_groups, 'ncm2')
-        if g:python_version == 3 && has('nvim')
-            let g:complete_method = "ncm2"
-        else
-            echoe "Cannot install ncm2, install neocomplcache instead."
-            let g:complete_method = "neocomplcache"
-        endif
     endif
     " install snippets plugins
     if g:complete_method != "None"
@@ -324,12 +317,6 @@ if g:vim_advance
         elseif g:python_version == 3
             Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
         endif
-    elseif g:complete_method == "ncm2"
-        Plug 'ncm2/ncm2'
-        Plug 'roxma/nvim-yarp'
-        Plug 'ncm2/ncm2-bufword'
-        Plug 'ncm2/ncm2-tmux'
-        Plug 'ncm2/ncm2-path'
     endif
 else
     echoe "In order to have grammar check and snippets completion, you should update to vim7.3+ or neovim!!"

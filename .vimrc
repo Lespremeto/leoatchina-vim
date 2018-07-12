@@ -1170,18 +1170,6 @@ if g:vim_advance
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:complete_method == "ncm2" && isdirectory(expand($PLUG_PATH."/ncm2"))
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-        set shortmess+=c
-        call ncm2#register_source({'name' : 'css',
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-        \ })
     endif
     " smart completion use neosnippet to expand
     if g:complete_method !="None"
