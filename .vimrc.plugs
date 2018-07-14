@@ -348,7 +348,6 @@ call plug#end()
 function! s:PlugRenew()
     :PlugClean
     :PlugUpgrade
-    :PlugInstall
     :PlugUpdate
 endfunction
 command! PlugRenew call s:PlugRenew()

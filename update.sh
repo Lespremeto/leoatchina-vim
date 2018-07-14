@@ -9,11 +9,11 @@ program_exists() {
     return 0
 }
 if program_exists "vim"; then
-  vim +PlugClean +PlugInstall +PlugUpdate +qall
+  vim +PlugClean +PlugUpdate +qall
 fi
 if program_exists "nvim"; then
-  nvim +PlugClean +PlugInstall +PlugUpdate +qall
+  nvim +PlugClean +PlugUpdate +qall
 fi
 if program_exists "mvim"; then
-  mvim +PlugClean +PlugInstall +PlugUpdate +qall
+  mvim +PlugClean +PlugUpdate +qall
 fi
