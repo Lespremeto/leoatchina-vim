@@ -275,7 +275,7 @@ if g:vim_advance
             Plug 'SirVer/ultisnips'
             Plug 'honza/vim-snippets'
             Plug 'leoatchina/leoatchina-snippets'
-        elseif count(g:plug_groups,'neosnippet') || g:complete_method == 'neocomplete' || g:complete_method == "neocomplcache"
+        elseif count(g:plug_groups,'neosnippet')
             let g:complete_snippet = "neosnippet"
             Plug 'Shougo/neosnippet'
             Plug 'Shougo/neosnippet-snippets'
@@ -318,6 +318,9 @@ if g:vim_advance
         Plug 'Shougo/neocomplete.vim'
     elseif g:complete_method == "neocomplcache"
         Plug 'Shougo/neocomplcache.vim'
+        if g:complete_snippet == 'ultisnips'
+            Plug 'JazzCore/neocomplcache-ultisnips'
+        endif
     elseif g:complete_method == "YCM"
         if g:python_version == 2
             Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2 ./install.py --clang-completer' }

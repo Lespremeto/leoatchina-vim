@@ -94,7 +94,7 @@ setup_plug() {
     local system_shell="$SHELL"
     export SHELL='/bin/sh'
     msg "Starting update/install plugins for $1"
-    "$1" +PlugClean +PlugUpgrade +PlugUpdate +qall
+    "$1" +PlugClean +PlugUpdate +qall
     export SHELL="$system_shell"
     success "Successfully updated/installed plugins using vim-plug for $1"
     debug
@@ -112,7 +112,6 @@ program_must_exist "git"
 program_must_exist "curl"
 mkdir -p "$HOME/.vim/session"
 mkdir -p "$HOME/.cache/tags"
-
 
 install_config='0'
 if [ -f $HOME/.vimrc.clean ];then
