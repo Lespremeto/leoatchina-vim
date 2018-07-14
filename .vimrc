@@ -330,18 +330,6 @@ if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/
         silent! call mkdir(s:vim_tags, 'p')
     endif
 endif
-" ctrlsf
-if isdirectory(expand($PLUG_PATH."/ctrlsf.vim"))
-    nmap     <C-F>s <Plug>CtrlSFPrompt
-    nmap     <C-F>n <Plug>CtrlSFCwordPath
-    nmap     <C-F>p <Plug>CtrlSFPwordPath
-    nnoremap <C-F>o :CtrlSFOpen<CR>
-    nnoremap <C-F>t :CtrlSFToggle<CR>
-    " vmap
-    vmap     <C-F>s <Plug>CtrlSFVwordExec
-    vmap     <C-F>f <Plug>CtrlSFVwordPath
-    let g:ctrlsf_position='right'
-endif
 " indent_guides
 if isdirectory(expand($PLUG_PATH."/vim-indent-guides/"))
     let g:indent_guides_enable_on_vim_startup = 1
