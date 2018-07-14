@@ -156,5 +156,8 @@ if program_exists "nvim"; then
     setup_plug "nvim"
 fi
 
+if program_exists "gvim"; then
+    setup_plug "gvim"
+fi
 msg "\nThanks for installing leoatchina's vim config forked from http://vim.spf13.com"
 msg "© `date +%Y` https://github.com/leoatchina/leoatchina-vim"
