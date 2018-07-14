@@ -549,7 +549,6 @@ if isdirectory(expand($PLUG_PATH."/nerdtree"))
             \ }
     endif
 endif
-
 " End/Start of line motion keys act relative to row/wrap width in the
 " presence of `:set wrap`, and relative to line for `:set nowrap`.
 " Default vim behaviour is to act relative to text line in both cases
@@ -1009,6 +1008,8 @@ if isdirectory(expand($PLUG_PATH."/undotree"))
 endif
 " language support
 if g:vim_advance
+    " supress the annoying 'match x of y', 'The only match' and 'Pattern not found' messages
+    set shortmess+=c
     " Enable omni completion.
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags

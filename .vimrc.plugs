@@ -142,6 +142,11 @@ endif
 if count(g:plug_groups, 'python')
     Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 endif
+" rust
+if count(g:plug_groups, 'rust')
+    Plug 'rust-lang/rust.vim'
+    Plug 'timonv/vim-cargo'
+endif
 " Javascript
 if count(g:plug_groups, 'javascript')
     Plug 'elzr/vim-json', {'for': 'javascript'}
