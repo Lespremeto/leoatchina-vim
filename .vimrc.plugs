@@ -270,17 +270,12 @@ if g:vim_advance
     " install snippets plugins
     if g:complete_method != "None"
         if count(g:plug_groups,'ultisnips')
-            if g:python_version
-                let g:complete_snippet = "ultisnips"
-                Plug 'SirVer/ultisnips'
-                Plug 'honza/vim-snippets'
-                Plug 'leoatchina/leoatchina-snippets'
-            else
-                let g:complete_snippet = "neosnippet"
-                Plug 'Shougo/neosnippet'
-                Plug 'Shougo/neosnippet-snippets'
-            endif
-        elseif count(g:plug_groups,'neosnippet')
+            " force ultisnips , but sometime not work
+            let g:complete_snippet = "ultisnips"
+            Plug 'SirVer/ultisnips'
+            Plug 'honza/vim-snippets'
+            Plug 'leoatchina/leoatchina-snippets'
+        elseif count(g:plug_groups,'neosnippet') || g:complete_method == 'neocomplete' || g:complete_method == "neocomplcache"
             let g:complete_snippet = "neosnippet"
             Plug 'Shougo/neosnippet'
             Plug 'Shougo/neosnippet-snippets'
