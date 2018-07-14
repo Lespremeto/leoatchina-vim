@@ -989,15 +989,8 @@ if isdirectory(expand($PLUG_PATH."/undotree"))
 endif
 " language support
 if g:vim_advance
-    " supress the annoying 'match x of y', 'The only match' and 'Pattern not found' messages
-    set shortmess+=c
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    set completeopt=menuone,noinsert,noselect
+    "set shortmess+=c
+    "set completeopt=menuone,noinsert,noselect
     if g:complete_method == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
@@ -1056,10 +1049,6 @@ if g:vim_advance
         let g:neocomplcache_force_overwrite_completefunc = 1
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-        if !exists('g:neocomplcache_keyword_patterns')
-            let g:neocomplcache_keyword_patterns = {}
-            let g:neocomplcache_keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
-        endif
         " Enable heavy omni completion.
         if !exists('g:neocomplcache_omni_patterns')
             let g:neocomplcache_omni_patterns = {}
@@ -1135,7 +1124,6 @@ if g:vim_advance
             " remap Ultisnips for compatibility
             let g:UltiSnipsNoPythonWarning = 0
             let g:UltiSnipsListSnippets="<C-l>"
-            let g:UltiSnipsExpandTrigger = '<F10>'
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
             " Ulti python version
