@@ -989,8 +989,10 @@ if isdirectory(expand($PLUG_PATH."/undotree"))
 endif
 " language support
 if g:vim_advance
-    "set shortmess+=c
-    "set completeopt=menuone,noinsert,noselect
+    set shortmess+=c
+    set completeopt+=menuone
+    set completeopt-=menu
+    set completeopt-=preview
     if g:complete_method == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
@@ -1019,7 +1021,7 @@ if g:vim_advance
     elseif g:complete_method == "completor" && isdirectory(expand($PLUG_PATH."/completor.vim"))
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-    elseif g:complete_method == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete"))
+    elseif g:complete_method == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete.vim"))
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1039,7 +1041,7 @@ if g:vim_advance
         let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_method == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache"))
+    elseif g:complete_method == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache.vim"))
         let g:neocomplcache_enable_insert_char_pre       = 1
         let g:neocomplcache_enable_at_startup            = 1
         let g:neocomplcache_enable_auto_select           = 0
