@@ -95,7 +95,7 @@ setup_plug() {
     local system_shell="$SHELL"
     export SHELL='/bin/sh'
     msg "Starting update/install plugins for $1"
-    "$1" +PlugClean +PlugInstall +qall
+    "$1" +PlugClean +PlugUpgrade +PlugUpdate +qall
     export SHELL="$system_shell"
     success "Successfully updated/installed plugins using vim-plug for $1"
     debug
@@ -156,5 +156,8 @@ if program_exists "nvim"; then
     setup_plug "nvim"
 fi
 
+if program_exists "gvim"; then
+    setup_plug "gvim"
+fi
 msg "\nThanks for installing leoatchina's vim config forked from http://vim.spf13.com"
 msg "© `date +%Y` https://github.com/leoatchina/leoatchina-vim"

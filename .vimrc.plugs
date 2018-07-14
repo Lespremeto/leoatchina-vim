@@ -101,6 +101,15 @@ if g:vim_advance == 2
 endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
+    nmap     <C-F>s <Plug>CtrlSFPrompt
+    nmap     <C-F>c <Plug>CtrlSFCwordPath
+    nmap     <C-F>p <Plug>CtrlSFPwordPath
+    nnoremap <C-F>o :CtrlSFOpen<CR>
+    nnoremap <C-F>t :CtrlSFToggle<CR>
+    " vmap
+    vmap     <C-F>s <Plug>CtrlSFVwordExec
+    vmap     <C-F>f <Plug>CtrlSFVwordPath
+    let g:ctrlsf_position='right'
 else
     if v:version >799 && !WINDOWS() && executable('ctags')
         Plug 'damage220/vim-finder'
@@ -141,6 +150,11 @@ endif
 " Python
 if count(g:plug_groups, 'python')
     Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+endif
+" rust
+if count(g:plug_groups, 'rust')
+    Plug 'rust-lang/rust.vim'
+    Plug 'timonv/vim-cargo'
 endif
 " Javascript
 if count(g:plug_groups, 'javascript')
@@ -334,7 +348,6 @@ call plug#end()
 function! s:PlugRenew()
     :PlugClean
     :PlugUpgrade
-    :PlugInstall
     :PlugUpdate
 endfunction
 command! PlugRenew call s:PlugRenew()

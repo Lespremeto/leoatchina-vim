@@ -304,13 +304,6 @@ augroup resCur
     au!
     au BufWinEnter * call ResCur()
 augroup END
-" far
-if isdirectory(expand($PLUG_PATH."/far.vim"))
-    nnoremap <C-f>a <ESC>:Far<Space>
-    snoremap <C-f>a <ESC>:Far<Space>
-    inoremap <C-f>a <ESC>:Far<Space>
-    vnoremap <C-f>a <ESC>:Far<Space>
-endif
 " tags
 if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/vim-gutentags"))
     set tags=./.tags;,.tags
@@ -329,18 +322,6 @@ if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/
     if !isdirectory(s:vim_tags)
         silent! call mkdir(s:vim_tags, 'p')
     endif
-endif
-" ctrlsf
-if isdirectory(expand($PLUG_PATH."/ctrlsf.vim"))
-    nmap     <C-F>s <Plug>CtrlSFPrompt
-    nmap     <C-F>n <Plug>CtrlSFCwordPath
-    nmap     <C-F>p <Plug>CtrlSFPwordPath
-    nnoremap <C-F>o :CtrlSFOpen<CR>
-    nnoremap <C-F>t :CtrlSFToggle<CR>
-    " vmap
-    vmap     <C-F>s <Plug>CtrlSFVwordExec
-    vmap     <C-F>f <Plug>CtrlSFVwordPath
-    let g:ctrlsf_position='right'
 endif
 " indent_guides
 if isdirectory(expand($PLUG_PATH."/vim-indent-guides/"))
@@ -549,7 +530,6 @@ if isdirectory(expand($PLUG_PATH."/nerdtree"))
             \ }
     endif
 endif
-
 " End/Start of line motion keys act relative to row/wrap width in the
 " presence of `:set wrap`, and relative to line for `:set nowrap`.
 " Default vim behaviour is to act relative to text line in both cases
@@ -1009,6 +989,8 @@ if isdirectory(expand($PLUG_PATH."/undotree"))
 endif
 " language support
 if g:vim_advance
+    " supress the annoying 'match x of y', 'The only match' and 'Pattern not found' messages
+    set shortmess+=c
     " Enable omni completion.
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
