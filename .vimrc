@@ -997,13 +997,7 @@ if g:vim_advance
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    if !WINDOWS()
-        if g:vim_advance == 2
-            set completeopt=menuone,noinsert,noselect
-        else
-            set completeopt=menuone
-        endif
-    endif
+    set completeopt=menuone,noinsert,noselect
     if g:complete_method == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
