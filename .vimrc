@@ -994,6 +994,7 @@ if g:vim_advance
     set completeopt-=menu
     set completeopt-=preview
     if g:complete_method == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
+        set completeopt+=noinsert,noselect
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
         let g:deoplete#enable_at_startup = 1
@@ -1019,6 +1020,7 @@ if g:vim_advance
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
     elseif g:complete_method == "completor" && isdirectory(expand($PLUG_PATH."/completor.vim"))
+        set completeopt+=noinsert,noselect
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
     elseif g:complete_method == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete.vim"))
@@ -1063,6 +1065,7 @@ if g:vim_advance
         let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     elseif g:complete_method == "YCM" && isdirectory(expand($PLUG_PATH."/YouCompleteMe"))
+        set completeopt+=noinsert,noselect
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python2'
         else
@@ -1154,11 +1157,8 @@ if g:vim_advance
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
         elseif g:complete_snippet == "neosnippet"
             let g:neosnippet#enable_completed_snippet = 1
-			" <F10> for trigger
-            imap <F10> <Plug>(neosnippet_expand)
-            smap <F10> <Plug>(neosnippet_expand)
             " c-f to jump
-            smap <C-f> <Right><Plug>(neosnippet_jump)
+            smap <C-f> <Plug>(neosnippet_jump)
             function! g:Neo_Snippet_Tab()
                 if pumvisible()
                     if neosnippet#expandable()
