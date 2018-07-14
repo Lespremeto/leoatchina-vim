@@ -304,13 +304,6 @@ augroup resCur
     au!
     au BufWinEnter * call ResCur()
 augroup END
-" far
-if isdirectory(expand($PLUG_PATH."/far.vim"))
-    nnoremap <C-f>a <ESC>:Far<Space>
-    snoremap <C-f>a <ESC>:Far<Space>
-    inoremap <C-f>a <ESC>:Far<Space>
-    vnoremap <C-f>a <ESC>:Far<Space>
-endif
 " tags
 if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/vim-gutentags"))
     set tags=./.tags;,.tags

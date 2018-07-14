@@ -101,7 +101,6 @@ if g:vim_advance == 2
 endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
-    let g:ctrlsf_position='right'
     nmap     <C-F>s <Plug>CtrlSFPrompt
     nmap     <C-F>c <Plug>CtrlSFCwordPath
     nmap     <C-F>p <Plug>CtrlSFPwordPath
@@ -110,6 +109,7 @@ if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     " vmap
     vmap     <C-F>s <Plug>CtrlSFVwordExec
     vmap     <C-F>f <Plug>CtrlSFVwordPath
+    let g:ctrlsf_position='right'
 else
     if v:version >799 && !WINDOWS() && executable('ctags')
         Plug 'damage220/vim-finder'
