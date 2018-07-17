@@ -633,12 +633,12 @@ elseif has('terminal') || has('nvim')
     tnoremap <C-w><up>    <C-\><C-N><C-w><up>
     if has('nvim')
         tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-        nmap <C-k>v :vsplit term://bash<Cr>
-        nmap <C-k>h :split  term://bash<Cr>
-        nmap <C-k>t :terminal<Cr>bash<Cr>
+        nmap <C-k>v :vsplit term://bash<Cr>i
+        nmap <C-k>h :split  term://bash<Cr>i
+        nmap <C-k>t :tabe   term://bash<Cr>i
         nmap <C-k>V :vsplit term://
         nmap <C-k>H :split  term://
-        nmap <C-k>T :terminal<Cr>
+        nmap <C-k>T :tabe   term://
     else
         nmap <C-k>v :vertical terminal<cr>bash<cr>
         nmap <C-k>h :terminal<cr>bash<cr>
