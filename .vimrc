@@ -983,7 +983,7 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
 endif
 " UndoTree
 if isdirectory(expand($PLUG_PATH."/undotree"))
-    nnoremap <silent><Leader>u :UndotreeToggle<CR>
+    nnoremap <silent><F6> :UndotreeToggle<CR>
     " If undotree is opened, it is likely one wants to interact with it.
     let g:undotree_SetFocusWhenToggle=1
 endif
@@ -1268,7 +1268,7 @@ if g:vim_advance
         command! RunAsync call s:RUN_ASYNC()
         nmap <leader><F5> :RunAsync<CR>
         nmap <localleader><F5> :AsyncStop<CR>
-        nmap gr :AsyncRun<Space>
+        nmap g<F5> :AsyncRun<Space>
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     endif
     if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
