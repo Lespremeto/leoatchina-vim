@@ -985,7 +985,11 @@ endif
 if isdirectory(expand($PLUG_PATH."/undotree"))
     nnoremap <silent><F6> :UndotreeToggle<CR>
     " If undotree is opened, it is likely one wants to interact with it.
-    let g:undotree_SetFocusWhenToggle=1
+    let g:undotree_SetFocusWhenToggle = 0
+    if has("persistent_undo")
+        set undodir=~/.vim/undodir/
+        set undofile
+    endif
 endif
 " language support
 if g:vim_advance
