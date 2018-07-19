@@ -243,6 +243,10 @@ set nofoldenable
 set showtabline=2
 " 开启实时搜索功能
 set incsearch
+" 显示行号
+set number
+" 在help里显示行号
+autocmd FileType help setlocal number
 " 显示光标当前位置
 set ruler
 " 高亮显示搜索结果
