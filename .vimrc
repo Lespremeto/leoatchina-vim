@@ -1198,8 +1198,8 @@ if g:vim_advance
         endif
     endif
     if isdirectory(expand($PLUG_PATH."/ale")) && g:vim_advance == 2
-        let g:ale_completion_enabled   = 1
-        let g:ale_lint_on_enter        = 0
+        let g:ale_completion_enabled   = 0
+        let g:ale_lint_on_enter        = 1
         let g:ale_lint_on_text_changed = 'always'
         " signs fo
         let g:ale_sign_column_always   = 1
@@ -1216,15 +1216,12 @@ if g:vim_advance
         let g:ale_set_loclist          = 0
         let g:ale_set_quickfix         = 0
         let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
-        "highlight clear ALEErrorSign
-        "highlight clear ALEWarningSign
         nnoremap <C-l><C-l> :ALELint<CR>
         nnoremap <silent> <C-l>p <Plug>(ale_previous_wrap)
         nnoremap <silent> <C-l>n <Plug>(ale_next_wrap)
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
-        let g:ale_fixers ={}
         nnoremap go :ALEGoToDefinitionInTab<CR>
     elseif isdirectory(expand($PLUG_PATH."/syntastic"))
         let g:syntastic_error_symbol             = 'E'
