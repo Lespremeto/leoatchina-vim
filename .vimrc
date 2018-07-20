@@ -1124,23 +1124,19 @@ if g:vim_advance
         " 跳转到定义处
         nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif g:complete_method == "ncm2" && isdirectory(expand($PLUG_PATH."/ncm2"))
-        let g:ncm2#match_highlight = 'bold'
-        let g:ncm2#match_highlight = 'sans-serif'
-        let g:ncm2#match_highlight = 'sans-serif-bold'
-        let g:ncm2#match_highlight = 'mono-space'
-        let g:ncm2#match_highlight = 'double-struck'
+        set completeopt+=noinsert,noselect
         autocmd BufEnter * call ncm2#enable_for_buffer()
         au User Ncm2Plugin call ncm2#register_source({
-                \ 'name' : 'css',
-                \ 'enable' : 1,
-                \ 'priority': 9,
-                \ 'subscope_enable': 1,
-                \ 'scope': ['css','scss'],
-                \ 'mark': 'css',
-                \ 'word_pattern': '[\w\-]+',
-                \ 'complete_pattern': ':\s*',
-                \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
-                \ })
+            \ 'name' : 'css',
+            \ 'enable' : 1,
+            \ 'priority': 9,
+            \ 'subscope_enable': 1,
+            \ 'scope': ['css','scss'],
+            \ 'mark': 'css',
+            \ 'word_pattern': '[\w\-]+',
+            \ 'complete_pattern': ':\s*',
+            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
+            \ })
     endif
     " smart completion use neosnippet to expand
     if g:complete_method !="None"
