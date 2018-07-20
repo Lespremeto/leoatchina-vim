@@ -258,15 +258,15 @@ if g:vim_advance
         endif
     elseif count(g:plug_groups, 'neocomplcache')
         let g:complete_method = "neocomplcache"
-    elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'youcompleteme')
-        if executable('cmake') && g:python_version || !WINDOWS()
+    elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
+        if executable('cmake') && g:python_version
             let g:complete_method = "YCM"
         else
             echoe "Cannot install YouCompleteMe, install neocomplcache instead."
             let g:complete_method = "neocomplcache"
         endif
     elseif count(g:plug_groups, 'ncm2')
-        if g:python_version == 3 && g:vim_advance == 2 && !WINDOWS()
+        if g:python_version == 3 && g:vim_advance == 2
             let g:complete_method = "ncm2"
         else
             echoe "Cannot install ncm2, install neocomplcache instead."
@@ -386,7 +386,6 @@ endif
 call plug#end()
 function! s:PlugRenew()
     :PlugClean
-    :PlugUpgrade
     :PlugUpdate
 endfunction
 command! PlugRenew call s:PlugRenew()
