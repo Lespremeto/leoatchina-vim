@@ -258,12 +258,18 @@ if g:vim_advance
         endif
     elseif count(g:plug_groups, 'neocomplcache')
         let g:complete_method = "neocomplcache"
-    " YCM or asyncomplete
-    elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
-        if executable('cmake') && g:python_version
+    elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'youcompleteme')
+        if executable('cmake') && g:python_version || !WINDOWS()
             let g:complete_method = "YCM"
         else
-            echoe "Cannot install YCM, install neocomplcache instead."
+            echoe "Cannot install YouCompleteMe, install neocomplcache instead."
+            let g:complete_method = "neocomplcache"
+        endif
+    elseif count(g:plug_groups, 'ncm2')
+        if g:python_version == 3 && g:vim_advance == 2 && |WINDOWS()
+            let g:complete_method = "ncm2"
+        else
+            echoe "Cannot install ncm2, install neocomplcache instead."
             let g:complete_method = "neocomplcache"
         endif
     endif
@@ -326,6 +332,40 @@ if g:vim_advance
             Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2 ./install.py --clang-completer' }
         elseif g:python_version == 3
             Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
+        endif
+    elseif g:complete_method == "ncm2"
+        " main
+        Plug 'ncm2/ncm2'
+        Plug 'roxma/nvim-yarp'
+        if !has('nvim')
+            Plug 'roxma/vim-hug-neovim-rpc'
+        endif
+        " main complete
+        Plug 'ncm2/ncm2-bufword'
+        Plug 'ncm2/ncm2-path'
+        Plug 'ncm2/ncm2-github'
+        Plug 'ncm2/ncm2-tmux'
+        Plug 'ncm2/ncm2-tagprefix'
+        Plug 'filipekiss/ncm2-look.vim'
+        Plug 'ncm2/ncm2-match-highlight'
+        " only use ultisnips
+        Plug 'ncm2/ncm2-ultisnips'
+        " language
+        Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
+        if count(g:plug_groups, 'css')
+            Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
+        endif
+        if count(g:plug_groups, 'javascript')
+            Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
+        endif
+        if count(g:plug_groups, 'python')
+            Plug 'ncm2/ncm2-jedi', {'for':'python'}
+        endif
+        if count(g:plug_groups, 'rust')
+            Plug 'ncm2/ncm2-racer', {'for':'rust'}
+        endif
+        if count(g:plug_groups, 'go')
+            Plug 'ncm2/ncm2-go', {'for':'go'}
         endif
     endif
 else
