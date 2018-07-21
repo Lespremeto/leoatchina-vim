@@ -20,16 +20,20 @@ else
     endif
 endif
 set rtp+=$PLUG_PATH
-" enhanced browser tools
+" complete enviroment
 let g:complete_method = "None"
 let g:complete_snippet = "None"
 " python support
 if has('python3') && executable('python3')
     let g:python_version = 3
-    silent! python3 1
+	if !WINDOWS()
+		silent! python3 1
+	endif
 elseif has('python') && executable('python')
     let g:python_version = 2
-    silent! python2 1
+	if !WINDOWS()
+		silent! python 1
+	endif
 else
     let g:python_version = 0
 endif
