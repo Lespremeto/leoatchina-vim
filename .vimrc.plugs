@@ -105,14 +105,14 @@ if g:vim_advance == 2
 endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
-    nmap     <C-F>s <Plug>CtrlSFPrompt
-    nmap     <C-F>c <Plug>CtrlSFCwordPath
-    nmap     <C-F>p <Plug>CtrlSFPwordPath
-    nnoremap <C-F>o :CtrlSFOpen<CR>
-    nnoremap <C-F>t :CtrlSFToggle<CR>
+    nmap <C-F>s <Plug>CtrlSFPrompt
+    nmap <C-F>c <Plug>CtrlSFCwordPath
+    nmap <C-F>p <Plug>CtrlSFPwordPath
+    nmap <C-F>o :CtrlSFOpen<CR>
+    nmap <C-F>t :CtrlSFToggle<CR>
     " vmap
-    vmap     <C-F>s <Plug>CtrlSFVwordExec
-    vmap     <C-F>f <Plug>CtrlSFVwordPath
+    vmap <C-F>s <Plug>CtrlSFVwordExec
+    vmap <C-F>f <Plug>CtrlSFVwordPath
     let g:ctrlsf_position='right'
 else
     if v:version >799 && !WINDOWS() && executable('ctags')
@@ -122,7 +122,7 @@ else
         nnoremap <C-f>s :vimgrep<Space>
     endif
 endif
-Plug 'brooth/far.vim'
+Plug 'brooth/far.vim', {'do': 'UpdateRemotePlugins'}
 Plug 'terryma/vim-multiple-cursors'
 " signs
 Plug 'gorodinskiy/vim-coloresque'
@@ -231,7 +231,11 @@ if g:vim_advance
     " select a complete plugin
     if count(g:plug_groups, 'smartcomplete')
         if g:python_version == 3 && has('nvim') && has('timers')
-            let g:complete_method = "deoplete"
+            if WINDOWS()
+                let g:complete_method = "deoplete"
+            else
+                let g:complete_method = "ncm2"
+            endif
         elseif g:python_version  && !has('nvim') && version > 799
             let g:complete_method = "completor"
         elseif has('lua')
