@@ -122,7 +122,7 @@ else
         nnoremap <C-f>s :vimgrep<Space>
     endif
 endif
-Plug 'brooth/far.vim', {'do': 'UpdateRemotePlugins'}
+Plug 'brooth/far.vim'
 Plug 'terryma/vim-multiple-cursors'
 " signs
 Plug 'gorodinskiy/vim-coloresque'
@@ -283,6 +283,7 @@ if g:vim_advance
     endif
     " install snippets plugins
     if g:complete_method != "None"
+        Plug 'Shougo/neco-vim'
         if count(g:plug_groups,'ultisnips')
             " force ultisnips , but sometime not work
             let g:complete_snippet = "ultisnips"
@@ -357,7 +358,6 @@ if g:vim_advance
         Plug 'ncm2/ncm2-tagprefix'
         Plug 'filipekiss/ncm2-look.vim'
         Plug 'jsfaint/ncm2-vim'
-        Plug 'Shougo/neco-vim'
         Plug 'Shougo/neoinclude.vim'
         Plug 'Shougo/neco-syntax'
         " only use ultisnips
