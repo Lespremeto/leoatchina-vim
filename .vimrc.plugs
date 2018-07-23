@@ -98,6 +98,7 @@ if count(g:plug_groups, 'rmarkdown')
     Plug 'vim-pandoc/vim-rmarkdown'
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
+    Plug 'drmingdrmer/vim-syntax-markdown'
 endif
 " biosyntax
 if count(g:plug_groups, 'bio')
