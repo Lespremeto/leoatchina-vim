@@ -45,7 +45,6 @@ elseif v:version > 703
 else
     let g:vim_advance = 0
 endif
-
 " plugins
 call plug#begin($PLUG_PATH)
 " Use local config, some tested feature can be add to it
@@ -93,6 +92,13 @@ endif
 " input method
 if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
     Plug 'leoatchina/ywvim'
+endif
+" latex and rmarkdown
+if count(g:plug_groups, 'rmarkdown')
+    Plug 'vim-pandoc/vim-rmarkdown'
+    Plug 'vim-pandoc/vim-pandoc'
+    Plug 'vim-pandoc/vim-pandoc-syntax'
+    Plug 'drmingdrmer/vim-syntax-markdown'
 endif
 " biosyntax
 if count(g:plug_groups, 'bio')
