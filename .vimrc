@@ -1291,6 +1291,9 @@ if g:vim_advance
     endif
     if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
         nnoremap <F5> :QuickRun<Cr>
+        inoremap <F5> <ESC>:QuickRun<Cr>
+        snoremap <F5> <ESC>:QuickRun<Cr>
+        vnoremap <F5> <ESC>:QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let g:quickfix_is_open = 0
         function! ToggleQuickfix()
