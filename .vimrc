@@ -84,8 +84,8 @@ let maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
 set pastetoggle=<F12>
 " 定义快捷键保存当前窗口内容
-nnoremap <leader><F12> :source ~/.vimrc<CR>
-vnoremap <leader><F12> <ESC>:source ~/.vimrc<CR>
+nnoremap <leader>0 :source ~/.vimrc<CR>
+vnoremap <leader>0 <ESC>:source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
@@ -728,7 +728,6 @@ if count(g:plug_groups, 'go')
     au FileType go nmap <Leader>I <Plug>(go-info)
     au FileType go nmap <Leader>r <Plug>(go-rename)
     au FileType go nmap <leader>R <Plug>(go-run)
-    au FileType go nmap <F5>      <Plug>(go-run)
     au FileType go nmap <leader>b <Plug>(go-build)
     au FileType go nmap <leader>t <Plug>(go-test)
     au FileType go nmap <Leader>d <Plug>(go-doc)
@@ -1285,9 +1284,9 @@ if g:vim_advance
             endif
         endfunction
         command! RunAsync call s:RUN_ASYNC()
-        nmap <leader><F5> :RunAsync<CR>
-        nmap <localleader><F5> :AsyncStop<CR>
-        nmap g<F5> :AsyncRun<Space>
+        nmap <leader>ra :RunAsync<CR>
+        nmap <leader>rs :AsyncStop<CR>
+        nmap gra :AsyncRun<Space>
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     endif
     if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
