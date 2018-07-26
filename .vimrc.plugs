@@ -239,7 +239,7 @@ if g:vim_advance
             if has('nvim')
                 if g:python_version == 3
                     if WINDOWS()
-                        if has('timer')
+                        if has('timers')
                             let g:complete_method = "deoplete"
                         else
                             let g:complete_method = "asyncomplete"
@@ -250,6 +250,7 @@ if g:vim_advance
                 else
                     let g:complete_method = "asyncomplete"
                 endif
+            " vim8
             elseif v:version > 799
                 if g:python_version && WINDOWS()
                     let g:complete_method = "completor"

@@ -114,13 +114,11 @@ nmap <C-e> $
 vmap <C-e> $
 smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
-
 " C-f/b in insert mode
 nmap <C-f> <Nop>
 vmap <C-f> <Nop>
 nmap <C-b> <Nop>
 vmap <C-b> <Nop>
-
 imap <C-f> <Right>
 imap <C-b> <Left>
 " Find merge conflict markers
@@ -129,7 +127,6 @@ nmap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 nnoremap <C-x> <C-f>
 nnoremap <C-y> <C-b>
-
 " tab control
 set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
