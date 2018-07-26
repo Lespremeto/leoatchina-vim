@@ -9,34 +9,6 @@
 "            |_|
 " You can find spf13's origin config  at http://spf13.com
 "
-" plug install path
-if has('nvim')
-    let $PLUG_PATH = '~/.nvim/plug'
-else
-    if has("gui_running")
-        let $PLUG_PATH = '~/.gvim/plug'
-    else
-        let $PLUG_PATH = '~/.vim/plug'
-    endif
-endif
-set rtp+=$PLUG_PATH
-" complete enviroment
-let g:complete_method = "None"
-let g:complete_snippet = "None"
-" python support
-if has('python3') && executable('python3')
-    let g:python_version = 3
-	if !WINDOWS()
-		silent! python3 1
-	endif
-elseif has('python') && executable('python')
-    let g:python_version = 2
-	if !WINDOWS()
-		silent! python 1
-	endif
-else
-    let g:python_version = 0
-endif
 " vim_advance judge
 if has('nvim') || v:version > 799
     let g:vim_advance = 2
@@ -45,180 +17,207 @@ elseif v:version >= 703
 else
     let g:vim_advance = 0
 endif
-" plugins
-call plug#begin($PLUG_PATH)
-" Use local config, some tested feature can be add to it
-if filereadable(expand("~/.nvimrc.local")) && has('nvim')
-    source ~/.nvimrc.local
-elseif filereadable(expand("~/.gvimrc.local")) && has('gui_running')
-    source ~/.gvimrc.local
-elseif filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
-if WINDOWS()
-    Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
-    let $PATH.=";".$HOME."\\.vim-windows-tools"
-endif
-if (has('nvim') && WINDOWS()) || (has('gui_running') && !WINDOWS())
-    Plug 'lambdalisue/vim-fullscreen'
-endif
-Plug 'mhinz/vim-startify'
-Plug 'kshenoy/vim-signature'
-Plug 'google/vim-searchindex'
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-commentary'
-Plug 'mbbill/undotree'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'leoatchina/vim-colorschemes-collections'
-if g:python_version > 0
-    Plug 'vim-voom/VOoM'
-endif
-if executable('git')
-    Plug 'tpope/vim-fugitive'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-endif
-if executable('ctags')
-    Plug 'majutsushi/tagbar'
-endif
-" In your .vimrc.local file
-" list only the plugin groups you will use
-if !exists('g:plug_groups')
-    let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'python']
-endif
-" input method
-if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
-    Plug 'leoatchina/ywvim'
-endif
-" latex and rmarkdown
-if count(g:plug_groups, 'rmarkdown')
-    Plug 'vim-pandoc/vim-rmarkdown'
-    Plug 'vim-pandoc/vim-pandoc'
-    Plug 'vim-pandoc/vim-pandoc-syntax'
-    Plug 'drmingdrmer/vim-syntax-markdown'
-endif
-" biosyntax
-if count(g:plug_groups, 'bio')
-    Plug 'bioSyntax/bioSyntax-vim'
-endif
-" external search method
-if g:vim_advance == 2
-    Plug 'wsdjeg/FlyGrep.vim'
-    nmap <C-f>f :FlyGrep<Cr>
-endif
-if executable('ag') || executable('ack') || executable('rg') || executable('pt')
-    Plug 'dyng/ctrlsf.vim'
-    nmap <C-F>s <Plug>CtrlSFPrompt
-    nmap <C-F>c <Plug>CtrlSFCwordPath
-    nmap <C-F>p <Plug>CtrlSFPwordPath
-    nmap <C-F>o :CtrlSFOpen<CR>
-    nmap <C-F>t :CtrlSFToggle<CR>
-    " vmap
-    vmap <C-F>s <Plug>CtrlSFVwordExec
-    vmap <C-F>f <Plug>CtrlSFVwordPath
-    let g:ctrlsf_position='right'
-else
-    if v:version >799 && !WINDOWS() && executable('ctags')
-        Plug 'damage220/vim-finder'
-        nnoremap <C-f>s :finder<Tab>
-    else
-        nnoremap <C-f>s :vimgrep<Space>
-    endif
-endif
-Plug 'brooth/far.vim'
-Plug 'terryma/vim-multiple-cursors'
-" signs
-Plug 'gorodinskiy/vim-coloresque'
-Plug 'rhysd/conflict-marker.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'mhinz/vim-signify'
-Plug 'tamlok/vim-markdown'
-Plug 'junegunn/vim-easy-align'
-" statusline
-Plug 'bling/vim-bufferline'
-if count(g:plug_groups, 'airline')
-    Plug 'vim-airline/vim-airline'
-elseif has('statusline')
-    Plug 'itchyny/lightline.vim'
-    if g:vim_advance == 2 && count(g:plug_groups, 'syntax')
-        Plug 'maximbaz/lightline-ale'
-    endi
-endif
-" shell
-if count(g:plug_groups, 'shell') && !WINDOWS()
-    Plug 'shougo/vimproc.vim', {'do':'make'}
-    Plug 'shougo/vimshell.vim'
-endif
-" PHP
-if count(g:plug_groups, 'php')
-    Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
-endif
-" Python
-if count(g:plug_groups, 'python')
-    Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-endif
-" rust
-if count(g:plug_groups, 'rust')
-    Plug 'rust-lang/rust.vim'
-    Plug 'timonv/vim-cargo'
-endif
-" Javascript
-if count(g:plug_groups, 'javascript')
-    Plug 'elzr/vim-json', {'for': 'javascript'}
-    Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-    Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
-endif
-" Go
-if count(g:plug_groups, 'go')
-    Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
-    Plug 'garyburd/go-explorer', {'for': 'go'}
-    if has('nvim')
-        Plug 'jodosha/vim-godebug', {'for': 'go'}
-    endif
-endif
-" HTML
-if count(g:plug_groups, 'html')
-    Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
-    Plug 'tpope/vim-haml'
-    Plug 'mattn/emmet-vim'
-endif
-" browser tools
-let g:ctrlp_version = 1
-if count(g:plug_groups, 'fzf')
-    if !WINDOWS()
-        let g:ctrlp_version = 4
-    endif
-elseif count(g:plug_groups, 'denite')
-    if g:python_version == 3 && g:vim_advance == 2
-        let g:ctrlp_version = 3
-    endif
-elseif count(g:plug_groups, 'leaderF')
-    if g:python_version && executable('gcc') && g:vim_advance
-        let g:ctrlp_version = 2
-    endif
-endif
-if g:ctrlp_version == 4
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
-elseif g:ctrlp_version == 3
-    Plug 'shougo/denite.nvim'
-elseif g:ctrlp_version == 2
-    if WINDOWS()
-        Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-    else
-        Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-    endif
-else
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'tacahiroy/ctrlp-funky'
-endif
-" complete method
+" use vim-plug to install plugs
 if g:vim_advance
-    " vim version
+    " plug install path
+    if has('nvim')
+        let $PLUG_PATH = '~/.nvim/plug'
+    else
+        if has("gui_running")
+            let $PLUG_PATH = '~/.gvim/plug'
+        else
+            let $PLUG_PATH = '~/.vim/plug'
+        endif
+    endif
+    set rtp+=$PLUG_PATH
+    " complete enviroment
+    let g:complete_method = "None"
+    let g:complete_snippet = "None"
+    " python support
+    if has('python3') && executable('python3')
+        let g:python_version = 3
+        if !WINDOWS()
+            silent! python3 1
+        endif
+    elseif has('python') && executable('python')
+        let g:python_version = 2
+        if !WINDOWS()
+            silent! python 1
+        endif
+    else
+        let g:python_version = 0
+    endif
+    call plug#begin($PLUG_PATH)
+    " Use local config, some tested feature can be add to it
+    if filereadable(expand("~/.nvimrc.local")) && has('nvim')
+        source ~/.nvimrc.local
+    elseif filereadable(expand("~/.gvimrc.local")) && has('gui_running')
+        source ~/.gvimrc.local
+    elseif filereadable(expand("~/.vimrc.local"))
+        source ~/.vimrc.local
+    endif
+    if WINDOWS()
+        Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
+        let $PATH.=";".$HOME."\\.vim-windows-tools"
+    endif
+    if (has('nvim') && WINDOWS()) || (has('gui_running') && !WINDOWS())
+        Plug 'lambdalisue/vim-fullscreen'
+    endif
+    Plug 'mhinz/vim-startify'
+    Plug 'kshenoy/vim-signature'
+    Plug 'google/vim-searchindex'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'tpope/vim-commentary'
+    Plug 'mbbill/undotree'
+    Plug 'scrooloose/nerdtree'
+    Plug 'jistr/vim-nerdtree-tabs'
+    Plug 'easymotion/vim-easymotion'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-surround'
+    Plug 'leoatchina/vim-colorschemes-collections'
+    if g:python_version > 0
+        Plug 'vim-voom/VOoM'
+    endif
+    if executable('git')
+        Plug 'tpope/vim-fugitive'
+        Plug 'Xuyuanp/nerdtree-git-plugin'
+    endif
+    if executable('ctags')
+        Plug 'majutsushi/tagbar'
+    endif
+    " In your .vimrc.local file
+    " list only the plugin groups you will use
+    if !exists('g:plug_groups')
+        let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'python']
+    endif
+    " input method
+    if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
+        Plug 'leoatchina/ywvim'
+    endif
+    " latex and rmarkdown
+    if count(g:plug_groups, 'rmarkdown')
+        Plug 'vim-pandoc/vim-rmarkdown'
+        Plug 'vim-pandoc/vim-pandoc'
+        Plug 'vim-pandoc/vim-pandoc-syntax'
+        Plug 'drmingdrmer/vim-syntax-markdown'
+    endif
+    " biosyntax
+    if count(g:plug_groups, 'bio')
+        Plug 'bioSyntax/bioSyntax-vim'
+    endif
+    " external search method
+    if g:vim_advance == 2
+        Plug 'wsdjeg/FlyGrep.vim'
+        nmap <C-f>f :FlyGrep<Cr>
+    endif
+    if executable('ag') || executable('ack') || executable('rg') || executable('pt')
+        Plug 'dyng/ctrlsf.vim'
+        nmap <C-F>s <Plug>CtrlSFPrompt
+        nmap <C-F>c <Plug>CtrlSFCwordPath
+        nmap <C-F>p <Plug>CtrlSFPwordPath
+        nmap <C-F>o :CtrlSFOpen<CR>
+        nmap <C-F>t :CtrlSFToggle<CR>
+        " vmap
+        vmap <C-F>s <Plug>CtrlSFVwordExec
+        vmap <C-F>f <Plug>CtrlSFVwordPath
+        let g:ctrlsf_position='right'
+    else
+        if v:version >799 && !WINDOWS() && executable('ctags')
+            Plug 'damage220/vim-finder'
+            nnoremap <C-f>s :finder<Tab>
+        else
+            nnoremap <C-f>s :vimgrep<Space>
+        endif
+    endif
+    Plug 'brooth/far.vim'
+    Plug 'terryma/vim-multiple-cursors'
+    " signs
+    Plug 'gorodinskiy/vim-coloresque'
+    Plug 'rhysd/conflict-marker.vim'
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'nathanaelkane/vim-indent-guides'
+    Plug 'mhinz/vim-signify'
+    Plug 'tamlok/vim-markdown'
+    Plug 'junegunn/vim-easy-align'
+    " statusline
+    Plug 'bling/vim-bufferline'
+    if count(g:plug_groups, 'airline')
+        Plug 'vim-airline/vim-airline'
+    elseif has('statusline')
+        Plug 'itchyny/lightline.vim'
+        if g:vim_advance == 2 && count(g:plug_groups, 'syntax')
+            Plug 'maximbaz/lightline-ale'
+        endi
+    endif
+    " shell
+    if count(g:plug_groups, 'shell') && !WINDOWS()
+        Plug 'shougo/vimproc.vim', {'do':'make'}
+        Plug 'shougo/vimshell.vim'
+    endif
+    " PHP
+    if count(g:plug_groups, 'php')
+        Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
+    endif
+    " Python
+    if count(g:plug_groups, 'python')
+        Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+    endif
+    " rust
+    if count(g:plug_groups, 'rust')
+        Plug 'rust-lang/rust.vim'
+        Plug 'timonv/vim-cargo'
+    endif
+    " Javascript
+    if count(g:plug_groups, 'javascript')
+        Plug 'elzr/vim-json', {'for': 'javascript'}
+        Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+        Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
+    endif
+    " Go
+    if count(g:plug_groups, 'go')
+        Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
+        Plug 'garyburd/go-explorer', {'for': 'go'}
+        if has('nvim')
+            Plug 'jodosha/vim-godebug', {'for': 'go'}
+        endif
+    endif
+    " HTML
+    if count(g:plug_groups, 'html')
+        Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
+        Plug 'tpope/vim-haml'
+        Plug 'mattn/emmet-vim'
+    endif
+    " browser tools
+    let g:ctrlp_version = 1
+    if count(g:plug_groups, 'fzf')
+        if !WINDOWS()
+            let g:ctrlp_version = 4
+        endif
+    elseif count(g:plug_groups, 'denite')
+        if g:python_version == 3 && g:vim_advance == 2
+            let g:ctrlp_version = 3
+        endif
+    elseif count(g:plug_groups, 'leaderF')
+        if g:python_version && executable('gcc') && g:vim_advance
+            let g:ctrlp_version = 2
+        endif
+    endif
+    if g:ctrlp_version == 4
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        Plug 'junegunn/fzf.vim'
+    elseif g:ctrlp_version == 3
+        Plug 'shougo/denite.nvim'
+    elseif g:ctrlp_version == 2
+        if WINDOWS()
+            Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+        else
+            Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+        endif
+    else
+        Plug 'ctrlpvim/ctrlp.vim'
+        Plug 'tacahiroy/ctrlp-funky'
+    endif
+    " complete method
     if g:vim_advance == 2
         if count(g:plug_groups, 'syntax')
             Plug 'w0rp/ale'
@@ -388,20 +387,20 @@ if g:vim_advance
             Plug 'ncm2/ncm2-go', {'for':'go'}
         endif
     endif
+    " after file
+    if filereadable(expand("~/.nvimrc.after")) && has('nvim')
+        source ~/.nvimrc.after
+    elseif filereadable(expand("~/.gvimrc.after")) && has('gui_running')
+        source ~/.gvimrc.after
+    elseif filereadable(expand("~/.vimrc.after"))
+        source ~/.vimrc.after
+    endif
+    call plug#end()
+    function! s:PlugRenew()
+        :PlugClean
+        :PlugUpdate
+    endfunction
+    command! PlugRenew call s:PlugRenew()
 else
-    echoe "In order to have grammar check and snippets completion, you should update to vim7.3+ or neovim!!"
+    echom "Inorder to install plugins, you should update to vim7.3+ or neovim"
 endif
-" after file
-if filereadable(expand("~/.nvimrc.after")) && has('nvim')
-    source ~/.nvimrc.after
-elseif filereadable(expand("~/.gvimrc.after")) && has('gui_running')
-    source ~/.gvimrc.after
-elseif filereadable(expand("~/.vimrc.after"))
-    source ~/.vimrc.after
-endif
-call plug#end()
-function! s:PlugRenew()
-    :PlugClean
-    :PlugUpdate
-endfunction
-command! PlugRenew call s:PlugRenew()
