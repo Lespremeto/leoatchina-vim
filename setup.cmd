@@ -21,10 +21,10 @@ call del "%HOME%\_vimrc"
 call del "%HOME%\.vimrc.plugs"
 call del "%HOME%\.vimrc.md"
 
-call mklink "%HOME%\.vimrc"                 "%APP_PATH%\.vimrc"
-call mklink "%HOME%\_vimrc"                 "%APP_PATH%\.vimrc"
-call mklink "%HOME%\.vimrc.plugs"         "%APP_PATH%\.vimrc.plugs"
-call mklink "%HOME%\.vimrc.md"         "%APP_PATH%\README.markdown"
+call mklink "%HOME%\.vimrc"       "%APP_PATH%\.vimrc"
+call mklink "%HOME%\_vimrc"       "%APP_PATH%\.vimrc"
+call mklink "%HOME%\.vimrc.plugs" "%APP_PATH%\.vimrc.plugs"
+call mklink "%HOME%\.vimrc.md"    "%APP_PATH%\README.markdown"
 
 IF NOT EXIST "%HOME%\.vimrc.local" (
     call cp  "%APP_PATH%\.vimrc.local"      "%HOME%\.vimrc.local"

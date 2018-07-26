@@ -451,11 +451,16 @@ if g:vim_advance
             source ~/.vimrc.after
         endif
     call plug#end()
-    function! s:PlugRenew()
+    function! s:PlugReinstall()
+        :PlugClean
+        :PlugInstall
+    endfunction
+    command! PlugReinstall call s:PlugReinstall()
+    function! s:PlugNew()
         :PlugClean
         :PlugUpdate
     endfunction
-    command! PlugRenew call s:PlugRenew()
+    command! PlugNew call s:PlugNew()
 else
     echom "Inorder to install plugins, you should update to vim7.3+ or neovim"
 endif

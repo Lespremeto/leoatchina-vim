@@ -10,8 +10,9 @@ die() {
 
 rm $HOME/.vimrc
 rm $HOME/.vimrc.plugs
-rm $HOME/.vimrc.md
 rm $HOME/.vimrc.clean
+rm $HOME/.vimrc.update
+rm $HOME/.vimrc.md
 rm $HOME/.config/nvim/init.vim
 
 rm -rf $HOME/.vim

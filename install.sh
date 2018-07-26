@@ -80,6 +80,7 @@ create_symlinks() {
     lnif "$source_path/.vimrc"          "$target_path/.vimrc"
     lnif "$source_path/.vimrc.plugs"    "$target_path/.vimrc.plugs"
     lnif "$source_path/.vimrc.clean"    "$target_path/.vimrc.clean"
+    lnif "$source_path/update.sh"       "$target_path/.vimrc.update"
     lnif "$source_path/README.markdown" "$target_path/.vimrc.md"
     if program_exists "nvim"; then
         mkdir -p "$target_path/.config/nvim"
@@ -94,7 +95,7 @@ setup_plug() {
     local system_shell="$SHELL"
     export SHELL='/bin/sh'
     msg "Starting update/install plugins for $1"
-    "$1" +PlugClean +PlugUpdate +qall
+    "$1" +PlugClean +PlugInstall +qall
     export SHELL="$system_shell"
     success "Successfully updated/installed plugins using vim-plug for $1"
     debug
