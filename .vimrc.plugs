@@ -236,22 +236,26 @@ if g:vim_advance
         " select a complete plugin
         if count(g:plug_groups, 'smartcomplete')
             " nvim
-            if g:python_version == 3 && has('nvim')
-                if WINDOWS()
-                    if has('timer')
-                        let g:complete_method = "deoplete"
+            if has('nvim')
+                if g:python_version == 3
+                    if WINDOWS()
+                        if has('timer')
+                            let g:complete_method = "deoplete"
+                        else
+                            let g:complete_method = "asyncomplete"
+                        endif
                     else
-                        let g:complete_method = "asyncomplete"
+                        let g:complete_method = "ncm2"
                     endif
                 else
-                    let g:complete_method = "ncm2"
+                    let g:complete_method = "asyncomplete"
                 endif
-            elseif g:vim_advance == 2 && !has(nvim) && g:python_version == 3 && WINDOWS()
-                let g:complete_method = "completor"
-            elseif g:vim_advance == 2 && !WINDOWS()
-                let g:complete_method = "asyncomplete"
-            elseif g:vim_advance == 2 && !has(nvim) && g:python_version
-                let g:complete_method = "completor"
+            elseif v:version > 799
+                if g:python_version && WINDOWS()
+                    let g:complete_method = "completor"
+                else
+                    let g:complete_method = "asyncomplete"
+                endif
             elseif has('lua')
                 let g:complete_method = "neocomplete"
             else

@@ -84,8 +84,7 @@ let maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
 set pastetoggle=<F12>
 " 定义快捷键保存当前窗口内容
-nnoremap <leader>0 :source ~/.vimrc<CR>
-vnoremap <leader>0 <ESC>:source ~/.vimrc<CR>
+nnoremap <leader><CR> :source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
@@ -438,47 +437,47 @@ if count(g:plug_groups, 'airline')
 elseif has('statusline')
     if isdirectory(expand($PLUG_PATH."/lightline.vim"))
         set noshowmode
-		let g:lightline = {
+        let g:lightline = {
             \ 'colorscheme': 'onedark',
-			\ 'active': {
-			\  'left': [ [ 'mode', 'paste' ],
-			\     [ 'gitbranch', 'readonly' ],
+            \ 'active': {
+            \  'left': [ [ 'mode', 'paste' ],
+            \     [ 'gitbranch', 'readonly' ],
             \     [ 'filefullpath', 'modified' ]],
-			\  'right': [
-			\     [ 'percent' ],
-			\     [ 'filetype', 'fileformat', 'fileencoding' , 'lineinfo']]
-			\ },
-		    \ 'inactive' : {
-		    \   'left': [ [ 'mode', 'paste' ],[ 'filefullpath' ] ],
-		    \   'right': [ [ 'lineinfo' ], [ 'percent' ] ] },
-			\ 'component': {
-			\  'filefullpath': '%F',
-			\  'lineinfo': '%l/%L : %c',
-			\ },
-			\ 'component_function': {
-			\  'gitbranch': 'fugitive#head',
-			\  'readonly': 'LightlineReadonly',
-			\ },
-		\ }
-		function! LightlineReadonly()
-		  return &readonly && &filetype !=# 'help' ? 'RO' : ''
-		endfunction
+            \  'right': [
+            \     [ 'percent' ],
+            \     [ 'filetype', 'fileformat', 'fileencoding' , 'lineinfo']]
+            \ },
+            \ 'inactive' : {
+            \   'left': [ [ 'mode', 'paste' ],[ 'filefullpath' ] ],
+            \   'right': [ [ 'lineinfo' ], [ 'percent' ] ] },
+            \ 'component': {
+            \  'filefullpath': '%F',
+            \  'lineinfo': '%l/%L : %c',
+            \ },
+            \ 'component_function': {
+            \  'gitbranch': 'fugitive#head',
+            \  'readonly': 'LightlineReadonly',
+            \ },
+        \ }
+        function! LightlineReadonly()
+          return &readonly && &filetype !=# 'help' ? 'RO' : ''
+        endfunction
         if count(g:plug_groups, 'syntax') && g:vim_advance == 2
-			let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-			\  [ 'percent' ],
-			\  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
-			let g:lightline.component_expand =  {
-			\  'linter_checking': 'lightline#ale#checking',
-			\  'linter_warnings': 'lightline#ale#warnings',
-			\  'linter_errors': 'lightline#ale#errors',
-			\  'linter_ok': 'lightline#ale#ok'
-			\ }
-			let g:lightline.component_type = {
-			\  'linter_checking': 'right',
-			\  'linter_warnings': 'warning',
-			\  'linter_errors': 'error',
-			\  'linter_ok': 'left'
-			\ }
+            let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+            \  [ 'percent' ],
+            \  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+            let g:lightline.component_expand =  {
+            \  'linter_checking': 'lightline#ale#checking',
+            \  'linter_warnings': 'lightline#ale#warnings',
+            \  'linter_errors': 'lightline#ale#errors',
+            \  'linter_ok': 'lightline#ale#ok'
+            \ }
+            let g:lightline.component_type = {
+            \  'linter_checking': 'right',
+            \  'linter_warnings': 'warning',
+            \  'linter_errors': 'error',
+            \  'linter_ok': 'left'
+            \ }
         endif
     else
         set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
