@@ -1136,6 +1136,17 @@ if g:vim_advance
             \ 'complete_pattern': ':\s*',
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
             \ })
+    elseif g:complete_method == "asyncomplete" && isdirectory(expand($PLUG_PATH."/asyncomplete"))
+        let g:asyncomplete_auto_popup = 1
+        set completeopt+=noinsert,noselect
+        if executable('pyls')
+            au User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
+                \ })
+        endif
     endif
     " smart completion use neosnippet to expand
     if g:complete_method !="None"

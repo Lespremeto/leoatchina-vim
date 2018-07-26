@@ -236,14 +236,21 @@ if g:vim_advance
         " select a complete plugin
         if count(g:plug_groups, 'smartcomplete')
             " nvim
-            if g:python_version == 3 && has('nvim') && has('timers')
+            if g:python_version == 3 && has('nvim')
                 if WINDOWS()
-                    let g:complete_method = "deoplete"
+                    if has('timer')
+                        let g:complete_method = "deoplete"
+                    else
+                        let g:complete_method = "asyncomplete"
+                    endif
                 else
                     let g:complete_method = "ncm2"
                 endif
-            " vim
-            elseif g:python_version  && !has('nvim')
+            elseif g:vim_advance == 2 && !has(nvim) && g:python_version == 3 && WINDOWS()
+                let g:complete_method = "completor"
+            elseif g:vim_advance == 2 && !WINDOWS()
+                let g:complete_method = "asyncomplete"
+            elseif g:vim_advance == 2 && !has(nvim) && g:python_version
                 let g:complete_method = "completor"
             elseif has('lua')
                 let g:complete_method = "neocomplete"
@@ -285,6 +292,13 @@ if g:vim_advance
                 let g:complete_method = "ncm2"
             else
                 echoe "Cannot install ncm2, install neocomplcache instead."
+                let g:complete_method = "neocomplcache"
+            endif
+        elseif count(g:plug_groups, 'asyncomplete')
+            if g:vim_advance == 2
+                let g:complete_method = "asyncomplete"
+            else
+                echoe "Cannot install asyncomplete, install neocomplcache instead."
                 let g:complete_method = "neocomplcache"
             endif
         endif
@@ -361,7 +375,6 @@ if g:vim_advance
             Plug 'ncm2/ncm2-bufword'
             Plug 'ncm2/ncm2-path'
             Plug 'ncm2/ncm2-github'
-            Plug 'ncm2/ncm2-tmux'
             Plug 'ncm2/ncm2-tagprefix'
             Plug 'filipekiss/ncm2-look.vim'
             Plug 'jsfaint/ncm2-vim'
@@ -385,6 +398,43 @@ if g:vim_advance
             endif
             if count(g:plug_groups, 'go')
                 Plug 'ncm2/ncm2-go', {'for':'go'}
+            endif
+        elseif g:complete_method == "asyncomplete"
+            Plug 'prabirshrestha/asyncomplete.vim'
+            Plug 'prabirshrestha/async.vim'
+            Plug 'prabirshrestha/vim-lsp'
+            Plug 'prabirshrestha/asyncomplete-lsp.vim'
+            Plug 'yami-beta/asyncomplete-omni.vim'
+            Plug 'prabirshrestha/asyncomplete-buffer.vim'
+            Plug 'prabirshrestha/asyncomplete-emoji.vim'
+            Plug 'prabirshrestha/asyncomplete-file.vim'
+            Plug 'prabirshrestha/asyncomplete-tags.vim'
+            Plug 'prabirshrestha/asyncomplete-necovim.vim'
+            Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+            if count(g:plug_groups, 'go')
+                Plug 'prabirshrestha/asyncomplete-gocode.vim'
+            endif
+            if count(g:plug_groups, 'javascript')
+                Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
+                Plug 'prabirshrestha/asyncomplete-flow.vim'
+            endif
+            if count(g:plug_groups, 'rust')
+                Plug 'keremc/asyncomplete-racer.vim'
+            endif
+            if g:complete_snippet == 'ultisnips'
+                Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+                au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+                    \ 'name': 'ultisnips',
+                    \ 'whitelist': ['*'],
+                    \ 'completor': function('asyncomplete#sources#ultisnips#completor')
+                    \ }))
+            elseif g:complete_snippet == 'neosnippet'
+                Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
+                au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+                    \ 'name': 'neosnippet',
+                    \ 'whitelist': ['*'],
+                    \ 'completor': function('asyncomplete#sources#neosnippet#completor')
+                    \ }))
             endif
         endif
         " after file
