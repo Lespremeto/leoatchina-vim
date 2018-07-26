@@ -1135,7 +1135,7 @@ if g:vim_advance
             \ 'complete_pattern': ':\s*',
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
             \ })
-    elseif g:complete_method == "asyncomplete" && isdirectory(expand($PLUG_PATH."/asyncomplete"))
+    elseif g:complete_method == "asyncomplete" && isdirectory(expand($PLUG_PATH."/asyncomplete.vim"))
         let g:asyncomplete_auto_popup = 1
         set completeopt+=noinsert,noselect
         if executable('pyls')
@@ -1145,6 +1145,19 @@ if g:vim_advance
                 \ 'whitelist': ['python'],
                 \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
                 \ })
+        endif
+        if isdirectory(expand($PLUG_PATH."/ultisnips"))
+            au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+                \ 'name': 'ultisnips',
+                \ 'whitelist': ['*'],
+                \ 'completor': function('asyncomplete#sources#ultisnips#completor')
+                \ }))
+        elseif isdirectory(expand($PLUG_PATH."/neosnippet"))
+            au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+                \ 'name': 'neosnippet',
+                \ 'whitelist': ['*'],
+                \ 'completor': function('asyncomplete#sources#neosnippet#completor')
+                \ }))
         endif
     endif
     " smart completion use neosnippet to expand
