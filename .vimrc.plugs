@@ -245,13 +245,7 @@ if g:vim_advance
             endif
         " vim
         elseif g:python_version  && !has('nvim')
-            if WINDOWS() || (!WINDOWS() && !executable('cmake'))
-                let g:complete_method = "completor"
-            elseif !WINDOWS() && executable('cmake')
-                let g:complete_method = "YCM"
-            else
-                let g:complete_method = "neocomplcache"
-            endif
+            let g:complete_method = "completor"
         elseif has('lua')
             let g:complete_method = "neocomplete"
         else

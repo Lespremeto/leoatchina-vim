@@ -686,7 +686,7 @@ endif
 " fugitive
 if isdirectory(expand($PLUG_PATH."/vim-fugitive"))
     nnoremap + :Git<Space>
-    nnoremap <leader>gc :Gcommit -a -v<CR>
+    nnoremap gc :Gcommit -a -v<CR>
 endif
 " TagBar
 if isdirectory(expand($PLUG_PATH."/tagbar/"))
@@ -1286,7 +1286,7 @@ if g:vim_advance
         command! RunAsync call s:RUN_ASYNC()
         nmap <leader>ra :RunAsync<CR>
         nmap <leader>rs :AsyncStop<CR>
-        nmap gra :AsyncRun<Space>
+        nmap gr :AsyncRun<Space>
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     endif
     if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
