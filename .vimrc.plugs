@@ -40,7 +40,7 @@ endif
 " vim_advance judge
 if has('nvim') || v:version > 799
     let g:vim_advance = 2
-elseif v:version > 703
+elseif v:version >= 703
     let g:vim_advance = 1
 else
     let g:vim_advance = 0
@@ -216,7 +216,7 @@ else
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tacahiroy/ctrlp-funky'
 endif
-" complete
+" complete method
 if g:vim_advance
     " vim version
     if g:vim_advance == 2
@@ -236,14 +236,22 @@ if g:vim_advance
     Plug 'thinca/vim-quickrun'
     " select a complete plugin
     if count(g:plug_groups, 'smartcomplete')
+        " nvim
         if g:python_version == 3 && has('nvim') && has('timers')
             if WINDOWS()
                 let g:complete_method = "deoplete"
             else
                 let g:complete_method = "ncm2"
             endif
-        elseif g:python_version  && !has('nvim') && version > 799
-            let g:complete_method = "completor"
+        " vim
+        elseif g:python_version  && !has('nvim')
+            if WINDOWS() || (!WINDOWS() && !executable('cmake'))
+                let g:complete_method = "completor"
+            elseif !WINDOWS() && executable('cmake')
+                let g:complete_method = "YCM"
+            else
+                let g:complete_method = "neocomplcache"
+            endif
         elseif has('lua')
             let g:complete_method = "neocomplete"
         else
