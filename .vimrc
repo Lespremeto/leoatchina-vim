@@ -518,7 +518,7 @@ if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
     let g:multi_cursor_select_all_key      = '<localleader><C-n>'
     let g:multi_cursor_next_key            = '<C-n>'
     let g:multi_cursor_prev_key            = '<C-p>'
-    let g:multi_cursor_skip_key            = '<C-c>'
+    let g:multi_cursor_skip_key            = '<C-h>'
     let g:multi_cursor_quit_key            = '<ESC>'
     highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
     highlight link multiple_cursors_visual Visual
@@ -786,7 +786,7 @@ if isdirectory(expand($PLUG_PATH."/rainbow"))
 endif
 " browser seris
 if g:ctrlp_version == 4 && isdirectory(expand($PLUG_PATH."/fzf.vim"))
-    nnoremap <silent>   <F10>      :FZF<CR>
+    nnoremap <silent>   <C-b>      :FZF<CR>
     nnoremap <silent>   <Leader>lb :Buffers<CR>
     nnoremap <Leader>lf :FZF<Space>
     nnoremap <silent>   <Leader>lt :Filetypes<CR>
@@ -842,7 +842,7 @@ if g:ctrlp_version == 4 && isdirectory(expand($PLUG_PATH."/fzf.vim"))
         \ 'ctrl-x': 'split',
         \ 'ctrl-v': 'vsplit' }
 elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
-    nnoremap <F10> :Denite file/rec buffer<Cr>
+    nnoremap <C-b> :Denite file/rec buffer<Cr>
     nnoremap <leader>lf :Denite
     nnoremap <leader>lb :DeniteBufferDir
     nnoremap <leader>lw :DeniteCursorWord
@@ -937,7 +937,7 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     	call denite#custom#map('normal', m[0], m[1], m[2])
     endfor
 elseif g:ctrlp_version == 2 && isdirectory(expand($PLUG_PATH."/LeaderF"))
-    let g:Lf_ShortcutF = '<F10>'
+    let g:Lf_ShortcutF = '<C-b>'
     let g:Lf_PythonVersion = g:python_version
     let g:Lf_ShortcutB = '<leader>B'
     nmap <leader>lf :Leaderf
@@ -945,7 +945,7 @@ elseif g:ctrlp_version == 2 && isdirectory(expand($PLUG_PATH."/LeaderF"))
     nmap <leader>lb :LeaderfB
     nmap <leader>lm :LeaderfM
 elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
-    let g:ctrlp_map = '<F10>'
+    let g:ctrlp_map = '<C-b>'
     let g:ctrlp_cmd = 'CtrlP'
     let g:ctrlp_working_path_mode = 'ar'
     let g:ctrlp_custom_ignore = {
@@ -983,7 +983,7 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
 endif
 " UndoTree
 if isdirectory(expand($PLUG_PATH."/undotree"))
-    nnoremap <silent><F6> :UndotreeToggle<CR>
+    nnoremap <silent><leader>u :UndotreeToggle<CR>
     " If undotree is opened, it is likely one wants to interact with it.
     let g:undotree_SetFocusWhenToggle = 0
     if has("persistent_undo")
