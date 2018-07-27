@@ -304,75 +304,49 @@ augroup resCur
     au!
     au BufWinEnter * call ResCur()
 augroup END
-" tags
-if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/vim-gutentags"))
-    set tags=./.tags;,.tags
-    " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-    let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-    " 所生成的数据文件的名称
-    let g:gutentags_ctags_tagfile = '.tags'
-    " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-    let s:vim_tags = expand("~/.cache/tags")
-    let g:gutentags_cache_dir = s:vim_tags
-    " 配置 ctags 的参数
-    let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-    let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-    let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-    " 检测 ~/.cache/tags 不存在就新建
-    if !isdirectory(s:vim_tags)
-        silent! call mkdir(s:vim_tags, 'p')
+" End/Start of line motion keys act relative to row/wrap width in the
+" presence of `:set wrap`, and relative to line for `:set nowrap`.
+" Default vim behaviour is to act relative to text line in both cases
+function! WrapRelativeMotion(key, ...)
+    let vis_sel=""
+    if a:0
+        let vis_sel="gv"
     endif
+    if &wrap
+        execute "normal!" vis_sel . "g" . a:key
+    else
+        execute "normal!" vis_sel . a:key
+    endif
+endfunction
+" Map g* keys in Normal, Operator-pending, and Visual+select
+noremap $ :call WrapRelativeMotion("$")<CR>
+noremap 0 :call WrapRelativeMotion("0")<CR>
+noremap ^ :call WrapRelativeMotion("^")<CR>
+" Overwrite the operator pending $/<End> mappings from above
+" to force inclusive motion with :execute normal!
+onoremap $ v:call WrapRelativeMotion("$")<CR>
+onoremap <End> v:call WrapRelativeMotion("$")<CR>
+" Overwrite the Visual+select mode mappings from above
+" to ensuwe the correct vis_sel flag is passed to function
+vnoremap $ :<C-U>call WrapRelativeMotion("$", 1)<CR>
+vnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
+vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
+vnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
+vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
+" Stupid shift key fixes
+if has("user_commands")
+    command! -bang -nargs=* -complete=file E e<bang> <args>
+    command! -bang -nargs=* -complete=file W w<bang> <args>
+    command! -bang -nargs=* -complete=file Wq wq<bang> <args>
+    command! -bang -nargs=* -complete=file WQ wq<bang> <args>
+    command! -bang Wa wa<bang>
+    command! -bang WA wa<bang>
+    command! -bang Q q<bang>
+    command! -bang QA qa<bang>
+    command! -bang Qa qa<bang>
 endif
-" indent_guides
-if isdirectory(expand($PLUG_PATH."/vim-indent-guides/"))
-    let g:indent_guides_enable_on_vim_startup = 1
-    let g:indent_guides_start_level = 2
-    let g:indent_guides_guide_size = 1
-    hi IndentGuidesOdd  ctermbg=black
-    hi IndentGuidesEven ctermbg=darkgrey
-endif
-" conflict-marker
-if isdirectory(expand($PLUG_PATH."/conflict-marker.vim/"))
-    let g:conflict_marker_enable_mappings = 1
-endif
-" voom
-if isdirectory(expand($PLUG_PATH."/voom/"))
-    let g:conflict_marker_enable_mappings = 1
-    let g:voom_python_versions = [g:python_version]
-    let g:voom_tab_key = "_"
-    nmap <leader>vt :VoomToggle<CR>
-    let g:voom_ft_modes = {
-        \ 'markdown': 'markdown',
-        \ 'pandoc': 'pandoc',
-        \ 'c': 'fmr2',
-        \ 'cpp': 'fmr2',
-        \ 'python':'python',
-        \ 'tex': 'latex'}
-endif
-" multiple-cursors
-if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
-    let g:multi_cursor_use_default_mapping=0
-    let g:multi_cursor_start_word_key      = '<C-n>'
-    let g:multi_cursor_select_all_word_key = '<leader><C-n>'
-    let g:multi_cursor_start_key           = 'g<C-n>'
-    let g:multi_cursor_select_all_key      = '<localleader><C-n>'
-    let g:multi_cursor_next_key            = '<C-n>'
-    let g:multi_cursor_prev_key            = '<C-p>'
-    let g:multi_cursor_skip_key            = '<C-c>'
-    let g:multi_cursor_quit_key            = '<ESC>'
-    highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
-    highlight link multiple_cursors_visual Visual
-    function! Multiple_cursors_before()
-      if exists(':NeoCompleteLock')==2
-        exe 'NeoCompleteLock'
-      endif
-    endfunction
-    function! Multiple_cursors_after()
-      if exists(':NeoCompleteUnlock')==2
-        exe 'NeoCompleteUnlock'
-      endif
-    endfunction
-endif
+
+" Plugins
 " dark theme
 set background=dark
 " 总是显示状态栏
@@ -490,6 +464,75 @@ elseif has('statusline')
         hi User5 cterm=None ctermfg=250 ctermbg=238
     endif
 endif
+" tags
+if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/vim-gutentags"))
+    set tags=./.tags;,.tags
+    " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+    let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+    " 所生成的数据文件的名称
+    let g:gutentags_ctags_tagfile = '.tags'
+    " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+    let s:vim_tags = expand("~/.cache/tags")
+    let g:gutentags_cache_dir = s:vim_tags
+    " 配置 ctags 的参数
+    let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+    let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+    let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+    " 检测 ~/.cache/tags 不存在就新建
+    if !isdirectory(s:vim_tags)
+        silent! call mkdir(s:vim_tags, 'p')
+    endif
+endif
+" indent_guides
+if isdirectory(expand($PLUG_PATH."/vim-indent-guides/"))
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_start_level = 2
+    let g:indent_guides_guide_size = 1
+    hi IndentGuidesOdd  ctermbg=black
+    hi IndentGuidesEven ctermbg=darkgrey
+endif
+" conflict-marker
+if isdirectory(expand($PLUG_PATH."/conflict-marker.vim/"))
+    let g:conflict_marker_enable_mappings = 1
+endif
+" voom
+if isdirectory(expand($PLUG_PATH."/voom/"))
+    let g:conflict_marker_enable_mappings = 1
+    let g:voom_python_versions = [g:python_version]
+    let g:voom_tab_key = "_"
+    nmap <leader>vt :VoomToggle<CR>
+    let g:voom_ft_modes = {
+        \ 'markdown': 'markdown',
+        \ 'pandoc': 'pandoc',
+        \ 'c': 'fmr2',
+        \ 'cpp': 'fmr2',
+        \ 'python':'python',
+        \ 'tex': 'latex'}
+endif
+" multiple-cursors
+if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
+    let g:multi_cursor_use_default_mapping=0
+    let g:multi_cursor_start_word_key      = '<C-n>'
+    let g:multi_cursor_select_all_word_key = '<leader><C-n>'
+    let g:multi_cursor_start_key           = 'g<C-n>'
+    let g:multi_cursor_select_all_key      = '<localleader><C-n>'
+    let g:multi_cursor_next_key            = '<C-n>'
+    let g:multi_cursor_prev_key            = '<C-p>'
+    let g:multi_cursor_skip_key            = '<C-c>'
+    let g:multi_cursor_quit_key            = '<ESC>'
+    highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
+    highlight link multiple_cursors_visual Visual
+    function! Multiple_cursors_before()
+      if exists(':NeoCompleteLock')==2
+        exe 'NeoCompleteLock'
+      endif
+    endfunction
+    function! Multiple_cursors_after()
+      if exists(':NeoCompleteUnlock')==2
+        exe 'NeoCompleteUnlock'
+      endif
+    endfunction
+endif
 " NerdTree
 if isdirectory(expand($PLUG_PATH."/nerdtree"))
     nmap <leader>nn :NERDTreeTabsToggle<CR>
@@ -530,48 +573,6 @@ if isdirectory(expand($PLUG_PATH."/nerdtree"))
             \ }
     endif
 endif
-" End/Start of line motion keys act relative to row/wrap width in the
-" presence of `:set wrap`, and relative to line for `:set nowrap`.
-" Default vim behaviour is to act relative to text line in both cases
-function! WrapRelativeMotion(key, ...)
-    let vis_sel=""
-    if a:0
-        let vis_sel="gv"
-    endif
-    if &wrap
-        execute "normal!" vis_sel . "g" . a:key
-    else
-        execute "normal!" vis_sel . a:key
-    endif
-endfunction
-" Map g* keys in Normal, Operator-pending, and Visual+select
-noremap $ :call WrapRelativeMotion("$")<CR>
-noremap 0 :call WrapRelativeMotion("0")<CR>
-noremap ^ :call WrapRelativeMotion("^")<CR>
-" Overwrite the operator pending $/<End> mappings from above
-" to force inclusive motion with :execute normal!
-onoremap $ v:call WrapRelativeMotion("$")<CR>
-onoremap <End> v:call WrapRelativeMotion("$")<CR>
-" Overwrite the Visual+select mode mappings from above
-" to ensuwe the correct vis_sel flag is passed to function
-vnoremap $ :<C-U>call WrapRelativeMotion("$", 1)<CR>
-vnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
-vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
-vnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
-vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
-" Stupid shift key fixes
-if has("user_commands")
-    command! -bang -nargs=* -complete=file E e<bang> <args>
-    command! -bang -nargs=* -complete=file W w<bang> <args>
-    command! -bang -nargs=* -complete=file Wq wq<bang> <args>
-    command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-    command! -bang Wa wa<bang>
-    command! -bang WA wa<bang>
-    command! -bang Q q<bang>
-    command! -bang QA qa<bang>
-    command! -bang Qa qa<bang>
-endif
-" Plugins
 " ywvim,vim里的中文输入法
 if isdirectory(expand($PLUG_PATH."/ywvim"))
     if count(g:plug_groups, 'pinyin')
@@ -743,10 +744,10 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     " disable pymode_rope and pymode_folding for slow problem
     let g:pymode_rope             = 0
     let g:pymode_folding          = 0
-    let g:pymode_trim_whiteSpaces = 1
+    let g:pymode_trim_whiteSpaces = 0
     let g:pymode_options          = 0
     " doc for python
-    let g:pymode_doc              = 0
+    let g:pymode_doc              = 1
     " motion
     let g:pymode_motion           = 1
     " run python
@@ -763,7 +764,7 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
         nmap <C-l>l :PymodeLint<CR>
         let g:pymode_lint            = 1
         let g:pymode_lint_signs      = 1
-        " no check when white
+        " no check when write
         let g:pymode_lint_on_write   = 0
         " check when save
         let g:pymode_lint_unmodified = 0
@@ -992,16 +993,17 @@ if isdirectory(expand($PLUG_PATH."/undotree"))
 endif
 " language support
 if g:vim_advance
-    set shortmess+=c
-    set completeopt+=menuone
     set completeopt-=menu
     set completeopt-=preview
+    set completeopt+=menuone
+    " ominifuc
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     if g:complete_method == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
+        set shortmess+=c
         set completeopt+=noinsert,noselect
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
@@ -1028,51 +1030,12 @@ if g:vim_advance
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
     elseif g:complete_method == "completor" && isdirectory(expand($PLUG_PATH."/completor.vim"))
+        set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-    elseif g:complete_method == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete.vim"))
-        let g:neocomplete#enable_at_startup = 1
-        let g:neocomplete#enable_smart_case = 1
-        let g:neocomplete#enable_auto_select = 0
-        let g:neocomplete#enable_camel_case = 1
-        let g:neocomplete#enable_auto_delimiter = 0
-        let g:neocomplete#force_overwrite_completefunc = 1
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-        " Enable heavy omni completion.
-        if !exists('g:neocomplete#force_omni_input_patterns')
-            let g:neocomplete#force_omni_input_patterns = {}
-        endif
-        let g:neocomplete#force_omni_input_patterns.java = '[^. \t]\.\w*'
-        let g:neocomplete#force_omni_input_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
-        let g:neocomplete#force_omni_input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-        let g:neocomplete#force_omni_input_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
-        let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-        let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-        let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_method == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache.vim"))
-        let g:neocomplcache_enable_insert_char_pre       = 1
-        let g:neocomplcache_enable_at_startup            = 1
-        let g:neocomplcache_enable_auto_select           = 0
-        let g:neocomplcache_enable_camel_case_completion = 1
-        let g:neocomplcache_enable_smart_case            = 1
-        let g:neocomplcache_enable_auto_delimiter        = 0
-        let g:neocomplcache_force_overwrite_completefunc = 1
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-        " Enable heavy omni completion.
-        if !exists('g:neocomplcache_omni_patterns')
-            let g:neocomplcache_omni_patterns = {}
-        endif
-        let g:neocomplcache_omni_patterns.java = '[^. \t]\.\w*'
-        let g:neocomplcache_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
-        let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-        let g:neocomplcache_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
-        let g:neocomplcache_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-        let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-        let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     elseif g:complete_method == "YCM" && isdirectory(expand($PLUG_PATH."/YouCompleteMe"))
+        set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python2'
@@ -1119,6 +1082,7 @@ if g:vim_advance
         " 跳转到定义处
         nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif g:complete_method == "ncm2" && isdirectory(expand($PLUG_PATH."/ncm2"))
+        set shortmess+=c
         set completeopt+=noinsert,noselect
         autocmd BufEnter * call ncm2#enable_for_buffer()
         au User Ncm2Plugin call ncm2#register_source({
@@ -1133,8 +1097,9 @@ if g:vim_advance
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
             \ })
     elseif g:complete_method == "asyncomplete" && isdirectory(expand($PLUG_PATH."/asyncomplete.vim"))
-        let g:asyncomplete_auto_popup = 1
+        set shortmess+=c
         set completeopt+=noinsert,noselect
+        let g:asyncomplete_auto_popup = 1
         if executable('pyls')
             au User lsp_setup call lsp#register_server({
                 \ 'name': 'pyls',
@@ -1156,6 +1121,47 @@ if g:vim_advance
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
                 \ }))
         endif
+    elseif g:complete_method == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete.vim"))
+        let g:neocomplete#enable_at_startup = 1
+        let g:neocomplete#enable_smart_case = 1
+        let g:neocomplete#enable_auto_select = 0
+        let g:neocomplete#enable_camel_case = 1
+        let g:neocomplete#enable_auto_delimiter = 0
+        let g:neocomplete#force_overwrite_completefunc = 1
+        " <BS>: close popup and delete backword char.
+        inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+        " Enable heavy omni completion.
+        if !exists('g:neocomplete#force_omni_input_patterns')
+            let g:neocomplete#force_omni_input_patterns = {}
+        endif
+        let g:neocomplete#force_omni_input_patterns.java = '[^. \t]\.\w*'
+        let g:neocomplete#force_omni_input_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
+    elseif g:complete_method == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache.vim"))
+        let g:neocomplcache_enable_insert_char_pre       = 1
+        let g:neocomplcache_enable_at_startup            = 1
+        let g:neocomplcache_enable_auto_select           = 0
+        let g:neocomplcache_enable_camel_case_completion = 1
+        let g:neocomplcache_enable_smart_case            = 1
+        let g:neocomplcache_enable_auto_delimiter        = 0
+        let g:neocomplcache_force_overwrite_completefunc = 1
+        " <BS>: close popup and delete backword char.
+        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+        " Enable heavy omni completion.
+        if !exists('g:neocomplcache_omni_patterns')
+            let g:neocomplcache_omni_patterns = {}
+        endif
+        let g:neocomplcache_omni_patterns.java = '[^. \t]\.\w*'
+        let g:neocomplcache_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplcache_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+        let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     endif
     " smart completion use neosnippet to expand
     if g:complete_method !="None"
@@ -1227,7 +1233,9 @@ if g:vim_advance
             " Enable neosnippet snipmate compatibility mode
             let g:neosnippet#enable_snipmate_compatibility = 1
             " Enable neosnippets when using go
-            let g:go_snippet_engine = "neosnippet"
+            if count(g:plug_groups, 'go')
+                let g:go_snippet_engine = "neosnippet"
+            endif
         endif
     endif
     if isdirectory(expand($PLUG_PATH."/ale")) && g:vim_advance == 2
@@ -1244,7 +1252,6 @@ if g:vim_advance
         let g:ale_echo_msg_error_str   = 'E'
         let g:ale_echo_msg_warning_str = 'W'
         let g:ale_echo_msg_format      = '[%linter%] %s [%code%]'
-
         let g:ale_fix_on_save          = 0
         let g:ale_set_loclist          = 0
         let g:ale_set_quickfix         = 0
