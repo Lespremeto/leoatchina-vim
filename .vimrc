@@ -49,18 +49,95 @@ else
         endif
     endif
 endif
-" vim-fullscreen
-if isdirectory(expand($PLUG_PATH."/vim-fullscreen"))
-    let g:fullscreen#enable_default_keymap = 1
-    if has('nvim')
-        let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
-        let g:fullscreen#stop_command  = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+" Functions
+" Initialize directories
+function! InitializeDirectories()
+    let parent = $HOME
+    let prefix = 'vim'
+    let dir_list = {
+                \ 'backup': 'backupdir',
+                \ 'views': 'viewdir',
+                \ 'swap': 'directory' }
+    if has('persistent_undo')
+        let dir_list['undo'] = 'undodir'
     endif
-    nmap <silent><F11> :FullscreenToggle<cr>
-    imap <silent><F11> <Esc>:FullscreenToggle<cr>
-    smap <silent><F11> <Esc>:FullscreenToggle<cr>
-    vmap <silent><F11> <Esc>:FullscreenToggle<cr>
-endif
+    " To specify a different directory in which to place the vimbackup,
+    let common_dir = parent . '/.' . prefix
+    for [dirname, settingname] in items(dir_list)
+        let directory = common_dir . dirname . '/'
+        if exists("*mkdir")
+            if !isdirectory(directory)
+                call mkdir(directory)
+            endif
+        endif
+        if !isdirectory(directory)
+            echo "Warning: Unable to create backup directory: " . directory
+            echo "Try: mkdir -p " . directory
+        else
+            let directory = substitute(directory, " ", "\\\\ ", "g")
+            exec "set " . settingname . "=" . directory
+        endif
+    endfor
+endfunction
+call InitializeDirectories()
+" Strip whiteSpace
+function! StripTrailingWhiteSpace()
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " do the business:
+    %s/\s\+$//e
+    " clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+" Shell command
+function! s:RunShellCommand(cmdline)
+    botright new
+    setlocal buftype=nofile
+    setlocal bufhidden=delete
+    setlocal nobuflisted
+    setlocal noswapfile
+    setlocal nowrap
+    setlocal filetype=shell
+    setlocal syntax=shell
+    call setline(1, a:cmdline)
+    call setline(2, substitute(a:cmdline, '.', '=', 'g'))
+    execute 'silent $read !' . escape(a:cmdline, '%#')
+    setlocal nomodifiable
+    1
+endfunction
+command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:ExpandFilenameAndExecute(command, file)
+    execute a:command . " " . expand(a:file, ":p")
+endfunction
+nnoremap <C-k>s :Shell<Space>
+" http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
+" Restore cursor to file position in previous editing session
+function! ResCur()
+    if line("'\"") <= line("$")
+        silent! normal! g`"
+        return 1
+    endif
+endfunction
+augroup resCur
+    au!
+    au BufWinEnter * call ResCur()
+augroup END
+" End/Start of line motion keys act relative to row/wrap width in the
+" presence of `:set wrap`, and relative to line for `:set nowrap`.
+" Default vim behaviour is to act relative to text line in both cases
+function! WrapRelativeMotion(key, ...)
+    let vis_sel=""
+    if a:0
+        let vis_sel="gv"
+    endif
+    if &wrap
+        execute "normal!" vis_sel . "g" . a:key
+    else
+        execute "normal!" vis_sel . a:key
+    endif
+endfunction
 " Clipboard
 if has('clipboard')
     if has('unnamedplus')  " When possible use + register for copy-paste
@@ -79,6 +156,13 @@ if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
 endif
 " Key (re)Mappings
+" some internal key remap
+map  gt <Nop>
+map  gT <Nop>
+xmap <C-s> <Nop>
+xmap <C-q> <Nop>
+xmap <C-z> <Nop>
+nmap ! :!
 let mapleader=' '
 let maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
@@ -92,13 +176,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Some helpers to edit mode
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-" some internal key remap
-map  gt <Nop>
-map  gT <Nop>
-xmap <C-s> <Nop>
-xmap <C-q> <Nop>
-xmap <C-z> <Nop>
-nmap ! :!
 nnoremap <localleader><localleader> %
 " Q
 nnoremap ~ Q
@@ -275,7 +352,7 @@ set guioptions-=m
 set guioptions-=T
 " sepcial setting for different type of files
 au BufNewFile,BufRead *.py
-            \set foldmethod=indent
+    \ set foldmethod=indent
 au FileType python au BufWritePost <buffer> :%retab
 " yaml
 au FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
@@ -292,32 +369,6 @@ au FileType haskell setlocal commentstring=--\ %s
 au FileType haskell,rust setlocal nospell
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-" http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
-" Restore cursor to file position in previous editing session
-function! ResCur()
-    if line("'\"") <= line("$")
-        silent! normal! g`"
-        return 1
-    endif
-endfunction
-augroup resCur
-    au!
-    au BufWinEnter * call ResCur()
-augroup END
-" End/Start of line motion keys act relative to row/wrap width in the
-" presence of `:set wrap`, and relative to line for `:set nowrap`.
-" Default vim behaviour is to act relative to text line in both cases
-function! WrapRelativeMotion(key, ...)
-    let vis_sel=""
-    if a:0
-        let vis_sel="gv"
-    endif
-    if &wrap
-        execute "normal!" vis_sel . "g" . a:key
-    else
-        execute "normal!" vis_sel . a:key
-    endif
-endfunction
 " Map g* keys in Normal, Operator-pending, and Visual+select
 noremap $ :call WrapRelativeMotion("$")<CR>
 noremap 0 :call WrapRelativeMotion("0")<CR>
@@ -347,11 +398,23 @@ if has("user_commands")
 endif
 
 " Plugins
+" vim-fullscreen
+if isdirectory(expand($PLUG_PATH."/vim-fullscreen"))
+    let g:fullscreen#enable_default_keymap = 1
+    if has('nvim')
+        let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
+        let g:fullscreen#stop_command  = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+    endif
+    nmap <silent><F11> :FullscreenToggle<cr>
+    imap <silent><F11> <Esc>:FullscreenToggle<cr>
+    smap <silent><F11> <Esc>:FullscreenToggle<cr>
+    vmap <silent><F11> <Esc>:FullscreenToggle<cr>
+endif
 " dark theme
 set background=dark
 " 总是显示状态栏
 set laststatus=2
-if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections/"))
+if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections"))
     if has('nvim')
         if has("gui_running")
             colorscheme onedark
@@ -484,7 +547,7 @@ if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/
     endif
 endif
 " indent_guides
-if isdirectory(expand($PLUG_PATH."/vim-indent-guides/"))
+if isdirectory(expand($PLUG_PATH."/vim-indent-guides"))
     let g:indent_guides_enable_on_vim_startup = 1
     let g:indent_guides_start_level = 2
     let g:indent_guides_guide_size = 1
@@ -492,11 +555,11 @@ if isdirectory(expand($PLUG_PATH."/vim-indent-guides/"))
     hi IndentGuidesEven ctermbg=darkgrey
 endif
 " conflict-marker
-if isdirectory(expand($PLUG_PATH."/conflict-marker.vim/"))
+if isdirectory(expand($PLUG_PATH."/conflict-marker.vim"))
     let g:conflict_marker_enable_mappings = 1
 endif
 " voom
-if isdirectory(expand($PLUG_PATH."/voom/"))
+if isdirectory(expand($PLUG_PATH."/voom"))
     let g:conflict_marker_enable_mappings = 1
     let g:voom_python_versions = [g:python_version]
     let g:voom_tab_key = "_"
@@ -510,7 +573,7 @@ if isdirectory(expand($PLUG_PATH."/voom/"))
         \ 'tex': 'latex'}
 endif
 " multiple-cursors
-if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors/"))
+if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors"))
     let g:multi_cursor_use_default_mapping=0
     let g:multi_cursor_start_word_key      = '<C-n>'
     let g:multi_cursor_select_all_word_key = '<leader><C-n>'
@@ -686,7 +749,7 @@ if isdirectory(expand($PLUG_PATH."/vim-fugitive"))
     nnoremap gc :Gcommit -a -v<CR>
 endif
 " TagBar
-if isdirectory(expand($PLUG_PATH."/tagbar/"))
+if isdirectory(expand($PLUG_PATH."/tagbar"))
     let g:tagbar_sort = 0
     set tags=./tags;/,~/.vimtags
     " Make tags placed in .git/tags file available in all levels of a repository
@@ -971,7 +1034,7 @@ elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
         \ },
         \ 'fallback': s:ctrlp_fallback
         \ }
-    if isdirectory(expand($PLUG_PATH."/ctrlp-funky/"))
+    if isdirectory(expand($PLUG_PATH."/ctrlp-funky"))
         " CtrlP extensions
         let g:ctrlp_extensions = ['funky']
         " funky
@@ -1341,66 +1404,3 @@ if g:vim_advance
         snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
     endif
 endif
-" Functions
-" Initialize directories
-function! InitializeDirectories()
-    let parent = $HOME
-    let prefix = 'vim'
-    let dir_list = {
-                \ 'backup': 'backupdir',
-                \ 'views': 'viewdir',
-                \ 'swap': 'directory' }
-    if has('persistent_undo')
-        let dir_list['undo'] = 'undodir'
-    endif
-    " To specify a different directory in which to place the vimbackup,
-    let common_dir = parent . '/.' . prefix
-    for [dirname, settingname] in items(dir_list)
-        let directory = common_dir . dirname . '/'
-        if exists("*mkdir")
-            if !isdirectory(directory)
-                call mkdir(directory)
-            endif
-        endif
-        if !isdirectory(directory)
-            echo "Warning: Unable to create backup directory: " . directory
-            echo "Try: mkdir -p " . directory
-        else
-            let directory = substitute(directory, " ", "\\\\ ", "g")
-            exec "set " . settingname . "=" . directory
-        endif
-    endfor
-endfunction
-call InitializeDirectories()
-" Strip whiteSpace
-function! StripTrailingWhiteSpace()
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " do the business:
-    %s/\s\+$//e
-    " clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
-endfunction
-" Shell command
-function! s:RunShellCommand(cmdline)
-    botright new
-    setlocal buftype=nofile
-    setlocal bufhidden=delete
-    setlocal nobuflisted
-    setlocal noswapfile
-    setlocal nowrap
-    setlocal filetype=shell
-    setlocal syntax=shell
-    call setline(1, a:cmdline)
-    call setline(2, substitute(a:cmdline, '.', '=', 'g'))
-    execute 'silent $read !' . escape(a:cmdline, '%#')
-    setlocal nomodifiable
-    1
-endfunction
-command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
-function! s:ExpandFilenameAndExecute(command, file)
-    execute a:command . " " . expand(a:file, ":p")
-endfunction
-nnoremap <C-k>s :Shell<Space>
