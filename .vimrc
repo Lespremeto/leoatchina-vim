@@ -711,7 +711,7 @@ if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
     let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
 endif
 " Go program
-if count(g:plug_groups, 'go')
+if isdirectory(expand($PLUG_PATH."vim-go"))
     let g:go_highlight_functions         = 1
     let g:go_highlight_methods           = 1
     let g:go_highlight_structs           = 1
@@ -756,12 +756,13 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
     let g:pymode_breakpoint       = 1
     let g:pymode_breakpoint_bind  = '<C-l>t'
     let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
-    let g:pymode_rope_goto_definition_bind = 'gd'
     " pymode check disable
     if count(g:plug_groups, 'syntax')
         let g:pymode_lint = 0
+        let g:pymode_rope_goto_definition_bind = '<Nop>'
     else
-        nmap <C-l>l :PymodeLint<CR>
+        nmap <C-l><C-l> :PymodeLint<CR>
+        let g:pymode_rope_goto_definition_bind = 'go'
         let g:pymode_lint            = 1
         let g:pymode_lint_signs      = 1
         " no check when write
@@ -774,7 +775,6 @@ if isdirectory(expand($PLUG_PATH."/python-mode"))
         let g:pymode_lint_message    = 1
         " checkers
         let g:pymode_lint_checkers   = ['pyflakes', 'pep8']
-        "let g:pymode_lint_checkers = ['pep8']
         let g:pymode_lint_ignore     = "E128,E2,E3,E501"
         " not Auto open cwindow (quickfix) if any errors have been found
         let g:pymode_lint_cwindow    = 0
@@ -904,8 +904,8 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     	call denite#custom#var('grep', 'separator', ['--'])
     	call denite#custom#var('grep', 'final_opts', [])
     	call denite#custom#var('grep', 'default_opts',
-    			\ ['--ackrc', $HOME.'/.config/ackrc', '-H',
-    			\ '--nopager', '--nocolor', '--nogroup', '--column'])
+            \ ['--ackrc', $HOME.'/.config/ackrc', '-H',
+            \ '--nopager', '--nocolor', '--nogroup', '--column'])
     endif
     " KEY MAPPINGS
     let insert_mode_mappings = [
@@ -917,7 +917,6 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     	\  ['<Down>', '<denite:assign_next_text>', 'noremap'],
     	\  ['<C-Y>', '<denite:redraw>', 'noremap'],
     	\ ]
-
     let normal_mode_mappings = [
     	\   ["'", '<denite:toggle_select_down>', 'noremap'],
     	\   ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
@@ -929,7 +928,6 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     	\   ['qt', '<denite:quit>', 'noremap'],
     	\   ['r', '<denite:redraw>', 'noremap'],
     	\ ]
-
     for m in insert_mode_mappings
     	call denite#custom#map('insert', m[0], m[1], m[2])
     endfor
@@ -1053,20 +1051,20 @@ if g:vim_advance
         let g:ycm_filetype_blacklist = {
             \ 'tagbar' : 1,
             \ 'nerdtree' : 1,
-            \}
+        \}
         let g:ycm_semantic_triggers =  {
-            \   'c' : ['->', '.'],
-            \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-            \             're!\[.*\]\s'],
-            \   'ocaml' : ['.', '#'],
-            \   'cpp,cuda,objcpp' : ['->', '.', '::'],
-            \   'perl' : ['->'],
-            \   'php' : ['->', '::'],
-            \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-            \   'ruby' : ['.', '::'],
-            \   'lua' : ['.', ':'],
-            \   'erlang' : [':'],
-            \ }
+            \ 'c' : ['->', '.'],
+            \ 'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+            \           're!\[.*\]\s'],
+            \ 'ocaml' : ['.', '#'],
+            \ 'cpp,cuda,objcpp' : ['->', '.', '::'],
+            \ 'perl' : ['->'],
+            \ 'php' : ['->', '::'],
+            \ 'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \ 'ruby' : ['.', '::'],
+            \ 'lua' : ['.', ':'],
+            \ 'erlang' : [':'],
+        \ }
         let g:ycm_confirm_extra_conf = 1 "加载.ycm_extra_conf.py提示
         let g:ycm_global_ycm_extra_conf = $PLUG_PATH."/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
         let g:ycm_key_invoke_completion = ''
