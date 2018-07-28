@@ -31,8 +31,8 @@ if g:vim_advance
     endif
     set rtp+=$PLUG_PATH
     " complete enviroment
-    let g:complete_method = "None"
-    let g:complete_snippet = "None"
+    let g:complete_method  = "None"
+    let g:complete_snippet = "ultisnips"
     " python support
     if has('python3') && executable('python3')
         let g:python_version = 3
@@ -310,18 +310,7 @@ if g:vim_advance
         " install snippets plugins
         if g:complete_method != "None"
             Plug 'Shougo/neco-vim'
-            if count(g:plug_groups,'ultisnips')
-                " force ultisnips , but sometime not work
-                let g:complete_snippet = "ultisnips"
-                Plug 'SirVer/ultisnips'
-                Plug 'honza/vim-snippets'
-                Plug 'leoatchina/leoatchina-snippets'
-            elseif count(g:plug_groups,'neosnippet')
-                let g:complete_snippet = "neosnippet"
-                Plug 'Shougo/neosnippet'
-                Plug 'Shougo/neosnippet-snippets'
-            elseif g:python_version && (!has('nvim') && v:version > 703 || has('nvim') && !WINDOWS())
-                let g:complete_snippet = "ultisnips"
+            if g:python_version && (!has('nvim') && v:version > 703 || has('nvim') && !WINDOWS()) && g:complete_snippet == "ultisnips"
                 Plug 'SirVer/ultisnips'
                 Plug 'honza/vim-snippets'
                 Plug 'leoatchina/leoatchina-snippets'
