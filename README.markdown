@@ -1,13 +1,16 @@
-This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings.
- You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim
- Below is spf13's introduction to his vim config
+This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings.
+ You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim.
+ Hereafter is spf13's introduction to his vim config
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.
  It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
+
 # Main files
-* `.vimrc` main configuration file, shortcuts, settings, themes 
-* `.vimrc.plug` plugins install file 
-* `.vimrc.local` basic features, will be copied to %HOME%
-* `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders
+* `.vimrc` main configuration file. Settings of shortcuts, settings, themes, fuctions. 
+* `.vimrc.plug` plugins install file.
+* `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders.
+* `.vimrc.local` basic features, will be copied to %HOME%, the origin content of which is
+  ```let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']```
+
 # Install 
 *`Git 1.7` and `Vim7.3` is at least required， `Vim8` or `neovim` and Git 2.0+ is prefered for advanced fearutures*
 
@@ -49,11 +52,11 @@ or
 ```
 or
 ```
-  open vim, do :PlugNew
+  open vim; do :PlugNew
 ```
 ## windows
 ```
-  open vim, do :PlugNew
+  open gvim; do :PlugNew
 ```
 
 # Delete 
@@ -69,13 +72,10 @@ or
 
 # How it works
 After the installation, a `.vimrc`symbol link in the `HOME` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the cloned folder. 
-
 The `.vimrc`/`init.vim` sources `~/.vimrc.plug` for plugins, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains some features for vim.
-
 Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`
 
-
-# Main change from spf13
+# Main changes from spf13
 - Use `vim-plug` instead of `vundle`, more quick and more smart
 - delete `fork`,`before` files , which are redundent for most users
 - delete lots of variables for feature settings 
@@ -83,24 +83,24 @@ Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vi
 - not support **XP** 
 
 # Some features
-* line number
 * no backup file 
-* In Visual, keep selection after indention change with `>`,`<`
 * no backup
 * no sound
+* no scroll bars 
+* no menu, no tools when gui-runnin
+* line number
 * highlight search  
 * smart indent
-* no scroll line
-* no menu, no tools when gui-runnin
+* In Visual, keep selection after indention change with `>`,`<`
 
 # Main shortcuts
-* `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
+* `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull 
 * `<localLeader>` to `\`
 * `<leader>.` for number + 1, `<leader>,` for number -1
-* `<Leader><cr>`, source `~/.vimrc`
+* `<Leader><cr>`: source `~/.vimrc`
 * `<localleader><localLeader` for bracket jump 
-* `g`,`c-f`,`c-k`, `c-l` sometimes work like `leader` key in normal mode
 * `c-a` to the head of a line, `c-e` to end in normal/visual/inesert mode, compatible with linux
+* `c-f`,`c-k`, `c-l`,`g` work like `leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
 * `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
 * `c-b` for plugins `ctrlp` or `fzf` or `leaderF` or `denite` in normal mode
@@ -145,13 +145,12 @@ Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vi
     vnoremap <leader>Y  "*y
     nnoremap Y y$
     vnoremap Y *y$
-
     nnoremap <leader>p "+p
     nnoremap <leader>P "*P
     vnoremap <leader>p "+p
     vnoremap <leader>P "*P
 ```
-* some other shortcuts 
+* Some other shortcuts 
 ```
     nmap <Leader>w :w<CR>
     nmap <Leader>W :wq!<CR>
@@ -187,16 +186,15 @@ A smart and parallel plug manage plugin, instead of [vundle](https://github.com/
 - Post-update hooks
 - Support for externally managed plugins
 
-## [themes ](https://github.com/leoatchina/vim-colorschemes-collections)
-forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keep some xterm-256 compatible themes which I prefer. `:colorschemes` followed by `<Tab>` will show all the themes.
+## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
+Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keep some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `<Tab>` will show  the themes.
   - `gruvbox` for vim 
   - `hybrid_material` for gvim
   - `wombatmod` for neovim
   - `onedark` for neovim with gui
 
 ## Completion
-
-
+Including **7** code-completion engine/framework, and **2** complete snippets, 
 
 ### 7.1.1. [YouComplteMe](https://github.com/Valloric/YouCompleteMe)
   ![](https://camo.githubusercontent.com/1f3f922431d5363224b20e99467ff28b04e810e2/687474703a2f2f692e696d6775722e636f6d2f304f50346f6f642e676966)

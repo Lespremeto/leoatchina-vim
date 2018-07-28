@@ -1065,7 +1065,7 @@ if g:vim_advance
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    if g:complete_method == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
+    if g:complete_engine == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         " <BS>: close popup and delete backword char.
@@ -1092,12 +1092,12 @@ if g:vim_advance
         if g:complete_snippet == 'ultisnips'
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif g:complete_method == "completor" && isdirectory(expand($PLUG_PATH."/completor.vim"))
+    elseif g:complete_engine == "completor" && isdirectory(expand($PLUG_PATH."/completor.vim"))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-    elseif g:complete_method == "YCM" && isdirectory(expand($PLUG_PATH."/YouCompleteMe"))
+    elseif g:complete_engine == "YCM" && isdirectory(expand($PLUG_PATH."/YouCompleteMe"))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
@@ -1144,7 +1144,7 @@ if g:vim_advance
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:complete_method == "ncm2" && isdirectory(expand($PLUG_PATH."/ncm2"))
+    elseif g:complete_engine == "ncm2" && isdirectory(expand($PLUG_PATH."/ncm2"))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -1159,7 +1159,7 @@ if g:vim_advance
             \ 'complete_pattern': ':\s*',
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
             \ })
-    elseif g:complete_method == "asyncomplete" && isdirectory(expand($PLUG_PATH."/asyncomplete.vim"))
+    elseif g:complete_engine == "asyncomplete" && isdirectory(expand($PLUG_PATH."/asyncomplete.vim"))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
@@ -1184,7 +1184,7 @@ if g:vim_advance
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
                 \ }))
         endif
-    elseif g:complete_method == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete.vim"))
+    elseif g:complete_engine == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete.vim"))
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1204,7 +1204,7 @@ if g:vim_advance
         let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_method == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache.vim"))
+    elseif g:complete_engine == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache.vim"))
         let g:neocomplcache_enable_insert_char_pre       = 1
         let g:neocomplcache_enable_at_startup            = 1
         let g:neocomplcache_enable_auto_select           = 0
@@ -1227,10 +1227,10 @@ if g:vim_advance
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     endif
     " smart completion use neosnippet to expand
-    if g:complete_method !="None"
+    if g:complete_engine !="None"
         imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
         " headache confict
-        if g:complete_method=="YCM"
+        if g:complete_engine=="YCM"
             imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
