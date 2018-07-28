@@ -12,7 +12,7 @@
 " vim_advance judge
 if has('nvim') || v:version > 799
     let g:vim_advance = 2
-elseif v:version >= 703
+elseif v:version > 702
     let g:vim_advance = 1
 else
     let g:vim_advance = 0
@@ -320,7 +320,7 @@ if g:vim_advance
                 let g:complete_snippet = "neosnippet"
                 Plug 'Shougo/neosnippet'
                 Plug 'Shougo/neosnippet-snippets'
-            elseif g:python_version && (!has('nvim') || has('nvim') && !WINDOWS())
+            elseif g:python_version && (!has('nvim') && v:version > 703 || has('nvim') && !WINDOWS())
                 let g:complete_snippet = "ultisnips"
                 Plug 'SirVer/ultisnips'
                 Plug 'honza/vim-snippets'

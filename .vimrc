@@ -177,9 +177,6 @@ cmap w!! w !sudo tee % >/dev/null
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 nnoremap <localleader><localleader> %
-" Q
-nnoremap ~ Q
-nnoremap Q :q!<CR>
 " remap c-a/e , for home/end
 nnoremap <Leader>, <C-X>
 nnoremap <Leader>. <C-A>
@@ -263,6 +260,9 @@ nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
 nnoremap <leader>fw :set nowrap! nowrap?<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
+" Q
+nnoremap ~ Q
+nnoremap Q :q!<CR>
 " 定义快捷键保存所有窗口内容并退出 vim
 nmap <Leader>WQ :wa<CR>:q<CR>
 " 定义快捷键关闭当前窗口
@@ -282,6 +282,8 @@ nmap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
+nnoremap < <<
+nnoremap > >>
 "离开插入模式后关闭预览窗口
 au InsertLeave * if pumvisible() == 0|pclose|endif
 " auto close qfixwindows when leave vim

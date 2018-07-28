@@ -1,166 +1,203 @@
-This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim).I sincerely thank him for great job. To meet my needs,I have changed lots of settings and plugins.
+This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings.
  You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim
- 
+ Below is spf13's introduction to his vim config
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.
-> It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
-> The distribution is completely customisable using a `~/.vimrc.local`, `~/.vimrc.bundles.local`, and `~/.vimrc.before.local` Vim RC files.
+ It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
+# Main files
+* `.vimrc` main configuration file, shortcuts, settings, themes 
+* `.vimrc.plug` plugins install file 
+* `.vimrc.local` basic features, will be copied to %HOME%
+* `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders
+# Install 
+*`Git 1.7` and `Vim7.3` is at least required， `Vim8` or `neovim` and Git 2.0+ is prefered for advanced fearutures*
 
-
-# 1.  Main files effection
-**各配置文件**
-* `.vimrc`      
-* `.vimrc.local` # 自定义配置
-* `.vimrc.plug`  # 插件管理文件
-
-# 2. call workflow
-.
-
-
-# 3. 安装
-*安装本配置 需要 Git 1.7+ 和 Vim 7.4+，部分插件如`ale`,`AsyncRun`,需要Vim8.0*
-
-## 3.1. Linux, \*nix, Mac OSX 下的安装
-
-need `git`,`curl`
-
+## Linux, \*nix, Mac OSX
+need `curl`
 ```bash
   git clone https://github.com/leoatchina/leoatchina-vim.git
   cd leoatchina-vim
-  ./install.sh   第一次安装要按`y`
+  ./install.sh 
 ```
-
-## 3.2. windows下的安装
-```
-点击setup.cmd
-同时 git clone https://github.com/leoatchina/tools-leoatchina-vim.git
-安装相关的字体,并把exe文件复制到vim安装目录
-然后打开vim或者gvim  , :PlugInstall
-```
-
-## 3.3. 升级到最新版本
+## windows
 ```bash
-  vim +PlugUpdate
-  或者在vim里直接  :PlugUpdate
+  git clone https://github.com/leoatchina/tools-leoatchina-vim.git
+  cd leoatchina-vim
+  click setup.cmd with admin rights
+  open vim, do :PlugInstall
+```
+# Upgrade to the latest version
+## Linux, \*nix, Mac OSX
+```bash
+  ./install.sh ,chosse y|Y, the scipt will do git pull and do reinstall plugs 
+```
+## windows
+```
+  cd leoatchina-vim
+  git pull
+  open vim, do :PlugReinstall  
 ```
 
-# 4. some features
-* 复制内容直接放到系统剪贴本
-* 显示行号,多种语法高亮
-* Visual模式下用`>`,`<`移动文字不会取消选择
-* 不生成backup文件
-* 关闭拼写检查
-* 关闭声音
-* 关闭列光标加亮
-* 关闭行光标加亮
-* 允许折行
-* 不代码折叠
-* 开启实时搜索功能
-* 显示光标当前位置
-* 高亮显示搜索结果
-* 折叠模式下翻页的改进
-* 智能缩进
-* 没有滚动条
-* 没有菜单和工具条
-* 总是显示状态栏
-* 根据系统情况，自动或手动设定补全插件
-
-# 5. 主要改动
-我在spf13的基础上，做了一些*微小*的工作
-- 大量精减，去除了`fork`,`before`功能
-- 用`vim-plug`代替了原来的`vundle`作为插件管理器
-- 修改了安装代码，变成直接从clone的目录中软链接到用户目录下，**不再支持XP**
-- 按自己习惯修改了大量快捷键
-- 去除了原来定义的一些函数
-- 加入了6种补全插件：`youcompleteme`,`asyncomplete`,`deoplete`,`completor`,`neocomplete`,`neocomplcache`,默认会在后4种中选择一种。
-
-# 6. 基本快捷键
-* `<Leader>`键改为<Space>,这个在键盘上最大的按键就有了更强的作用;
-* `<localLeader>`改为`\`
-* `C-f`,`C-l`变成了两个`先导键`
-* `~`作为进入`ex`模式的快捷键,`Q`键map为`退出当前buffer`
-* `F1`: 为`:h `，方便启动帮助
-* `F2`: 执行 `:Far`
-* `F5`: 运行脚本（python、perl、c等）或 `<Leader>R`;
-    * 高低版本还有差别
-* `F6`: 打开关闭代码折叠 或 `<Leader>fd`
-* `F7`: 打开关闭换行 或 `<Leader>fr`
-* `F8`: 打开关闭搜索高亮 或 `<Leader>fh`
-* `F9`: `qfix`窗口切换
-* `F10`: Voom窗口
-* `F11`: 全屏切换,如果是windows下的gvim,要把本目录下的`gvim_fullscreen.dll`放到`gvim`的安装目录下，此时<S+F11>为切换透明度
-* `F12`: 切换paste模式,或者`<Leader>fp`
-* `<Leader>,`: 执行 `<C-x>`
-* `<Leader>.`: 执行 `<C-a>`
-* 在`Visual`模式下按`.`为退出`Visual`模式
-* n,v,i三种模式下，`Ctrl+e`移到一行的结尾;`Ctrl+a`移到一行的开头;
-* i模式下，`C-f`往右;`C-b`往左
-*
-* ``括号之间跳转
-* 标签页控制
+# Upgrade plugs
+## Linux, \*nix, Mac OSX
 ```
-  set tabpagemax=10 " Only show 10 tabs
-  cmap Tabe tabe
-  nnoremap <silent>-     :tabprevious<CR>  #前一个标签
-  nnoremap <silent><Tab> :tabnext<CR> #后一个标签
-  nnoremap <Leader>tp :tabprevious<CR> #前标签
-  nnoremap <Leader>tn :tabnext<CR> #后标签
-  nnoremap <Leader>-  :tabm -1<CR>
-  nnoremap <Leader><Tab>  :tabm +1<CR>
-  nnoremap <Leader><Leader>- :tabfirst<CR>
-  nnoremap <Leader><Leader><Tab> :tablast<CR>
-  nnoremap <Leader>te :tabe<Space>
-  nnoremap <Leader>ts :tab split<CR>
-  nnoremap <Leader>tS :tabs<CR>
-  nnoremap <Leader>tm :tabm<Space>```
+  cd leoatchina-vim
+  ./updata.sh
 ```
-* 复制粘贴等
+or
 ```
-  " 设置快捷键将选中文本块复制至系统剪贴板
-  vnoremap  <Leader>y  "+y
-  nnoremap  <Leader>y  "+y
-  nnoremap  <Leader>Y  "+yg
-  nnoremap  <Leader>yy  "+yy
-  " Yank from the cursor to the end of the line
-  nnoremap Y y$
-  " p and P for paste
-  nnoremap <Leader>p "+p
-  nnoremap <Leader>P "+P
-  vnoremap <Leader>p "+p
-  vnoremap <Leader>P "+P
+  ~/.vimrc.update
 ```
-* 其他一些快捷键
+or
 ```
-  " 定义快捷键保存当前窗口内容
-  nmap <Leader>w :w<CR>
-  nmap <Leader>W :wq!<CR>
-  " 定义快捷键保存所有窗口内容并退出 vim
-  nmap <Leader>WQ :wa<CR>:q<CR>
-  " 定义快捷键关闭当前窗口
-  nmap <Leader>q :q!
-  " 不做任何保存，直接退出 vim
-  nmap <Leader>Q :qa!
-  " 设置分割页面
-  nmap <leader>\ :vsplit<Space>
-  nmap <Leader><leader>\ :split<Space>
-  nmap <leader>= <C-W>=
-  "设置垂直高度减增
-  nmap <Leader><Down> :resize -3<CR>
-  nmap <Leader><Up>   :resize +3<CR>
-  "设置水平宽度减增
-  nmap <Leader><Left> :vertical resize -3<CR>
-  nmap <Leader><Right>:vertical resize +3<CR>
-  " Visual shifting (does not exit Visual mode)
-  vnoremap < <gv
-  vnoremap > >gv
-  nnoremap < <<
-  nnoremap > >>
+  open vim, do :PlugNew
+```
+## windows
+```
+  open vim, do :PlugNew
 ```
 
-# 7. 插件系统
-我使用[vim-plug](https://github.com/junegunn/vim-plug)代替了spf13的[vundle](https://github.com/VundleVim/Vundle.vim),安装速度快了数倍。高级功能还在调试中
+# Delete 
+## Linux, \*nix, Mac OSX
+```
+  cd leoatchina-vim
+  ./uninstall.sh
+```
+## Windows
+```
+  click delete.cmd with admin rights
+```
 
-## 7.1. 补全插件
-- 用了6种补全插件,2种代码插件
+# How it works
+After the installation, a `.vimrc`symbol link in the `HOME` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the cloned folder. 
+
+The `.vimrc`/`init.vim` sources `~/.vimrc.plug` for plugins, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains some features for vim.
+
+Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`
+
+
+# Main change from spf13
+- Use `vim-plug` instead of `vundle`, more quick and more smart
+- delete `fork`,`before` files , which are redundent for most users
+- delete lots of variables for feature settings 
+- just have mentioned before, the link is from the cloned folder 
+- not support **XP** 
+
+# Some features
+* line number
+* no backup file 
+* In Visual, keep selection after indention change with `>`,`<`
+* no backup
+* no sound
+* highlight search  
+* smart indent
+* no scroll line
+* no menu, no tools when gui-runnin
+
+# Main shortcuts
+* `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
+* `<localLeader>` to `\`
+* `<leader>.` for number + 1, `<leader>,` for number -1
+* `<Leader><cr>`, source `~/.vimrc`
+* `<localleader><localLeader` for bracket jump 
+* `g`,`c-f`,`c-k`, `c-l` sometimes work like `leader` key in normal mode
+* `c-a` to the head of a line, `c-e` to end in normal/visual/inesert mode, compatible with linux
+* `c-f` to right `c-b` to left in insert mode
+* `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
+* `c-b` for plugins `ctrlp` or `fzf` or `leaderF` or `denite` in normal mode
+* `~` instead of `Q`, and `Q` for quit current buffer at once
+* `F1`: tab help 
+* `F2`: toggle search results highlight
+* `F3`: show register srings
+* `F4`: toggle quickrun windows
+* `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun)) 
+* `F11`: full screen toggle, but sometimes not work
+* `F12`: paste toggle
+* `.` for exit visual mode
+* tab/buffer control
+```
+    set tabpagemax=10 " Only show 10 tabs
+    cmap Tabe tabe
+    " s-tab not work in Xshell
+    nnoremap <silent>-          :tabprevious<CR>
+    nnoremap <silent><Tab>      :tabnext<CR>
+    nnoremap <Leader>tp         :tabprevious<CR>
+    nnoremap <Leader>tn         :tabnext<CR>
+    nnoremap <leader>-          :tabm -1<CR>
+    nnoremap <leader><Tab>      :tabm +1<CR>
+    nnoremap <localleader>-     :tabfirst<CR>
+    nnoremap <localleader><Tab> :tablast<CR>
+    nnoremap <Leader>te         :tabe<Space>
+    nnoremap <Leader>ts         :tab  split<CR>
+    nnoremap <Leader>tw         :tabs<CR>
+    nnoremap <Leader>tm         :tabm<Space>
+    " buffer switch
+    nnoremap <localleader><Backspace> :buffers<CR>
+    nnoremap <localleader>]           :bn<CR>
+    nnoremap <localleader>[           :bp<CR>
+
+```
+* copy & paste
+```
+    vnoremap <leader>y  "+y
+    nnoremap <leader>y  "+y
+    nnoremap <leader>yy "+yy
+    nnoremap <leader>Y  "*y
+    vnoremap <leader>Y  "*y
+    nnoremap Y y$
+    vnoremap Y *y$
+
+    nnoremap <leader>p "+p
+    nnoremap <leader>P "*P
+    vnoremap <leader>p "+p
+    vnoremap <leader>P "*P
+```
+* some other shortcuts 
+```
+    nmap <Leader>w :w<CR>
+    nmap <Leader>W :wq!<CR>
+    nmap <Leader>WQ :wa<CR>:q<CR>
+    nmap <Leader>q :q!
+    nmap <Leader>Q :qa!
+    " split windows
+    nmap <leader>\ :vsplit<Space>
+    nmap <Leader><leader>\ :split<Space>
+    nmap <leader>= <C-W>=
+    " resize spilted windows
+    nmap <Leader><Down> :resize -3<CR>
+    nmap <Leader><Up>   :resize +3<CR>
+    nmap <Leader><Left> :vertical resize -3<CR>
+    nmap <Leader><Right>:vertical resize +3<CR>
+    " Visual shifting (does not exit Visual mode)
+    vnoremap < <gv
+    vnoremap > >gv
+    nnoremap < <<
+    nnoremap > >>
+```
+
+# Plugins and their shortcuts
+## [vim-plug](https://github.com/junegunn/vim-plug) 
+A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use
+- Easier to setup: Single file. No boilerplate code required.
+- Easier to use: Concise, intuitive syntax
+- Super-fast parallel installation/update (with any of +job, +python, +python3, +ruby, or Neovim)
+- Creates shallow clones to minimize disk space usage and download time
+- On-demand loading for faster startup time
+- Can review and rollback updates
+- Branch/tag/commit support
+- Post-update hooks
+- Support for externally managed plugins
+
+## [themes ](https://github.com/leoatchina/vim-colorschemes-collections)
+forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keep some xterm-256 compatible themes which I prefer. `:colorschemes` followed by `<Tab>` will show all the themes.
+  - `gruvbox` for vim 
+  - `hybrid_material` for gvim
+  - `wombatmod` for neovim
+  - `onedark` for neovim with gui
+
+## Completion
+
+
+
 ### 7.1.1. [YouComplteMe](https://github.com/Valloric/YouCompleteMe)
   ![](https://camo.githubusercontent.com/1f3f922431d5363224b20e99467ff28b04e810e2/687474703a2f2f692e696d6775722e636f6d2f304f50346f6f642e676966)
   - 需要安装一系列编译用软件
@@ -182,9 +219,7 @@ need `git`,`curl`
 
 #### 7.1.1.5. [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
 
-### 7.1.2. 内置多个主题
-在有gui时，使用`hybrid_material`, 其他情况时使用`gruvbox`
-使用`:colorscheme ` 再敲`tab`，可以看到内置的主题
+
 
 ### 7.1.3. [scrooloose/nerdtree](https://github.com/scrooloose/nerdtree)
 在侧边显示当前目录，Toggle快捷键为`<Leader>nn`
