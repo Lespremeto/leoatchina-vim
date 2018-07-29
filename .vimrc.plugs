@@ -239,11 +239,7 @@ if g:vim_advance
             if has('nvim')
                 if g:python_version == 3
                     if WINDOWS()
-                        if has('timers')
-                            let g:complete_engine = "deoplete"
-                        else
-                            let g:complete_engine = "asyncomplete"
-                        endif
+                        let g:complete_engine = "deoplete"
                     else
                         let g:complete_engine = "ncm2"
                     endif
@@ -403,6 +399,7 @@ if g:vim_advance
             Plug 'prabirshrestha/asyncomplete-emoji.vim'
             Plug 'prabirshrestha/asyncomplete-file.vim'
             Plug 'prabirshrestha/asyncomplete-tags.vim'
+            Plug 'Shougo/neco-syntax'
             Plug 'prabirshrestha/asyncomplete-necovim.vim'
             Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
             if count(g:plug_groups, 'go')

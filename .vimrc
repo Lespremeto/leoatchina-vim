@@ -55,9 +55,9 @@ function! InitializeDirectories()
     let parent = $HOME
     let prefix = 'vim'
     let dir_list = {
-                \ 'backup': 'backupdir',
-                \ 'views': 'viewdir',
-                \ 'swap': 'directory' }
+        \ 'backup': 'backupdir',
+        \ 'views': 'viewdir',
+        \ 'swap': 'directory' }
     if has('persistent_undo')
         let dir_list['undo'] = 'undodir'
     endif
@@ -453,7 +453,6 @@ if count(g:plug_groups, 'airline')
     let g:airline#extensions#tabline#show_splits = 0
     let g:airline#extensions#tabline#show_close_button = 0
     let g:airline#extensions#tabline#buffer_nr_show = 0
-    "let g:airline#extensions#bufferline#enabled = 1
     " shw full_path of the file
     let g:airline_section_c = "\ %F"
     if !exists('g:airline_symbols')
@@ -1068,9 +1067,9 @@ if g:vim_advance
     if g:complete_engine == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
         set shortmess+=c
         set completeopt+=noinsert,noselect
+        let g:deoplete#enable_at_startup = 1
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
-        let g:deoplete#enable_at_startup = 1
         if !has('nvim')
             let g:deoplete#enable_yarp=1
         endif
@@ -1163,6 +1162,29 @@ if g:vim_advance
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
+        call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+            \ 'name': 'buffer',
+            \ 'whitelist': ['*'],
+            \ 'blacklist': ['go'],
+            \ 'completor': function('asyncomplete#sources#buffer#completor'),
+            \ }))
+        au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+            \ 'name': 'file',
+            \ 'whitelist': ['*'],
+            \ 'priority': 10,
+            \ 'completor': function('asyncomplete#sources#file#completor')
+            \ }))
+        au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+            \ 'name': 'omni',
+            \ 'whitelist': ['*'],
+            \ 'blacklist': ['c', 'cpp', 'html'],
+            \ 'completor': function('asyncomplete#sources#omni#completor')
+            \  }))
+        au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
+            \ 'name': 'necosyntax',
+            \ 'whitelist': ['*'],
+            \ 'completor': function('asyncomplete#sources#necosyntax#completor'),
+            \ }))
         if executable('pyls')
             au User lsp_setup call lsp#register_server({
                 \ 'name': 'pyls',
@@ -1170,6 +1192,17 @@ if g:vim_advance
                 \ 'whitelist': ['python'],
                 \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
                 \ })
+        endif
+        if count(g:plug_groups, 'go')
+            au User asyncomplete_setup  call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
+                \ 'name': 'gocode',
+                \ 'whitelist': ['go'],
+                \ 'completor': function('asyncomplete#sources#gocode#completor'),
+                \ }))
+        endif
+        if count(g:plug_groups, 'rust')
+            autocmd User asyncomplete_setup call asyncomplete#register_source(
+                \ asyncomplete#sources#racer#get_source_options())
         endif
         if isdirectory(expand($PLUG_PATH."/ultisnips"))
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({

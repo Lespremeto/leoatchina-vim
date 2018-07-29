@@ -1,4 +1,15 @@
-This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings.
+
+# 中文介绍
+原来的repo放在 [spf13-vim-leoatchina](https://github.com/leoatchina/spf13-vim-leoatchina)，因为原来一时脑抽，把中文字体放进去后导致体积较大，影响速度，所以重开一个repo并把windows下的工具分开，以增加clone速度。
+
+这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的集大成者，原配置已经远远落后于这个vim8/neovim当道的时代，因此我作了非常大的调整，commit了1千多次(两个repo加起来)，不断地从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。
+
+长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件基本上没有大的漏洞，可以好好坐下来，写下这个文档。
+
+# PLEASE FORGIVE  MY POOL ENGLISH！
+
+# Introduction
+This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
  You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim.
  Hereafter is spf13's introduction to his vim config
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.
@@ -8,7 +19,7 @@ This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim dis
 * `.vimrc` main configuration file. Settings of shortcuts, settings, themes, fuctions. 
 * `.vimrc.plug` plugins install file.
 * `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders.
-* `.vimrc.local` basic features, will be copied to %HOME%, the origin content of which is
+* `.vimrc.local` basic features, will be copied to %HOME%, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.
   ```let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']```
 
 # Install 
@@ -34,7 +45,7 @@ need `curl`
   ./install.sh ,chosse y|Y, the scipt will do git pull and do reinstall plugs 
 ```
 ## windows
-```
+```bash
   cd leoatchina-vim
   git pull
   open vim, do :PlugReinstall  
@@ -42,38 +53,38 @@ need `curl`
 
 # Upgrade plugs
 ## Linux, \*nix, Mac OSX
-```
+```bash
   cd leoatchina-vim
   ./updata.sh
 ```
-or
-```
+OR
+```bash
   ~/.vimrc.update
 ```
-or
-```
+OR
+```bash
   open vim; do :PlugNew
 ```
 ## windows
-```
+```bash
   open gvim; do :PlugNew
 ```
-
 # Delete 
 ## Linux, \*nix, Mac OSX
-```
+```bash
   cd leoatchina-vim
   ./uninstall.sh
 ```
 ## Windows
-```
+```bash
   click delete.cmd with admin rights
 ```
-
 # How it works
-After the installation, a `.vimrc`symbol link in the `HOME` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the cloned folder. 
-The `.vimrc`/`init.vim` sources `~/.vimrc.plug` for plugins, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains some features for vim.
-Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`
+After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder. 
+
+The `.vimrc`/`init.vim` sources `~/.vimrc.plug` for plugins, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains some features for vim and `:PlugInstall` will change according to it.
+
+Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`. 
 
 # Main changes from spf13
 - Use `vim-plug` instead of `vundle`, more quick and more smart
@@ -97,14 +108,16 @@ Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vi
 * `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull 
 * `<localLeader>` to `\`
 * `<leader>.` for number + 1, `<leader>,` for number -1
-* `<Leader><cr>`: source `~/.vimrc`
+* `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug myself
 * `<localleader><localLeader` for bracket jump 
 * `c-a` to the head of a line, `c-e` to end in normal/visual/inesert mode, compatible with linux
 * `c-f`,`c-k`, `c-l`,`g` work like `leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
-* `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
+* `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y` 
 * `c-b` for plugins `ctrlp` or `fzf` or `leaderF` or `denite` in normal mode
 * `~` instead of `Q`, and `Q` for quit current buffer at once
+* `.` for exit visual mode
+* `!` for `:!`
 * `F1`: tab help 
 * `F2`: toggle search results highlight
 * `F3`: show register srings
@@ -112,7 +125,8 @@ Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vi
 * `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun)) 
 * `F11`: full screen toggle, but sometimes not work
 * `F12`: paste toggle
-* `.` for exit visual mode
+* `gc` for gcommit, `+` for `:Git`
+* 
 * tab/buffer control
 ```
     set tabpagemax=10 " Only show 10 tabs
@@ -134,7 +148,6 @@ Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vi
     nnoremap <localleader><Backspace> :buffers<CR>
     nnoremap <localleader>]           :bn<CR>
     nnoremap <localleader>[           :bp<CR>
-
 ```
 * copy & paste
 ```
@@ -152,6 +165,14 @@ Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vi
 ```
 * Some other shortcuts 
 ```
+    " Find merge conflict markers
+    nmap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
+    " and ask which one to jump to
+    nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+    " toggleFold
+    nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
+    " toggleWrap
+    nnoremap <leader>fw :set nowrap! nowrap?<CR>
     nmap <Leader>w :w<CR>
     nmap <Leader>W :wq!<CR>
     nmap <Leader>WQ :wa<CR>:q<CR>
@@ -174,70 +195,89 @@ Here is a trick that I set diffent PLUG_INATLL_PATH for vim/gvim/neovim , `~/.vi
 ```
 
 # Plugins and their shortcuts
+hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.
+
+Just as I have told, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugs `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
+
+You can open `.vimrc.plugs` for these features
+
 ## [vim-plug](https://github.com/junegunn/vim-plug) 
-A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use
-- Easier to setup: Single file. No boilerplate code required.
-- Easier to use: Concise, intuitive syntax
-- Super-fast parallel installation/update (with any of +job, +python, +python3, +ruby, or Neovim)
-- Creates shallow clones to minimize disk space usage and download time
-- On-demand loading for faster startup time
-- Can review and rollback updates
-- Branch/tag/commit support
-- Post-update hooks
-- Support for externally managed plugins
+A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use.
+You can check how it is installed via install.sh or setup.cmd
+
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
-Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keep some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `<Tab>` will show  the themes.
-  - `gruvbox` for vim 
-  - `hybrid_material` for gvim
-  - `wombatmod` for neovim
-  - `onedark` for neovim with gui
+Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeps some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  the themes.Default themes
+  - [gruvbox](https://github.com/morhetz/gruvbox) for vim 
+  - [hybrid_material](https://github.com/kristijanhusak/vim-hybrid-material) for gvim
+  - [wombat256](https://github.com/vim-scripts/wombat256.vim) for neovim
+  - [onedark](https://github.com/joshdick/onedark.vim) for neovim with gui
 
-## Completion
-Including **7** code-completion engine/framework, and **2** complete snippets, 
+## Completion method
+**7** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `completor`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
-### 7.1.1. [YouComplteMe](https://github.com/Valloric/YouCompleteMe)
-  ![](https://camo.githubusercontent.com/1f3f922431d5363224b20e99467ff28b04e810e2/687474703a2f2f692e696d6775722e636f6d2f304f50346f6f642e676966)
-  - 需要安装一系列编译用软件
-  - 具体可参考[Vim 自动补全插件 YouCompleteMe 安装与配置](http://howiefh.github.io/2015/05/22/vim-install-youcompleteme-plugin/).
-  - 在安装好各种编译用的工具后
-  ```
-     cd ~/.vim/bundle/YouCompleteMe
-     python install.py
-  ```
-#### 7.1.1.1. [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
-在nvimcompletemangaer停止更新后，另一开发者fork后，直接利用了vim8内置的异步功能进行补全，不再需要python支持
-这个提供了一个框架，补全功能要配合其他插件使用
+**2** complete snippets: `ultisnips`, `neosnippet`
 
-#### 7.1.1.2. [deoplete](https://github.com/Shougo/deoplete.nvim)
+### Completion shortcuts
+It is such a complex to make the completion shorcuts compatible, finally I used a series of unroute shorcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
-#### 7.1.1.3. [completor](https://github.com/maralla/completor.vim)
+## SmartComplete Engines 
+There is a `smartcomplete` in `g:plug_groups` in `.vimrc.local`, it means the .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `version <800`, `python3/2` or `no python`, `windows` or not. I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-#### 7.1.1.4. [neocomplete](https://github.com/Shougo/neocomplete.vim)
+By default, when neovim and python3 support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete` 
 
-#### 7.1.1.5. [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
+If you are install older vim7.3 (default installed by ubuntu apt-get, centos yum), if `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has semantic completion funtion, theirs finishment is completed with snippets support
+
+You can also force to install the completion engine in `g:plug_groups`, just replace `smartcomplete` with it, but if the vim feature and enviroment not support the plug you choose, the engine will fall to `neocomplcache`.
+
+`youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups`, and is the one with the best performance. Since it is hard to install, I advice you not write it to `.vimrc.local` only you have a deep understanding to you system
+
+## Snippets
+If engine is setted, by default, with vim7.4+ and python support, `ultisnips` is used, otherwise `neosnippet`
+`C-l` will list the snips when use `ultisnips`, `c-f` for snips jump forword in both snippets, and only `ultisnips` has `c-b` for jump back
+
+### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
+`nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration`
 
 
+### [deoplete](https://github.com/Shougo/deoplete.nvim)
+Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.
 
-### 7.1.3. [scrooloose/nerdtree](https://github.com/scrooloose/nerdtree)
-在侧边显示当前目录，Toggle快捷键为`<Leader>nn`
-![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011101641847.png)
+### [completor](https://github.com/maralla/completor.vim)
+Completor is an asynchronous code completion framework for vim8. New features of vim8 are used to implement the fast completion engine with low overhead. Require `python3`
 
-### 7.1.4. [majutsushi/tagbar](https://github.com/majutsushi/tagbar) and [ludovicchabant/vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
-显示文档结构，要求在系统里安装`ctags`
-用`<Leader>tt`切换在测边显示文档结构.在bar窗口里按`F1`调出帮助窗口
-![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011102150785.png)
+### [ncm2](https://github.com/ncm2/ncm2)
+NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `python3`
 
-### 7.1.5. [vim-voom/VOoM](https://github.com/vim-voom/VOoM)
-另一个显示文档结构的插件，和`TagBar`逻辑不一样，`python`里肯定有用，其他语言我还没有测试出来。快捷键`<F10>`打开 ,用`_`在voom_buffer和代码窗口内切换。
-![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171012105213969.png)
+### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
+Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed.
+But if you want `python` support, you should `pip3 install python-language-server`
 
-### 7.1.6. [mbbill/undotree](https://github.com/mbbill/undotree)
-undotree顾名思义,增强版的回退插件，快捷键`<Leader>u`
+### [neocomplete](https://github.com/Shougo/neocomplete.vim)
+neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.
 
-### 7.1.7. [airline](https://github.com/vim-airline-themes)
-漂亮的状态栏,能够显示很多状态。
-![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011105655369.png)
+### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
+
+neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
+It is the last complete engine the config choose
+
+
+## [nerdtree](https://github.com/scrooloose/nerdtree)
+Togglekey:`<Leader>nn`, and key `<leader>nt`
+
+## [tagbar](https://github.com/majutsushi/tagbar) and [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
+need `has("ctags")`. Togglekey:`<leader>tt` 
+
+## [VOoM](https://github.com/vim-voom/VOoM)
+VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner. 
+use `:Voom` to open
+##[undotree](https://github.com/mbbill/undotree)
+Togglekey:`<Leader>u`
+
+### [airline](https://github.com/vim-airline-themes)
+
+
 
 ### 7.1.8. [ywvim中文输入法](https://github.com/leoatchina/ywvim)
 `ywvim`中文输入法,直接在vim里内置,~~无意中发现要和[fcitx](https://github.com/fcitx/fcitx)配合使用否则会有bug~~,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置.`;`临时英文输入法;注意,默认只输入**英文状态**的标点,而且首选是`五笔`;`z`临时拼音;`,.-=`上下翻页;
