@@ -86,6 +86,8 @@ The `.vimrc`/`init.vim` sources `~/.vimrc.plug` for plugins, and `~/.vimrc.plug`
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`. 
 
+And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former two not exist, `.vimrc.local` works if exists
+
 # Main changes from spf13
 - Use `vim-plug` instead of `vundle`, more quick and more smart
 - delete `fork`,`before` files , which are redundent for most users
@@ -275,20 +277,19 @@ use `:Voom` to open
 ##[undotree](https://github.com/mbbill/undotree)
 Togglekey:`<Leader>u`
 
-### [airline](https://github.com/vim-airline-themes)
+### [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
+`airline` show more context than other statusline plugs, and more pleasing to eye. But it needs more computer resource, so if **not** add `"airline"` in `g:plug_groups`, `lightline` will work.
 
 
 
-### 7.1.8. [ywvim中文输入法](https://github.com/leoatchina/ywvim)
-`ywvim`中文输入法,直接在vim里内置,~~无意中发现要和[fcitx](https://github.com/fcitx/fcitx)配合使用否则会有bug~~,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置.`;`临时英文输入法;注意,默认只输入**英文状态**的标点,而且首选是`五笔`;`z`临时拼音;`,.-=`上下翻页;
-![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011215538461.png)
-![](http://oxa21co60.bkt.clouddn.com/markdown-img-paste-20171011212612850.png)
-x
 
-### 7.1.9. [fugitive](https://github.com/tpope/vim-fugitive)
-对git的支持,具体可以看官方说明,设置了快捷键`<Leader>gi :Git<Space>`,操作体验接近终端下输入`git`命令.还有快捷键
+### [ywvim中文输入法](https://github.com/leoatchina/ywvim)
+这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置。快捷键:`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页;要在 `~/.vimrc.local`里的`g:plug_groups`加入`"wubi"`或者`"pinyin"`
 
-### 7.1.10. [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
+### [fugitive](https://github.com/tpope/vim-fugitive)
+Git plugin
+
+### [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
 注释插件,神器,直接上官方的快捷键,最常用的是`<Leader>c<Space>`
   * `[count]<Leader>cc` **|NERDComComment|**
     Comment out the current line or text selected in visual mode.
@@ -316,21 +317,19 @@ x
   * `[count]<Leader>cu` **|NERDComUncommentLine|**
     Uncomments the selected line(s).
 
-### 7.1.11. [LeaderF](https://github.com/Yggdroot/LeaderF)
+### [LeaderF](https://github.com/Yggdroot/LeaderF)
 在高级模式的情况下会选用这个插件
 
 
-### 7.1.12. [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
-杀手级插件，不过有点老，网上找来的图
-![](http://zuyunfei.com/images/ctrlp-vim-demo.gif)
+### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
 
 `ctrl+p`启动插件,`<Leader>fu`启动funksky函数查询功能,在启动后,用`Ctrl+f`,`Ctrl+b`在不同模式中切换.
 在文件列表中,`Ctrl+k/j`或者方向键向上/下选择文件,`t`在新标签里打开文件.其他快捷键见[ctrlp中文介绍](http://blog.codepiano.com/pages/ctrlp-cn.light.html)
 
-### 7.1.13. [Pymode](https://github.com/python-mode/python-mode)
+### [Pymode](https://github.com/python-mode/python-mode)
 `python`用的插件,具有语法检查,调试等功能.`<Leader>R`:运行脚本;`<LocalLeader>p`:track_point toggle
 
-### 7.1.14. [surround](https://github.com/tpope/vim-surround)
+### [surround](https://github.com/tpope/vim-surround)
 给一段文字加上括号的插件，下面说明文字引用自[vim中的杀手级别的插件：surround](http://zuyunfei.com/2013/04/17/killer-plugin-of-vim-surround/)
 ```
    Old text                  Command     New text
