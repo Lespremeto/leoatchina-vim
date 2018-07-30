@@ -26,7 +26,6 @@
     * [Completion method](#completion-method)
         - [Completion shortcuts](#completion-shortcuts)
     * [SmartComplete Engines](#smartcomplete-engines)
-    * [Snippets](#snippets)
         - [YouCompleteMe](#youcompleteme)
         - [deoplete](#deoplete)
         - [completor](#completor)
@@ -34,6 +33,7 @@
         - [asyncomplete](#asyncomplete)
         - [neocomplete](#neocomplete)
         - [neocomplcache](#neocomplcache)
+    * [Snippets](#snippets)
     * [nerdtree](#nerdtree)
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
     * [VOoM](#voom)
@@ -290,10 +290,6 @@ You can also force to install the completion engine in `g:plug_groups`, just rep
 
 `youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups`, and is the one with the best performance. Since it is hard to install, I advice you not write it to `.vimrc.local` only you have a deep understanding to you system
 
-## Snippets
-If engine is setted, by default, with vim7.4+ and python support, `ultisnips` is used, otherwise `neosnippet`
-`C-l` will list the snips when use `ultisnips`, `c-f` for snips jump forword in both snippets, and only `ultisnips` has `c-b` for jump back
-
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
 `nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration`
@@ -320,6 +316,9 @@ neocomplete is the abbreviation of "neo-completion with cache". It provides keyw
 neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
 It is the last complete engine the config choose
 
+## Snippets
+If engine is setted, by default, with vim7.4+ and python support, [ultisnips](https://github.com/SirVer/ultisnips) is used, otherwise [neosnippet](https://github.com/Shougo/neosnippet.vim)
+`C-l` will list the snips downsite when use `ultisnips`, `c-f` for snips jump forword in snippet inserted in both snippets, and only `ultisnips` use `c-b` for jump back
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)
 Togglekey:`<Leader>nn`, and key `<Leader>nt`
