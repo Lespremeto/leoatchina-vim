@@ -25,15 +25,17 @@
     * [Themes Collentions](#themes-collentions)
     * [Completion method](#completion-method)
         - [Completion shortcuts](#completion-shortcuts)
-    * [SmartComplete Engines](#smartcomplete-engines)
-        - [YouCompleteMe](#youcompleteme)
-        - [deoplete](#deoplete)
-        - [completor](#completor)
-        - [ncm2](#ncm2)
-        - [asyncomplete](#asyncomplete)
-        - [neocomplete](#neocomplete)
-        - [neocomplcache](#neocomplcache)
-    * [Snippets](#snippets)
+        - [SmartComplete Engines](#smartcomplete-engines)
+            + [YouCompleteMe](#youcompleteme)
+            + [deoplete](#deoplete)
+            + [completor](#completor)
+            + [ncm2](#ncm2)
+            + [asyncomplete](#asyncomplete)
+            + [neocomplete](#neocomplete)
+            + [neocomplcache](#neocomplcache)
+        - [Snippets](#snippets)
+            + [ultisnips](#ultisnips)
+            + [neosnippet](#neosnippet)
     * [nerdtree](#nerdtree)
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
     * [VOoM](#voom)
@@ -279,7 +281,7 @@ Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), ke
 ### Completion shortcuts
 It is such a complex to make the completion shorcuts compatible, finally I used a series of unroute shorcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
-## SmartComplete Engines
+### SmartComplete Engines
 There is a `smartcomplete` in `g:plug_groups` in `.vimrc.local`, it means the .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `version <800`, `python3/2` or `no python`, `windows` or not. I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
 By default, when neovim and python3 support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
@@ -290,34 +292,39 @@ You can also force to install the completion engine in `g:plug_groups`, just rep
 
 `youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups`, and is the one with the best performance. Since it is hard to install, I advice you not write it to `.vimrc.local` only you have a deep understanding to you system
 
-### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+#### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
 `nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration`
 
 
-### [deoplete](https://github.com/Shougo/deoplete.nvim)
+#### [deoplete](https://github.com/Shougo/deoplete.nvim)
 Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.
 
-### [completor](https://github.com/maralla/completor.vim)
+#### [completor](https://github.com/maralla/completor.vim)
 Completor is an asynchronous code completion framework for vim8. New features of vim8 are used to implement the fast completion engine with low overhead. Require `python3`
 
-### [ncm2](https://github.com/ncm2/ncm2)
+#### [ncm2](https://github.com/ncm2/ncm2)
 NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `python3`
 
-### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
+#### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed.
 But if you want `python` support, you should `pip3 install python-language-server`
 
-### [neocomplete](https://github.com/Shougo/neocomplete.vim)
+#### [neocomplete](https://github.com/Shougo/neocomplete.vim)
 neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.
 
-### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
+#### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
 
 neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
 It is the last complete engine the config choose
 
-## Snippets
-If engine is setted, by default, with vim7.4+ and python support, [ultisnips](https://github.com/SirVer/ultisnips) is used, otherwise [neosnippet](https://github.com/Shougo/neosnippet.vim)
+### Snippets
+#### [ultisnips](https://github.com/SirVer/ultisnips)
+Default comlete snips if vim7.4+ with python support
+> UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+#### [neosnippet](https://github.com/Shougo/neosnippet.vim)
+Other w
+
 `C-l` will list the snips downsite when use `ultisnips`, `c-f` for snips jump forword in snippet inserted in both snippets, and only `ultisnips` use `c-b` for jump back
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)

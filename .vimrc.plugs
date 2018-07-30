@@ -304,7 +304,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                     Plug 'SirVer/ultisnips'
                     Plug 'honza/vim-snippets'
                     Plug 'leoatchina/leoatchina-snippets'
-                else
+                elseif v:version > 703
                     let g:complete_snippet = "neosnippet"
                     Plug 'Shougo/neosnippet'
                     Plug 'Shougo/neosnippet-snippets'
