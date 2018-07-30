@@ -49,6 +49,9 @@
         - [ctrlp](#ctrlp)
     * [Pymode](#pymode)
     * [surround](#surround)
+        - [repeat](#repeat)
+        - [vim-easy-align](#vim-easy-align)
+        - [EasyMotion](#easymotion)
 
 <!-- vim-markdown-toc -->
 # 中文介绍
@@ -417,12 +420,13 @@ plugin to add bracket for string，here after is from [<vim中的杀手级别的
     <CTRL-g>s - same as <CTRL-s>
     <CTRL-g>S - same as <CTRL-s><CTRL-s>
 ```
-[repeat]
-
-[vim-easy-align](https://github.com/junegunn/vim-easy-align)
+### [repeat](https://github.com/tpope/vim-repeat)
 
 
-[EasyMotion](https://github.com/easymotion/vim-easymotion)
+### [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+
+
+### [EasyMotion](https://github.com/easymotion/vim-easymotion)
  又一个杀手级别的插件
 
  1. 跳转到当前光标前后,快捷键`<Leader><Leader>w`和`<Leader><Leader>b`

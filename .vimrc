@@ -419,6 +419,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     if has("gui_running") && HasDirectory('markdown-preview.vim')
         let g:vim_markdown_folding_disabled = 1
         let g:vim_markdown_no_default_key_mappings = 1
+        let g:vim_markdown_preview_started = 0
         au FileType markdown nmap <silent> <C-z> <Plug>MarkdownPreview
         au FileType markdown imap <silent> <C-z> <Plug>MarkdownPreview
         au FileType markdown vmap <silent> <C-z> <Plug>MarkdownPreview
@@ -437,9 +438,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         if v:version > 703
             let g:vmt_auto_update_on_save = 1
             let g:vmt_cycle_list_item_markers = 1
-            au FileType markdown map <C-t> <ESC>:UpdateToc<cr>
-        else
-            au FileType markdown map <C-t> <ESC>:GenerateMarkdownTOC<Cr>
         endif
         let g:vim_markdown_folding_style_pythonic = 1
         let g:vim_markdown_override_foldtext = 0
