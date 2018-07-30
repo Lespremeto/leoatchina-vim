@@ -61,6 +61,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'lambdalisue/vim-fullscreen'
         endif
         Plug 'tpope/vim-fugitive'
+        Plug 'scrooloose/nerdtree'
         Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'mhinz/vim-startify'
         Plug 'kshenoy/vim-signature'
@@ -68,7 +69,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
-        Plug 'scrooloose/nerdtree'
         Plug 'jistr/vim-nerdtree-tabs'
         Plug 'easymotion/vim-easymotion'
         Plug 'tpope/vim-surround'
@@ -103,26 +103,11 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         Plug 'brooth/far.vim'
         if g:vim_advance == 2
             Plug 'wsdjeg/FlyGrep.vim'
-            nmap <C-f><C-f> :FlyGrep<Cr>
         endif
         if executable('ag') || executable('ack') || executable('rg') || executable('pt')
             Plug 'dyng/ctrlsf.vim'
-            nmap <C-F>s <Plug>CtrlSFPrompt
-            nmap <C-F>c <Plug>CtrlSFCwordPath
-            nmap <C-F>p <Plug>CtrlSFPwordPath
-            nmap <C-F>o :CtrlSFOpen<CR>
-            nmap <C-F>t :CtrlSFToggle<CR>
-            " vmap
-            vmap <C-F>s <Plug>CtrlSFVwordExec
-            vmap <C-F>f <Plug>CtrlSFVwordPath
-            let g:ctrlsf_position='right'
-        else
-            if v:version >799 && !WINDOWS() && executable('ctags')
-                Plug 'damage220/vim-finder'
-                nnoremap <C-f>s :finder<Tab>
-            else
-                nnoremap <C-f>s :vimgrep<Space>
-            endif
+        elseif v:version >799 && !WINDOWS() && executable('ctags')
+            Plug 'damage220/vim-finder'
         endif
         Plug 'terryma/vim-multiple-cursors'
         " signs

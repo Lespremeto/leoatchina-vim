@@ -415,6 +415,42 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         smap <silent><F11> <Esc>:FullscreenToggle<cr>
         vmap <silent><F11> <Esc>:FullscreenToggle<cr>
     endif
+    " fugitive
+    if HasDirectory("vim-fugitive")
+        nnoremap + :Git<Space>
+        nnoremap gc :Gcommit -a -v<CR>
+    endif
+    " startify
+    if HasDirectory("vim-startify")
+        let g:startify_custom_header = [
+            \ '+---------------------------------------------------------+',
+            \ '|  Welcome to use leoatchina vim config forked from spf13 |',
+            \ '|                                                         |',
+            \ '|  https://github.com/leoatchina/leoatchina-vim           |',
+            \ '|                                                         |',
+            \ '|  https://github.com/spf13/spf13-vim                     |',
+            \ '+---------------------------------------------------------+',
+            \ ]
+        let g:startify_session_dir = '~/.vim/session'
+        let g:startify_files_number = 5
+        let g:startify_session_number = 5
+        let g:startify_list_order = [
+            \ ['   最近项目:'],
+            \ 'sessions',
+            \ ['   最近文件:'],
+            \ 'files',
+            \ ['   快捷命令:'],
+            \ 'commands',
+            \ ['   常用书签:'],
+            \ 'bookmarks',
+            \ ]
+        let g:startify_commands = [
+            \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
+            \ {'h': ['帮助', 'help howto']},
+            \ {'v': ['版本', 'version']}
+            \ ]
+    endif
+    " themes
     if HasDirectory("/vim-colorschemes-collections")
         " dark theme
         set background=dark
@@ -502,20 +538,20 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             endfunction
             if count(g:plug_groups, 'syntax') && g:vim_advance == 2
                 let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-                \  [ 'percent' ],
-                \  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+                    \  [ 'percent' ],
+                    \  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
                 let g:lightline.component_expand =  {
-                \  'linter_checking': 'lightline#ale#checking',
-                \  'linter_warnings': 'lightline#ale#warnings',
-                \  'linter_errors': 'lightline#ale#errors',
-                \  'linter_ok': 'lightline#ale#ok'
-                \ }
+                    \  'linter_checking': 'lightline#ale#checking',
+                    \  'linter_warnings': 'lightline#ale#warnings',
+                    \  'linter_errors': 'lightline#ale#errors',
+                    \  'linter_ok': 'lightline#ale#ok'
+                    \ }
                 let g:lightline.component_type = {
-                \  'linter_checking': 'right',
-                \  'linter_warnings': 'warning',
-                \  'linter_errors': 'error',
-                \  'linter_ok': 'left'
-                \ }
+                    \  'linter_checking': 'right',
+                    \  'linter_warnings': 'warning',
+                    \  'linter_errors': 'error',
+                    \  'linter_ok': 'left'
+                    \ }
             endif
         else
             set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
@@ -684,7 +720,25 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         imap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
         cmap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
     endif
-
+    " search tools
+    if HasDirectory('FlyGrep.vim')
+        nmap <C-f><C-f> :FlyGrep<Cr>
+    endif
+    if HasDirectory('ctrlsf.vim')
+        let g:ctrlsf_position='right'
+        nmap <C-F>s <Plug>CtrlSFPrompt
+        nmap <C-F>c <Plug>CtrlSFCwordPath
+        nmap <C-F>p <Plug>CtrlSFPwordPath
+        nmap <C-F>o :CtrlSFOpen<CR>
+        nmap <C-F>t :CtrlSFToggle<CR>
+        " vmap
+        vmap <C-F>s <Plug>CtrlSFVwordExec
+        vmap <C-F>f <Plug>CtrlSFVwordPath
+    elseif HasDirectory('vim-finder')
+        nnoremap <C-f>s :finder<Space>
+    else
+        nnoremap <C-f>s :vimgrep<Space>
+    endif
     " Shell
     if HasDirectory("vimshell.vim")
         nmap <C-k>v :vsplit<cr>:VimShell<cr>
@@ -730,42 +784,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             nmap <C-k>H :terminal
             nmap <C-k>T :tab terminal
         endif
-    endif
-
-    " startify
-    if HasDirectory("vim-startify")
-        let g:startify_custom_header = [
-            \ '+---------------------------------------------------------+',
-            \ '|  Welcome to use leoatchina vim config forked from spf13 |',
-            \ '|                                                         |',
-            \ '|  https://github.com/leoatchina/leoatchina-vim           |',
-            \ '|                                                         |',
-            \ '|  https://github.com/spf13/spf13-vim                     |',
-            \ '+---------------------------------------------------------+',
-            \ ]
-        let g:startify_session_dir = '~/.vim/session'
-        let g:startify_files_number = 5
-        let g:startify_session_number = 5
-        let g:startify_list_order = [
-            \ ['   最近项目:'],
-            \ 'sessions',
-            \ ['   最近文件:'],
-            \ 'files',
-            \ ['   快捷命令:'],
-            \ 'commands',
-            \ ['   常用书签:'],
-            \ 'bookmarks',
-            \ ]
-        let g:startify_commands = [
-            \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
-            \ {'h': ['帮助', 'help howto']},
-            \ {'v': ['版本', 'version']}
-            \ ]
-    endif
-    " fugitive
-    if HasDirectory("vim-fugitive")
-        nnoremap + :Git<Space>
-        nnoremap gc :Gcommit -a -v<CR>
     endif
     " easy-align
     if HasDirectory("vim-easy-align")
