@@ -6,7 +6,7 @@
 + [Install](#install)
     * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx)
     * [windows](#windows)
-+ [Upgrade](#upgrade)
++ [Update](#update)
     * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-1)
     * [windows](#windows-1)
 + [Upgrade plugins](#upgrade-plugins)
@@ -21,26 +21,27 @@
 + [Main shortcuts](#main-shortcuts)
 + [Plugins and their shortcuts](#plugins-and-their-shortcuts)
     * [vim-plug](#vim-plug)
+    * [ywvim中文输入法](#ywvim中文输入法)
     * [Themes Collentions](#themes-collentions)
-    * [Completion method](#completion-method)
-        - [Completion shortcuts](#completion-shortcuts)
-        - [SmartComplete Engines](#smartcomplete-engines)
-            + [YouCompleteMe](#youcompleteme)
-            + [deoplete](#deoplete)
-            + [completor](#completor)
-            + [ncm2](#ncm2)
-            + [asyncomplete](#asyncomplete)
-            + [neocomplete](#neocomplete)
-            + [neocomplcache](#neocomplcache)
-        - [Snippets](#snippets)
-            + [ultisnips](#ultisnips)
-            + [neosnippet](#neosnippet)
+    * [Complete Engines](#complete-engines)
+        - [Shortcuts](#shortcuts)
+        - [YouCompleteMe](#youcompleteme)
+        - [deoplete](#deoplete)
+        - [completor](#completor)
+        - [ncm2](#ncm2)
+        - [asyncomplete](#asyncomplete)
+        - [neocomplete](#neocomplete)
+        - [neocomplcache](#neocomplcache)
+        - [Smart Engines Selection](#smart-engines-selection)
+    * [Complete Snippets](#complete-snippets)
+        - [ultisnips](#ultisnips)
+        - [neosnippet](#neosnippet)
+        - [Shortcuts](#shortcuts-1)
     * [nerdtree](#nerdtree)
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
     * [VOoM](#voom)
     * [undotree](#undotree)
     * [airline and lightline](#airline-and-lightline)
-    * [ywvim中文输入法](#ywvim中文输入法)
     * [fugitive](#fugitive)
     * [scrooloose/nerdcommenter](#scrooloosenerdcommenter)
     * [Browser tools](#browser-tools)
@@ -95,7 +96,7 @@ need `curl`
   open vim, do :PlugInstall
 ```
 
-# Upgrade
+# Update
 ## Linux, \*nix, Mac OSX
 ```bash
   ./install.sh ,chosse y|Y, the scipt will do git pull and do reinstall plugins
@@ -152,7 +153,7 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
 
 # Main changes from spf13
 * use `vim-plug` instead of `vundle`, more quick and more smart
-* simplify, delete `fork`,`before` files , which are redundent for most users
+* totally simplify, delete `fork`,`before` files , which are redundent for most users
 * delete lots of variables for feature settings
 * just have mentioned before, the link is from the cloned folder
 * not support **XP**
@@ -191,71 +192,57 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
 * `F12`: paste toggle
 * `gc` for gcommit, `+` for `:Git`
 * tab/buffer control
-```
-    set tabpagemax=10 " Only show 10 tabs
-    cmap Tabe tabe
-    " s-tab not work in Xshell
-    nnoremap <silent>-          :tabprevious<CR>
-    nnoremap <silent><Tab>      :tabnext<CR>
-    nnoremap <Leader>tp         :tabprevious<CR>
-    nnoremap <Leader>tn         :tabnext<CR>
-    nnoremap <Leader>-          :tabm -1<CR>
-    nnoremap <Leader><Tab>      :tabm +1<CR>
-    nnoremap <LocalLeader>-     :tabfirst<CR>
-    nnoremap <LocalLeader><Tab> :tablast<CR>
-    nnoremap <Leader>te         :tabe<Space>
-    nnoremap <Leader>ts         :tab  split<CR>
-    nnoremap <Leader>tw         :tabs<CR>
-    nnoremap <Leader>tm         :tabm<Space>
-    " buffer switch
-    nnoremap <LocalLeader><Backspace> :buffers<CR>
-    nnoremap <LocalLeader>]           :bn<CR>
-    nnoremap <LocalLeader>[           :bp<CR>
-```
+    - set tabpagemax=10 " Only show 10 tabs
+    - cmap Tabe tabe
+    - nnoremap <silent>-          :tabprevious<CR>
+    - nnoremap <silent><Tab>      :tabnext<CR>
+    - nnoremap <Leader>tp         :tabprevious<CR>
+    - nnoremap <Leader>tn         :tabnext<CR>
+    - nnoremap <Leader>-          :tabm -1<CR>
+    - nnoremap <Leader><Tab>      :tabm +1<CR>
+    - nnoremap <LocalLeader>-     :tabfirst<CR>
+    - nnoremap <LocalLeader><Tab> :tablast<CR>
+    - nnoremap <Leader>te         :tabe<Space>
+    - nnoremap <Leader>ts         :tab  split<CR>
+    - nnoremap <Leader>tw         :tabs<CR>
+    - nnoremap <Leader>tm         :tabm<Space>
+    - nnoremap <LocalLeader><Backspace> :buffers<CR>
+    - nnoremap <LocalLeader>]           :bn<CR>
+    - nnoremap <LocalLeader>[           :bp<CR>
+
 * copy & paste
-```
-    vnoremap <Leader>y  "+y
-    nnoremap <Leader>y  "+y
-    nnoremap <Leader>yy "+yy
-    nnoremap <Leader>Y  "*y
-    vnoremap <Leader>Y  "*y
-    nnoremap Y y$
-    vnoremap Y *y$
-    nnoremap <Leader>p "+p
-    nnoremap <Leader>P "*P
-    vnoremap <Leader>p "+p
-    vnoremap <Leader>P "*P
-```
+    - vnoremap <Leader>y  "+y
+    - nnoremap <Leader>y  "+y
+    - nnoremap <Leader>yy "+yy
+    - nnoremap <Leader>Y  "*y
+    - vnoremap <Leader>Y  "*y
+    - nnoremap Y y$
+    - vnoremap Y *y$
+    - nnoremap <Leader>p "+p
+    - nnoremap <Leader>P "*P
+    - vnoremap <Leader>p "+p
+    - vnoremap <Leader>P "*P
+
 * Some other shortcuts
-```
-    " Find merge conflict markers
-    nmap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
-    " and ask which one to jump to
-    nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-    " toggleFold
-    nnoremap <Leader>fd :set nofoldenable! nofoldenable?<CR>
-    " toggleWrap
-    nnoremap <Leader>fw :set nowrap! nowrap?<CR>
-    nmap <Leader>w :w<CR>
-    nmap <Leader>W :wq!<CR>
-    nmap <Leader>WQ :wa<CR>:q<CR>
-    nmap <Leader>q :q!
-    nmap <Leader>Q :qa!
-    " split windows
-    nmap <Leader>\ :vsplit<Space>
-    nmap <Leader><Leader>\ :split<Space>
-    nmap <Leader>= <C-W>=
-    " resize spilted windows
-    nmap <Leader><Down> :resize -3<CR>
-    nmap <Leader><Up>   :resize +3<CR>
-    nmap <Leader><Left> :vertical resize -3<CR>
-    nmap <Leader><Right>:vertical resize +3<CR>
-    " Visual shifting (does not exit Visual mode)
-    vnoremap < <gv
-    vnoremap > >gv
-    nnoremap < <<
-    nnoremap > >>
-```
+    - nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+    - nnoremap <Leader>fd :set nofoldenable! nofoldenable?<CR>
+    - nnoremap <Leader>fw :set nowrap! nowrap?<CR>
+    - nmap <Leader>w :w<CR>
+    - nmap <Leader>W :wq!<CR>
+    - nmap <Leader>WQ :wa<CR>:q<CR>
+    - nmap <Leader>q :q!
+    - nmap <Leader>Q :qa!
+    - nmap <Leader>\ :vsplit<Space>
+    - nmap <Leader><Leader>\ :split<Space>
+    - nmap <Leader>= <C-W>=
+    - nmap <Leader><Down> :resize -3<CR>
+    - nmap <Leader><Up>   :resize +3<CR>
+    - nmap <Leader><Left> :vertical resize -3<CR>
+    - nmap <Leader><Right>:vertical resize +3<CR>
+    - vnoremap < <gv
+    - vnoremap > >gv
+    - nnoremap < <<
+    - nnoremap > >>
 
 # Plugins and their shortcuts
 hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.
@@ -266,25 +253,26 @@ You can open `.vimrc.plugs` for these features
 
 ## [vim-plug](https://github.com/junegunn/vim-plug)
 A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use.
-You can check how it is installed via install.sh or setup.cmd
+You can check how it is installed via `install.sh` or `setup.cmd`
+
+## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
+这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页
+开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`"wubi"`或者`"pinyin"`
+
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
-Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeps some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  the themes.Default themes
-  - [gruvbox](https://github.com/morhetz/gruvbox) for vim
-  - [hybrid_material](https://github.com/kristijanhusak/vim-hybrid-material) for gvim
-  - [wombat256](https://github.com/vim-scripts/wombat256.vim) for neovim
-  - [onedark](https://github.com/joshdick/onedark.vim) for neovim with gui
+Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  these themes.
+Default themes:
+- [gruvbox](https://github.com/morhetz/gruvbox) for vim
+- [hybrid_material](https://github.com/kristijanhusak/vim-hybrid-material) for gvim
+- [wombat256](https://github.com/vim-scripts/wombat256.vim) for neovim
+- [onedark](https://github.com/joshdick/onedark.vim) for neovim with gui
 
-## Completion method
+## Complete Engines
 **7** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `completor`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
-**2** complete snippets: `ultisnips`, `neosnippet`
-
-### Completion shortcuts
-It is such a complex to make the completion shorcuts compatible, finally I used a series of unroute shorcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
-
-### SmartComplete Engines
-There is a `smartcomplete` in `g:plug_groups` in `.vimrc.local`, it means the .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `version <800`, `python3/2` or `no python`, `windows` or not. I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
+### Shortcuts
+It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
 By default, when neovim and python3 support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
 
@@ -294,40 +282,43 @@ You can also force to install the completion engine in `g:plug_groups`, just rep
 
 `youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups`, and is the one with the best performance. Since it is hard to install, I advice you not write it to `.vimrc.local` only you have a deep understanding to you system
 
-#### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
 `nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration`
 
-
-#### [deoplete](https://github.com/Shougo/deoplete.nvim)
+### [deoplete](https://github.com/Shougo/deoplete.nvim)
 Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.
 
-#### [completor](https://github.com/maralla/completor.vim)
+### [completor](https://github.com/maralla/completor.vim)
 Completor is an asynchronous code completion framework for vim8. New features of vim8 are used to implement the fast completion engine with low overhead. Require `python3`
 
-#### [ncm2](https://github.com/ncm2/ncm2)
+### [ncm2](https://github.com/ncm2/ncm2)
 NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `python3`
 
-#### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
+### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed.
 But if you want `python` support, you should `pip3 install python-language-server`
 
-#### [neocomplete](https://github.com/Shougo/neocomplete.vim)
+### [neocomplete](https://github.com/Shougo/neocomplete.vim)
 neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.
 
-#### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
-
+### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
 neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
-It is the last complete engine the config choose
+**It is the last complete engine this config choose**
 
-### Snippets
-#### [ultisnips](https://github.com/SirVer/ultisnips)
-Default comlete snips if vim7.4+ with python support
-> UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
-#### [neosnippet](https://github.com/Shougo/neosnippet.vim)
-Other w
+### Smart Engines Selection
+There is a `smartcomplete` in `g:plug_groups` in `.vimrc.local`, it means the .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `version <800`, `python3/2` or `no python`, `windows` or not. I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-`C-l` will list the snips downsite when use `ultisnips`, `c-f` for snips jump forword in snippet inserted in both snippets, and only `ultisnips` use `c-b` for jump back
+## Complete Snippets
+**2** complete snippets: `ultisnips`, `neosnippet`.Vim7.4+ is both required
+### [ultisnips](https://github.com/SirVer/ultisnips)
+works if with python support. UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+
+### [neosnippet](https://github.com/Shougo/neosnippet.vim)
+works if without python support
+
+### Shortcuts
+`C-l` will list the snips when use `ultisnips`, `c-f` for snips jump forword in snippet inserted in both snippets, and only `ultisnips` use `c-b` for jump back
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)
 Togglekey:`<Leader>nn`, and key `<Leader>nt`
@@ -337,16 +328,13 @@ need `has("ctags")`. Togglekey:`<Leader>tt`
 
 ## [VOoM](https://github.com/vim-voom/VOoM)
 VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner.
-<Leader>vt :VoomToggle
+Togglekey:`<Leader>vt`. If the Voom sidebar has appeard
 
 ##[undotree](https://github.com/mbbill/undotree)
 Togglekey:`<Leader>u`
 
 ## [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
 `airline` show more context than other statusline plugins, and more pleasing to eye. But it needs more computer resource, so if **not** add `"airline"` in `g:plug_groups`, `lightline` will work.
-
-## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
-这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置。快捷键:`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页;要在 `~/.vimrc.local`里的`g:plug_groups`加入`"wubi"`或者`"pinyin"`
 
 ## [fugitive](https://github.com/tpope/vim-fugitive)
 Git plugin
