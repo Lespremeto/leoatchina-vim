@@ -17,8 +17,22 @@ elseif v:version > 702
 else
     let g:vim_advance = 0
 endif
+" python support
+if has('python3') && executable('python3')
+    let g:python_version = 3
+    if !WINDOWS()
+        silent! python3 1
+    endif
+elseif has('python') && executable('python')
+    let g:python_version = 2
+    if !WINDOWS()
+        silent! python 1
+    endif
+else
+    let g:python_version = 0
+endif
 " use vim-plug to install plugs
-if g:vim_advance
+if (has('job') || python_version || has('nvim') || has('lua'))
     " plug install path
     if has('nvim')
         let $PLUG_PATH = '~/.nvim/plug'
@@ -30,23 +44,6 @@ if g:vim_advance
         endif
     endif
     set rtp+=$PLUG_PATH
-    " complete enviroment
-    let g:complete_engine  = "None"
-    let g:complete_snippet = "ultisnips"
-    " python support
-    if has('python3') && executable('python3')
-        let g:python_version = 3
-        if !WINDOWS()
-            silent! python3 1
-        endif
-    elseif has('python') && executable('python')
-        let g:python_version = 2
-        if !WINDOWS()
-            silent! python 1
-        endif
-    else
-        let g:python_version = 0
-    endif
     call plug#begin($PLUG_PATH)
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
@@ -63,6 +60,8 @@ if g:vim_advance
         if (has('nvim') && WINDOWS()) || (has('gui_running') && !WINDOWS())
             Plug 'lambdalisue/vim-fullscreen'
         endif
+        Plug 'tpope/vim-fugitive'
+        Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'mhinz/vim-startify'
         Plug 'kshenoy/vim-signature'
         Plug 'google/vim-searchindex'
@@ -72,20 +71,15 @@ if g:vim_advance
         Plug 'scrooloose/nerdtree'
         Plug 'jistr/vim-nerdtree-tabs'
         Plug 'easymotion/vim-easymotion'
-        Plug 'tpope/vim-repeat'
         Plug 'tpope/vim-surround'
+        Plug 'tpope/vim-repeat'
         Plug 'leoatchina/vim-colorschemes-collections'
-        if g:python_version > 0
+        if g:python_version
             Plug 'vim-voom/VOoM'
-        endif
-        if executable('git')
-            Plug 'tpope/vim-fugitive'
-            Plug 'Xuyuanp/nerdtree-git-plugin'
         endif
         if executable('ctags')
             Plug 'majutsushi/tagbar'
         endif
-        " In your .vimrc.local file
         " list only the plugin groups you will use
         if !exists('g:plug_groups')
             let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'python']
@@ -94,6 +88,10 @@ if g:vim_advance
         if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
             Plug 'leoatchina/ywvim'
         endif
+        " biosyntax
+        if count(g:plug_groups, 'bio')
+            Plug 'bioSyntax/bioSyntax-vim'
+        endif
         " latex and rmarkdown
         if count(g:plug_groups, 'rmarkdown')
             Plug 'vim-pandoc/vim-rmarkdown'
@@ -101,11 +99,8 @@ if g:vim_advance
             Plug 'vim-pandoc/vim-pandoc-syntax'
             Plug 'drmingdrmer/vim-syntax-markdown'
         endif
-        " biosyntax
-        if count(g:plug_groups, 'bio')
-            Plug 'bioSyntax/bioSyntax-vim'
-        endif
         " external search method
+        Plug 'brooth/far.vim'
         if g:vim_advance == 2
             Plug 'wsdjeg/FlyGrep.vim'
             nmap <C-f><C-f> :FlyGrep<Cr>
@@ -129,7 +124,6 @@ if g:vim_advance
                 nnoremap <C-f>s :vimgrep<Space>
             endif
         endif
-        Plug 'brooth/far.vim'
         Plug 'terryma/vim-multiple-cursors'
         " signs
         Plug 'gorodinskiy/vim-coloresque'
@@ -187,245 +181,247 @@ if g:vim_advance
             Plug 'tpope/vim-haml'
             Plug 'mattn/emmet-vim'
         endif
-        " browser tool
-        let g:browser_tool = "ctrlp"
-        if count(g:plug_groups, 'fzf')
-            if !WINDOWS()
-                let g:browser_tool = "fzf"
-            endif
-        elseif count(g:plug_groups, 'denite')
-            if g:python_version == 3 && g:vim_advance == 2
-                let g:browser_tool = "denite"
-            endif
-        elseif count(g:plug_groups, 'LeaderF')
-            if g:python_version && executable('gcc') && g:vim_advance
-                let g:browser_tool = "leaderF"
-            endif
-        endif
-        if g:browser_tool == "fzf"
-            Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-            Plug 'junegunn/fzf.vim'
-        elseif g:browser_tool == "denite"
-            Plug 'shougo/denite.nvim'
-        elseif g:browser_tool == "LeaderF"
-            if WINDOWS()
-                Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-            else
-                Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-            endif
-        else
-            Plug 'ctrlpvim/ctrlp.vim'
-            Plug 'tacahiroy/ctrlp-funky'
-        endif
-        " complete method
         if g:vim_advance == 2
             if count(g:plug_groups, 'syntax')
                 Plug 'w0rp/ale'
             endif
-            Plug 'skywind3000/asyncrun.vim'
             if executable('ctags')
                 Plug 'ludovicchabant/vim-gutentags'
             endif
-        else
-            " install run and syntax tools
+            Plug 'skywind3000/asyncrun.vim'
+        elseif g:vim_advance
             if count(g:plug_groups, 'syntax')
                 Plug 'vim-syntastic/syntastic'
             endif
         endif
-        Plug 'thinca/vim-quickrun'
-        " select a complete plugin
-        if count(g:plug_groups, 'smartcomplete')
-            " nvim
-            if has('nvim')
-                if g:python_version == 3
-                    if WINDOWS()
-                        let g:complete_engine = "deoplete"
-                    else
-                        let g:complete_engine = "ncm2"
-                    endif
-                else
-                    let g:complete_engine = "asyncomplete"
+        if g:vim_advance
+            Plug 'thinca/vim-quickrun'
+            " browser tool
+            let g:browser_tool = "ctrlp"
+            if count(g:plug_groups, 'fzf')
+                if !WINDOWS()
+                    let g:browser_tool = "fzf"
                 endif
-            " vim8
-            elseif v:version > 799
-                if g:python_version && WINDOWS()
+            elseif count(g:plug_groups, 'denite')
+                if g:python_version == 3 && g:vim_advance == 2
+                    let g:browser_tool = "denite"
+                endif
+            elseif count(g:plug_groups, 'LeaderF')
+                if g:python_version && executable('gcc') && g:vim_advance
+                    let g:browser_tool = "leaderF"
+                endif
+            endif
+            if g:browser_tool == "fzf"
+                Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+                Plug 'junegunn/fzf.vim'
+            elseif g:browser_tool == "denite"
+                Plug 'shougo/denite.nvim'
+            elseif g:browser_tool == "LeaderF"
+                if WINDOWS()
+                    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+                else
+                    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+                endif
+            else
+                Plug 'ctrlpvim/ctrlp.vim'
+                Plug 'tacahiroy/ctrlp-funky'
+            endif
+            " select a complete_engine && complete_snippet
+            let g:complete_engine  = "None"
+            let g:complete_snippet = "ultisnips"
+            if count(g:plug_groups, 'smartcomplete')
+                " nvim
+                if has('nvim')
+                    if g:python_version == 3
+                        if WINDOWS()
+                            let g:complete_engine = "deoplete"
+                        else
+                            let g:complete_engine = "ncm2"
+                        endif
+                    else
+                        let g:complete_engine = "asyncomplete"
+                    endif
+                " vim8
+                elseif v:version > 799
+                    if g:python_version && WINDOWS()
+                        let g:complete_engine = "completor"
+                    else
+                        let g:complete_engine = "asyncomplete"
+                    endif
+                elseif has('lua')
+                    let g:complete_engine = "neocomplete"
+                else
+                    let g:complete_engine = "neocomplcache"
+                endif
+            elseif count(g:plug_groups, 'deoplete')
+                if g:python_version == 3 && g:vim_advance == 2 && has('timers')
+                    let g:complete_engine = "deoplete"
+                else
+                    echoe "Cannot install deoplete, install neocomplcache instead."
+                    let g:complete_engine = "neocomplcache"
+                endif
+            elseif count(g:plug_groups, 'completor')
+                if g:python_version && !has('nvim') && version > 799
                     let g:complete_engine = "completor"
                 else
-                    let g:complete_engine = "asyncomplete"
+                    echoe "Cannot install completor, install neocomplcache instead."
+                    let g:complete_engine = "neocomplcache"
                 endif
-            elseif has('lua')
-                let g:complete_engine = "neocomplete"
-            else
+            elseif count(g:plug_groups, 'neocomplete')
+                if has('lua')
+                    let g:complete_engine = "neocomplete"
+                else
+                    echoe "Cannot install neocomplete, install neocomplcache instead."
+                    let g:complete_engine = "neocomplcache"
+                endif
+            elseif count(g:plug_groups, 'neocomplcache')
                 let g:complete_engine = "neocomplcache"
+            elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
+                if executable('cmake') && g:python_version
+                    let g:complete_engine = "YCM"
+                else
+                    echoe "Cannot install YouCompleteMe, install neocomplcache instead."
+                    let g:complete_engine = "neocomplcache"
+                endif
+            elseif count(g:plug_groups, 'ncm2')
+                if g:python_version == 3 && g:vim_advance == 2
+                    let g:complete_engine = "ncm2"
+                else
+                    echoe "Cannot install ncm2, install neocomplcache instead."
+                    let g:complete_engine = "neocomplcache"
+                endif
+            elseif count(g:plug_groups, 'asyncomplete')
+                if g:vim_advance == 2
+                    let g:complete_engine = "asyncomplete"
+                else
+                    echoe "Cannot install asyncomplete, install neocomplcache instead."
+                    let g:complete_engine = "neocomplcache"
+                endif
             endif
-        elseif count(g:plug_groups, 'deoplete')
-            if g:python_version == 3 && g:vim_advance == 2 && has('timers')
-                let g:complete_engine = "deoplete"
-            else
-                echoe "Cannot install deoplete, install neocomplcache instead."
-                let g:complete_engine = "neocomplcache"
+            " install snippets plugins
+            if g:complete_engine != "None"
+                Plug 'Shougo/neco-vim'
+                if g:python_version && (!has('nvim') && v:version > 703 || has('nvim') && !WINDOWS()) && g:complete_snippet == "ultisnips"
+                    Plug 'SirVer/ultisnips'
+                    Plug 'honza/vim-snippets'
+                    Plug 'leoatchina/leoatchina-snippets'
+                else
+                    let g:complete_snippet = "neosnippet"
+                    Plug 'Shougo/neosnippet'
+                    Plug 'Shougo/neosnippet-snippets'
+                endif
             endif
-        elseif count(g:plug_groups, 'completor')
-            if g:python_version && !has('nvim') && version > 799
-                let g:complete_engine = "completor"
-            else
-                echoe "Cannot install completor, install neocomplcache instead."
-                let g:complete_engine = "neocomplcache"
-            endif
-        elseif count(g:plug_groups, 'neocomplete')
-            if has('lua')
-                let g:complete_engine = "neocomplete"
-            else
-                echoe "Cannot install neocomplete, install neocomplcache instead."
-                let g:complete_engine = "neocomplcache"
-            endif
-        elseif count(g:plug_groups, 'neocomplcache')
-            let g:complete_engine = "neocomplcache"
-        elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
-            if executable('cmake') && g:python_version
-                let g:complete_engine = "YCM"
-            else
-                echoe "Cannot install YouCompleteMe, install neocomplcache instead."
-                let g:complete_engine = "neocomplcache"
-            endif
-        elseif count(g:plug_groups, 'ncm2')
-            if g:python_version == 3 && g:vim_advance == 2
-                let g:complete_engine = "ncm2"
-            else
-                echoe "Cannot install ncm2, install neocomplcache instead."
-                let g:complete_engine = "neocomplcache"
-            endif
-        elseif count(g:plug_groups, 'asyncomplete')
-            if g:vim_advance == 2
-                let g:complete_engine = "asyncomplete"
-            else
-                echoe "Cannot install asyncomplete, install neocomplcache instead."
-                let g:complete_engine = "neocomplcache"
-            endif
-        endif
-        " install snippets plugins
-        if g:complete_engine != "None"
-            Plug 'Shougo/neco-vim'
-            if g:python_version && (!has('nvim') && v:version > 703 || has('nvim') && !WINDOWS()) && g:complete_snippet == "ultisnips"
-                Plug 'SirVer/ultisnips'
-                Plug 'honza/vim-snippets'
-                Plug 'leoatchina/leoatchina-snippets'
-            else
-                let g:complete_snippet = "neosnippet"
-                Plug 'Shougo/neosnippet'
-                Plug 'Shougo/neosnippet-snippets'
-            endif
-        endif
-        " install complete plugins
-        if g:complete_engine == "deoplete"
-            if has('nvim')
-                Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
-            else
-                Plug 'Shougo/deoplete.nvim'
-                Plug 'roxma/vim-hug-neovim-rpc'
+            " install complete plugins
+            if g:complete_engine == "deoplete"
+                if has('nvim')
+                    Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
+                else
+                    Plug 'Shougo/deoplete.nvim'
+                    Plug 'roxma/vim-hug-neovim-rpc'
+                    Plug 'roxma/nvim-yarp'
+                endif
+                Plug 'Shougo/neoinclude.vim'
+                Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp']}
+                if count(g:plug_groups, 'python')
+                    Plug 'zchee/deoplete-jedi', {'for': 'python'}
+                endif
+                if count(g:plug_groups, 'go')
+                    Plug 'zchee/deoplete-go', {'for': 'go'}
+                endif
+                if count(g:plug_groups, 'javascript')
+                    Plug 'carlitux/deoplete-ternjs'
+                endif
+            elseif g:complete_engine == "completor"
+                Plug 'maralla/completor.vim'
+                if g:complete_snippet == "neosnippet"
+                    Plug 'maralla/completor-neosnippet'
+                endif
+            elseif g:complete_engine == "neocomplete"
+                Plug 'Shougo/neoinclude.vim'
+                Plug 'Shougo/neocomplete.vim'
+            elseif g:complete_engine == "neocomplcache"
+                Plug 'Shougo/neocomplcache.vim'
+                if g:complete_snippet == 'ultisnips'
+                    Plug 'JazzCore/neocomplcache-ultisnips'
+                endif
+            elseif g:complete_engine == "YCM"
+                if g:python_version == 2
+                    Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2 ./install.py --clang-completer' }
+                elseif g:python_version == 3
+                    Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
+                endif
+            elseif g:complete_engine == "ncm2"
+                Plug 'ncm2/ncm2'
                 Plug 'roxma/nvim-yarp'
-            endif
-            Plug 'Shougo/neoinclude.vim'
-            Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp']}
-            if count(g:plug_groups, 'python')
-                Plug 'zchee/deoplete-jedi', {'for': 'python'}
-            endif
-            if count(g:plug_groups, 'go')
-                Plug 'zchee/deoplete-go', {'for': 'go'}
-            endif
-            if count(g:plug_groups, 'javascript')
-                Plug 'carlitux/deoplete-ternjs'
-            endif
-        elseif g:complete_engine == "completor"
-            Plug 'maralla/completor.vim'
-            if g:complete_snippet == "neosnippet"
-                Plug 'maralla/completor-neosnippet'
-            endif
-        elseif g:complete_engine == "neocomplete"
-            Plug 'Shougo/neoinclude.vim'
-            Plug 'Shougo/neocomplete.vim'
-        elseif g:complete_engine == "neocomplcache"
-            Plug 'Shougo/neocomplcache.vim'
-            if g:complete_snippet == 'ultisnips'
-                Plug 'JazzCore/neocomplcache-ultisnips'
-            endif
-        elseif g:complete_engine == "YCM"
-            if g:python_version == 2
-                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2 ./install.py --clang-completer' }
-            elseif g:python_version == 3
-                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
-            endif
-        elseif g:complete_engine == "ncm2"
-            Plug 'ncm2/ncm2'
-            Plug 'roxma/nvim-yarp'
-            if !has('nvim')
-                Plug 'roxma/vim-hug-neovim-rpc'
-            endif
-            " main complete
-            Plug 'ncm2/ncm2-bufword'
-            Plug 'ncm2/ncm2-path'
-            Plug 'ncm2/ncm2-github'
-            Plug 'ncm2/ncm2-tagprefix'
-            Plug 'filipekiss/ncm2-look.vim'
-            Plug 'jsfaint/ncm2-vim'
-            Plug 'Shougo/neoinclude.vim'
-            Plug 'Shougo/neco-syntax'
-            " only use ultisnips
-            Plug 'ncm2/ncm2-ultisnips'
-            " language
-            Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
-            if count(g:plug_groups, 'css')
-                Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
-            endif
-            if count(g:plug_groups, 'javascript')
-                Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
-            endif
-            if count(g:plug_groups, 'python')
-                Plug 'ncm2/ncm2-jedi', {'for':'python'}
-            endif
-            if count(g:plug_groups, 'rust')
-                Plug 'ncm2/ncm2-racer', {'for':'rust'}
-            endif
-            if count(g:plug_groups, 'go')
-                Plug 'ncm2/ncm2-go', {'for':'go'}
-            endif
-        elseif g:complete_engine == "asyncomplete"
-            Plug 'prabirshrestha/asyncomplete.vim'
-            Plug 'prabirshrestha/async.vim'
-            Plug 'prabirshrestha/vim-lsp'
-            Plug 'prabirshrestha/asyncomplete-lsp.vim'
-            Plug 'yami-beta/asyncomplete-omni.vim'
-            Plug 'prabirshrestha/asyncomplete-buffer.vim'
-            Plug 'prabirshrestha/asyncomplete-emoji.vim'
-            Plug 'prabirshrestha/asyncomplete-file.vim'
-            Plug 'prabirshrestha/asyncomplete-tags.vim'
-            Plug 'Shougo/neco-syntax'
-            Plug 'prabirshrestha/asyncomplete-necovim.vim'
-            Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
-            if count(g:plug_groups, 'go')
-                Plug 'prabirshrestha/asyncomplete-gocode.vim'
-            endif
-            if count(g:plug_groups, 'javascript')
-                Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
-                Plug 'prabirshrestha/asyncomplete-flow.vim'
-            endif
-            if count(g:plug_groups, 'rust')
-                Plug 'keremc/asyncomplete-racer.vim'
-            endif
-            if g:complete_snippet == 'ultisnips'
-                Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-                au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-                    \ 'name': 'ultisnips',
-                    \ 'whitelist': ['*'],
-                    \ 'completor': function('asyncomplete#sources#ultisnips#completor')
-                    \ }))
-            elseif g:complete_snippet == 'neosnippet'
-                Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
-                au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-                    \ 'name': 'neosnippet',
-                    \ 'whitelist': ['*'],
-                    \ 'completor': function('asyncomplete#sources#neosnippet#completor')
-                    \ }))
+                if !has('nvim')
+                    Plug 'roxma/vim-hug-neovim-rpc'
+                endif
+                " main complete
+                Plug 'ncm2/ncm2-bufword'
+                Plug 'ncm2/ncm2-path'
+                Plug 'ncm2/ncm2-github'
+                Plug 'ncm2/ncm2-tagprefix'
+                Plug 'filipekiss/ncm2-look.vim'
+                Plug 'jsfaint/ncm2-vim'
+                Plug 'Shougo/neoinclude.vim'
+                Plug 'Shougo/neco-syntax'
+                " only use ultisnips
+                Plug 'ncm2/ncm2-ultisnips'
+                " language
+                Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
+                if count(g:plug_groups, 'css')
+                    Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
+                endif
+                if count(g:plug_groups, 'javascript')
+                    Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
+                endif
+                if count(g:plug_groups, 'python')
+                    Plug 'ncm2/ncm2-jedi', {'for':'python'}
+                endif
+                if count(g:plug_groups, 'rust')
+                    Plug 'ncm2/ncm2-racer', {'for':'rust'}
+                endif
+                if count(g:plug_groups, 'go')
+                    Plug 'ncm2/ncm2-go', {'for':'go'}
+                endif
+            elseif g:complete_engine == "asyncomplete"
+                Plug 'prabirshrestha/asyncomplete.vim'
+                Plug 'prabirshrestha/async.vim'
+                Plug 'prabirshrestha/vim-lsp'
+                Plug 'prabirshrestha/asyncomplete-lsp.vim'
+                Plug 'yami-beta/asyncomplete-omni.vim'
+                Plug 'prabirshrestha/asyncomplete-buffer.vim'
+                Plug 'prabirshrestha/asyncomplete-emoji.vim'
+                Plug 'prabirshrestha/asyncomplete-file.vim'
+                Plug 'prabirshrestha/asyncomplete-tags.vim'
+                Plug 'Shougo/neco-syntax'
+                Plug 'prabirshrestha/asyncomplete-necovim.vim'
+                Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+                if count(g:plug_groups, 'go')
+                    Plug 'prabirshrestha/asyncomplete-gocode.vim'
+                endif
+                if count(g:plug_groups, 'javascript')
+                    Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
+                    Plug 'prabirshrestha/asyncomplete-flow.vim'
+                endif
+                if count(g:plug_groups, 'rust')
+                    Plug 'keremc/asyncomplete-racer.vim'
+                endif
+                if g:complete_snippet == 'ultisnips'
+                    Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+                    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+                        \ 'name': 'ultisnips',
+                        \ 'whitelist': ['*'],
+                        \ 'completor': function('asyncomplete#sources#ultisnips#completor')
+                        \ }))
+                elseif g:complete_snippet == 'neosnippet'
+                    Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
+                    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+                        \ 'name': 'neosnippet',
+                        \ 'whitelist': ['*'],
+                        \ 'completor': function('asyncomplete#sources#neosnippet#completor')
+                        \ }))
+                endif
             endif
         endif
         " after file
@@ -448,5 +444,5 @@ if g:vim_advance
     endfunction
     command! PlugNew call s:PlugNew()
 else
-    echom "Inorder to install plugins, you should update to vim7.3+ or neovim"
+    echom "Inorder to install plugins with vim-plug, your vim should with any of `+job`, `+python`, `+python3`, `+ruby`, or use Neovim"
 endif
