@@ -401,7 +401,10 @@ endif
 " Plugins, if vim-plug works
 if (has('job') || python_version || has('nvim') || has('lua'))
     " vim-fullscreen
-    if isdirectory(expand($PLUG_PATH."/vim-fullscreen"))
+    function! HasDirectory(dir)
+        return isdirectory(expand($PLUG_PATH."/".a:dir))
+    endfunction
+    if HasDirectory("vim_fullscreen")
         let g:fullscreen#enable_default_keymap = 1
         if has('nvim')
             let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
@@ -412,7 +415,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         smap <silent><F11> <Esc>:FullscreenToggle<cr>
         vmap <silent><F11> <Esc>:FullscreenToggle<cr>
     endif
-    if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections"))
+    if HasDirectory("/vim-colorschemes-collections")
         " dark theme
         set background=dark
         " 总是显示状态栏
@@ -432,7 +435,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
     endif
     " bufferline
-    if isdirectory(expand($PLUG_PATH."/vim-bufferline"))
+    if HasDirectory("vim-bufferline")
         let g:bufferline_show_bufnr = 0
         let g:bufferline_rotate = 1
         let g:bufferline_fixed_index =  0
@@ -470,7 +473,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             let g:airline_right_alt_sep = '❮'
         endif
     elseif has('statusline')
-        if isdirectory(expand($PLUG_PATH."/lightline.vim"))
+        if HasDirectory("lightline.vim")
             set noshowmode
             let g:lightline = {
                 \ 'colorscheme': 'onedark',
@@ -529,38 +532,53 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
     endif
     " tags
-    if isdirectory(expand($PLUG_PATH."/tagbar")) && isdirectory(expand($PLUG_PATH."/vim-gutentags"))
-        set tags=./.tags;,.tags
-        " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-        let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-        " 所生成的数据文件的名称
-        let g:gutentags_ctags_tagfile = '.tags'
-        " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-        let s:vim_tags = expand("~/.cache/tags")
-        let g:gutentags_cache_dir = s:vim_tags
-        " 配置 ctags 的参数
-        let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-        let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-        let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-        " 检测 ~/.cache/tags 不存在就新建
-        if !isdirectory(s:vim_tags)
-            silent! call mkdir(s:vim_tags, 'p')
+    if HasDirectory("tagbar")
+        let g:tagbar_sort = 0
+        set tags=./tags;/,~/.cache/tags
+        " Make tags placed in .git/tags file available in all levels of a repository
+        let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+        if gitroot != ''
+            let &tags = &tags . ',' . gitroot . '/.git/tags'
+        endif
+        nmap <silent><leader>tt :TagbarToggle<CR>
+        nmap <silent><leader>tj :TagbarOpen j<CR>
+        " AutoCloseTag
+        " Make it so AutoCloseTag works for xml and xhtml files as well
+        au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
+            \ nmap <Leader>ta <Plug>ToggleAutoCloseMappings
+        if HasDirectory("vim-gutentags")
+            set tags=./.tags;,.tags
+            " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+            let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+            " 所生成的数据文件的名称
+            let g:gutentags_ctags_tagfile = '.tags'
+            " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+            let s:vim_tags = expand("~/.cache/tags")
+            let g:gutentags_cache_dir = s:vim_tags
+            " 配置 ctags 的参数
+            let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+            let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+            let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+            " 检测 ~/.cache/tags 不存在就新建
+            if !isdirectory(s:vim_tags)
+                silent! call mkdir(s:vim_tags, 'p')
+            endif
         endif
     endif
     " indent_guides
-    if isdirectory(expand($PLUG_PATH."/vim-indent-guides"))
+    if HasDirectory("vim-indent-guides")
         let g:indent_guides_enable_on_vim_startup = 1
-        let g:indent_guides_start_level = 2
-        let g:indent_guides_guide_size = 1
+        let g:indent_guides_start_level           = 2
+        let g:indent_guides_guide_size            = 1
         hi IndentGuidesOdd  ctermbg=black
         hi IndentGuidesEven ctermbg=darkgrey
     endif
     " conflict-marker
-    if isdirectory(expand($PLUG_PATH."/conflict-marker.vim"))
+    if HasDirectory("conflict-marker.vim")
         let g:conflict_marker_enable_mappings = 1
     endif
     " voom
-    if isdirectory(expand($PLUG_PATH."/voom"))
+    if HasDirectory("voom")
         let g:conflict_marker_enable_mappings = 1
         let g:voom_python_versions = [g:python_version]
         let g:voom_tab_key = "_"
@@ -574,7 +592,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'tex': 'latex'}
     endif
     " multiple-cursors
-    if isdirectory(expand($PLUG_PATH."/vim-multiple-cursors"))
+    if HasDirectory("vim-multiple-cursors")
         let g:multi_cursor_use_default_mapping=0
         let g:multi_cursor_start_word_key      = '<C-n>'
         let g:multi_cursor_select_all_word_key = '<leader><C-n>'
@@ -587,18 +605,18 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
         function! Multiple_cursors_before()
-          if exists(':NeoCompleteLock')==2
+          if exists(':NeoCompleteLock') == 2
             exe 'NeoCompleteLock'
           endif
         endfunction
         function! Multiple_cursors_after()
-          if exists(':NeoCompleteUnlock')==2
+          if exists(':NeoCompleteUnlock') == 2
             exe 'NeoCompleteUnlock'
           endif
         endfunction
     endif
     " NerdTree
-    if isdirectory(expand($PLUG_PATH."/nerdtree"))
+    if HasDirectory("nerdtree")
         nmap <leader>nn :NERDTreeTabsToggle<CR>
         nmap <leader>nf :NERDTreeFind<CR>
         let g:NERDShutUp=1
@@ -623,7 +641,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:NERDTreeDirArrowCollapsible = '▾'
         au bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
         " nerdtree-git
-        if isdirectory(expand($PLUG_PATH."/nerdtree-git-plugin"))
+        if HasDirectory("nerdtree-git-plugin")
             let g:NERDTreeIndicatorMapCustom = {
                 \ "Modified"  : "*",
                 \ "Staged"    : "+",
@@ -638,7 +656,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
     endif
     " ywvim,vim里的中文输入法
-    if isdirectory(expand($PLUG_PATH."/ywvim"))
+    if HasDirectory("ywvim")
         if count(g:plug_groups, 'pinyin')
             let g:ywvim_ims=[
                         \['py', '拼音', 'pinyin.ywvim'],
@@ -668,7 +686,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
 
     " Shell
-    if isdirectory(expand($PLUG_PATH."/vimshell.vim"))
+    if HasDirectory("vimshell.vim")
         nmap <C-k>v :vsplit<cr>:VimShell<cr>
         nmap <C-k>h :split<cr>:VimShell<cr>
         nmap <C-k>V :VimShell<Space>
@@ -715,7 +733,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
 
     " startify
-    if isdirectory(expand($PLUG_PATH."/vim-startify"))
+    if HasDirectory("vim-startify")
         let g:startify_custom_header = [
             \ '+---------------------------------------------------------+',
             \ '|  Welcome to use leoatchina vim config forked from spf13 |',
@@ -745,28 +763,12 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ ]
     endif
     " fugitive
-    if isdirectory(expand($PLUG_PATH."/vim-fugitive"))
+    if HasDirectory("vim-fugitive")
         nnoremap + :Git<Space>
         nnoremap gc :Gcommit -a -v<CR>
     endif
-    " TagBar
-    if isdirectory(expand($PLUG_PATH."/tagbar"))
-        let g:tagbar_sort = 0
-        set tags=./tags;/,~/.vimtags
-        " Make tags placed in .git/tags file available in all levels of a repository
-        let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
-        if gitroot != ''
-            let &tags = &tags . ',' . gitroot . '/.git/tags'
-        endif
-        nmap <silent><leader>tt :TagbarToggle<CR>
-        nnoremap <silent><leader>tj :TagbarOpen j<CR>
-        " AutoCloseTag
-        " Make it so AutoCloseTag works for xml and xhtml files as well
-        au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-        nmap <Leader>ta <Plug>ToggleAutoCloseMappings
-    endif
     " easy-align
-    if isdirectory(expand($PLUG_PATH."/vim-easy-align"))
+    if HasDirectory("vim-easy-align")
         nmap <localleader><Cr> <Plug>(EasyAlign)
         vmap <Cr> <Plug>(EasyAlign)
         if !exists('g:easy_align_delimiters')
@@ -796,7 +798,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         au FileType go nmap <leader>c <Plug>(go-coverage)
     endif
     " PyMode
-    if isdirectory(expand($PLUG_PATH."/python-mode"))
+    if HasDirectory("python-mode")
         " python version
         if g:python_version     == 3
             let g:pymode_python  = 'python3'
@@ -845,11 +847,11 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
     endif
     " Rainbow
-    if isdirectory(expand($PLUG_PATH."/rainbow"))
+    if HasDirectory("rainbow")
         let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
     endif
     " browser seris
-    if g:browser_tool == 'fzf' && isdirectory(expand($PLUG_PATH."/fzf.vim"))
+    if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
         nnoremap <silent>   <C-b>      :FZF<CR>
         nnoremap <silent>   <Leader>lb :Buffers<CR>
         nnoremap <Leader>lf :FZF<Space>
@@ -905,7 +907,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit' }
-    elseif g:browser_tool == 'denite' && isdirectory(expand($PLUG_PATH."/denite.nvim"))
+    elseif g:browser_tool == 'denite' && HasDirectory("denite.nvim")
         nnoremap <C-b> :Denite file/rec buffer<Cr>
         nnoremap <leader>lf :Denite
         nnoremap <leader>lb :DeniteBufferDir
@@ -994,7 +996,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         for m in normal_mode_mappings
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
-    elseif g:browser_tool == "LeaderF" && isdirectory(expand($PLUG_PATH."/LeaderF"))
+    elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
         let g:Lf_ShortcutF = '<C-b>'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_ShortcutB = '<leader>B'
@@ -1002,7 +1004,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nmap <leader>lF :LeaderfF
         nmap <leader>lb :LeaderfB
         nmap <leader>lm :LeaderfM
-    elseif isdirectory(expand($PLUG_PATH."/ctrlp.vim"))
+    elseif HasDirectory("ctrlp.vim")
         let g:ctrlp_map = '<C-b>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
@@ -1031,7 +1033,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ },
             \ 'fallback': s:ctrlp_fallback
             \ }
-        if isdirectory(expand($PLUG_PATH."/ctrlp-funky"))
+        if HasDirectory("ctrlp-funky")
             " CtrlP extensions
             let g:ctrlp_extensions = ['funky']
             " funky
@@ -1040,7 +1042,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nnoremap <leader>lm :CtrlPMRU<CR>
     endif
     " UndoTree
-    if isdirectory(expand($PLUG_PATH."/undotree"))
+    if HasDirectory("undotree")
         nnoremap <silent><leader>u :UndotreeToggle<CR>
         " If undotree is opened, it is likely one wants to interact with it.
         let g:undotree_SetFocusWhenToggle = 0
@@ -1059,7 +1061,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    if g:complete_engine == "deoplete" && isdirectory(expand($PLUG_PATH."/deoplete.nvim"))
+    if g:complete_engine == "deoplete" && HasDirectory("deoplete.nvim")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
@@ -1086,12 +1088,12 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         if g:complete_snippet == 'ultisnips'
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif g:complete_engine == "completor" && isdirectory(expand($PLUG_PATH."/completor.vim"))
+    elseif g:complete_engine == "completor" && HasDirectory("completor.vim")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-    elseif g:complete_engine == "YCM" && isdirectory(expand($PLUG_PATH."/YouCompleteMe"))
+    elseif g:complete_engine == "YCM" && HasDirectory("YouCompleteMe")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
@@ -1138,7 +1140,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:complete_engine == "ncm2" && isdirectory(expand($PLUG_PATH."/ncm2"))
+    elseif g:complete_engine == "ncm2" && HasDirectory("ncm2")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -1153,7 +1155,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'complete_pattern': ':\s*',
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
             \ })
-    elseif g:complete_engine == "asyncomplete" && isdirectory(expand($PLUG_PATH."/asyncomplete.vim"))
+    elseif g:complete_engine == "asyncomplete" && HasDirectory("asyncomplete.vim")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
@@ -1199,20 +1201,20 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             autocmd User asyncomplete_setup call asyncomplete#register_source(
                 \ asyncomplete#sources#racer#get_source_options())
         endif
-        if isdirectory(expand($PLUG_PATH."/ultisnips"))
+        if HasDirectory("ultisnips")
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
                 \ 'name': 'ultisnips',
                 \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#ultisnips#completor')
                 \ }))
-        elseif isdirectory(expand($PLUG_PATH."/neosnippet"))
+        elseif HasDirectory("neosnippet")
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
                 \ 'name': 'neosnippet',
                 \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
                 \ }))
         endif
-    elseif g:complete_engine == "neocomplete" && isdirectory(expand($PLUG_PATH."/neocomplete.vim"))
+    elseif g:complete_engine == "neocomplete" && HasDirectory("neocomplete.vim")
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1232,7 +1234,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_engine == "neocomplcache" && isdirectory(expand($PLUG_PATH."/neocomplcache.vim"))
+    elseif g:complete_engine == "neocomplcache" && HasDirectory("neocomplcache.vim")
         let g:neocomplcache_enable_insert_char_pre       = 1
         let g:neocomplcache_enable_at_startup            = 1
         let g:neocomplcache_enable_auto_select           = 0
@@ -1329,7 +1331,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             endif
         endif
     endif
-    if isdirectory(expand($PLUG_PATH."/ale")) && g:vim_advance == 2
+    if HasDirectory("ale") && g:vim_advance == 2
         let g:ale_completion_enabled   = 0
         let g:ale_lint_on_enter        = 1
         let g:ale_lint_on_text_changed = 'always'
@@ -1354,7 +1356,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
         nnoremap go :ALEGoToDefinitionInTab<CR>
-    elseif isdirectory(expand($PLUG_PATH."/syntastic"))
+    elseif HasDirectory("syntastic")
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'
         let g:syntastic_check_on_open            = 0
@@ -1368,7 +1370,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:syntastic_auto_loc_list            = 0
         let g:syntastic_loc_list_height          = 5
         function! ToggleErrors()
-            let old_last_winnr                    = winnr('$')
+            let old_last_winnr = winnr('$')
             lclose
             if old_last_winnr == winnr('$')
                 Errors
@@ -1378,7 +1380,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nnoremap <C-l>n :lnext<cr>
         nnoremap <C-l>p :lprevious<cr>
     endif
-    if isdirectory(expand($PLUG_PATH."/asyncrun.vim")) && g:vim_advance == 2
+    if HasDirectory("asyncrun.vim") && g:vim_advance == 2
         function! s:RUN_ASYNC()
             exec "w"
             call asyncrun#quickfix_toggle(8,1)
@@ -1407,7 +1409,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nmap gr :AsyncRun<Space>
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
     endif
-    if isdirectory(expand($PLUG_PATH."/vim-quickrun"))
+    if HasDirectory("vim-quickrun")
         nnoremap <F5> :QuickRun<Cr>
         inoremap <F5> <ESC>:QuickRun<Cr>
         snoremap <F5> <ESC>:QuickRun<Cr>
