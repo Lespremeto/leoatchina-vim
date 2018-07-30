@@ -62,7 +62,8 @@
 
 长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件基本上没有大的漏洞，可以好好坐下来，写下这个文档。
 
-<h3>PLEASE FORGIVE  MY POOL ENGLISH！</h1>
+<center>**PLEASE FORGIVE ME FOR MY POOR ENGLISH!!**</center>
+
 
 # Introduction
 This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
@@ -74,7 +75,7 @@ Hereafter is spf13's introduction to his vim config
  It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
 
 # Requirements
-*`Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and Git 2.0+ is prefered for advanced fearutures*
+`Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and `Git 2.0+` is prefered for advanced fearutures
 
 # Install
 ## Linux, \*nix, Mac OSX
@@ -120,7 +121,7 @@ OR
 ```
 ## windows
 ```bash
-  open gvim; do :PlugNew
+  open vim; do :PlugNew
 ```
 # Delete
 ## Linux, \*nix, Mac OSX
@@ -132,28 +133,27 @@ OR
 ```bash
   click delete.cmd with admin rights
 ```
+
 # How it works
 After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
-The `.vimrc`/`init.vim` sources `~/.vimrc.plug` for plugins, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains some features for vim and `:PlugInstall` will change according to it.
+The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins installation, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change.
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
+`.vimrc.local` will be copied to `~`, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.The default contents of `.vimrc.local` is
+> let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']
+
 And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former two not exist, `.vimrc.local` works if exists
 
-* `.vimrc` main configuration file. Settings of shortcuts, settings, themes, fuctions.
-* `.vimrc.plug` plugins install file.
-* `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders.
-* `.vimrc.local` basic features, will be copied to %HOME%, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.
-
-The default contents of `.vimrc.local` is `let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']`
+`.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders. Also be linked as `~/.vimrc.clean`
 
 # Main changes from spf13
-- use `vim-plug` instead of `vundle`, more quick and more smart
-- simplify, delete `fork`,`before` files , which are redundent for most users
-- delete lots of variables for feature settings
-- just have mentioned before, the link is from the cloned folder
-- not support **XP**
+* use `vim-plug` instead of `vundle`, more quick and more smart
+* simplify, delete `fork`,`before` files , which are redundent for most users
+* delete lots of variables for feature settings
+* just have mentioned before, the link is from the cloned folder
+* not support **XP**
 
 # Some features
 * no backup file
