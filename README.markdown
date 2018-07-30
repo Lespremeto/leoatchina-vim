@@ -16,13 +16,13 @@ This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim dis
  It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
 
 # Main files
-* `.vimrc` main configuration file. Settings of shortcuts, settings, themes, fuctions. 
+* `.vimrc` main configuration file. Settings of shortcuts, settings, themes, fuctions.
 * `.vimrc.plug` plugins install file.
 * `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders.
 * `.vimrc.local` basic features, will be copied to %HOME%, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.
   ```let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']```
 
-# Install 
+# Install
 *`Git 1.7` and `Vim7.3` is at least required， `Vim8` or `neovim` and Git 2.0+ is prefered for advanced fearutures*
 
 ## Linux, \*nix, Mac OSX
@@ -30,7 +30,7 @@ need `curl`
 ```bash
   git clone https://github.com/leoatchina/leoatchina-vim.git
   cd leoatchina-vim
-  ./install.sh 
+  ./install.sh
 ```
 ## windows
 ```bash
@@ -42,13 +42,13 @@ need `curl`
 # Upgrade to the latest version
 ## Linux, \*nix, Mac OSX
 ```bash
-  ./install.sh ,chosse y|Y, the scipt will do git pull and do reinstall plugs 
+  ./install.sh ,chosse y|Y, the scipt will do git pull and do reinstall plugs
 ```
 ## windows
 ```bash
   cd leoatchina-vim
   git pull
-  open vim, do :PlugReinstall  
+  open vim, do :PlugReinstall
 ```
 
 # Upgrade plugs
@@ -69,7 +69,7 @@ OR
 ```bash
   open gvim; do :PlugNew
 ```
-# Delete 
+# Delete
 ## Linux, \*nix, Mac OSX
 ```bash
   cd leoatchina-vim
@@ -80,55 +80,55 @@ OR
   click delete.cmd with admin rights
 ```
 # How it works
-After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder. 
+After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
 The `.vimrc`/`init.vim` sources `~/.vimrc.plug` for plugins, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains some features for vim and `:PlugInstall` will change according to it.
 
-Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`. 
+Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
 And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former two not exist, `.vimrc.local` works if exists
 
 # Main changes from spf13
 - Use `vim-plug` instead of `vundle`, more quick and more smart
 - delete `fork`,`before` files , which are redundent for most users
-- delete lots of variables for feature settings 
-- just have mentioned before, the link is from the cloned folder 
-- not support **XP** 
+- delete lots of variables for feature settings
+- just have mentioned before, the link is from the cloned folder
+- not support **XP**
 
 # Some features
-* no backup file 
+* no backup file
 * no backup
 * no sound
-* no scroll bars 
+* no scroll bars
 * no menu, no tools when gui-runnin
 * line number
-* highlight search  
+* highlight search
 * smart indent
 * In Visual, keep selection after indention change with `>`,`<`
 
 # Main shortcuts
-* `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull 
+* `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
 * `<localLeader>` to `\`
 * `<leader>.` for number + 1, `<leader>,` for number -1
 * `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug myself
-* `<localleader><localLeader` for bracket jump 
+* `<localleader><localLeader` for bracket jump
 * `c-a` to the head of a line, `c-e` to end in normal/visual/inesert mode, compatible with linux
 * `c-f`,`c-k`, `c-l`,`g` work like `leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
-* `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y` 
+* `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
 * `c-b` for plugins `ctrlp` or `fzf` or `leaderF` or `denite` in normal mode
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode
 * `!` for `:!`
-* `F1`: tab help 
+* `F1`: tab help
 * `F2`: toggle search results highlight
 * `F3`: show register srings
 * `F4`: toggle quickrun windows
-* `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun)) 
+* `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun))
 * `F11`: full screen toggle, but sometimes not work
 * `F12`: paste toggle
 * `gc` for gcommit, `+` for `:Git`
-* 
+*
 * tab/buffer control
 ```
     set tabpagemax=10 " Only show 10 tabs
@@ -165,7 +165,7 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
     vnoremap <leader>p "+p
     vnoremap <leader>P "*P
 ```
-* Some other shortcuts 
+* Some other shortcuts
 ```
     " Find merge conflict markers
     nmap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
@@ -203,14 +203,14 @@ Just as I have told, the `~/.vimrc.local` contains the fearutures that you need.
 
 You can open `.vimrc.plugs` for these features
 
-## [vim-plug](https://github.com/junegunn/vim-plug) 
+## [vim-plug](https://github.com/junegunn/vim-plug)
 A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use.
 You can check how it is installed via install.sh or setup.cmd
 
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
 Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeps some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  the themes.Default themes
-  - [gruvbox](https://github.com/morhetz/gruvbox) for vim 
+  - [gruvbox](https://github.com/morhetz/gruvbox) for vim
   - [hybrid_material](https://github.com/kristijanhusak/vim-hybrid-material) for gvim
   - [wombat256](https://github.com/vim-scripts/wombat256.vim) for neovim
   - [onedark](https://github.com/joshdick/onedark.vim) for neovim with gui
@@ -223,10 +223,10 @@ Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), ke
 ### Completion shortcuts
 It is such a complex to make the completion shorcuts compatible, finally I used a series of unroute shorcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
-## SmartComplete Engines 
+## SmartComplete Engines
 There is a `smartcomplete` in `g:plug_groups` in `.vimrc.local`, it means the .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `version <800`, `python3/2` or `no python`, `windows` or not. I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-By default, when neovim and python3 support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete` 
+By default, when neovim and python3 support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
 
 If you are install older vim7.3 (default installed by ubuntu apt-get, centos yum), if `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has semantic completion funtion, theirs finishment is completed with snippets support
 
@@ -269,11 +269,12 @@ It is the last complete engine the config choose
 Togglekey:`<Leader>nn`, and key `<leader>nt`
 
 ## [tagbar](https://github.com/majutsushi/tagbar) and [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
-need `has("ctags")`. Togglekey:`<leader>tt` 
+need `has("ctags")`. Togglekey:`<leader>tt`
 
 ## [VOoM](https://github.com/vim-voom/VOoM)
-VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner. 
-use `:Voom` to open
+VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner.
+<leader>vt :VoomToggle
+
 ##[undotree](https://github.com/mbbill/undotree)
 Togglekey:`<Leader>u`
 

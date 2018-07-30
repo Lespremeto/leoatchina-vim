@@ -412,11 +412,11 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         smap <silent><F11> <Esc>:FullscreenToggle<cr>
         vmap <silent><F11> <Esc>:FullscreenToggle<cr>
     endif
-    " dark theme
-    set background=dark
-    " 总是显示状态栏
-    set laststatus=2
     if isdirectory(expand($PLUG_PATH."/vim-colorschemes-collections"))
+        " dark theme
+        set background=dark
+        " 总是显示状态栏
+        set laststatus=2
         if has('nvim')
             if has("gui_running")
                 colorscheme onedark
