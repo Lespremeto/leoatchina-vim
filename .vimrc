@@ -422,12 +422,12 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         au FileType markdown nmap <silent> <C-z> <Plug>MarkdownPreview
         au FileType markdown imap <silent> <C-z> <Plug>MarkdownPreview
         au FileType markdown vmap <silent> <C-z> <Plug>MarkdownPreview
-        au FileType markdown nmap <silent> <C-q> <Plug>StopMarkdownPreview
-        au FileType markdown imap <silent> <C-q> <Plug>StopMarkdownPreview
-        au FileType markdown vmap <silent> <C-q> <Plug>StopMarkdownPreview
-        au FileType markdown nmap <C-s> <Plug>Markdown_OpenUrlUnderCursor
-        au FileType markdown vmap <C-s> <Plug>Markdown_OpenUrlUnderCursor
-        au FileType markdown imap <C-s> <Plug>Markdown_EditUrlUnderCursor
+        au FileType markdown nmap <silent> <C-s> <Plug>StopMarkdownPreview
+        au FileType markdown imap <silent> <C-s> <Plug>StopMarkdownPreview
+        au FileType markdown vmap <silent> <C-s> <Plug>StopMarkdownPreview
+        au FileType markdown nmap <silent> <C-q> <Plug>Markdown_OpenUrlUnderCursor
+        au FileType markdown vmap <silent> <C-q> <Plug>Markdown_OpenUrlUnderCursor
+        au FileType markdown imap <silent> <C-q> <Plug>Markdown_EditUrlUnderCursor
         au FileType markdown nmap ]] <Plug>Markdown_MoveToNextHeader
         au FileType markdown nmap [[ <Plug>Markdown_MoveToPreviousHeader
         au FileType markdown nmap ][ <Plug>Markdown_MoveToNextSiblingHeader
