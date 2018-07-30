@@ -18,7 +18,6 @@ app_name='spf13-vim-leoatchina'
 [ -z "$REPO_URL" ] && REPO_URL='https://github.com/leoatchina/leoatchina-vim.git'
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
 debug_mode='0'
-update_setting='0'
 [ -z "$PLUG_URL" ] && PLUG_URL="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 ############################  BASIC SETUP TOOLS
 msg() {
