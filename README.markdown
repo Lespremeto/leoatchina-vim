@@ -1,13 +1,12 @@
 <!-- vim-markdown-toc GitLab -->
 
 + [中文介绍](#中文介绍)
-+ [PLEASE FORGIVE  MY POOL ENGLISH！](#please-forgive-my-pool-english)
 + [Introduction](#introduction)
-+ [Main files](#main-files)
++ [Requirements](#requirements)
 + [Install](#install)
     * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx)
     * [windows](#windows)
-+ [Upgrade to the latest version](#upgrade-to-the-latest-version)
++ [Upgrade](#upgrade)
     * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-1)
     * [windows](#windows-1)
 + [Upgrade plugins](#upgrade-plugins)
@@ -63,7 +62,7 @@
 
 长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件基本上没有大的漏洞，可以好好坐下来，写下这个文档。
 
-# PLEASE FORGIVE  MY POOL ENGLISH！
+<h3>PLEASE FORGIVE  MY POOL ENGLISH！</h1>
 
 # Introduction
 This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
@@ -74,16 +73,10 @@ Hereafter is spf13's introduction to his vim config
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.
  It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
 
-# Main files
-* `.vimrc` main configuration file. Settings of shortcuts, settings, themes, fuctions.
-* `.vimrc.plug` plugins install file.
-* `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders.
-* `.vimrc.local` basic features, will be copied to %HOME%, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.
-`let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']`
-
-# Install
+# Requirements
 *`Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and Git 2.0+ is prefered for advanced fearutures*
 
+# Install
 ## Linux, \*nix, Mac OSX
 need `curl`
 ```bash
@@ -98,14 +91,15 @@ need `curl`
   click setup.cmd with admin rights
   open vim, do :PlugInstall
 ```
-# Upgrade to the latest version
+
+# Upgrade
 ## Linux, \*nix, Mac OSX
 ```bash
   ./install.sh ,chosse y|Y, the scipt will do git pull and do reinstall plugins
 ```
 ## windows
 ```bash
-  cd leoatchina-vim
+  cd leoatchina-vi#m
   git pull
   open vim, do :PlugReinstall
 ```
@@ -146,6 +140,12 @@ The `.vimrc`/`init.vim` sources `~/.vimrc.plug` for plugins, and `~/.vimrc.plug`
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
 And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former two not exist, `.vimrc.local` works if exists
+
+* `.vimrc` main configuration file. Settings of shortcuts, settings, themes, fuctions.
+* `.vimrc.plug` plugins install file.
+* `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders.
+* `.vimrc.local` basic features, will be copied to %HOME%, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.
+`let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']`
 
 # Main changes from spf13
 - use `vim-plug` instead of `vundle`, more quick and more smart
