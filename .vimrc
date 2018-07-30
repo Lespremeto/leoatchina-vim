@@ -652,7 +652,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:conflict_marker_enable_mappings = 1
         let g:voom_python_versions = [g:python_version]
         let g:voom_tab_key = "_"
-        nmap <leader>vt :VoomToggle<CR>
+        nmap <silent><leader>vt :VoomToggle<CR>
+        nmap <silent><Leader>vv :VoomQuit<CR>:Voom<CR><C-w>w
         let g:voom_ft_modes = {
             \ 'markdown': 'markdown',
             \ 'pandoc': 'pandoc',

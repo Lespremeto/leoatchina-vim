@@ -38,7 +38,7 @@
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
     * [VOoM](#voom)
     * [undotree](#undotree)
-        - [airline and lightline](#airline-and-lightline)
+    * [airline and lightline](#airline-and-lightline)
     * [ywvim中文输入法](#ywvim中文输入法)
     * [fugitive](#fugitive)
     * [scrooloose/nerdcommenter](#scrooloosenerdcommenter)
@@ -334,7 +334,7 @@ VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text
 ##[undotree](https://github.com/mbbill/undotree)
 Togglekey:`<Leader>u`
 
-### [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
+## [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
 `airline` show more context than other statusline plugins, and more pleasing to eye. But it needs more computer resource, so if **not** add `"airline"` in `g:plug_groups`, `lightline` will work.
 
 ## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
