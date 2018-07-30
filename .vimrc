@@ -435,11 +435,11 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         au FileType markdown nmap ]c <Plug>Markdown_MoveToCurHeader
         au FileType markdown nmap ]u <Plug>Markdown_MoveToParentHeader
         if v:version > 703
-            let g:vmt_auto_update_on_save = 0
+            let g:vmt_auto_update_on_save = 1
             let g:vmt_cycle_list_item_markers = 1
-            nmap <C-t> <ESC>:UpdateToc<cr>
+            au FileType markdown map <C-t> <ESC>:UpdateToc<cr>
         else
-            nmap <C-t> <ESC>:GenerateMarkdownTOC<Cr>
+            au FileType markdown map <C-t> <ESC>:GenerateMarkdownTOC<Cr>
         endif
         let g:vim_markdown_folding_style_pythonic = 1
         let g:vim_markdown_override_foldtext = 0
