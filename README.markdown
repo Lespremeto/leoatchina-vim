@@ -1,8 +1,7 @@
-
 # 中文介绍
 原来的repo放在 [spf13-vim-leoatchina](https://github.com/leoatchina/spf13-vim-leoatchina)，因为原来一时脑抽，把中文字体放进去后导致体积较大，影响速度，所以重开一个repo并把windows下的工具分开，以增加clone速度。
 
-这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的集大成者，原配置已经远远落后于这个vim8/neovim当道的时代，因此我作了非常大的调整，commit了1千多次(两个repo加起来)，不断地从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。
+这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的集大成者，原配置已经不大适合这个vim8/neovim当道的时代。因此我作了非常大的调整，commit了1千多次(两个repo加起来)，不断地从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。
 
 长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件基本上没有大的漏洞，可以好好坐下来，写下这个文档。
 
@@ -10,7 +9,10 @@
 
 # Introduction
 This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
+
  You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim.
+ 
+ 
  Hereafter is spf13's introduction to his vim config
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.
  It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
@@ -42,7 +44,7 @@ need `curl`
 # Upgrade to the latest version
 ## Linux, \*nix, Mac OSX
 ```bash
-  ./install.sh ,chosse y|Y, the scipt will do git pull and do reinstall plugs
+  ./install.sh ,chosse y|Y, the scipt will do git pull and do reinstall plugins
 ```
 ## windows
 ```bash
@@ -51,7 +53,7 @@ need `curl`
   open vim, do :PlugReinstall
 ```
 
-# Upgrade plugs
+# Upgrade plugins
 ## Linux, \*nix, Mac OSX
 ```bash
   cd leoatchina-vim
@@ -89,8 +91,8 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former two not exist, `.vimrc.local` works if exists
 
 # Main changes from spf13
-- Use `vim-plug` instead of `vundle`, more quick and more smart
-- delete `fork`,`before` files , which are redundent for most users
+- use `vim-plug` instead of `vundle`, more quick and more smart
+- simplify, delete `fork`,`before` files , which are redundent for most users
 - delete lots of variables for feature settings
 - just have mentioned before, the link is from the cloned folder
 - not support **XP**
@@ -199,7 +201,7 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
 # Plugins and their shortcuts
 hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.
 
-Just as I have told, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugs `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
+Just as I have told, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugins `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
 
 You can open `.vimrc.plugs` for these features
 
@@ -279,18 +281,15 @@ VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text
 Togglekey:`<Leader>u`
 
 ### [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
-`airline` show more context than other statusline plugs, and more pleasing to eye. But it needs more computer resource, so if **not** add `"airline"` in `g:plug_groups`, `lightline` will work.
+`airline` show more context than other statusline plugins, and more pleasing to eye. But it needs more computer resource, so if **not** add `"airline"` in `g:plug_groups`, `lightline` will work.
 
-
-
-
-### [ywvim中文输入法](https://github.com/leoatchina/ywvim)
+## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
 这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置。快捷键:`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页;要在 `~/.vimrc.local`里的`g:plug_groups`加入`"wubi"`或者`"pinyin"`
 
-### [fugitive](https://github.com/tpope/vim-fugitive)
+## [fugitive](https://github.com/tpope/vim-fugitive)
 Git plugin
 
-### [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
+## [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
   * `[count]<Leader>cc` **|NERDComComment|**
     Comment out the current line or text selected in visual mode.
   * `[count]<Leader>cn` **|NERDComNestedComment|**
@@ -317,20 +316,24 @@ Git plugin
   * `[count]<Leader>cu` **|NERDComUncommentLine|**
     Uncomments the selected line(s).
 
+## Browser tools
+### [fzf.vim](https://github.com/junegunn/fzf.vim)
+
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
 在高级模式的情况下会选用这个插件
 
+### [denite](https://github.com/Shougo/denite.nvim)
 
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
 
 `ctrl+p`启动插件,`<Leader>fu`启动funksky函数查询功能,在启动后,用`Ctrl+f`,`Ctrl+b`在不同模式中切换.
 在文件列表中,`Ctrl+k/j`或者方向键向上/下选择文件,`t`在新标签里打开文件.其他快捷键见[ctrlp中文介绍](http://blog.codepiano.com/pages/ctrlp-cn.light.html)
 
-### [Pymode](https://github.com/python-mode/python-mode)
+## [Pymode](https://github.com/python-mode/python-mode)
 `python`用的插件,具有语法检查,调试等功能.`<Leader>R`:运行脚本;`<LocalLeader>p`:track_point toggle
 
-### [surround](https://github.com/tpope/vim-surround)
-给一段文字加上括号的插件，下面说明文字引用自[vim中的杀手级别的插件：surround](http://zuyunfei.com/2013/04/17/killer-plugin-of-vim-surround/)
+## [surround](https://github.com/tpope/vim-surround)
+plugin to add bracket for string，here after is from [<vim中的杀手级别的插件：surround>](http://zuyunfei.com/2013/04/17/killer-plugin-of-vim-surround/), **\*** is for the cursor position
 ```
    Old text                  Command     New text
    "Hello *world!"           ds"         Hello world!
@@ -341,9 +344,7 @@ Git plugin
    <div>Yo!*</div>           dst         Yo!
    <div>Yo!*</div>           cst<p>      <p>Yo!</p>
 ```
-如上面代码块所示，添加替换时使用后半括号)]}，添加的括号和内容间就没有空格（如第2个示例），反之会在内容前后添加一个空格（如第4个实例）。第6个示例中的t代表一对HTML或者xml tag。其他表示范围的符号：w代表word, W代表WORD(被空格分开的连续的字符窜），p代表paragraph。
-
-*命令列表*
+*command list*
 ```
     Normal mode
     -----------
@@ -365,12 +366,14 @@ Git plugin
     <CTRL-g>s - same as <CTRL-s>
     <CTRL-g>S - same as <CTRL-s><CTRL-s>
 ```
-### 7.1.15. [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+[repeat]
+
+[vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
 
-### 7.1.16. [EasyMotion](https://github.com/easymotion/vim-easymotion)
+[EasyMotion](https://github.com/easymotion/vim-easymotion)
  又一个杀手级别的插件
- ![](http://www.wklken.me/imgs/vim/easy_motion_search.gif)
+
  1. 跳转到当前光标前后,快捷键`<Leader><Leader>w`和`<Leader><Leader>b`
  2. 搜索跳转,`<Leader><Leader>s`,然后输入要搜索的字母
  3. 行间/行内级别跳转,`<Leader><Leader>`再`hjkl`不解释
