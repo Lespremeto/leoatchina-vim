@@ -425,10 +425,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:vim_markdown_no_default_key_mappings = 1
         let g:vim_markdown_preview_started = 0
         au FileType markdown nmap <silent> <C-z> <Plug>MarkdownPreview
-        au FileType markdown imap <silent> <C-z> <Plug>MarkdownPreview
         au FileType markdown vmap <silent> <C-z> <Plug>MarkdownPreview
         au FileType markdown nmap <silent> <C-s> <Plug>StopMarkdownPreview
-        au FileType markdown imap <silent> <C-s> <Plug>StopMarkdownPreview
         au FileType markdown vmap <silent> <C-s> <Plug>StopMarkdownPreview
         au FileType markdown nmap <silent> <C-q> <Plug>Markdown_OpenUrlUnderCursor
         au FileType markdown vmap <silent> <C-q> <Plug>Markdown_OpenUrlUnderCursor

@@ -82,7 +82,7 @@ Hereafter is spf13's introduction to his vim config
 `let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']`
 
 # Install
-*`Git 1.7` and `Vim7.3` is at least required， `Vim8` or `neovim` and Git 2.0+ is prefered for advanced fearutures*
+*`Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and Git 2.0+ is prefered for advanced fearutures*
 
 ## Linux, \*nix, Mac OSX
 need `curl`
@@ -264,7 +264,6 @@ You can open `.vimrc.plugs` for these features
 ## [vim-plug](https://github.com/junegunn/vim-plug)
 A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use.
 You can check how it is installed via install.sh or setup.cmd
-
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
 Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeps some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  the themes.Default themes
