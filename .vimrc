@@ -415,6 +415,15 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         smap <silent><F11> <Esc>:FullscreenToggle<cr>
         vmap <silent><F11> <Esc>:FullscreenToggle<cr>
     endif
+    " markdown preview for gvim
+    if has("gui_running") && HasDirectory('markdown-preview.vim')
+        nmap <silent> <C-s> <Plug>MarkdownPreview
+        imap <silent> <C-s> <Plug>MarkdownPreview
+        vmap <silent> <C-s> <Plug>MarkdownPreview
+        nmap <silent> <C-q> <Plug>StopMarkdownPreview
+        imap <silent> <C-q> <Plug>StopMarkdownPreview
+        vmap <silent> <C-q> <Plug>StopMarkdownPreview
+    endif
     " fugitive
     if HasDirectory("vim-fugitive")
         nnoremap + :Git<Space>

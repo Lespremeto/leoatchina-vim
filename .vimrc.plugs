@@ -92,7 +92,15 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         if count(g:plug_groups, 'bio')
             Plug 'bioSyntax/bioSyntax-vim'
         endif
-        " latex and rmarkdown
+        " markdown
+        Plug 'tamlok/vim-markdown'
+        Plug 'joker1007/vim-markdown-quote-syntax'
+        " gvim for markdown preview
+        if has("gui_running") && python_version
+            Plug 'iamcco/mathjax-support-for-mkdp'
+            Plug 'iamcco/markdown-preview.vim'
+        endif
+        " latex and rmarkdown for test
         if count(g:plug_groups, 'rmarkdown')
             Plug 'vim-pandoc/vim-rmarkdown'
             Plug 'vim-pandoc/vim-pandoc'
@@ -116,7 +124,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         Plug 'jiangmiao/auto-pairs'
         Plug 'nathanaelkane/vim-indent-guides'
         Plug 'mhinz/vim-signify'
-        Plug 'tamlok/vim-markdown'
         Plug 'junegunn/vim-easy-align'
         " statusline
         Plug 'bling/vim-bufferline'
