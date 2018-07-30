@@ -9,6 +9,10 @@
 " You can find spf13's origin config at http://spf13.com
 " Basics
 set nocompatible        " Must be first line
+if v:version < 700
+    echoerr 'This _vimrc requires Vim 7 or later.'
+    quit
+endif
 set encoding=utf-8
 set fileencodings=utf-8,gbk,gb18030,gk2312,chinese,latin-1
 set background=dark     " Assume a dark background
@@ -775,24 +779,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nnoremap <C-f>s :vimgrep<Space>
     endif
     " Shell
-    if HasDirectory("vimshell.vim")
-        nmap <C-k>v :vsplit<cr>:VimShell<cr>
-        nmap <C-k>h :split<cr>:VimShell<cr>
-        nmap <C-k>V :VimShell<Space>
-        nmap <C-k>c :VimShellClose<Cr>
-        nmap <C-k>t :VimShellTab<Space>
-        nmap <C-k>T :VimShellInteractive<Space>
-        nmap <C-k>p :VimShellPop<Space>
-        nmap <C-k>d :VimShellCurrentDir<Space>
-        nmap <C-k>b :VimShellBufferDir<Space>
-        nmap <C-k>B :VimShellSendBuffer<Space>
-        nmap <C-k>e :VimShellExecute<Space>
-        nmap <C-k>n :VimShellCreate<Space>
-        vmap <C-k>  :VimShellSendString<cr>
-        let g:vimshell_prompt_expr    = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
-        let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
-        let g:vimshell_force_overwrite_statusline = 1
-    elseif has('terminal') || has('nvim')
+    if has('terminal') || has('nvim')
         tnoremap <C-[> <C-\><C-n>
         tnoremap <ESC> <C-\><C-n>
         tnoremap <C-w>h <C-\><C-N><C-w>h

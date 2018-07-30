@@ -12,7 +12,7 @@
 " vim_advance judge
 if has('nvim') || v:version > 799
     let g:vim_advance = 2
-elseif v:version > 702
+elseif v:version > 703
     let g:vim_advance = 1
 else
     let g:vim_advance = 0
@@ -57,19 +57,30 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
             let $PATH.=";".$HOME."\\.vim-windows-tools"
         endif
+        " list only the plugin groups you will use
+        if !exists('g:plug_groups')
+            let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'python']
+        endif
+        " fullscreen
         if (has('nvim') && WINDOWS()) || (has('gui_running') && !WINDOWS())
             Plug 'lambdalisue/vim-fullscreen'
         endif
+        " general
         Plug 'tpope/vim-fugitive'
+        if v:version < 702
+            Plug 'tpope/vim-git'
+        endif
         Plug 'scrooloose/nerdtree'
         Plug 'Xuyuanp/nerdtree-git-plugin'
+        Plug 'jistr/vim-nerdtree-tabs'
         Plug 'mhinz/vim-startify'
-        Plug 'kshenoy/vim-signature'
+        if has('signs')
+            Plug 'kshenoy/vim-signature'
+        endif
         Plug 'google/vim-searchindex'
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
-        Plug 'jistr/vim-nerdtree-tabs'
         Plug 'easymotion/vim-easymotion'
         Plug 'tpope/vim-surround'
         Plug 'tpope/vim-repeat'
@@ -79,10 +90,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
         if executable('ctags')
             Plug 'majutsushi/tagbar'
-        endif
-        " list only the plugin groups you will use
-        if !exists('g:plug_groups')
-            let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'python']
         endif
         " input method
         if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
@@ -98,67 +105,41 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'iamcco/mathjax-support-for-mkdp', {'for':'markdown'}
             Plug 'iamcco/markdown-preview.vim', {'for':'markdown'}
             Plug 'plasticboy/vim-markdown', {'for':'markdown'}
-            if v:version > 703
+            if g:vim_advance
                 Plug 'mzlogin/vim-markdown-toc', {'for':'markdown'}
             else
                 Plug 'ajorgensen/vim-markdown-toc', {'for':'markdown'}
             endif
         else
-            Plug 'tamlok/vim-markdown', {'for':'markdown'}
+            Plug 'tpope/vim-markdown', {'for':'markdown'}
         endif
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown'}
-        " latex and rmarkdown for test
-        if count(g:plug_groups, 'rmarkdown')
-            Plug 'vim-pandoc/vim-rmarkdown'
-            Plug 'vim-pandoc/vim-pandoc'
-            Plug 'vim-pandoc/vim-pandoc-syntax'
-            Plug 'drmingdrmer/vim-syntax-markdown'
-        endif
-        " external search method
+        " external search/replace
         Plug 'brooth/far.vim'
         if g:vim_advance == 2
             Plug 'wsdjeg/FlyGrep.vim'
         endif
         if executable('ag') || executable('ack') || executable('rg') || executable('pt')
             Plug 'dyng/ctrlsf.vim'
-        elseif v:version >799 && !WINDOWS() && executable('ctags')
+        elseif g:vim_advance == 2 && !WINDOWS() && executable('ctags')
             Plug 'damage220/vim-finder'
         endif
-        Plug 'terryma/vim-multiple-cursors'
         " signs
         Plug 'gorodinskiy/vim-coloresque'
         Plug 'rhysd/conflict-marker.vim'
-        Plug 'jiangmiao/auto-pairs'
-        Plug 'nathanaelkane/vim-indent-guides'
         Plug 'mhinz/vim-signify'
         Plug 'junegunn/vim-easy-align'
-        " statusline
+        " status
         Plug 'bling/vim-bufferline'
-        if count(g:plug_groups, 'airline')
-            Plug 'vim-airline/vim-airline'
-        elseif has('statusline')
+        if has('statusline') && (v:version <= 702 || !count(g:plug_groups, 'airline'))
             Plug 'itchyny/lightline.vim'
             if g:vim_advance == 2 && count(g:plug_groups, 'syntax')
                 Plug 'maximbaz/lightline-ale'
-            endi
-        endif
-        " shell
-        if count(g:plug_groups, 'shell') && !WINDOWS()
-            Plug 'shougo/vimproc.vim', {'do':'make'}
-            Plug 'shougo/vimshell.vim'
+            endif
         endif
         " PHP
         if count(g:plug_groups, 'php')
             Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
-        endif
-        " Python
-        if count(g:plug_groups, 'python')
-            Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-        endif
-        " rust
-        if count(g:plug_groups, 'rust')
-            Plug 'rust-lang/rust.vim'
-            Plug 'timonv/vim-cargo'
         endif
         " Javascript
         if count(g:plug_groups, 'javascript')
@@ -166,20 +147,24 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'pangloss/vim-javascript', {'for': 'javascript'}
             Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
         endif
-        " Go
-        if count(g:plug_groups, 'go')
-            Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
-            Plug 'garyburd/go-explorer', {'for': 'go'}
-            if has('nvim')
-                Plug 'jodosha/vim-godebug', {'for': 'go'}
-            endif
-        endif
         " HTML
         if count(g:plug_groups, 'html')
             Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
             Plug 'tpope/vim-haml'
             Plug 'mattn/emmet-vim'
         endif
+        " vim 7.2+
+        if v:version >= 702
+            Plug 'nathanaelkane/vim-indent-guides'
+            if count(g:plug_groups, 'airline')
+                Plug 'vim-airline/vim-airline'
+            endif
+        endif
+        " Python
+        if count(g:plug_groups, 'python') || v:version >= 703
+            Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+        endif
+        " syntax and run method
         if g:vim_advance == 2
             if count(g:plug_groups, 'syntax')
                 Plug 'w0rp/ale'
@@ -193,8 +178,22 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Plug 'vim-syntastic/syntastic'
             endif
         endif
+        " vim_advance fearture with vim7.4 or later
         if g:vim_advance
+            Plug 'terryma/vim-multiple-cursors'
             Plug 'thinca/vim-quickrun'
+            " Go
+            if count(g:plug_groups, 'go')
+                Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
+                Plug 'garyburd/go-explorer', {'for': 'go'}
+                if has('nvim')
+                    Plug 'jodosha/vim-godebug', {'for': 'go'}
+                endif
+            endif
+            " rust
+            if count(g:plug_groups, 'rust')
+                Plug 'rust-lang/rust.vim'
+            endif
             " browser tool
             let g:browser_tool = "ctrlp"
             if count(g:plug_groups, 'fzf')
