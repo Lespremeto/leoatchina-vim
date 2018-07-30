@@ -400,10 +400,10 @@ if has("user_commands")
 endif
 " Plugins, if vim-plug works
 if (has('job') || python_version || has('nvim') || has('lua'))
-    " vim-fullscreen
     function! HasDirectory(dir)
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
+    " vim-fullscreen
     if HasDirectory("vim_fullscreen")
         let g:fullscreen#enable_default_keymap = 1
         if has('nvim')
@@ -534,7 +534,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 \ },
             \ }
             function! LightlineReadonly()
-              return &readonly && &filetype !=# 'help' ? 'RO' : ''
+                return &readonly && &filetype !=# 'help' ? 'RO' : ''
             endfunction
             if count(g:plug_groups, 'syntax') && g:vim_advance == 2
                 let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
@@ -567,7 +567,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             hi User5 cterm=None ctermfg=250 ctermbg=238
         endif
     endif
-    " tags
+    " ctags
     if HasDirectory("tagbar")
         let g:tagbar_sort = 0
         set tags=./tags;/,~/.cache/tags
@@ -641,40 +641,40 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
         function! Multiple_cursors_before()
-          if exists(':NeoCompleteLock') == 2
-            exe 'NeoCompleteLock'
-          endif
+            if exists(':NeoCompleteLock') == 2
+                exe 'NeoCompleteLock'
+            endif
         endfunction
         function! Multiple_cursors_after()
-          if exists(':NeoCompleteUnlock') == 2
-            exe 'NeoCompleteUnlock'
-          endif
+            if exists(':NeoCompleteUnlock') == 2
+                exe 'NeoCompleteUnlock'
+            endif
         endfunction
     endif
     " NerdTree
     if HasDirectory("nerdtree")
         nmap <leader>nn :NERDTreeTabsToggle<CR>
         nmap <leader>nf :NERDTreeFind<CR>
-        let g:NERDShutUp=1
-        let s:has_nerdtree = 1
-        let g:nerdtree_tabs_open_on_gui_startup=0
+        let g:NERDShutUp                            = 1
+        let s:has_nerdtree                          = 1
+        let g:nerdtree_tabs_open_on_gui_startup     = 0
         let g:nerdtree_tabs_open_on_console_startup = 0
-        let g:nerdtree_tabs_smart_startup_focus = 2
-        let g:nerdtree_tabs_focus_on_files = 1
-        let g:NERDTreeWinSize=30
-        let g:NERDTreeShowBookmarks=1
-        let g:nerdtree_tabs_smart_startup_focus = 0
-        let g:NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-        let g:NERDTreeChDirMode=0
-        let g:NERDTreeQuitOnOpen=1
-        let g:NERDTreeMouseMode=2
-        let g:NERDTreeShowHidden=1
-        let g:NERDTreeKeepTreeInNewTab=1
-        let g:nerdtree_tabs_focus_on_files = 1
+        let g:nerdtree_tabs_smart_startup_focus     = 2
+        let g:nerdtree_tabs_focus_on_files          = 1
+        let g:NERDTreeWinSize                       = 30
+        let g:NERDTreeShowBookmarks                 =1
+        let g:nerdtree_tabs_smart_startup_focus     = 0
+        let g:NERDTreeIgnore = ['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+        let g:NERDTreeChDirMode                 =0
+        let g:NERDTreeQuitOnOpen                =1
+        let g:NERDTreeMouseMode                 =2
+        let g:NERDTreeShowHidden                =1
+        let g:NERDTreeKeepTreeInNewTab          =1
+        let g:nerdtree_tabs_focus_on_files      = 1
         let g:nerdtree_tabs_open_on_gui_startup = 0
-        let g:NERDTreeWinPos=0
-        let g:NERDTreeDirArrowExpandable = '▸'
-        let g:NERDTreeDirArrowCollapsible = '▾'
+        let g:NERDTreeWinPos                    =0
+        let g:NERDTreeDirArrowExpandable        = '▸'
+        let g:NERDTreeDirArrowCollapsible       = '▾'
         au bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
         " nerdtree-git
         if HasDirectory("nerdtree-git-plugin")
@@ -695,28 +695,28 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     if HasDirectory("ywvim")
         if count(g:plug_groups, 'pinyin')
             let g:ywvim_ims=[
-                        \['py', '拼音', 'pinyin.ywvim'],
-                        \['wb', '五笔', 'wubi.ywvim'],
-                        \]
+                    \['py', '拼音', 'pinyin.ywvim'],
+                    \['wb', '五笔', 'wubi.ywvim'],
+                \]
         elseif count(g:plug_groups, 'wubi')
             let g:ywvim_ims=[
-                        \['wb', '五笔', 'wubi.ywvim'],
-                        \['py', '拼音', 'pinyin.ywvim'],
-                        \]
+                    \['wb', '五笔', 'wubi.ywvim'],
+                    \['py', '拼音', 'pinyin.ywvim'],
+                \]
         endif
-        let g:ywvim_py = { 'helpim':'wb', 'gb':0 }
-        let g:ywvim_zhpunc = 0
-        let g:ywvim_listmax = 8
-        let g:ywvim_esc_autoff = 1
-        let g:ywvim_autoinput = 2
+        let g:ywvim_py               = { 'helpim':'wb', 'gb':0 }
+        let g:ywvim_zhpunc           = 0
+        let g:ywvim_listmax          = 8
+        let g:ywvim_esc_autoff       = 1
+        let g:ywvim_autoinput        = 2
         let g:ywvim_circlecandidates = 1
-        let g:ywvim_helpim_on = 0
-        let g:ywvim_matchexact = 0
-        let g:ywvim_chinesecode = 1
-        let g:ywvim_gb = 0
-        let g:ywvim_preconv = 'g2b'
-        let g:ywvim_conv = ''
-        let g:ywvim_lockb = 1
+        let g:ywvim_helpim_on        = 0
+        let g:ywvim_matchexact       = 0
+        let g:ywvim_chinesecode      = 1
+        let g:ywvim_gb               = 0
+        let g:ywvim_preconv          = 'g2b'
+        let g:ywvim_conv             = ''
+        let g:ywvim_lockb            = 1
         imap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
         cmap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
     endif
@@ -924,7 +924,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'ctrl-q': function('s:build_quickfix_list'),
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-x': 'split',
-            \ 'ctrl-v': 'vsplit' }
+            \ 'ctrl-v': 'vsplit'
+        }
     elseif g:browser_tool == 'denite' && HasDirectory("denite.nvim")
         nnoremap <C-b> :Denite file/rec buffer<Cr>
         nnoremap <leader>lf :Denite
@@ -932,19 +933,19 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nnoremap <leader>lw :DeniteCursorWord
         nnoremap <Leader>/ :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
         call denite#custom#option('_', {
-            \ 'prompt': 'λ:',
-            \ 'empty': 0,
-            \ 'winheight': 16,
-            \ 'source_names': 'short',
-            \ 'vertical_preview': 1,
-            \ 'auto-accel': 1,
-            \ 'auto-resume': 1,
+                \ 'prompt': 'λ:',
+                \ 'empty': 0,
+                \ 'winheight': 16,
+                \ 'source_names': 'short',
+                \ 'vertical_preview': 1,
+                \ 'auto-accel': 1,
+                \ 'auto-resume': 1,
             \ })
         call denite#custom#option('list', {})
         call denite#custom#option('mpc', {
-            \ 'quit': 0,
-            \ 'mode': 'normal',
-            \ 'winheight': 20,
+                \ 'quit': 0,
+                \ 'mode': 'normal',
+                \ 'winheight': 20,
             \ })
         " MATCHERS
         " Default is 'matcher_fuzzy'
@@ -989,24 +990,24 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
         " KEY MAPPINGS
         let insert_mode_mappings = [
-            \  ['<C-c>', '<denite:enter_mode:normal>', 'noremap'],
-            \  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
-            \  ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
-            \  ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
-            \  ['<Up>', '<denite:assign_previous_text>', 'noremap'],
-            \  ['<Down>', '<denite:assign_next_text>', 'noremap'],
-            \  ['<C-Y>', '<denite:redraw>', 'noremap'],
+                \  ['<C-c>', '<denite:enter_mode:normal>', 'noremap'],
+                \  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
+                \  ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
+                \  ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
+                \  ['<Up>', '<denite:assign_previous_text>', 'noremap'],
+                \  ['<Down>', '<denite:assign_next_text>', 'noremap'],
+                \  ['<C-Y>', '<denite:redraw>', 'noremap'],
             \ ]
         let normal_mode_mappings = [
-            \   ["'", '<denite:toggle_select_down>', 'noremap'],
-            \   ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
-            \   ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
-            \   ['gg', '<denite:move_to_first_line>', 'noremap'],
-            \   ['st', '<denite:do_action:tabopen>', 'noremap'],
-            \   ['vs', '<denite:do_action:vsplit>', 'noremap'],
-            \   ['sv', '<denite:do_action:split>', 'noremap'],
-            \   ['qt', '<denite:quit>', 'noremap'],
-            \   ['r', '<denite:redraw>', 'noremap'],
+                \   ["'", '<denite:toggle_select_down>', 'noremap'],
+                \   ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
+                \   ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
+                \   ['gg', '<denite:move_to_first_line>', 'noremap'],
+                \   ['st', '<denite:do_action:tabopen>', 'noremap'],
+                \   ['vs', '<denite:do_action:vsplit>', 'noremap'],
+                \   ['sv', '<denite:do_action:split>', 'noremap'],
+                \   ['qt', '<denite:quit>', 'noremap'],
+                \   ['r', '<denite:redraw>', 'noremap'],
             \ ]
         for m in insert_mode_mappings
             call denite#custom#map('insert', m[0], m[1], m[2])
@@ -1027,8 +1028,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-            \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
         if executable('ag')
             let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
         elseif executable('ack-grep')
@@ -1045,11 +1046,11 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             unlet g:ctrlp_user_command
         endif
         let g:ctrlp_user_command = {
-            \ 'types': {
-            \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-            \ },
-            \ 'fallback': s:ctrlp_fallback
+                \ 'types': {
+                    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+                \ },
+                \ 'fallback': s:ctrlp_fallback
             \ }
         if HasDirectory("ctrlp-funky")
             " CtrlP extensions
