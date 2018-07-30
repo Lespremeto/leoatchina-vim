@@ -93,13 +93,15 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'bioSyntax/bioSyntax-vim'
         endif
         " markdown
-        Plug 'tamlok/vim-markdown'
-        Plug 'joker1007/vim-markdown-quote-syntax'
         " gvim for markdown preview
         if has("gui_running") && python_version
-            Plug 'iamcco/mathjax-support-for-mkdp'
-            Plug 'iamcco/markdown-preview.vim'
+            Plug 'iamcco/mathjax-support-for-mkdp', {'for':'markdown'}
+            Plug 'iamcco/markdown-preview.vim', {'for':'markdown'}
+            Plug 'plasticboy/vim-markdown', {'for':'markdown'}
+        else
+            Plug 'tamlok/vim-markdown', {'for':'markdown'}
         endif
+        Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown'}
         " latex and rmarkdown for test
         if count(g:plug_groups, 'rmarkdown')
             Plug 'vim-pandoc/vim-rmarkdown'

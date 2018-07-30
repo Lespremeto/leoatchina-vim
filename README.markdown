@@ -10,10 +10,9 @@
 # Introduction
 This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
 
- You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim.
- 
- 
- Hereafter is spf13's introduction to his vim config
+You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim.
+
+Hereafter is spf13's introduction to his vim config
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.
  It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
 
@@ -22,7 +21,7 @@ This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim dis
 * `.vimrc.plug` plugins install file.
 * `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders.
 * `.vimrc.local` basic features, will be copied to %HOME%, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.
-  ```let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']```
+`let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']`
 
 # Install
 *`Git 1.7` and `Vim7.3` is at least required， `Vim8` or `neovim` and Git 2.0+ is prefered for advanced fearutures*

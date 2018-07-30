@@ -159,9 +159,9 @@ endif
 " some internal key remap
 map  gt <Nop>
 map  gT <Nop>
-xmap <C-s> <Nop>
-xmap <C-q> <Nop>
-xmap <C-z> <Nop>
+map <C-s> <Nop>
+map <C-q> <Nop>
+map <C-z> <Nop>
 nmap ! :!
 let mapleader=' '
 let maplocalleader = '\'
@@ -417,12 +417,32 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
     " markdown preview for gvim
     if has("gui_running") && HasDirectory('markdown-preview.vim')
-        nmap <silent> <C-s> <Plug>MarkdownPreview
-        imap <silent> <C-s> <Plug>MarkdownPreview
-        vmap <silent> <C-s> <Plug>MarkdownPreview
-        nmap <silent> <C-q> <Plug>StopMarkdownPreview
-        imap <silent> <C-q> <Plug>StopMarkdownPreview
-        vmap <silent> <C-q> <Plug>StopMarkdownPreview
+        let g:vim_markdown_folding_disabled = 1
+        let g:vim_markdown_no_default_key_mappings = 1
+        au FileType markdown nmap <silent> <C-z> <Plug>MarkdownPreview
+        au FileType markdown imap <silent> <C-z> <Plug>MarkdownPreview
+        au FileType markdown vmap <silent> <C-z> <Plug>MarkdownPreview
+        au FileType markdown nmap <silent> <C-q> <Plug>StopMarkdownPreview
+        au FileType markdown imap <silent> <C-q> <Plug>StopMarkdownPreview
+        au FileType markdown vmap <silent> <C-q> <Plug>StopMarkdownPreview
+        au FileType markdown nmap <C-s> <Plug>Markdown_OpenUrlUnderCursor
+        au FileType markdown vmap <C-s> <Plug>Markdown_OpenUrlUnderCursor
+        au FileType markdown imap <C-s> <Plug>Markdown_EditUrlUnderCursor
+        au FileType markdown nmap ]] <Plug>Markdown_MoveToNextHeader
+        au FileType markdown nmap [[ <Plug>Markdown_MoveToPreviousHeader
+        au FileType markdown nmap ][ <Plug>Markdown_MoveToNextSiblingHeader
+        au FileType markdown nmap [] <Plug>Markdown_MoveToPreviousSiblingHeader
+        au FileType markdown nmap ]c <Plug>Markdown_MoveToCurHeader
+        au FileType markdown nmap ]u <Plug>Markdown_MoveToParentHeader
+        let g:vim_markdown_folding_style_pythonic = 1
+        let g:vim_markdown_override_foldtext = 0
+        let g:vim_markdown_toc_autofit = 1
+        let g:vim_markdown_emphasis_multiline = 0
+        let g:vim_markdown_conceal = 0
+        let g:vim_markdown_math = 1
+        let g:vim_markdown_frontmatter = 1
+        let g:vim_markdown_auto_insert_bullets = 0
+        let g:vim_markdown_new_list_item_indent = 0
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
