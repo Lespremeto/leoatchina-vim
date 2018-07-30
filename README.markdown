@@ -77,6 +77,8 @@ Hereafter is spf13's introduction to his vim config
 # Requirements
 `Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and `Git 2.0+` is prefered for advanced fearutures
 
+And I wish you has a basic understanding for vim, know how to read this config.
+
 # Install
 ## Linux, \*nix, Mac OSX
 need `curl`
@@ -433,10 +435,8 @@ plugin to add bracket for string，here after is from [<vim中的杀手级别的
 
 
 ### [EasyMotion](https://github.com/easymotion/vim-easymotion)
- 又一个杀手级别的插件
-
- 1. 跳转到当前光标前后,快捷键`<Leader><Leader>w`和`<Leader><Leader>b`
- 2. 搜索跳转,`<Leader><Leader>s`,然后输入要搜索的字母
- 3. 行间/行内级别跳转,`<Leader><Leader>`再`hjkl`不解释
- 4. 重复上一次的动作,`<Leader><Leader>.`
- 5. 还可以`<Leader><Leader>f`和`<Leader><Leader>t`,不过不建议使用
+跳转到当前光标前后,快捷键`<Leader><Leader>w`和`<Leader><Leader>b`
+搜索跳转,`<Leader><Leader>s`,然后输入要搜索的字母
+行间/行内级别跳转,`<Leader><Leader>`再`hjkl`不解释
+重复上一次的动作,`<Leader><Leader>.`
+还可以`<Leader><Leader>f`和`<Leader><Leader>t`,不过不建议使用
