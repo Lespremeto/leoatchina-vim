@@ -206,9 +206,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 if g:python_version == 3 && g:vim_advance == 2
                     let g:browser_tool = "denite"
                 endif
-            elseif count(g:plug_groups, 'LeaderF')
+            elseif count(g:plug_groups, 'LeaderF') || count(g:plug_groups, 'leaderf')
                 if g:python_version && executable('gcc') && g:vim_advance
-                    let g:browser_tool = "leaderF"
+                    let g:browser_tool = "LeaderF"
                 endif
             endif
             if g:browser_tool == "fzf"
