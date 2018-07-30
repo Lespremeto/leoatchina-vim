@@ -849,7 +849,7 @@ if isdirectory(expand($PLUG_PATH."/rainbow"))
     let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 endif
 " browser seris
-if g:ctrlp_version == 4 && isdirectory(expand($PLUG_PATH."/fzf.vim"))
+if g:browser_tool == 'fzf' && isdirectory(expand($PLUG_PATH."/fzf.vim"))
     nnoremap <silent>   <C-b>      :FZF<CR>
     nnoremap <silent>   <Leader>lb :Buffers<CR>
     nnoremap <Leader>lf :FZF<Space>
@@ -905,7 +905,7 @@ if g:ctrlp_version == 4 && isdirectory(expand($PLUG_PATH."/fzf.vim"))
         \ 'ctrl-t': 'tab split',
         \ 'ctrl-x': 'split',
         \ 'ctrl-v': 'vsplit' }
-elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
+elseif g:browser_tool == 'denite' && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     nnoremap <C-b> :Denite file/rec buffer<Cr>
     nnoremap <leader>lf :Denite
     nnoremap <leader>lb :DeniteBufferDir
@@ -942,16 +942,13 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     call denite#custom#source(
     	\ 'buffer,file_mru,file_old',
     	\ 'converters', ['converter_relative_word'])
-
     " FIND and GREP COMMANDS
     if executable('ag')
     	" The Silver Searcher
     	call denite#custom#var('file_rec', 'command',
     		\ ['ag', '-U', '--hidden', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
     	" Setup ignore patterns in your .agignore file!
     	" https://github.com/ggreer/the_silver_searcher/wiki/Advanced-Usage
-
     	call denite#custom#var('grep', 'command', ['ag'])
     	call denite#custom#var('grep', 'recursive_opts', [])
     	call denite#custom#var('grep', 'pattern_opt', [])
@@ -959,7 +956,6 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     	call denite#custom#var('grep', 'final_opts', [])
     	call denite#custom#var('grep', 'default_opts',
     		\ [ '--skip-vcs-ignores', '--vimgrep', '--smart-case', '--hidden' ])
-
     elseif executable('ack')
     	" Ack command
     	call denite#custom#var('grep', 'command', ['ack'])
@@ -998,7 +994,7 @@ elseif g:ctrlp_version == 3 && isdirectory(expand($PLUG_PATH."/denite.nvim"))
     for m in normal_mode_mappings
     	call denite#custom#map('normal', m[0], m[1], m[2])
     endfor
-elseif g:ctrlp_version == 2 && isdirectory(expand($PLUG_PATH."/LeaderF"))
+elseif g:browser_tool == "LeaderF" && isdirectory(expand($PLUG_PATH."/LeaderF"))
     let g:Lf_ShortcutF = '<C-b>'
     let g:Lf_PythonVersion = g:python_version
     let g:Lf_ShortcutB = '<leader>B'

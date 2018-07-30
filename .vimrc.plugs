@@ -108,7 +108,7 @@ if g:vim_advance
         " external search method
         if g:vim_advance == 2
             Plug 'wsdjeg/FlyGrep.vim'
-            nmap <C-f>f :FlyGrep<Cr>
+            nmap <C-f><C-f> :FlyGrep<Cr>
         endif
         if executable('ag') || executable('ack') || executable('rg') || executable('pt')
             Plug 'dyng/ctrlsf.vim'
@@ -187,27 +187,27 @@ if g:vim_advance
             Plug 'tpope/vim-haml'
             Plug 'mattn/emmet-vim'
         endif
-        " browser tools
-        let g:ctrlp_version = 1
+        " browser tool
+        let g:browser_tool = "ctrlp"
         if count(g:plug_groups, 'fzf')
             if !WINDOWS()
-                let g:ctrlp_version = 4
+                let g:browser_tool = "fzf"
             endif
         elseif count(g:plug_groups, 'denite')
             if g:python_version == 3 && g:vim_advance == 2
-                let g:ctrlp_version = 3
+                let g:browser_tool = "denite"
             endif
-        elseif count(g:plug_groups, 'leaderF')
+        elseif count(g:plug_groups, 'LeaderF')
             if g:python_version && executable('gcc') && g:vim_advance
-                let g:ctrlp_version = 2
+                let g:browser_tool = "leaderF"
             endif
         endif
-        if g:ctrlp_version == 4
+        if g:browser_tool == "fzf"
             Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
             Plug 'junegunn/fzf.vim'
-        elseif g:ctrlp_version == 3
+        elseif g:browser_tool == "denite"
             Plug 'shougo/denite.nvim'
-        elseif g:ctrlp_version == 2
+        elseif g:browser_tool == "LeaderF"
             if WINDOWS()
                 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
             else

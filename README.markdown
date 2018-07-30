@@ -290,7 +290,6 @@ Togglekey:`<Leader>u`
 Git plugin
 
 ### [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
-注释插件,神器,直接上官方的快捷键,最常用的是`<Leader>c<Space>`
   * `[count]<Leader>cc` **|NERDComComment|**
     Comment out the current line or text selected in visual mode.
   * `[count]<Leader>cn` **|NERDComNestedComment|**
