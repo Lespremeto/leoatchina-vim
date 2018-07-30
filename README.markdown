@@ -109,15 +109,15 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
 
 # Main shortcuts
 * `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
-* `<localLeader>` to `\`
-* `<leader>.` for number + 1, `<leader>,` for number -1
+* `<LocalLeader>` to `\`
+* `<Leader>.` for number + 1, `<Leader>,` for number -1
 * `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug myself
-* `<localleader><localLeader` for bracket jump
+* `<LocalLeader><LocalLeader` for bracket jump
 * `c-a` to the head of a line, `c-e` to end in normal/visual/inesert mode, compatible with linux
-* `c-f`,`c-k`, `c-l`,`g` work like `leader` key in normal mode
+* `c-f`,`c-k`, `c-l`,`g` work like `Leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
 * `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
-* `c-b` for plugins `ctrlp` or `fzf` or `leaderF` or `denite` in normal mode
+* `c-b` for plugins `ctrlp` or `fzf` or `LeaderF` or `denite` in normal mode
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode
 * `!` for `:!`
@@ -129,7 +129,6 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
 * `F11`: full screen toggle, but sometimes not work
 * `F12`: paste toggle
 * `gc` for gcommit, `+` for `:Git`
-*
 * tab/buffer control
 ```
     set tabpagemax=10 " Only show 10 tabs
@@ -139,32 +138,32 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
     nnoremap <silent><Tab>      :tabnext<CR>
     nnoremap <Leader>tp         :tabprevious<CR>
     nnoremap <Leader>tn         :tabnext<CR>
-    nnoremap <leader>-          :tabm -1<CR>
-    nnoremap <leader><Tab>      :tabm +1<CR>
-    nnoremap <localleader>-     :tabfirst<CR>
-    nnoremap <localleader><Tab> :tablast<CR>
+    nnoremap <Leader>-          :tabm -1<CR>
+    nnoremap <Leader><Tab>      :tabm +1<CR>
+    nnoremap <LocalLeader>-     :tabfirst<CR>
+    nnoremap <LocalLeader><Tab> :tablast<CR>
     nnoremap <Leader>te         :tabe<Space>
     nnoremap <Leader>ts         :tab  split<CR>
     nnoremap <Leader>tw         :tabs<CR>
     nnoremap <Leader>tm         :tabm<Space>
     " buffer switch
-    nnoremap <localleader><Backspace> :buffers<CR>
-    nnoremap <localleader>]           :bn<CR>
-    nnoremap <localleader>[           :bp<CR>
+    nnoremap <LocalLeader><Backspace> :buffers<CR>
+    nnoremap <LocalLeader>]           :bn<CR>
+    nnoremap <LocalLeader>[           :bp<CR>
 ```
 * copy & paste
 ```
-    vnoremap <leader>y  "+y
-    nnoremap <leader>y  "+y
-    nnoremap <leader>yy "+yy
-    nnoremap <leader>Y  "*y
-    vnoremap <leader>Y  "*y
+    vnoremap <Leader>y  "+y
+    nnoremap <Leader>y  "+y
+    nnoremap <Leader>yy "+yy
+    nnoremap <Leader>Y  "*y
+    vnoremap <Leader>Y  "*y
     nnoremap Y y$
     vnoremap Y *y$
-    nnoremap <leader>p "+p
-    nnoremap <leader>P "*P
-    vnoremap <leader>p "+p
-    vnoremap <leader>P "*P
+    nnoremap <Leader>p "+p
+    nnoremap <Leader>P "*P
+    vnoremap <Leader>p "+p
+    vnoremap <Leader>P "*P
 ```
 * Some other shortcuts
 ```
@@ -173,18 +172,18 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
     " and ask which one to jump to
     nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
     " toggleFold
-    nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
+    nnoremap <Leader>fd :set nofoldenable! nofoldenable?<CR>
     " toggleWrap
-    nnoremap <leader>fw :set nowrap! nowrap?<CR>
+    nnoremap <Leader>fw :set nowrap! nowrap?<CR>
     nmap <Leader>w :w<CR>
     nmap <Leader>W :wq!<CR>
     nmap <Leader>WQ :wa<CR>:q<CR>
     nmap <Leader>q :q!
     nmap <Leader>Q :qa!
     " split windows
-    nmap <leader>\ :vsplit<Space>
-    nmap <Leader><leader>\ :split<Space>
-    nmap <leader>= <C-W>=
+    nmap <Leader>\ :vsplit<Space>
+    nmap <Leader><Leader>\ :split<Space>
+    nmap <Leader>= <C-W>=
     " resize spilted windows
     nmap <Leader><Down> :resize -3<CR>
     nmap <Leader><Up>   :resize +3<CR>
@@ -267,14 +266,14 @@ It is the last complete engine the config choose
 
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)
-Togglekey:`<Leader>nn`, and key `<leader>nt`
+Togglekey:`<Leader>nn`, and key `<Leader>nt`
 
 ## [tagbar](https://github.com/majutsushi/tagbar) and [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
-need `has("ctags")`. Togglekey:`<leader>tt`
+need `has("ctags")`. Togglekey:`<Leader>tt`
 
 ## [VOoM](https://github.com/vim-voom/VOoM)
 VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner.
-<leader>vt :VoomToggle
+<Leader>vt :VoomToggle
 
 ##[undotree](https://github.com/mbbill/undotree)
 Togglekey:`<Leader>u`
