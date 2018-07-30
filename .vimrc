@@ -924,8 +924,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'ctrl-q': function('s:build_quickfix_list'),
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-x': 'split',
-            \ 'ctrl-v': 'vsplit'
-        }
+            \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == 'denite' && HasDirectory("denite.nvim")
         nnoremap <C-b> :Denite file/rec buffer<Cr>
         nnoremap <leader>lf :Denite
