@@ -145,7 +145,8 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
 * `.vimrc.plug` plugins install file.
 * `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders.
 * `.vimrc.local` basic features, will be copied to %HOME%, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.
-`let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']`
+
+The default contents of `.vimrc.local` is `let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']`
 
 # Main changes from spf13
 - use `vim-plug` instead of `vundle`, more quick and more smart
