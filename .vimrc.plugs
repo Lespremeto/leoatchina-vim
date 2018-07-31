@@ -92,8 +92,10 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'majutsushi/tagbar'
         endif
         " input method
+        let g:install_enhanced_line = 1
         if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
             Plug 'leoatchina/ywvim'
+            let g:install_enhanced_line = 0
         endif
         " biosyntax
         if count(g:plug_groups, 'bio')

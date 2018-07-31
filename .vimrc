@@ -514,7 +514,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
     " statusline
     if HasDirectory('vim-airline')
-        set noshowmode
         let g:airline_powerline_fonts = 0
         let g:airline_symbols_ascii = 1
         let g:airline_exclude_preview = 0
@@ -546,7 +545,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
     elseif has('statusline')
         if HasDirectory("lightline.vim")
-            set noshowmode
             let g:lightline = {
                 \ 'colorscheme': 'onedark',
                 \ 'active': {
