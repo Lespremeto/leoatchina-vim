@@ -47,14 +47,14 @@ call del "%HOME%\AppData\Local\nvim\init.vim"
 call mklink "%HOME%\AppData\Local\nvim\init.vim"  "%APP_PATH%\.vimrc"                 
 
 IF NOT EXIST "%HOME%\.vim\autoload" (
-    call git clone https://github.com/junegunn/vim-plug.git "%HOME%\.vim\autoload"
+    call git clone --depth=1 https://github.com/junegunn/vim-plug.git "%HOME%\.vim\autoload"
 ) ELSE (
     call cd "%HOME%\.vim\autoload"
     call git pull
 )
 
 IF NOT EXIST "%HOME%\AppData\Local\nvim\autoload" (
-    call git clone https://github.com/junegunn/vim-plug.git "%HOME%\AppData\Local\nvim\autoload"
+    call git clone --depth=1 https://github.com/junegunn/vim-plug.git "%HOME%\AppData\Local\nvim\autoload"
 ) ELSE (
     call cd "%HOME%\AppData\Local\nvim\autoload"
     call git pull

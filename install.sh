@@ -106,7 +106,7 @@ install_vim_plug() {
         git pull
         cd "$4"
     else
-        git clone "$1" "$2" 
+        git clone --depth=1 "$1" "$2" 
     fi
     success "Successfully installed/updated vim-plug for $3"
     debug
