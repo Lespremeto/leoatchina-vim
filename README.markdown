@@ -99,7 +99,6 @@ And I wish you has a basic understanding for vim, know how to read this config.
 
 # Install
 ## Linux, \*nix, Mac OSX
-need `curl`
 ```bash
   git clone https://github.com/leoatchina/leoatchina-vim.git
   cd leoatchina-vim
