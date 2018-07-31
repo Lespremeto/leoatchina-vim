@@ -437,10 +437,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         au FileType markdown nmap [] <Plug>Markdown_MoveToPreviousSiblingHeader
         au FileType markdown nmap ]c <Plug>Markdown_MoveToCurHeader
         au FileType markdown nmap ]u <Plug>Markdown_MoveToParentHeader
-        if v:version > 703
-            let g:vmt_auto_update_on_save = 1
-            let g:vmt_cycle_list_item_markers = 1
-        endif
         let g:vim_markdown_folding_style_pythonic = 1
         let g:vim_markdown_override_foldtext = 0
         let g:vim_markdown_toc_autofit = 1
@@ -450,6 +446,20 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:vim_markdown_frontmatter = 1
         let g:vim_markdown_auto_insert_bullets = 0
         let g:vim_markdown_new_list_item_indent = 0
+        if g:vim_advance
+            let g:vmt_auto_update_on_save = 1
+            let g:vmt_cycle_list_item_markers = 1
+        endif
+    endif
+    " autopairs
+    if HasDirectory("auto-pairs")
+        let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
+        let g:AutoPairsShortcutToggle     = "<C-l>t"
+        let g:AutoPairsShortcutFastWrap   = "<C-l>f"
+        let g:AutoPairsShortcutJump       = "<C-l>j"
+        let g:AutoPairsShortcutBackInsert = "<C-l>b"
+        inoremap <buffer> <silent> <C-h> <C-R>=AutoPairsDelete()<CR>
+        inoremap <buffer> <silent> <BS>  <C-R>=AutoPairsDelete()<CR>
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
@@ -891,7 +901,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
     " browser seris
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent>   <C-b>      :FZF<CR>
+        nnoremap <silent>   <F10>      :FZF<CR>
         nnoremap <silent>   <Leader>lb :Buffers<CR>
         nnoremap <Leader>lf :FZF<Space>
         nnoremap <silent>   <Leader>lt :Filetypes<CR>
@@ -947,7 +957,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == 'denite' && HasDirectory("denite.nvim")
-        nnoremap <C-b> :Denite file/rec buffer<Cr>
+        nnoremap <F10> :Denite file/rec buffer<Cr>
         nnoremap <leader>lf :Denite
         nnoremap <leader>lb :DeniteBufferDir
         nnoremap <leader>lw :DeniteCursorWord
@@ -1036,7 +1046,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-b>'
+        let g:Lf_ShortcutF = '<F10>'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_ShortcutB = '<leader>B'
         nmap <leader>lf :Leaderf
@@ -1044,7 +1054,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nmap <leader>lb :LeaderfB
         nmap <leader>lm :LeaderfM
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<C-b>'
+        let g:ctrlp_map = '<F10>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
@@ -1374,7 +1384,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ale_completion_enabled   = 0
         let g:ale_lint_on_enter        = 1
         let g:ale_lint_on_text_changed = 'always'
-        " signs fo
+        " signs
         let g:ale_sign_column_always   = 1
         let g:ale_set_signs            = 1
         let g:ale_set_highlights       = 0
@@ -1389,8 +1399,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ale_set_quickfix         = 0
         let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
         nnoremap <C-l><C-l> :ALELint<CR>
-        nnoremap <silent> <C-l>p <Plug>(ale_previous_wrap)
-        nnoremap <silent> <C-l>n <Plug>(ale_next_wrap)
+        nnoremap <silent> <C-l><C-p> <Plug>(ale_previous_wrap)
+        nnoremap <silent> <C-l><C-n> <Plug>(ale_next_wrap)
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
@@ -1416,9 +1426,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Errors
             endif
         endfunction
-        nnoremap <C-l><C-l> :call ToggleErrors()<cr>
-        nnoremap <C-l>n :lnext<cr>
-        nnoremap <C-l>p :lprevious<cr>
+        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
+        nnoremap <silent> <C-l><C-n> :lnext<cr>
+        nnoremap <silent> <C-l><C-p> :lprevious<cr>
     endif
     if HasDirectory("asyncrun.vim") && g:vim_advance == 2
         function! s:RUN_ASYNC()

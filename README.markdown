@@ -157,7 +157,9 @@ OR
 After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
 The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins installation, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change. The default contents of `.vimrc.local` is
-> let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']
+> let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html']
+
+The typical variables that could be add to `g:plug_groups` are `pymode`,`airline`,`airline`, `youcompleteme`, etc.
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
@@ -203,10 +205,11 @@ And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvi
 * `F3`: show register srings
 * `F4`: toggle quickrun windows
 * `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun))
+* `F10`: invoke browser tools `fzf` or `LeaderF` or `denite` or `Ctrlp`
 * `F11`: full screen toggle, but sometimes not work
 * `F12`: paste toggle
 * tab/buffer control
-    - set tabpagemax=10 " Only show 10 tabs
+    - set tabpagemax=10
     - cmap Tabe tabe
     - nnoremap <silent>-          :tabprevious<CR>
     - nnoremap <silent><Tab>      :tabnext<CR>

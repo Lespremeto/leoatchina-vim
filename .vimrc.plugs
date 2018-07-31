@@ -67,6 +67,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
         " general
         Plug 'tpope/vim-fugitive'
+        Plug 'jiangmiao/auto-pairs'
         if v:version < 702
             Plug 'tpope/vim-git'
         endif
@@ -157,8 +158,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Plug 'maximbaz/lightline-ale'
             endif
         endif
-        " Python
-        if count(g:plug_groups, 'python') && v:version >= 703 && python_version
+        " Pymode for python, python is supported by all the engines since I
+        " wrote python mostly
+        if count(g:plug_groups, 'pymode') && v:version >= 703 && python_version
             Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
         endif
         " syntax check and run method
@@ -298,11 +300,11 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             " install snippets plugins
             if g:complete_engine != "None"
                 Plug 'Shougo/neco-vim'
-                if g:python_version && (!has('nvim') && v:version > 703 || has('nvim') && !WINDOWS()) && g:complete_snippet == "ultisnips"
+                if g:python_version && (!has('nvim') || has('nvim') && !WINDOWS()) && g:complete_snippet == "ultisnips"
                     Plug 'SirVer/ultisnips'
                     Plug 'honza/vim-snippets'
                     Plug 'leoatchina/leoatchina-snippets'
-                elseif v:version > 703
+                elseif
                     let g:complete_snippet = "neosnippet"
                     Plug 'Shougo/neosnippet'
                     Plug 'Shougo/neosnippet-snippets'
@@ -317,11 +319,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                     Plug 'roxma/vim-hug-neovim-rpc'
                     Plug 'roxma/nvim-yarp'
                 endif
-                Plug 'Shougo/neoinclude.vim'
+                Plug 'Shougo/neoinclude.vim', {'for': 'vim'}
                 Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp']}
-                if count(g:plug_groups, 'python')
-                    Plug 'zchee/deoplete-jedi', {'for': 'python'}
-                endif
+                Plug 'zchee/deoplete-jedi', {'for': 'python'}
                 if count(g:plug_groups, 'go')
                     Plug 'zchee/deoplete-go', {'for': 'go'}
                 endif
@@ -334,7 +334,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                     Plug 'maralla/completor-neosnippet'
                 endif
             elseif g:complete_engine == "neocomplete"
-                Plug 'Shougo/neoinclude.vim'
+                Plug 'Shougo/neoinclude.vim', {'for': 'vim'}
                 Plug 'Shougo/neocomplete.vim'
             elseif g:complete_engine == "neocomplcache"
                 Plug 'Shougo/neocomplcache.vim'
@@ -366,14 +366,12 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-ultisnips'
                 " language
                 Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
+                Plug 'ncm2/ncm2-jedi', {'for':'python'}
                 if count(g:plug_groups, 'css')
                     Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
                 endif
                 if count(g:plug_groups, 'javascript')
                     Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
-                endif
-                if count(g:plug_groups, 'python')
-                    Plug 'ncm2/ncm2-jedi', {'for':'python'}
                 endif
                 if count(g:plug_groups, 'rust')
                     Plug 'ncm2/ncm2-racer', {'for':'rust'}
