@@ -869,7 +869,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:pymode_run_bind         = '<leader>R'
         " breakpoint
         let g:pymode_breakpoint       = 1
-        let g:pymode_breakpoint_bind  = '<C-l>t'
+        let g:pymode_breakpoint_bind  = '<F9>'
         let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
         " pymode check disable
         if count(g:plug_groups, 'syntax')

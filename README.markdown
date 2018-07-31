@@ -25,6 +25,7 @@
     * [Markdown](#markdown)
     * [Themes Collentions](#themes-collentions)
     * [vim-easy-align](#vim-easy-align)
+    * [auto-pairs](#auto-pairs)
     * [Complete Engines](#complete-engines)
         - [Smart Engines Selection](#smart-engines-selection)
         - [YouCompleteMe](#youcompleteme)
@@ -78,9 +79,9 @@
 # 中文介绍
 原来的repo放在 [spf13-vim-leoatchina](https://github.com/leoatchina/spf13-vim-leoatchina)，因为原来一时脑抽，把中文字体放进去后导致体积较大，影响速度，所以重开一个repo并把windows下的工具分开，以增加clone速度。
 
-这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的集大成者，原配置已经不大适合这个vim8/neovim当道的时代。因此我作了非常大的调整，commit了1千多次(两个repo加起来)，不断地从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。
+这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的作品，原配置已经不大适合这个vim8/neovim当道的时代。因此在近两年的使用时间里, 我不断调整，从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。
 
-长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件已经比较完整，因此可以好好坐下来，对使用方法和注意点作一介绍。
+长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件已经比较完整，因此可以好好坐下来，对使用方法和注意点作一介绍。(其实,在这写这个文档的时候还在不停地改快捷键)
 
 **PLEASE FORGIVE ME FOR MY POOR ENGLISH!!**
 
@@ -287,6 +288,8 @@ Default themes:
 - [onedark](https://github.com/joshdick/onedark.vim) for neovim with gui
 
 ## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+
+## [auto-pairs](https://github.com/jiangmiao/auto-pairs)
 
 ## Complete Engines
 **7** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `completor`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
