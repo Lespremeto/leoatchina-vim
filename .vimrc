@@ -172,7 +172,7 @@ let maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
 set pastetoggle=<F12>
 " 定义快捷键保存当前窗口内容
-nnoremap <leader><CR> :source ~/.vimrc<CR>
+nnoremap <leader>/ :source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
@@ -193,6 +193,7 @@ vmap <C-e> $
 smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 " C-f/b in insert mode
+nmap <BS>  <Nop>
 nmap <C-f> <Nop>
 vmap <C-f> <Nop>
 nmap <C-b> <Nop>
@@ -852,7 +853,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         if g:python_version     == 3
             let g:pymode_python  = 'python3'
         else
-            let g:pymode_python  = 'python2'
+            let g:pymode_python  = 'python'
         endif
         let g:pymode_syntax = 0
         let g:pymode_syntax_all = 0
@@ -869,7 +870,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:pymode_run_bind         = '<leader>R'
         " breakpoint
         let g:pymode_breakpoint       = 1
-        let g:pymode_breakpoint_bind  = '<F9>'
+        let g:pymode_breakpoint_bind  = '<BS>'
         let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
         " pymode check disable
         if count(g:plug_groups, 'syntax')
@@ -901,7 +902,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
     " browser seris
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent>   <F10>      :FZF<CR>
+        nnoremap <silent>   <C-\>      :FZF<CR>
         nnoremap <silent>   <Leader>lb :Buffers<CR>
         nnoremap <Leader>lf :FZF<Space>
         nnoremap <silent>   <Leader>lt :Filetypes<CR>
@@ -957,7 +958,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == 'denite' && HasDirectory("denite.nvim")
-        nnoremap <F10> :Denite file/rec buffer<Cr>
+        nnoremap <C-\> :Denite file/rec buffer<Cr>
         nnoremap <leader>lf :Denite
         nnoremap <leader>lb :DeniteBufferDir
         nnoremap <leader>lw :DeniteCursorWord
@@ -1046,7 +1047,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<F10>'
+        let g:Lf_ShortcutF = '<C-\>'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_ShortcutB = '<leader>B'
         nmap <leader>lf :Leaderf
@@ -1054,7 +1055,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nmap <leader>lb :LeaderfB
         nmap <leader>lm :LeaderfM
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<F10>'
+        let g:ctrlp_map = '<C-\>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
@@ -1431,6 +1432,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nnoremap <silent> <C-l><C-p> :lprevious<cr>
     endif
     if HasDirectory("asyncrun.vim") && g:vim_advance == 2
+        let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
         function! s:RUN_ASYNC()
             exec "w"
             call asyncrun#quickfix_toggle(8,1)
@@ -1454,10 +1456,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             endif
         endfunction
         command! RunAsync call s:RUN_ASYNC()
-        nmap <leader>ra :RunAsync<CR>
-        nmap <leader>rs :AsyncStop<CR>
-        nmap gr :AsyncRun<Space>
-        let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
+        nmap <C-b>r        :RunAsync<CR>
+        nmap <C-b>s        :AsyncStop<CR>
+        nmap <localleade>R :AsyncRun<Space>
     endif
     if HasDirectory("vim-quickrun")
         nnoremap <F5> :QuickRun<Cr>

@@ -193,20 +193,19 @@ And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvi
 * `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug myself
 * `<LocalLeader><LocalLeader` for bracket jump
 * `c-a` to the head of a line, `c-e` to end in normal/visual/inesert mode, compatible with linux
-* `c-f`,`c-k`, `c-l`,`g` work like `Leader` key in normal mode
+* `c-f`, `c-b`, `c-k`, `c-l`, `g` work like `Leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
 * `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
-* `c-b` for plugins `ctrlp` or `fzf` or `LeaderF` or `denite` in normal mode
+* `c-\` invoke browser tools `fzf` or `LeaderF` or `denite` or `Ctrlp`
 * `gc` for gcommit, `+` for `:Git`
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode
 * `!` for `:!`
 * `F1`: tab help
 * `F2`: toggle search results highlight
-* `F3`: show register srings
+* `F3`: show register strings
 * `F4`: toggle quickrun windows
 * `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun))
-* `F10`: invoke browser tools `fzf` or `LeaderF` or `denite` or `Ctrlp`
 * `F11`: full screen toggle, but sometimes not work
 * `F12`: paste toggle
 * tab/buffer control
@@ -384,7 +383,7 @@ The main leader key is `C-f`,
 ## language support
 ### [Pymode for python](https://github.com/python-mode/python-mode)
 If your major work is with python, it is the only plugin you need. However,
-`<Leader>R`:run scripts;`<C-l>t`:track_point toggle
+`<Leader>R`:run scripts;`<BS>`:track_point toggle
 ### html
 ### css
 ### javascript
@@ -450,7 +449,7 @@ Adds comment delimiters at the current cursor position and inserts between. Disa
 ### [denite](https://github.com/Shougo/denite.nvim)
 
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
-
+Ctrlp
 
 ## [surround](https://github.com/tpope/vim-surround)
 plugin to add bracket for string，here after is from [<vim中的杀手级别的插件：surround>](http://zuyunfei.com/2013/04/17/killer-plugin-of-vim-surround/), **\*** is for the cursor position
@@ -486,6 +485,7 @@ plugin to add bracket for string，here after is from [<vim中的杀手级别的
     <CTRL-g>s - same as <CTRL-s>
     <CTRL-g>S - same as <CTRL-s><CTRL-s>
 ```
+
 ## [repeat](https://github.com/tpope/vim-repeat)
 
 ## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
