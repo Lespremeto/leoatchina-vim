@@ -43,18 +43,18 @@
         - [ale](#ale)
         - [styntastic](#styntastic)
     * [Search/Replace tools](#searchreplace-tools)
-        - [[FlyGrep]](#flygrep)
-        - [[Ctrlsf]](#ctrlsf)
-        - [[vim-multiple-cursors]](#vim-multiple-cursors)
+        - [FlyGrep](#flygrep)
+        - [Ctrlsf](#ctrlsf)
+        - [vim-multiple-cursors](#vim-multiple-cursors)
     * [RunTools](#runtools)
-        - [[vim-quickrun]](#vim-quickrun)
-        - [[asyncrun[](#asyncrun)
+        - [vim-quickrun](#vim-quickrun)
+        - [asyncrun](#asyncrun)
     * [language support](#language-support)
         - [Pymode for python](#pymode-for-python)
         - [html](#html)
         - [css](#css)
         - [javascript](#javascript)
-        - [vim-go](#vim-go)
+        - [vim-go for go](#vim-go-for-go)
         - [rust](#rust)
     * [nerdtree](#nerdtree)
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
@@ -345,15 +345,15 @@ Works if without python support.
 
 
 ## Search/Replace tools
-### [FlyGrep]
+### [FlyGrep](#)
 
-### [Ctrlsf]
+### [Ctrlsf](#)
 
-### [vim-multiple-cursors]
+### [vim-multiple-cursors](#)
 
 ## RunTools
-### [vim-quickrun]
-### [asyncrun[
+### [vim-quickrun](#)
+### [asyncrun](#)
 
 ## language support
 ### [Pymode for python](https://github.com/python-mode/python-mode)
@@ -362,7 +362,7 @@ If your major work is with python, it is the only plugin you need. However,
 ### html
 ### css
 ### javascript
-### vim-go
+### [vim-go for go](#)
 ### rust
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)
