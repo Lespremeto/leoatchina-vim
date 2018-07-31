@@ -343,13 +343,24 @@ Works if without python support.
 
 ### [styntastic](https://github.com/vim-syntastic/syntastic.git)
 
-
 ## Search/Replace tools
+The main leader key is `C-f`,
 ### [FlyGrep](#)
+`<C-f><C-f>` to call the window
 
 ### [Ctrlsf](#)
 
 ### [vim-multiple-cursors](#)
+```
+    let g:multi_cursor_start_word_key      = '<C-n>'
+    let g:multi_cursor_select_all_word_key = '<leader><C-n>'
+    let g:multi_cursor_start_key           = 'g<C-n>'
+    let g:multi_cursor_select_all_key      = '<localleader><C-n>'
+    let g:multi_cursor_next_key            = '<C-n>'
+    let g:multi_cursor_prev_key            = '<C-p>'
+    let g:multi_cursor_skip_key            = '<C-h>'
+    let g:multi_cursor_quit_key            = '<ESC>'
+```
 
 ## RunTools
 ### [vim-quickrun](#)

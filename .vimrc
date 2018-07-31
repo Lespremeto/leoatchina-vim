@@ -513,7 +513,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:bufferline_fixed_index =  0
     endif
     " statusline
-    if count(g:plug_groups, 'airline')
+    if HasDirectory('vim-airline')
         set noshowmode
         let g:airline_powerline_fonts = 0
         let g:airline_symbols_ascii = 1
