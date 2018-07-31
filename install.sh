@@ -16,7 +16,6 @@
 app_name='spf13-vim-leoatchina'
 [ -z "$APP_PATH" ] && APP_PATH="$PWD"
 [ -z "$REPO_URL" ] && REPO_URL='https://github.com/leoatchina/leoatchina-vim.git'
-[ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
 debug_mode='0'
 [ -z "$PLUG_URL" ] && PLUG_URL="https://github.com/junegunn/vim-plug.git"
 ############################  BASIC SETUP TOOLS
@@ -83,7 +82,7 @@ create_symlinks() {
     lnif "$source_path/README.markdown" "$target_path/.vimrc.md"
     if program_exists "nvim"; then
         mkdir -p "$target_path/.config/nvim"
-        lnif "$source_path/.vimrc"          "$target_path/.config/nvim/init.vim"
+        lnif "$source_path/.vimrc"      "$target_path/.config/nvim/init.vim"
     fi
     ret="$?"
     success "Setted up vim symlinks."
@@ -96,15 +95,17 @@ setup_plug() {
     msg "Starting update/install plugins for $1"
     "$1" +PlugClean +PlugInstall +qall
     export SHELL="$system_shell"
-    "$PLUG_URL" success "Successfully updated/installed plugins using vim-plug for $1"
+    success "Successfully updated/installed plugins using vim-plug for $1"
     debug
 }
 
 install_vim_plug() {
-    if [ -d "$1" ];then
-        git pull "$1" "$2"
+    if [ -d "$2" ];then
+        cd "$2"
+        git pull
+        cd "$4"
     else
-        git clone  "$1" "$2" 
+        git clone "$1" "$2" 
     fi
     success "Successfully installed/updated vim-plug for $3"
     debug
@@ -113,27 +114,22 @@ install_vim_plug() {
 ############################ MAIN()
 variable_set "$HOME"
 program_must_exist "git"
-program_must_exist "curl"
 mkdir -p "$HOME/.vim/session"
 mkdir -p "$HOME/.cache/tags"
-
-install_config='0'
+update_vim_plug='0'
+ret='0'
 if [ -f $HOME/.vimrc.clean ];then
     read -p "Do you want to update leoathina's vim config  (Y/y for Yes , any other key for No)? " -n 1 -r
     echo
+    if [[ $REPLY =~ ^[Yy]$ ]];then
+        git pull
+        success "Update to the latest version of leoatchina-vim"
+        update_vim_plug='1'
+        ret='0'
+    fi
 else
-    install_config='1'
-fi
-
-update_setting='0'
-if [[ $REPLY =~ ^[Yy]$ ]] || [[ $install_config -eq '1' ]]
-then
-    update_setting='1'
-fi
-ret=0
-if [ "$update_setting" -eq '1' ];then
-    git pull
-    success "Update to the latest version of leoatchina-vim"
+    update_vim_plug='1'
+    debug
 fi
 
 if [ -f $HOME/.vimrc.local ];then
@@ -146,15 +142,15 @@ fi
 create_symlinks "$APP_PATH" "$HOME"
 
 if program_exists "vim"; then
-    if [ "$update_setting" -eq '1' ];then
-        install_vim_plug "$PLUG_URL" "$HOME/.vim/autoload" "vim"
+    if [ "$update_vim_plug" -eq '1' ];then
+        install_vim_plug "$PLUG_URL" "$HOME/.vim/autoload" "vim" "$APP_PATH"
     fi
     setup_plug "vim"
 fi
 
 if program_exists "nvim"; then
-    if [ "$update_setting" -eq '1' ];then
-        install_vim_plug "$PLUG_URL" "$HOME/.vim/autoload" "nvim"
+    if [ "$update_vim_plug" -eq '1' ];then
+        install_vim_plug "$PLUG_URL" "$HOME/.local/share/nvim/site/autoload" "nvim" "$APP_PATH"
     fi
     setup_plug "nvim"
 fi

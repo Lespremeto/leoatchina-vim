@@ -116,9 +116,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown'}
         " external search/replace
         Plug 'brooth/far.vim'
-        if g:vim_advance == 2
-            Plug 'wsdjeg/FlyGrep.vim'
-        endif
         if executable('ag') || executable('ack') || executable('rg') || executable('pt')
             Plug 'dyng/ctrlsf.vim'
         elseif g:vim_advance == 2 && !WINDOWS() && executable('ctags')
@@ -129,14 +126,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         Plug 'rhysd/conflict-marker.vim'
         Plug 'mhinz/vim-signify'
         Plug 'junegunn/vim-easy-align'
-        " status
-        Plug 'bling/vim-bufferline'
-        if has('statusline') && (v:version <= 702 || !count(g:plug_groups, 'airline'))
-            Plug 'itchyny/lightline.vim'
-            if g:vim_advance == 2 && count(g:plug_groups, 'syntax')
-                Plug 'maximbaz/lightline-ale'
-            endif
-        endif
         " PHP
         if count(g:plug_groups, 'php')
             Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
@@ -155,13 +144,21 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
         " vim 7.2+
         if v:version >= 702
-            Plug 'nathanaelkane/vim-indent-guides'
             if count(g:plug_groups, 'airline')
                 Plug 'vim-airline/vim-airline'
             endif
+            Plug 'nathanaelkane/vim-indent-guides'
+        endif
+        " status
+        Plug 'bling/vim-bufferline'
+        if has('statusline') && (v:version < 702 || !count(g:plug_groups, 'airline'))
+            Plug 'itchyny/lightline.vim'
+            if g:vim_advance == 2 && count(g:plug_groups, 'syntax')
+                Plug 'maximbaz/lightline-ale'
+            endif
         endif
         " Python
-        if count(g:plug_groups, 'python') || v:version >= 703
+        if count(g:plug_groups, 'python') && v:version >= 703 && python_version
             Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
         endif
         " syntax and run method
@@ -173,12 +170,13 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Plug 'ludovicchabant/vim-gutentags'
             endif
             Plug 'skywind3000/asyncrun.vim'
+            Plug 'wsdjeg/FlyGrep.vim'
         elseif g:vim_advance
             if count(g:plug_groups, 'syntax')
                 Plug 'vim-syntastic/syntastic'
             endif
         endif
-        " vim_advance fearture with vim7.4 or later
+        " plugins for vim7.4 or later
         if g:vim_advance
             Plug 'terryma/vim-multiple-cursors'
             Plug 'thinca/vim-quickrun'
@@ -205,7 +203,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                     let g:browser_tool = "denite"
                 endif
             elseif count(g:plug_groups, 'LeaderF') || count(g:plug_groups, 'leaderf')
-                if g:python_version && executable('gcc') && g:vim_advance
+                if g:python_version && executable('gcc')
                     let g:browser_tool = "LeaderF"
                 endif
             endif

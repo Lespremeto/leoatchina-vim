@@ -18,3 +18,4 @@ rm $HOME/.config/nvim/init.vim
 rm -rf $HOME/.vim
 rm -rf $HOME/.gvim
 rm -rf $HOME/.nvim
+rm -rf $HOME/.local/share/nvim/site/autoload

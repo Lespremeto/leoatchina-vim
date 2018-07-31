@@ -41,7 +41,7 @@
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
     * [VOoM](#voom)
     * [undotree](#undotree)
-    * [airline || lightline](#airline-lightline)
+    * [airline and lightline](#airline-and-lightline)
     * [fugitive](#fugitive)
     * [scrooloose/nerdcommenter](#scrooloosenerdcommenter)
     * [Browser tools](#browser-tools)
@@ -51,9 +51,9 @@
         - [ctrlp](#ctrlp)
     * [Pymode](#pymode)
     * [surround](#surround)
-        - [repeat](#repeat)
-        - [vim-easy-align](#vim-easy-align)
-        - [EasyMotion](#easymotion)
+    * [repeat](#repeat)
+    * [vim-easy-align](#vim-easy-align)
+    * [EasyMotion](#easymotion)
 
 <!-- vim-markdown-toc -->
 # 中文介绍
@@ -328,7 +328,7 @@ Togglekey:`<Leader>vt`. If voom sidebar has appeared, `<Leader>vv` will evoke Vo
 ##[undotree](https://github.com/mbbill/undotree)
 Just as it name. Togglekey:`<Leader>u`
 
-## [airline](https://github.com/vim-airline-themes) || [lightline](https://github.com/itchyny/lightline.vim)
+## [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
 `airline` show more context than other statusline plugins, and more pleasing to eye. But it is heavy, so if **no** `"airline"` in `~/.vimrc.local`, `lightline` will work.
 Both two show information of files in will orgnized ways.
 
@@ -336,45 +336,42 @@ Both two show information of files in will orgnized ways.
 Git plugin. `gc` for `Gcommit`, and `+` for `:Git `
 
 ## [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
-Hackable plugin, just copy the introduce.
-* `[count]<Leader>cc` **|NERDComComment|**
-Comment out the current line or text selected in visual mode.
-* `[count]<Leader>cn` **|NERDComNestedComment|**
-Same as <Leader>cc but forces nesting.
-* `[count]<Leader>c<Space>` **|NERDComToggleComment|**
+Hackable plugin, just copy the introduction here.
+* `<Leader>c<Space>` **|NERDComToggleComment|**
 Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.
-* `[count]<Leader>cm` **|NERDComMinimalComment|**
+* `<Leader>cc` **|NERDComComment|**
+Comment out the current line or text selected in visual mode.
+* `<Leader>cn` **|NERDComNestedComment|**
+Same as <Leader>cc but forces nesting.
+* `<Leader>cm` **|NERDComMinimalComment|**
 Comments the given lines using only one set of multipart delimiters.
-* `[count]<Leader>ci` **|NERDComInvertComment|**
+* `<Leader>ci` **|NERDComInvertComment|**
 Toggles the comment state of the selected line(s) individually.
-* `[count]<Leader>cs` **|NERDComSexyComment|**
+* `<Leader>cs` **|NERDComSexyComment|**
 Comments out the selected lines with a pretty block formatted layout.
-* `[count]<Leader>cy` **|NERDComYankComment|**
+* `<Leader>cy` **|NERDComYankComment|**
 Same as <Leader>cc except that the commented line(s) are yanked first.
 * `<Leader>cA` **|NERDComAppendComment|**
 Adds comment delimiters to the end of line and goes into insert mode between them.
-* **|NERDComInsertComment|**
-Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
 * `<Leader>ca` **|NERDComAltDelim|**
 Switches to the alternative set of delimiters.
-* `[count]<Leader>cl`
-`[count]<Leader>cb` **|NERDComAlignedComment|**
+* `<Leader>cl`
+`<Leader>cb` **|NERDComAlignedComment|**
 Same as **|NERDComComment|** except that the delimiters are aligned down the left side (`<Leader>cl`) or both sides (`<Leader>cb`).
-* `[count]<Leader>cu` **|NERDComUncommentLine|**
+* `<Leader>cu` **|NERDComUncommentLine|**
 Uncomments the selected line(s).
+* **|NERDComInsertComment|**
+Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
 
 ## Browser tools
+
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
 
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
-在高级模式的情况下会选用这个插件
 
 ### [denite](https://github.com/Shougo/denite.nvim)
 
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
-
-`ctrl+p`启动插件,`<Leader>fu`启动funksky函数查询功能,在启动后,用`Ctrl+f`,`Ctrl+b`在不同模式中切换.
-在文件列表中,`Ctrl+k/j`或者方向键向上/下选择文件,`t`在新标签里打开文件.其他快捷键见[ctrlp中文介绍](http://blog.codepiano.com/pages/ctrlp-cn.light.html)
 
 ## [Pymode](https://github.com/python-mode/python-mode)
 `python`用的插件,具有语法检查,调试等功能.`<Leader>R`:运行脚本;`<LocalLeader>p`:track_point toggle
@@ -413,13 +410,11 @@ plugin to add bracket for string，here after is from [<vim中的杀手级别的
     <CTRL-g>s - same as <CTRL-s>
     <CTRL-g>S - same as <CTRL-s><CTRL-s>
 ```
-### [repeat](https://github.com/tpope/vim-repeat)
+## [repeat](https://github.com/tpope/vim-repeat)
 
+## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
-### [vim-easy-align](https://github.com/junegunn/vim-easy-align)
-
-
-### [EasyMotion](https://github.com/easymotion/vim-easymotion)
+## [EasyMotion](https://github.com/easymotion/vim-easymotion)
 跳转到当前光标前后,快捷键`<Leader><Leader>w`和`<Leader><Leader>b`
 搜索跳转,`<Leader><Leader>s`,然后输入要搜索的字母
 行间/行内级别跳转,`<Leader><Leader>`再`hjkl`不解释
