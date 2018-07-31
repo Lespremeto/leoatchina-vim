@@ -172,7 +172,7 @@ let maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
 set pastetoggle=<F12>
 " 定义快捷键保存当前窗口内容
-nnoremap <leader>/ :source ~/.vimrc<CR>
+nnoremap <leader><Cr> :source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
 " For when you forget to sudo.. Really Write the file.
@@ -455,12 +455,11 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     " autopairs
     if HasDirectory("auto-pairs")
         let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-        let g:AutoPairsShortcutToggle     = "<C-l>t"
-        let g:AutoPairsShortcutFastWrap   = "<C-l>f"
-        let g:AutoPairsShortcutJump       = "<C-l>j"
-        let g:AutoPairsShortcutBackInsert = "<C-l>b"
+        let g:AutoPairsShortcutToggle     = "<C-b>t"
+        let g:AutoPairsShortcutFastWrap   = "<C-b>f"
+        let g:AutoPairsShortcutJump       = "<C-b>j"
+        let g:AutoPairsShortcutBackInsert = "<C-b>i"
         inoremap <buffer> <silent> <C-h> <C-R>=AutoPairsDelete()<CR>
-        inoremap <buffer> <silent> <BS>  <C-R>=AutoPairsDelete()<CR>
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
@@ -896,10 +895,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             let g:pymode_lint_cwindow    = 0
         endif
     endif
-    " Rainbow
-    if HasDirectory("rainbow")
-        let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
-    endif
     " browser seris
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
         nnoremap <silent>   <C-\>      :FZF<CR>
@@ -1310,15 +1305,15 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     if g:complete_engine !="None"
         imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
         " headache confict
-        if g:complete_engine=="YCM"
+        if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
             imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
         endif
-        inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
-        inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
-        inoremap <expr> <PageDown>  pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
-        inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+        inoremap <expr> <Up>       pumvisible() ? "\<C-p>"                  : "\<Up>"
+        inoremap <expr> <Down>     pumvisible() ? "\<C-n>"                  : "\<Down>"
+        inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>"   : "\<PageUp>"
+        inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
         " ultisnip
         if g:complete_snippet == "ultisnips"
             " remap Ultisnips for compatibility

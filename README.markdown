@@ -287,8 +287,20 @@ Default themes:
 - [onedark](https://github.com/joshdick/onedark.vim) for neovim with gui
 
 ## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+```
+    nmap <localleader><Cr> <Plug>(EasyAlign)
+    vmap <Cr> <Plug>(EasyAlign)
+```
 
 ## [auto-pairs](https://github.com/jiangmiao/auto-pairs)
+```
+    let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
+    let g:AutoPairsShortcutToggle     = "<C-b>t"
+    let g:AutoPairsShortcutFastWrap   = "<C-b>f"
+    let g:AutoPairsShortcutJump       = "<C-b>j"
+    let g:AutoPairsShortcutBackInsert = "<C-b>i"
+    inoremap <buffer> <silent> <C-h> <C-R>=AutoPairsDelete()<CR>
+```
 
 ## Complete Engines
 **7** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `completor`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
