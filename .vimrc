@@ -824,7 +824,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:go_fmt_command                 = "gofmt"
         let g:syntastic_go_checkers          = ['golint', 'govet', 'errcheck']
         let g:syntastic_mode_map             = { 'mode': 'active', 'passive_filetypes': ['go'] }
-        au FileType go imap <C-g>     <C-x><C-o>
+        au FileType go imap <C-k>     <C-x><C-o>
         au FileType go nmap <Leader>i <Plug>(go-implements)
         au FileType go nmap <Leader>I <Plug>(go-info)
         au FileType go nmap <Leader>r <Plug>(go-rename)
@@ -866,7 +866,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             let g:pymode_rope_goto_definition_bind = '<Nop>'
         else
             nmap <C-l><C-l> :PymodeLint<CR>
-            let g:pymode_rope_goto_definition_bind = 'go'
+            let g:pymode_rope_goto_definition_bind = 'gd'
             let g:pymode_lint            = 1
             let g:pymode_lint_signs      = 1
             " no check when write
@@ -1177,7 +1177,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         "注释和字符串中的文字也会被收入补全
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif g:complete_engine == "ncm2" && HasDirectory("ncm2")
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1393,7 +1393,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
-        nnoremap go :ALEGoToDefinitionInTab<CR>
+        nnoremap gt :ALEGoToDefinitionInTab<CR>
+        nnoremap gd :ALEGoToDefinition<CR>
     elseif HasDirectory("syntastic")
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'

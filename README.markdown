@@ -154,16 +154,16 @@ OR
 ```
 
 # How it works
-After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
+After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
 The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins installation, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change. The default contents of `.vimrc.local` is
 > let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
-And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim` for diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works if exists
+And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
 
-`.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders. Also be linked as `~/.vimrc.clean`
+`.vimrc.clean` it is an bash file which is set to delete `~/.vimswap` & `~/.vimviews` folders. Also be linked as `~/.vimrc.clean`
 
 # Main changes from spf13
 * use `vim-plug` instead of `vundle`, more quick and more smart
