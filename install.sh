@@ -18,7 +18,7 @@ app_name='spf13-vim-leoatchina'
 [ -z "$REPO_URL" ] && REPO_URL='https://github.com/leoatchina/leoatchina-vim.git'
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
 debug_mode='0'
-[ -z "$PLUG_URL" ] && PLUG_URL="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+[ -z "$PLUG_URL" ] && PLUG_URL="https://github.com/junegunn/vim-plug.git"
 ############################  BASIC SETUP TOOLS
 msg() {
     printf '%b\n' "$1" >&2
@@ -96,13 +96,17 @@ setup_plug() {
     msg "Starting update/install plugins for $1"
     "$1" +PlugClean +PlugInstall +qall
     export SHELL="$system_shell"
-    success "Successfully updated/installed plugins using vim-plug for $1"
+    "$PLUG_URL" success "Successfully updated/installed plugins using vim-plug for $1"
     debug
 }
 
 install_vim_plug() {
-    curl -fLo "$1/plug.vim" --create-dirs "$2" 
-    success "Successfully installed/updated $3 for $4"
+    if [ -d "$1" ];then
+        git pull "$1" "$2"
+    else
+        git clone  "$1" "$2" 
+    fi
+    success "Successfully installed/updated vim-plug for $3"
     debug
 }
 
@@ -143,13 +147,14 @@ create_symlinks "$APP_PATH" "$HOME"
 
 if program_exists "vim"; then
     if [ "$update_setting" -eq '1' ];then
-        install_vim_plug       "$HOME/.vim/autoload" "$PLUG_URL" "vim-plug" "vim"
+        install_vim_plug "$PLUG_URL" "$HOME/.vim/autoload" "vim"
     fi
     setup_plug "vim"
 fi
+
 if program_exists "nvim"; then
     if [ "$update_setting" -eq '1' ];then
-        install_vim_plug       "$HOME/.local/share/nvim/site/autoload" "$PLUG_URL" "vim-plug" "nvim" 
+        install_vim_plug "$PLUG_URL" "$HOME/.vim/autoload" "nvim"
     fi
     setup_plug "nvim"
 fi

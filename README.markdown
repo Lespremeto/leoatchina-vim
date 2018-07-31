@@ -41,7 +41,7 @@
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
     * [VOoM](#voom)
     * [undotree](#undotree)
-    * [airline and lightline](#airline-and-lightline)
+    * [airline || lightline](#airline-lightline)
     * [fugitive](#fugitive)
     * [scrooloose/nerdcommenter](#scrooloosenerdcommenter)
     * [Browser tools](#browser-tools)
@@ -63,8 +63,7 @@
 
 长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件基本上没有大的漏洞，可以好好坐下来，写下这个文档。
 
-<center>**PLEASE FORGIVE ME FOR MY POOR ENGLISH!!**</center>
-
+**PLEASE FORGIVE ME FOR MY POOR ENGLISH!!*
 
 # Introduction
 This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
@@ -140,14 +139,12 @@ OR
 # How it works
 After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, in its config file, such as `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
-The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins installation, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change.
+The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins installation, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change. The default contents of `.vimrc.local` is
+> let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
-`.vimrc.local` will be copied to `~`, it contains an important variable `g:plug_groups` which is the features of the config, if you want add/del some features, change it.The default contents of `.vimrc.local` is
-> let g:plug_groups=['smartcomplete', 'python', 'php', 'javascript', 'html']
-
-And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former two not exist, `.vimrc.local` works if exists
+And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim` for diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works if exists
 
 `.vimrc.clean` it is an bash file which is set to delete .vimswap & .vimviews folders. Also be linked as `~/.vimrc.clean`
 
@@ -180,6 +177,7 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
 * `c-f` to right `c-b` to left in insert mode
 * `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
 * `c-b` for plugins `ctrlp` or `fzf` or `LeaderF` or `denite` in normal mode
+* `gc` for gcommit, `+` for `:Git`
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode
 * `!` for `:!`
@@ -190,7 +188,6 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
 * `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun))
 * `F11`: full screen toggle, but sometimes not work
 * `F12`: paste toggle
-* `gc` for gcommit, `+` for `:Git`
 * tab/buffer control
     - set tabpagemax=10 " Only show 10 tabs
     - cmap Tabe tabe
@@ -209,7 +206,6 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
     - nnoremap <LocalLeader><Backspace> :buffers<CR>
     - nnoremap <LocalLeader>]           :bn<CR>
     - nnoremap <LocalLeader>[           :bp<CR>
-
 * copy & paste
     - vnoremap <Leader>y  "+y
     - nnoremap <Leader>y  "+y
@@ -222,7 +218,6 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
     - nnoremap <Leader>P "*P
     - vnoremap <Leader>p "+p
     - vnoremap <Leader>P "*P
-
 * Some other shortcuts
     - nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
     - nnoremap <Leader>fd :set nofoldenable! nofoldenable?<CR>
@@ -245,9 +240,9 @@ And also `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim`, it former t
     - nnoremap > >>
 
 # Plugins and their shortcuts
-hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.
+Hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.
 
-Just as I have told, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugins `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
+Just as I have mentioned, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugins `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
 
 You can open `.vimrc.plugs` for these features
 
@@ -328,43 +323,45 @@ need `has("ctags")`. Togglekey:`<Leader>tt`
 
 ## [VOoM](https://github.com/vim-voom/VOoM)
 VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner.
-Togglekey:`<Leader>vt`. If the Voom sidebar has appeard
+Togglekey:`<Leader>vt`. If voom sidebar has appeared, `<Leader>vv` will evoke Voom content refresh.
 
 ##[undotree](https://github.com/mbbill/undotree)
-Togglekey:`<Leader>u`
+Just as it name. Togglekey:`<Leader>u`
 
-## [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
-`airline` show more context than other statusline plugins, and more pleasing to eye. But it needs more computer resource, so if **not** add `"airline"` in `g:plug_groups`, `lightline` will work.
+## [airline](https://github.com/vim-airline-themes) || [lightline](https://github.com/itchyny/lightline.vim)
+`airline` show more context than other statusline plugins, and more pleasing to eye. But it is heavy, so if **no** `"airline"` in `~/.vimrc.local`, `lightline` will work.
+Both two show information of files in will orgnized ways.
 
 ## [fugitive](https://github.com/tpope/vim-fugitive)
-Git plugin
+Git plugin. `gc` for `Gcommit`, and `+` for `:Git `
 
 ## [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
-  * `[count]<Leader>cc` **|NERDComComment|**
-    Comment out the current line or text selected in visual mode.
-  * `[count]<Leader>cn` **|NERDComNestedComment|**
-    Same as <Leader>cc but forces nesting.
-  * `[count]<Leader>c<Space>` **|NERDComToggleComment|**
-    Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.
-  * `[count]<Leader>cm` **|NERDComMinimalComment|**
-    Comments the given lines using only one set of multipart delimiters.
-  * `[count]<Leader>ci` **|NERDComInvertComment|**
-    Toggles the comment state of the selected line(s) individually.
-  * `[count]<Leader>cs` **|NERDComSexyComment|**
-    Comments out the selected lines with a pretty block formatted layout.
-  * `[count]<Leader>cy` **|NERDComYankComment|**
-    Same as <Leader>cc except that the commented line(s) are yanked first.
-  * `<Leader>cA` **|NERDComAppendComment|**
-    Adds comment delimiters to the end of line and goes into insert mode between them.
-  * **|NERDComInsertComment|**
-    Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
-  * `<Leader>ca` **|NERDComAltDelim|**
-    Switches to the alternative set of delimiters.
-  * `[count]<Leader>cl`
-    `[count]<Leader>cb` **|NERDComAlignedComment|**
-    Same as **|NERDComComment|** except that the delimiters are aligned down the left side (`<Leader>cl`) or both sides (`<Leader>cb`).
-  * `[count]<Leader>cu` **|NERDComUncommentLine|**
-    Uncomments the selected line(s).
+Hackable plugin, just copy the introduce.
+* `[count]<Leader>cc` **|NERDComComment|**
+Comment out the current line or text selected in visual mode.
+* `[count]<Leader>cn` **|NERDComNestedComment|**
+Same as <Leader>cc but forces nesting.
+* `[count]<Leader>c<Space>` **|NERDComToggleComment|**
+Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.
+* `[count]<Leader>cm` **|NERDComMinimalComment|**
+Comments the given lines using only one set of multipart delimiters.
+* `[count]<Leader>ci` **|NERDComInvertComment|**
+Toggles the comment state of the selected line(s) individually.
+* `[count]<Leader>cs` **|NERDComSexyComment|**
+Comments out the selected lines with a pretty block formatted layout.
+* `[count]<Leader>cy` **|NERDComYankComment|**
+Same as <Leader>cc except that the commented line(s) are yanked first.
+* `<Leader>cA` **|NERDComAppendComment|**
+Adds comment delimiters to the end of line and goes into insert mode between them.
+* **|NERDComInsertComment|**
+Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
+* `<Leader>ca` **|NERDComAltDelim|**
+Switches to the alternative set of delimiters.
+* `[count]<Leader>cl`
+`[count]<Leader>cb` **|NERDComAlignedComment|**
+Same as **|NERDComComment|** except that the delimiters are aligned down the left side (`<Leader>cl`) or both sides (`<Leader>cb`).
+* `[count]<Leader>cu` **|NERDComUncommentLine|**
+Uncomments the selected line(s).
 
 ## Browser tools
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
