@@ -80,7 +80,7 @@
 
 这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的集大成者，原配置已经不大适合这个vim8/neovim当道的时代。因此我作了非常大的调整，commit了1千多次(两个repo加起来)，不断地从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。
 
-长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件基本上没有大的漏洞，可以好好坐下来，写下这个文档。
+长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件已经比较完整，因此可以好好坐下来，对使用方法和注意点作一介绍。
 
 **PLEASE FORGIVE ME FOR MY POOR ENGLISH!!**
 
@@ -345,11 +345,20 @@ Works if without python support.
 
 ## Search/Replace tools
 The main leader key is `C-f`,
-### [FlyGrep](#)
+### [FlyGrep](https://github.com/wsdjeg/FlyGrep.vim)
 `<C-f><C-f>` to call the window
 
 ### [Ctrlsf](#)
-
+```
+    nmap <C-F>s <Plug>CtrlSFPrompt
+    nmap <C-F>c <Plug>CtrlSFCwordPath
+    nmap <C-F>p <Plug>CtrlSFPwordPath
+    nmap <C-F>o :CtrlSFOpen<CR>
+    nmap <C-F>t :CtrlSFToggle<CR>
+    " vmap
+    vmap <C-F>s <Plug>CtrlSFVwordExec
+    vmap <C-F>f <Plug>CtrlSFVwordPath
+```
 ### [vim-multiple-cursors](#)
 ```
     let g:multi_cursor_start_word_key      = '<C-n>'

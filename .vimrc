@@ -728,6 +728,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
     " ywvim,vim里的中文输入法
     if HasDirectory("ywvim")
+        set showmode
         if count(g:plug_groups, 'pinyin')
             let g:ywvim_ims=[
                     \['py', '拼音', 'pinyin.ywvim'],
@@ -754,6 +755,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ywvim_lockb            = 1
         imap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
         cmap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
+    else
+        set noshowmode
     endif
     " search tools
     if HasDirectory('FlyGrep.vim')

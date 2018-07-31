@@ -13,9 +13,13 @@ rm $HOME/.vimrc.plugs
 rm $HOME/.vimrc.clean
 rm $HOME/.vimrc.update
 rm $HOME/.vimrc.md
-rm $HOME/.config/nvim/init.vim
+if [ -f $HOME/.config/nvim/init.vim ];then
+    rm $HOME/.config/nvim/init.vim
+fi
 
 rm -rf $HOME/.vim
 rm -rf $HOME/.gvim
 rm -rf $HOME/.nvim
-rm -rf $HOME/.local/share/nvim/site/autoload
+if [ -d $HOME/.local/share/nvim ];then
+    rm -rf $HOME/.local/share/nvim
+fi
