@@ -92,10 +92,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'majutsushi/tagbar'
         endif
         " input method
-        let g:install_enhanced_line = 1
         if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
             Plug 'leoatchina/ywvim'
-            let g:install_enhanced_line = 0
         endif
         " biosyntax
         if count(g:plug_groups, 'bio')
@@ -151,7 +149,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             endif
             Plug 'nathanaelkane/vim-indent-guides'
         endif
-        " status
+        " enhance_status_line
         Plug 'bling/vim-bufferline'
         if has('statusline') && (v:version < 702 || !count(g:plug_groups, 'airline'))
             Plug 'itchyny/lightline.vim'
@@ -163,7 +161,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         if count(g:plug_groups, 'python') && v:version >= 703 && python_version
             Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
         endif
-        " syntax and run method
+        " syntax check and run method
         if g:vim_advance == 2
             if count(g:plug_groups, 'syntax')
                 Plug 'w0rp/ale'
@@ -224,9 +222,10 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Plug 'ctrlpvim/ctrlp.vim'
                 Plug 'tacahiroy/ctrlp-funky'
             endif
-            " select a complete_engine && complete_snippet
+            " complete_engine && complete_snippet
             let g:complete_engine  = "None"
             let g:complete_snippet = "ultisnips"
+            " smart select
             if count(g:plug_groups, 'smartcomplete')
                 " nvim
                 if has('nvim')
@@ -442,5 +441,5 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endfunction
     command! PlugNew call s:PlugNew()
 else
-    echom "Inorder to install plugins with vim-plug, your vim should with any of `+job`, `+python`, `+python3`, `+ruby`, or use Neovim"
+    echom "Inorder to install plugins with vim-plug, your vim should be with any of `+job`, `+python`, `+python3`, `+ruby`, or use Neovim"
 endif
