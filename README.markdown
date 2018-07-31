@@ -22,9 +22,11 @@
 + [Plugins and their shortcuts](#plugins-and-their-shortcuts)
     * [vim-plug](#vim-plug)
     * [ywvim中文输入法](#ywvim中文输入法)
+    * [Markdown](#markdown)
     * [Themes Collentions](#themes-collentions)
+    * [vim-easy-align](#vim-easy-align)
     * [Complete Engines](#complete-engines)
-        - [Shortcuts](#shortcuts)
+        - [Smart Engines Selection](#smart-engines-selection)
         - [YouCompleteMe](#youcompleteme)
         - [deoplete](#deoplete)
         - [completor](#completor)
@@ -32,27 +34,44 @@
         - [asyncomplete](#asyncomplete)
         - [neocomplete](#neocomplete)
         - [neocomplcache](#neocomplcache)
-        - [Smart Engines Selection](#smart-engines-selection)
+        - [Shortcuts](#shortcuts)
     * [Complete Snippets](#complete-snippets)
         - [ultisnips](#ultisnips)
         - [neosnippet](#neosnippet)
         - [Shortcuts](#shortcuts-1)
+    * [Syntax Check](#syntax-check)
+        - [ale](#ale)
+        - [styntastic](#styntastic)
+    * [Search/Replace tools](#searchreplace-tools)
+        - [[FlyGrep]](#flygrep)
+        - [[Ctrlsf]](#ctrlsf)
+        - [[vim-multiple-cursors]](#vim-multiple-cursors)
+    * [RunTools](#runtools)
+        - [[vim-quickrun]](#vim-quickrun)
+        - [[asyncrun[](#asyncrun)
+    * [language support](#language-support)
+        - [Pymode for python](#pymode-for-python)
+        - [html](#html)
+        - [css](#css)
+        - [javascript](#javascript)
+        - [vim-go](#vim-go)
+        - [rust](#rust)
     * [nerdtree](#nerdtree)
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
     * [VOoM](#voom)
     * [undotree](#undotree)
     * [airline and lightline](#airline-and-lightline)
     * [fugitive](#fugitive)
-    * [scrooloose/nerdcommenter](#scrooloosenerdcommenter)
+    * [bioSyntax-vim](#biosyntax-vim)
+    * [nerdcommenter](#nerdcommenter)
     * [Browser tools](#browser-tools)
         - [fzf.vim](#fzfvim)
         - [LeaderF](#leaderf)
         - [denite](#denite)
         - [ctrlp](#ctrlp)
-    * [Pymode](#pymode)
     * [surround](#surround)
     * [repeat](#repeat)
-    * [vim-easy-align](#vim-easy-align)
+    * [vim-easy-align](#vim-easy-align-1)
     * [EasyMotion](#easymotion)
 
 <!-- vim-markdown-toc -->
@@ -63,7 +82,7 @@
 
 长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件基本上没有大的漏洞，可以好好坐下来，写下这个文档。
 
-**PLEASE FORGIVE ME FOR MY POOR ENGLISH!!*
+**PLEASE FORGIVE ME FOR MY POOR ENGLISH!!**
 
 # Introduction
 This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
@@ -71,8 +90,7 @@ This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim dis
 You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim.
 
 Hereafter is spf13's introduction to his vim config
-> spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.
- It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
+> spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
 
 # Requirements
 `Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and `Git 2.0+` is prefered for advanced fearutures
@@ -251,9 +269,12 @@ A smart and parallel plug manage plugin, instead of [vundle](https://github.com/
 You can check how it is installed via `install.sh` or `setup.cmd`
 
 ## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
-这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过`CTRL+@`或`CTRL+\`开启,`CTRL+^`进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页
-开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`"wubi"`或者`"pinyin"`
+这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过**CTRL+\**开启,**CTRL+^**进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`或者`pinyin`.
 
+## Markdown
+Markdown styntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for open url under cursor.
+
+This `README` is written mostly in gvim under OSX, and Atom.
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
 Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  these themes.
@@ -263,11 +284,13 @@ Default themes:
 - [wombat256](https://github.com/vim-scripts/wombat256.vim) for neovim
 - [onedark](https://github.com/joshdick/onedark.vim) for neovim with gui
 
+## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+
 ## Complete Engines
 **7** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `completor`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
-### Shortcuts
-It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
+### Smart Engines Selection
+There is variable `smartcomplete` in `g:plug_groups` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no`, `windows` or `not`. I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
 By default, when neovim and python3 support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
 
@@ -292,6 +315,7 @@ NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable co
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed.
+
 But if you want `python` support, you should `pip3 install python-language-server`
 
 ### [neocomplete](https://github.com/Shougo/neocomplete.vim)
@@ -301,19 +325,46 @@ neocomplete is the abbreviation of "neo-completion with cache". It provides keyw
 neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
 **It is the last complete engine this config choose**
 
-### Smart Engines Selection
-There is a `smartcomplete` in `g:plug_groups` in `.vimrc.local`, it means the .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `version <800`, `python3/2` or `no python`, `windows` or not. I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
+### Shortcuts
+It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
 ## Complete Snippets
-**2** complete snippets: `ultisnips`, `neosnippet`.Vim7.4+ is both required
+**2** complete snippets: `ultisnips`, `neosnippet`. Vim7.4+ is both required
 ### [ultisnips](https://github.com/SirVer/ultisnips)
-works if with python support. UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+Works if with python support.
 
 ### [neosnippet](https://github.com/Shougo/neosnippet.vim)
-works if without python support
+Works if without python support.
 
 ### Shortcuts
-`C-l` will list the snips when use `ultisnips`, `c-f` for snips jump forword in snippet inserted in both snippets, and only `ultisnips` use `c-b` for jump back
+`C-l` will list the snips when use `ultisnips`, `C-f` for snips jump forward in snippets, and only `ultisnips` use `c-b` for jump back
+
+## Syntax Check
+### [ale](https://github.com/w0rp/ale.git)
+
+### [styntastic](https://github.com/vim-syntastic/syntastic.git)
+
+
+## Search/Replace tools
+### [FlyGrep]
+
+### [Ctrlsf]
+
+### [vim-multiple-cursors]
+
+## RunTools
+### [vim-quickrun]
+### [asyncrun[
+
+## language support
+### [Pymode for python](https://github.com/python-mode/python-mode)
+If your major work is with python, it is the only plugin you need. However,
+`<Leader>R`:run scripts;`<C-l>t`:track_point toggle
+### html
+### css
+### javascript
+### vim-go
+### rust
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)
 Togglekey:`<Leader>nn`, and key `<Leader>nt`
@@ -323,19 +374,21 @@ need `has("ctags")`. Togglekey:`<Leader>tt`
 
 ## [VOoM](https://github.com/vim-voom/VOoM)
 VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner.
-Togglekey:`<Leader>vt`. If voom sidebar has appeared, `<Leader>vv` will evoke Voom content refresh.
+Togglekey:`<Leader>vt`. If voom sidebar has appeared, `<Leader>vv` will froce content refresh.
 
-##[undotree](https://github.com/mbbill/undotree)
+## [undotree](https://github.com/mbbill/undotree)
 Just as it name. Togglekey:`<Leader>u`
 
 ## [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
-`airline` show more context than other statusline plugins, and more pleasing to eye. But it is heavy, so if **no** `"airline"` in `~/.vimrc.local`, `lightline` will work.
-Both two show information of files in will orgnized ways.
+Beautifull statusline for advanced information of workspace, `airline` show more context than other statusline plugins, and more pleasing to eye. But it is heavy, so if **no** `"airline"` in `~/.vimrc.local`, `lightline` will work.
 
 ## [fugitive](https://github.com/tpope/vim-fugitive)
 Git plugin. `gc` for `Gcommit`, and `+` for `:Git `
 
-## [scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter)
+## [bioSyntax-vim](https://github.com/bioSyntax/bioSyntax-vim.git)
+As a bionformtion worker, this plug is use in view bam/sam/vcf. need add `bio` in `~/.vimrc.local`
+
+## [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
 Hackable plugin, just copy the introduction here.
 * `<Leader>c<Space>` **|NERDComToggleComment|**
 Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.
@@ -364,7 +417,7 @@ Uncomments the selected line(s).
 Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
 
 ## Browser tools
-
+`C-b` to invoke one of the following plugs
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
 
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
@@ -373,8 +426,6 @@ Adds comment delimiters at the current cursor position and inserts between. Disa
 
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
 
-## [Pymode](https://github.com/python-mode/python-mode)
-`python`用的插件,具有语法检查,调试等功能.`<Leader>R`:运行脚本;`<LocalLeader>p`:track_point toggle
 
 ## [surround](https://github.com/tpope/vim-surround)
 plugin to add bracket for string，here after is from [<vim中的杀手级别的插件：surround>](http://zuyunfei.com/2013/04/17/killer-plugin-of-vim-surround/), **\*** is for the cursor position
