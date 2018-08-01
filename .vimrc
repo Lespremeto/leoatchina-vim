@@ -115,7 +115,7 @@ command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 function! s:ExpandFilenameAndExecute(command, file)
     execute a:command . " " . expand(a:file, ":p")
 endfunction
-nnoremap <C-k>s :Shell<Space>
+nnoremap <C-h>s :Shell<Space>
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 " Restore cursor to file position in previous editing session
 function! ResCur()
@@ -459,7 +459,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:AutoPairsShortcutFastWrap   = "<C-b>f"
         let g:AutoPairsShortcutJump       = "<C-b>j"
         let g:AutoPairsShortcutBackInsert = "<C-b>i"
-        inoremap <buffer> <silent> <C-h> <C-R>=AutoPairsDelete()<CR>
+        inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
@@ -801,19 +801,19 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         tnoremap <C-w><up>    <C-\><C-N><C-w><up>
         if has('nvim')
             tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-            nmap <C-k>v :vsplit term://bash<Cr>i
-            nmap <C-k>h :split  term://bash<Cr>i
-            nmap <C-k>t :tabe   term://bash<Cr>i
-            nmap <C-k>V :vsplit term://
-            nmap <C-k>H :split  term://
-            nmap <C-k>T :tabe   term://
+            nmap <C-h>v :vsplit term://bash<Cr>i
+            nmap <C-h>h :split  term://bash<Cr>i
+            nmap <C-h>t :tabe   term://bash<Cr>i
+            nmap <C-h>V :vsplit term://
+            nmap <C-h>H :split  term://
+            nmap <C-h>T :tabe   term://
         else
-            nmap <C-k>v :vertical terminal<cr>bash<cr>
-            nmap <C-k>h :terminal<cr>bash<cr>
-            nmap <C-k>t :tab terminal<Cr>bash<Cr>
-            nmap <C-k>V :vertical terminal
-            nmap <C-k>H :terminal
-            nmap <C-k>T :tab terminal
+            nmap <C-h>v :vertical terminal<cr>bash<cr>
+            nmap <C-h>h :terminal<cr>bash<cr>
+            nmap <C-h>t :tab terminal<Cr>bash<Cr>
+            nmap <C-h>V :vertical terminal
+            nmap <C-h>H :terminal
+            nmap <C-h>T :tab terminal
         endif
     endif
     " easy-align
@@ -835,7 +835,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:go_fmt_command                 = "gofmt"
         let g:syntastic_go_checkers          = ['golint', 'govet', 'errcheck']
         let g:syntastic_mode_map             = { 'mode': 'active', 'passive_filetypes': ['go'] }
-        au FileType go imap <C-k>     <C-x><C-o>
+        au FileType go imap <C-b>     <C-x><C-o>
         au FileType go nmap <Leader>i <Plug>(go-implements)
         au FileType go nmap <Leader>I <Plug>(go-info)
         au FileType go nmap <Leader>r <Plug>(go-rename)
@@ -1394,9 +1394,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ale_set_loclist          = 0
         let g:ale_set_quickfix         = 0
         let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
-        nnoremap <C-l><C-l> :ALELint<CR>
-        nnoremap <silent> <C-l><C-p> <Plug>(ale_previous_wrap)
-        nnoremap <silent> <C-l><C-n> <Plug>(ale_next_wrap)
+        nmap <C-l><C-l> :ALELint<CR>
+        nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
+        nmap <silent> <C-l>n <Plug>(ale_next_wrap)
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
@@ -1422,9 +1422,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Errors
             endif
         endfunction
-        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nnoremap <silent> <C-l><C-n> :lnext<cr>
-        nnoremap <silent> <C-l><C-p> :lprevious<cr>
+        nmap <silent> <C-l><C-l> :call ToggleErrors()<cr>
+        nmap <silent> <C-l>n :lnext<cr>
+        nmap <silent> <C-l>p :lprevious<cr>
     endif
     if HasDirectory("asyncrun.vim") && v:version >= 800
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
