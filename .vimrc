@@ -447,7 +447,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:vim_markdown_frontmatter = 1
         let g:vim_markdown_auto_insert_bullets = 0
         let g:vim_markdown_new_list_item_indent = 0
-        if g:vim_advance
+        if v:version >= 704
             let g:vmt_auto_update_on_save = 1
             let g:vmt_cycle_list_item_markers = 1
         endif
@@ -580,7 +580,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             function! LightlineReadonly()
                 return &readonly && &filetype !=# 'help' ? 'RO' : ''
             endfunction
-            if count(g:plug_groups, 'syntax') && g:vim_advance == 2
+            if count(g:plug_groups, 'syntax') && v:version >= 800
                 let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
                     \  [ 'percent' ],
                     \  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
@@ -1376,7 +1376,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             endif
         endif
     endif
-    if HasDirectory("ale") && g:vim_advance == 2
+    if HasDirectory("ale") && v:version >= 800
         let g:ale_completion_enabled   = 0
         let g:ale_lint_on_enter        = 1
         let g:ale_lint_on_text_changed = 'always'
@@ -1426,7 +1426,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nnoremap <silent> <C-l><C-n> :lnext<cr>
         nnoremap <silent> <C-l><C-p> :lprevious<cr>
     endif
-    if HasDirectory("asyncrun.vim") && g:vim_advance == 2
+    if HasDirectory("asyncrun.vim") && v:version >= 800
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
         function! s:RUN_ASYNC()
             exec "w"
