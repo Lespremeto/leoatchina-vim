@@ -318,7 +318,7 @@ You can also force to install the completion engine in `g:plug_groups`, just rep
 
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
-`nnoremap gt :YcmCompleter GoToDefinitionElseDeclaration`
+> `nnoremap go :YcmCompleter GoToDefinitionElseDeclaration`
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
 Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.
@@ -328,11 +328,10 @@ Completor is an asynchronous code completion framework for vim8. New features of
 
 ### [ncm2](https://github.com/ncm2/ncm2)
 NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `python3`
+Its popup menu is differnt from others.
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
-Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed.
-
-But if you want `python` support, you should `pip3 install python-language-server`
+Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed. But if you want `python` support(actruely python3), you should `pip3 install python-language-server`
 
 ### [neocomplete](https://github.com/Shougo/neocomplete.vim)
 neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.
@@ -394,7 +393,7 @@ The main leader key is `C-f`,
 
 ## language support
 ### [Pymode for python](https://github.com/python-mode/python-mode)
-If your major work is with python, it is the only plugin you need. However,
+If your major work is with python, it is the only plugin you need. However, its so huge that I prefer not using it.
 `<Leader>R`:run scripts;`<BS>`:track_point toggle
 ### html
 ### css
@@ -453,15 +452,17 @@ Uncomments the selected line(s).
 Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
 
 ## Browser tools
-`C-b` to invoke one of the following plugs
+`C-\ ` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
+You can install only one of them , by write the plugins name in `~/.vimrc.local`. `CtrlP` is the default on is the default one
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
-
+fzf runs asynchronously and can be orders of magnitude faster than similar Vim plugins.
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
-
+This plugin is mainly used for locating files, buffers, mrus, tags in large project.
 ### [denite](https://github.com/Shougo/denite.nvim)
-
+Denite is a dark powered plugin for Neovim/Vim to unite all interfaces. It can replace many features or plugins with its interface. It is like a fuzzy finder, but is more generic. You can extend the interface and create the sources.
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
-Ctrlp
+Full path fuzzy file, buffer, mru, tag, ... finder for Vim. No need of python
+
 
 ## [surround](https://github.com/tpope/vim-surround)
 plugin to add bracket for string，here after is from [<vim中的杀手级别的插件：surround>](http://zuyunfei.com/2013/04/17/killer-plugin-of-vim-surround/), **\*** is for the cursor position
