@@ -8,9 +8,9 @@
 "            |_|
 " You can find spf13's origin config at http://spf13.com
 " Basics
-set nocompatible        " Must be first line
+set nocompatible
 if v:version < 700
-    echoerr 'This _vimrc requires Vim 7 or later.'
+    echoerr 'This vimrc requires Vim 7.0 or later.'
     quit
 endif
 set encoding=utf-8
@@ -580,7 +580,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             function! LightlineReadonly()
                 return &readonly && &filetype !=# 'help' ? 'RO' : ''
             endfunction
-            if count(g:plug_groups, 'syntax') && v:version >= 800
+            if HasDirectory("ale")
                 let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
                     \  [ 'percent' ],
                     \  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
@@ -681,7 +681,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:multi_cursor_select_all_key      = '<localleader><C-n>'
         let g:multi_cursor_next_key            = '<C-n>'
         let g:multi_cursor_prev_key            = '<C-p>'
-        let g:multi_cursor_skip_key            = '<C-h>'
+        let g:multi_cursor_skip_key            = '<C-c>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
@@ -1303,12 +1303,13 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
     " smart completion use neosnippet to expand
     if g:complete_engine !="None"
-        imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
         " headache confict
         if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
             imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
+            imap <expr><C-j> pumvisible()? "\<C-[>a":"\<CR>"
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
+            imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
         endif
         inoremap <expr> <Up>       pumvisible() ? "\<C-p>"                  : "\<Up>"
         inoremap <expr> <Down>     pumvisible() ? "\<C-n>"                  : "\<Down>"
@@ -1318,7 +1319,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         if g:complete_snippet == "ultisnips"
             " remap Ultisnips for compatibility
             let g:UltiSnipsNoPythonWarning = 0
-            let g:UltiSnipsListSnippets="<C-l>"
+            let g:UltiSnipsListSnippets = "<C-l>"
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
             " Ulti python version
@@ -1368,15 +1369,13 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:Neo_Snippet_Tab()<cr>"
             " Use honza's snippets.
             let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
-            " Enable neosnippet snipmate compatibility mode
-            let g:neosnippet#enable_snipmate_compatibility = 1
             " Enable neosnippets when using go
             if count(g:plug_groups, 'go')
                 let g:go_snippet_engine = "neosnippet"
             endif
         endif
     endif
-    if HasDirectory("ale") && v:version >= 800
+    if HasDirectory("ale")
         let g:ale_completion_enabled   = 0
         let g:ale_lint_on_enter        = 1
         let g:ale_lint_on_text_changed = 'always'
@@ -1426,7 +1425,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nmap <silent> <C-l>n :lnext<cr>
         nmap <silent> <C-l>p :lprevious<cr>
     endif
-    if HasDirectory("asyncrun.vim") && v:version >= 800
+    if HasDirectory("asyncrun.vim")
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
         function! s:RUN_ASYNC()
             exec "w"

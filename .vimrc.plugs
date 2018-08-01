@@ -61,7 +61,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
         " general
         Plug 'tpope/vim-fugitive'
-        Plug 'jiangmiao/auto-pairs'
         if v:version < 702
             Plug 'tpope/vim-git'
         endif
@@ -69,22 +68,17 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'jistr/vim-nerdtree-tabs'
         Plug 'mhinz/vim-startify'
-        if has('signs')
-            Plug 'kshenoy/vim-signature'
-        endif
-        Plug 'google/vim-searchindex'
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
-        Plug 'easymotion/vim-easymotion'
+        Plug 'leoatchina/vim-colorschemes-collections'
+        " text
         Plug 'tpope/vim-surround'
         Plug 'tpope/vim-repeat'
-        Plug 'leoatchina/vim-colorschemes-collections'
+        Plug 'jiangmiao/auto-pairs'
+        Plug 'junegunn/vim-easy-align'
         if g:python_version
             Plug 'vim-voom/VOoM'
-        endif
-        if executable('ctags')
-            Plug 'majutsushi/tagbar'
         endif
         " input method
         if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
@@ -95,8 +89,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'bioSyntax/bioSyntax-vim'
         endif
         " markdown
-        " gvim for markdown preview
-        if has("gui_running") && python_version
+        if has("gui_running") && python_version  " gvim for markdown preview
             Plug 'iamcco/mathjax-support-for-mkdp', {'for':'markdown'}
             Plug 'iamcco/markdown-preview.vim', {'for':'markdown'}
             Plug 'plasticboy/vim-markdown', {'for':'markdown'}
@@ -109,7 +102,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'tpope/vim-markdown', {'for':'markdown'}
         endif
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown'}
-        " external search/replace
+        " search/replace/finder
+        Plug 'google/vim-searchindex'
+        Plug 'easymotion/vim-easymotion'
         Plug 'brooth/far.vim'
         if executable('ag') || executable('ack') || executable('rg') || executable('pt')
             Plug 'dyng/ctrlsf.vim'
@@ -117,10 +112,12 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'damage220/vim-finder'
         endif
         " signs
-        Plug 'gorodinskiy/vim-coloresque'
-        Plug 'rhysd/conflict-marker.vim'
-        Plug 'mhinz/vim-signify'
-        Plug 'junegunn/vim-easy-align'
+        if has('signs')
+            Plug 'kshenoy/vim-signature'
+            Plug 'gorodinskiy/vim-coloresque'
+            Plug 'rhysd/conflict-marker.vim'
+            Plug 'mhinz/vim-signify'
+        endif
         " PHP
         if count(g:plug_groups, 'php')
             Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
@@ -137,13 +134,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'tpope/vim-haml'
             Plug 'mattn/emmet-vim'
         endif
-        " vim 7.2+
-        if v:version >= 702
-            if count(g:plug_groups, 'airline')
-                Plug 'vim-airline/vim-airline'
-            endif
-            Plug 'nathanaelkane/vim-indent-guides'
-        endif
         " enhance_status_line
         Plug 'bling/vim-bufferline'
         if has('statusline') && (v:version < 702 || !count(g:plug_groups, 'airline'))
@@ -152,10 +142,22 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Plug 'maximbaz/lightline-ale'
             endif
         endif
+        " vim 7.2+
+        if v:version >= 702
+            if count(g:plug_groups, 'airline')
+                Plug 'vim-airline/vim-airline'
+            endif
+            Plug 'nathanaelkane/vim-indent-guides'
+        endif
         " Pymode for python, python is supported by all the engines since I
         " wrote python mostly
-        if count(g:plug_groups, 'pymode') && v:version >= 703 && python_version
-            Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+        if v:version >= 703
+            if count(g:plug_groups, 'pymode') && python_version
+                Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+            endif
+            if executable('ctags')
+                Plug 'majutsushi/tagbar'
+            endif
         endif
         " syntax check and run method
         if v:version >= 800
