@@ -196,7 +196,7 @@ And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvi
 * `c-f`, `c-b`, `c-k`, `c-l`, `g` work like `Leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
 * `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
-* `c-\` invoke browser tools `fzf` or `LeaderF` or `denite` or `Ctrlp`
+* `c-p` invoke browser tools `fzf` or `LeaderF` or `denite` or `Ctrlp`
 * `gc` for gcommit, `+` for `:Git`
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode

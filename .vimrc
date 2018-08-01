@@ -680,8 +680,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:multi_cursor_start_key           = 'g<C-n>'
         let g:multi_cursor_select_all_key      = '<localleader><C-n>'
         let g:multi_cursor_next_key            = '<C-n>'
-        let g:multi_cursor_prev_key            = '<C-p>'
-        let g:multi_cursor_skip_key            = '<C-c>'
+        let g:multi_cursor_prev_key            = '<C-\>'
+        let g:multi_cursor_skip_key            = '<C-h>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
@@ -898,7 +898,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     " browser seris
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
         nnoremap <silent>   <C-\>      :FZF<CR>
-        nnoremap <silent>   <Leader>lb :Buffers<CR>
+        nnoremap <silent>   <C-p>lb :Buffers<CR>
         nnoremap <Leader>lf :FZF<Space>
         nnoremap <silent>   <Leader>lt :Filetypes<CR>
         nnoremap <silent>   <Leader>lg :GFiles?<CR>
@@ -953,7 +953,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == 'denite' && HasDirectory("denite.nvim")
-        nnoremap <C-\> :Denite file/rec buffer<Cr>
+        nnoremap <C-p> :Denite file/rec buffer<Cr>
         nnoremap <leader>lf :Denite
         nnoremap <leader>lb :DeniteBufferDir
         nnoremap <leader>lw :DeniteCursorWord
@@ -1042,7 +1042,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-\>'
+        let g:Lf_ShortcutF = '<C-p>'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_ShortcutB = '<leader>B'
         nmap <leader>lf :Leaderf
@@ -1050,7 +1050,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nmap <leader>lb :LeaderfB
         nmap <leader>lm :LeaderfM
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<C-\>'
+        let g:ctrlp_map = '<C-p>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
