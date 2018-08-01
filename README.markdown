@@ -158,7 +158,7 @@ OR
 After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
 The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins installation, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change. The default contents of `.vimrc.local` is
-> let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html']
+> let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet']
 
 The typical variables that could be add to `g:plug_groups` are `pymode`,`airline`,`airline`, `youcompleteme`, etc.
 
