@@ -142,16 +142,14 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 Plug 'maximbaz/lightline-ale'
             endif
         endif
-        " vim 7.2+
         if v:version >= 702
             if count(g:plug_groups, 'airline')
                 Plug 'vim-airline/vim-airline'
             endif
             Plug 'nathanaelkane/vim-indent-guides'
         endif
-        " Pymode for python, python is supported by all the engines since I
-        " wrote python mostly
         if v:version >= 703
+            " Pymode for python
             if count(g:plug_groups, 'pymode') && python_version
                 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
             endif
@@ -305,7 +303,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                     Plug 'SirVer/ultisnips'
                     Plug 'honza/vim-snippets'
                     Plug 'leoatchina/leoatchina-snippets'
-                elseif
+                else
                     let g:complete_snippet = "neosnippet"
                     Plug 'Shougo/neosnippet'
                     Plug 'Shougo/neosnippet-snippets'

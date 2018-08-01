@@ -1142,7 +1142,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
-            let g:ycm_python_binary_path = 'python2'
+            let g:ycm_python_binary_path = 'python'
         else
             let g:ycm_python_binary_path = 'python3'
         endif
@@ -1177,11 +1177,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ycm_collect_identifiers_from_tags_files = 1    " 开启 YC基于标签引擎
         let g:ycm_min_num_of_chars_for_completion = 2   " 从第2个键入字符就开始罗列匹配项
         let g:ycm_seed_identifiers_with_syntax = 1   " 语法关键字补全
-        ""在注释输入中也能补全
-        let g:ycm_complete_in_comments = 1
-        "在字符串输入中也能补全
+        let g:ycm_complete_in_comments = 0
         let g:ycm_complete_in_strings = 1
-        "注释和字符串中的文字也会被收入补全
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
