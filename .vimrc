@@ -194,6 +194,9 @@ smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 " C-f/b in insert mode
 nmap <BS>  <Nop>
+nmap <C-h> <Nop>
+nmap <C-j> <Nop>
+nmap <C-k> <Nop>
 nmap <C-f> <Nop>
 vmap <C-f> <Nop>
 nmap <C-b> <Nop>
@@ -825,6 +828,10 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
         let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
     endif
+    if HasDirectory("vim-easymotion")
+        nmap <C-j><C-j> <Plug>(easymotion-w)
+        nmap <C-k><C-k> <Plug>(easymotion-b)
+    endif
     " Go program
     if isdirectory(expand($PLUG_PATH."vim-go"))
         let g:go_highlight_functions         = 1
@@ -897,8 +904,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     endif
     " browser seris
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent>   <C-\>      :FZF<CR>
-        nnoremap <silent>   <C-p>lb :Buffers<CR>
+        nnoremap <silent>   <C-p>      :FZF<CR>
+        nnoremap <silent>   <leader>lb :Buffers<CR>
         nnoremap <Leader>lf :FZF<Space>
         nnoremap <silent>   <Leader>lt :Filetypes<CR>
         nnoremap <silent>   <Leader>lg :GFiles?<CR>

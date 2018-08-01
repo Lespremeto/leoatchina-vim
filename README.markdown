@@ -476,10 +476,11 @@ plugin to add bracket for string，here after is from [<vim中的杀手级别的
    <div>Yo!*</div>           dst         Yo!
    <div>Yo!*</div>           cst<p>      <p>Yo!</p>
 ```
-*command list*
+command list
 ```
     Normal mode
     -----------
+
     ds  - delete a surrounding
     cs  - change a surrounding
     ys  - add a surrounding
@@ -491,12 +492,10 @@ plugin to add bracket for string，here after is from [<vim中的杀手级别的
     -----------
     s   - in visual mode, add a surrounding
     S   - in visual mode, add a surrounding but place text on new line + indent it
-    Insert mode "不建议使用,特别是ctrl-s会引起屏幕halt的情况下
+    Insert mode
     -----------
-    <CTRL-s> - in insert mode, add a surrounding
-    <CTRL-s><CTRL-s> - in insert mode, add a new line + surrounding + indent
-    <CTRL-g>s - same as <CTRL-s>
-    <CTRL-g>S - same as <CTRL-s><CTRL-s>
+    <CTRL-g>s - in insert mode, add a surrounding
+    <CTRL-g>S - in insert mode, add a new line + surrounding + indent
 ```
 
 ## [repeat](https://github.com/tpope/vim-repeat)
@@ -504,8 +503,7 @@ plugin to add bracket for string，here after is from [<vim中的杀手级别的
 ## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
 ## [EasyMotion](https://github.com/easymotion/vim-easymotion)
-跳转到当前光标前后,快捷键`<Leader><Leader>w`和`<Leader><Leader>b`
-搜索跳转,`<Leader><Leader>s`,然后输入要搜索的字母
-行间/行内级别跳转,`<Leader><Leader>`再`hjkl`不解释
-重复上一次的动作,`<Leader><Leader>.`
-还可以`<Leader><Leader>f`和`<Leader><Leader>t`,不过不建议使用
+```
+    nmap <C-j><C-j> <Plug>(easymotion-w)
+    nmap <C-k><C-k> <Plug>(easymotion-b)
+```
