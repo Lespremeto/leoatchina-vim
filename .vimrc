@@ -1113,20 +1113,19 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    if g:complete_engine == "deoplete" && HasDirectory("deoplete.nvim")
+    if HasDirectory("deoplete.nvim")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
         if !has('nvim')
-            let g:deoplete#enable_yarp=1
+            let g:deoplete#enable_yarp = 1
         endif
-        let g:deoplete#enable_camel_case=1
+        let g:deoplete#enable_camel_case = 1
         " Enable heavy omni completion.
         if !exists('g:deoplete#keyword_patterns')
             let g:deoplete#keyword_patterns = {}
-            let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
         endif
         call deoplete#custom#option('omni_patterns', {
             \ 'java' : '[^. *\t]\.\w*',
@@ -1137,15 +1136,15 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'ruby' : '[^. *\t]\.\h\w*\|\h\w*::',
             \ 'go'   : '\h\w*\.\?',
         \})
-        if g:complete_snippet == 'ultisnips'
+        if HasDirectory('ultisnips')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif g:complete_engine == "completor" && HasDirectory("completor.vim")
+    elseif HasDirectory("completor.vim")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-    elseif g:complete_engine == "YCM" && HasDirectory("YouCompleteMe")
+    elseif HasDirectory("YouCompleteMe")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
@@ -1153,6 +1152,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         else
             let g:ycm_python_binary_path = 'python3'
         endif
+        " add_preview
+        let g:ycm_add_preview_to_completeopt = 1
         "  补全后close窗口
         let g:ycm_autoclose_preview_window_after_completion = 1
         "  插入后close窗口
@@ -1167,8 +1168,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         \}
         let g:ycm_semantic_triggers =  {
             \ 'c' : ['->', '.'],
-            \ 'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-            \           're!\[.*\]\s'],
+            \ 'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s', 're!\[.*\]\s'],
             \ 'ocaml' : ['.', '#'],
             \ 'cpp,cuda,objcpp' : ['->', '.', '::'],
             \ 'perl' : ['->'],
@@ -1189,7 +1189,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif g:complete_engine == "ncm2" && HasDirectory("ncm2")
+    elseif HasDirectory("ncm2")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -1204,7 +1204,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             \ 'complete_pattern': ':\s*',
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
             \ })
-    elseif g:complete_engine == "asyncomplete" && HasDirectory("asyncomplete.vim")
+    elseif HasDirectory("asyncomplete.vim")
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
@@ -1263,7 +1263,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
                 \ }))
         endif
-    elseif g:complete_engine == "neocomplete" && HasDirectory("neocomplete.vim")
+    elseif HasDirectory("neocomplete.vim")
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1283,7 +1283,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif g:complete_engine == "neocomplcache" && HasDirectory("neocomplcache.vim")
+    elseif HasDirectory("neocomplcache.vim")
         let g:neocomplcache_enable_insert_char_pre       = 1
         let g:neocomplcache_enable_at_startup            = 1
         let g:neocomplcache_enable_auto_select           = 0
@@ -1320,7 +1320,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>"   : "\<PageUp>"
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
         " ultisnip
-        if g:complete_snippet == "ultisnips"
+        if HasDirectory('ultisnip')
             " remap Ultisnips for compatibility
             let g:UltiSnipsNoPythonWarning = 0
             let g:UltiSnipsListSnippets = "<C-l>"
@@ -1350,7 +1350,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             " Ulti的代码片段的文件夹
             let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-        elseif g:complete_snippet == "neosnippet"
+        elseif HasDirectory('neosnippet')
             let g:neosnippet#enable_completed_snippet = 1
             " c-f to jump
             smap <C-f> <Plug>(neosnippet_jump)
