@@ -27,7 +27,6 @@
     * [vim-easy-align](#vim-easy-align)
     * [auto-pairs](#auto-pairs)
     * [Complete Engines, vim 7.4+ is required](#complete-engines-vim-74-is-required)
-        - [Smart Engines Selection](#smart-engines-selection)
         - [YouCompleteMe](#youcompleteme)
         - [deoplete](#deoplete)
         - [completor](#completor)
@@ -35,11 +34,9 @@
         - [asyncomplete](#asyncomplete)
         - [neocomplete](#neocomplete)
         - [neocomplcache](#neocomplcache)
-        - [Shortcuts](#shortcuts)
     * [Complete Snippets, vim 7.4+ is also required](#complete-snippets-vim-74-is-also-required)
         - [ultisnips](#ultisnips)
         - [neosnippet](#neosnippet)
-        - [Shortcuts](#shortcuts-1)
     * [Syntax Check](#syntax-check)
         - [ale](#ale)
         - [styntastic](#styntastic)
@@ -305,7 +302,7 @@ Default themes:
 ## Complete Engines, vim 7.4+ is required
 **7** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `completor`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
-### Smart Engines Selection
+**Smart Engines Selection**
 There is variable `smartcomplete` in `g:plug_groups` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no`, `windows` or `not`. I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
 By default, when neovim and python3 support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
@@ -315,6 +312,8 @@ If you are install older vim7.3 (default installed by ubuntu apt-get, centos yum
 You can also force to install the completion engine in `g:plug_groups`, just replace `smartcomplete` with it, but if the vim feature and enviroment not support the plug you choose, the engine will fall to `neocomplcache`.
 
 `youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups`, and is the one with the best performance. Since it is hard to install, I advice you not write it to `.vimrc.local` only you have a deep understanding to you system
+
+It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
@@ -346,19 +345,17 @@ neocomplete is the abbreviation of "neo-completion with cache". It provides keyw
 neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
 **It is the last complete engine this config choose**
 
-### Shortcuts
-It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
 ## Complete Snippets, vim 7.4+ is also required
-if complete_engine is `neocomplete` or `neocomplcache`,  snippets `ultisnips`, `neosnippet` will be intalled. Otherwise need `snippet` in `~/.vimrc.local`
+If complete_engine is `neocomplete` or `neocomplcache`,  snippets `ultisnips` or  `neosnippet` will be intalled. Otherwise need `snippet` in `~/.vimrc.local`
+`C-l` will list the snips when use `ultisnips`, `C-f` for snips jump forward in snippets, and only `ultisnips` use `c-b` for jump back
+
 ### [ultisnips](https://github.com/SirVer/ultisnips)
 Works if with python support.
 
 ### [neosnippet](https://github.com/Shougo/neosnippet.vim)
 Works if without python support.
 
-### Shortcuts
-`C-l` will list the snips when use `ultisnips`, `C-f` for snips jump forward in snippets, and only `ultisnips` use `c-b` for jump back
 
 ## Syntax Check
 ### [ale](https://github.com/w0rp/ale.git)
@@ -385,12 +382,13 @@ The main leader key is `C-f`,
 ```
 ### [vim-multiple-cursors](#)
 ```
+    let g:multi_cursor_use_default_mapping=0
     let g:multi_cursor_start_word_key      = '<C-n>'
     let g:multi_cursor_select_all_word_key = '<leader><C-n>'
     let g:multi_cursor_start_key           = 'g<C-n>'
     let g:multi_cursor_select_all_key      = '<localleader><C-n>'
     let g:multi_cursor_next_key            = '<C-n>'
-    let g:multi_cursor_prev_key            = '<C-p>'
+    let g:multi_cursor_prev_key            = '<C-\>'
     let g:multi_cursor_skip_key            = '<C-h>'
     let g:multi_cursor_quit_key            = '<ESC>'
 ```
@@ -463,8 +461,9 @@ Uncomments the selected line(s).
 Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
 
 ## Browser tools
-`C-\ ` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
-You can install only one of them , by write the plugins name in `~/.vimrc.local`. `CtrlP` is the default on is the default one
+`C-p` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
+You can install only one of them , by write the plugins name in `~/.vimrc.local`. `CtrlP` is the default one.
+
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
 fzf runs asynchronously and can be orders of magnitude faster than similar Vim plugins.
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
