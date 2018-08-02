@@ -26,7 +26,7 @@
     * [Themes Collentions](#themes-collentions)
     * [vim-easy-align](#vim-easy-align)
     * [auto-pairs](#auto-pairs)
-    * [Complete Engines](#complete-engines)
+    * [Complete Engines, vim 7.4+ is required](#complete-engines-vim-74-is-required)
         - [Smart Engines Selection](#smart-engines-selection)
         - [YouCompleteMe](#youcompleteme)
         - [deoplete](#deoplete)
@@ -36,7 +36,7 @@
         - [neocomplete](#neocomplete)
         - [neocomplcache](#neocomplcache)
         - [Shortcuts](#shortcuts)
-    * [Complete Snippets](#complete-snippets)
+    * [Complete Snippets, vim 7.4+ is also required](#complete-snippets-vim-74-is-also-required)
         - [ultisnips](#ultisnips)
         - [neosnippet](#neosnippet)
         - [Shortcuts](#shortcuts-1)
@@ -52,10 +52,10 @@
         - [asyncrun](#asyncrun)
     * [language support](#language-support)
         - [Pymode for python](#pymode-for-python)
+        - [vim-go for go](#vim-go-for-go)
         - [html](#html)
         - [css](#css)
         - [javascript](#javascript)
-        - [vim-go for go](#vim-go-for-go)
         - [rust](#rust)
     * [nerdtree](#nerdtree)
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
@@ -92,6 +92,7 @@ You can find spf13's origin config at http://vim.spf13.com or https://github.com
 
 Hereafter is spf13's introduction to his vim config
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
+
 
 # Requirements
 `Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and `Git 2.0+` is prefered for advanced fearutures
@@ -180,15 +181,15 @@ And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvi
 * no backup
 * no sound
 * no scroll bars
-* no menu, no tools when gui-runnin
+* no menu, no tools when gui-running
 * line number
-* highlight search
+* highlight search results
 * smart indent
 * In Visual, keep selection after indention change with `>`,`<`
 
 # Main shortcuts
 * `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
-* `<LocalLeader>` to `\`
+* `<LocalLeader>` to **\**
 * `<Leader>.` for number + 1, `<Leader>,` for number -1
 * `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug myself
 * `<LocalLeader><LocalLeader` for bracket jump
@@ -276,7 +277,7 @@ You can check how it is installed via `install.sh` or `setup.cmd`
 ## Markdown
 Markdown styntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for open url under cursor.
 
-This `README` is written mostly in gvim under OSX, and Atom.
+This `README` is written mostly macvim, and Atom.
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
 Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  these themes.
@@ -295,14 +296,13 @@ Default themes:
 ## [auto-pairs](https://github.com/jiangmiao/auto-pairs)
 ```
     let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-    let g:AutoPairsShortcutToggle     = "<C-b>t"
     let g:AutoPairsShortcutFastWrap   = "<C-b>f"
     let g:AutoPairsShortcutJump       = "<C-b>j"
     let g:AutoPairsShortcutBackInsert = "<C-b>i"
     inoremap <buffer> <silent> <C-h> <C-R>=AutoPairsDelete()<CR>
 ```
 
-## Complete Engines
+## Complete Engines, vim 7.4+ is required
 **7** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `completor`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
 ### Smart Engines Selection
@@ -318,23 +318,29 @@ You can also force to install the completion engine in `g:plug_groups`, just rep
 
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
+
+Needs `python` or `python3`
 > `nnoremap go :YcmCompleter GoToDefinitionElseDeclaration`
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
 Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.
 
+Need `+python3`
+
 ### [completor](https://github.com/maralla/completor.vim)
-Completor is an asynchronous code completion framework for vim8. New features of vim8 are used to implement the fast completion engine with low overhead. Require `python3`
+Completor is an asynchronous code completion framework for vim8. New features of vim8 are used to implement the fast completion engine with low overhead. Need `python3`
 
 ### [ncm2](https://github.com/ncm2/ncm2)
 NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `python3`
+
 Its popup menu is differnt from others.
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed. But if you want `python` support(actruely python3), you should `pip3 install python-language-server`
 
 ### [neocomplete](https://github.com/Shougo/neocomplete.vim)
-neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.
+neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.Use snippets for completion, faster than `neocomplcache`
+
 
 ### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
 neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
@@ -343,8 +349,8 @@ neocomplcache is the abbreviation of "neo-completion with cache". It provides ke
 ### Shortcuts
 It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
-## Complete Snippets
-**2** complete snippets: `ultisnips`, `neosnippet`. Vim7.4+ is both required
+## Complete Snippets, vim 7.4+ is also required
+if complete_engine is `neocomplete` or `neocomplcache`,  snippets `ultisnips`, `neosnippet` will be intalled. Otherwise need `snippet` in `~/.vimrc.local`
 ### [ultisnips](https://github.com/SirVer/ultisnips)
 Works if with python support.
 
@@ -357,7 +363,9 @@ Works if without python support.
 ## Syntax Check
 ### [ale](https://github.com/w0rp/ale.git)
 
+
 ### [styntastic](https://github.com/vim-syntastic/syntastic.git)
+Works is not fits the need of `ale`
 
 ## Search/Replace tools
 The main leader key is `C-f`,
@@ -388,17 +396,20 @@ The main leader key is `C-f`,
 ```
 
 ## RunTools
-### [vim-quickrun](#)
-### [asyncrun](#)
+### [vim-quickrun](https://github.com/thinca/vim-quickrun)
+Use `F5` to run scripts. `F4` to toggle quickrun window
+
+### [asyncrun](https://github.com/skywind3000/asyncrun.vim)
 
 ## language support
 ### [Pymode for python](https://github.com/python-mode/python-mode)
 If your major work is with python, it is the only plugin you need. However, its so huge that I prefer not using it.
 `<Leader>R`:run scripts;`<BS>`:track_point toggle
+### [vim-go for go](#)
+
 ### html
 ### css
 ### javascript
-### [vim-go for go](#)
 ### rust
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)

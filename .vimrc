@@ -1377,6 +1377,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             if count(g:plug_groups, 'go')
                 let g:go_snippet_engine = "neosnippet"
             endif
+        else
+            inoremap <silent><expr> <C-k> pumvisible()? "<C-y>":"<C-k>"
         endif
     endif
     if HasDirectory("ale")
