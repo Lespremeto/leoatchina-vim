@@ -402,9 +402,9 @@ Use `F5` to run scripts. `F4` to toggle quickrun window
 ## language support
 ### [Pymode for python](https://github.com/python-mode/python-mode)
 If your major work is with python, it is the only plugin you need. However, its so huge that I prefer not using it.
-`<Leader>R`:run scripts;`<BS>`:track_point toggle
-### [vim-go for go](#)
-
+`<Leader>R`:run scripts;`<BS>`:track_point toggle; need `pymode` in `g:plug_groups`
+### [vim-go for go](https://github.com/fatih/vim-go)
+vim-go requires at least Vim 7.4.1689 or Neovim 0.2.2. need `go` in `g:plug_groups`
 ### html
 ### css
 ### javascript

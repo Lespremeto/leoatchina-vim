@@ -273,9 +273,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             elseif count(g:plug_groups, 'asyncomplete')
                 if v:version >= 800
                     let g:complete_engine = "asyncomplete"
-                    if !executable('pyls')
-                        echoe "Suggest you to `pip3 install python-language-server`"
-                    endif
                 else
                     echoe "Cannot install asyncomplete, install neocomplcache instead."
                     let g:complete_engine = "neocomplcache"
@@ -290,7 +287,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             elseif count(g:plug_groups, 'neocomplcache')
                 let g:complete_engine = "neocomplcache"
             elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
-                if executable('cmake') && g:python_version
+                if executable('cmake') && g:python_version && !WINDOWS()
                     let g:complete_engine = "YCM"
                 else
                     echoe "Cannot install YouCompleteMe, install neocomplcache instead."
@@ -373,6 +370,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                     Plug 'ncm2/ncm2-go', {'for':'go'}
                 endif
             elseif g:complete_engine == "asyncomplete"
+                if !(executable('pyls') && g:python_version == 3)
+                    echoe "Suggest you to `pip3 install python-language-server`"
+                endif
                 Plug 'prabirshrestha/asyncomplete.vim'
                 Plug 'prabirshrestha/async.vim'
                 Plug 'prabirshrestha/vim-lsp'
