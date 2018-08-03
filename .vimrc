@@ -1399,7 +1399,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ale_set_loclist          = 0
         let g:ale_set_quickfix         = 0
         let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
-        let g:ale_type_map = {'flake8': {'E501': 'W'}}
+        let g:ale_python_flake8_options = " --ignore=E501 "
         nmap <C-l><C-l> :ALELint<CR>
         nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
         nmap <silent> <C-l>n <Plug>(ale_next_wrap)
