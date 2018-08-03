@@ -433,32 +433,7 @@ Git plugin. `gc` for `Gcommit`, and `+` for `:Git `
 As a bionformtion worker, this plug is use in view bam/sam/vcf. need add `bio` in `~/.vimrc.local`
 
 ## [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
-Hackable plugin, just copy the introduction here.
-* `<Leader>c<Space>` **|NERDComToggleComment|**
-Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.
-* `<Leader>cc` **|NERDComComment|**
-Comment out the current line or text selected in visual mode.
-* `<Leader>cn` **|NERDComNestedComment|**
-Same as <Leader>cc but forces nesting.
-* `<Leader>cm` **|NERDComMinimalComment|**
-Comments the given lines using only one set of multipart delimiters.
-* `<Leader>ci` **|NERDComInvertComment|**
-Toggles the comment state of the selected line(s) individually.
-* `<Leader>cs` **|NERDComSexyComment|**
-Comments out the selected lines with a pretty block formatted layout.
-* `<Leader>cy` **|NERDComYankComment|**
-Same as <Leader>cc except that the commented line(s) are yanked first.
-* `<Leader>cA` **|NERDComAppendComment|**
-Adds comment delimiters to the end of line and goes into insert mode between them.
-* `<Leader>ca` **|NERDComAltDelim|**
-Switches to the alternative set of delimiters.
-* `<Leader>cl`
-`<Leader>cb` **|NERDComAlignedComment|**
-Same as **|NERDComComment|** except that the delimiters are aligned down the left side (`<Leader>cl`) or both sides (`<Leader>cb`).
-* `<Leader>cu` **|NERDComUncommentLine|**
-Uncomments the selected line(s).
-* **|NERDComInsertComment|**
-Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
+Hackable plugin, the most import key is ** `<Leader>c<Space>` **|NERDComToggleComment|**
 
 ## Browser tools
 `C-p` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
@@ -509,6 +484,7 @@ command list
 ```
 
 ## [repeat](https://github.com/tpope/vim-repeat)
+if has `surround`, use `.` to `repead`
 
 ## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
