@@ -359,10 +359,16 @@ Works if without python support.
 
 ## Syntax Check
 ### [ale](https://github.com/w0rp/ale.git)
-
+```
+    nmap <C-l><C-l> :ALELint<CR>
+    nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
+    nmap <silent> <C-l>n <Plug>(ale_next_wrap)
+    nnoremap gf :ALEGoToDefinitionInTab<CR>
+    nnoremap gd :ALEGoToDefinition<CR>
+```
 
 ### [styntastic](https://github.com/vim-syntastic/syntastic.git)
-Works is not fits the need of `ale`
+Works is not fits the need of `ale`,
 
 ## Search/Replace tools
 The main leader key is `C-f`,
@@ -418,7 +424,7 @@ need `has("ctags")`. Togglekey:`<Leader>tt`
 
 ## [VOoM](https://github.com/vim-voom/VOoM)
 VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner.
-Togglekey:`<Leader>vt`. If voom sidebar has appeared, `<Leader>vv` will froce content refresh.
+Togglekey:`gt`. If voom sidebar has appeared, `gT` will froce content refresh.
 
 ## [undotree](https://github.com/mbbill/undotree)
 Just as it name. Togglekey:`<Leader>u`

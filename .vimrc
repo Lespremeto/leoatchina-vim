@@ -1403,12 +1403,12 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:ale_set_quickfix         = 0
         let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
         let g:ale_python_flake8_options = " --ignore=E501,E251,E226,E221 "
-        nmap <C-l><C-l> :ALELint<CR>
-        nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
-        nmap <silent> <C-l>n <Plug>(ale_next_wrap)
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
+        nmap <C-l><C-l> :ALELint<CR>
+        nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
+        nmap <silent> <C-l>n <Plug>(ale_next_wrap)
         nnoremap gf :ALEGoToDefinitionInTab<CR>
         nnoremap gd :ALEGoToDefinition<CR>
     elseif HasDirectory("syntastic")
