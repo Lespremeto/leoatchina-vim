@@ -10,9 +10,12 @@
 " Basics
 set nocompatible
 if v:version < 700
-    echoerr 'This vimrc requires Vim 7.0 or later.'
+    echoe 'This vimrc requires Vim 7.0 or later.'
     quit
 endif
+set re=1
+set ttyfast
+set lazyredraw
 set encoding=utf-8
 set fileencodings=utf-8,gbk,gb18030,gk2312,chinese,latin-1
 set background=dark     " Assume a dark background
@@ -665,8 +668,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:conflict_marker_enable_mappings = 1
         let g:voom_python_versions = [3,2]
         let g:voom_tab_key = "_"
-        nmap <silent><leader>vt :VoomToggle<CR>
-        nmap <silent><Leader>vv :VoomQuit<CR>:Voom<CR><C-w>w
+        nmap <leader>vt :VoomToggle<CR>
+        nmap <Leader>vv :VoomQuit<CR>:Voom<CR><C-w>w
         let g:voom_ft_modes = {
             \ 'markdown': 'markdown',
             \ 'pandoc': 'pandoc',
