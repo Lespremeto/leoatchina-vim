@@ -50,6 +50,8 @@
     * [language support](#language-support)
         - [Pymode for python](#pymode-for-python)
         - [vim-go for go](#vim-go-for-go)
+        - [vim-perl for perl](#vim-perl-for-perl)
+        - [php](#php)
         - [html](#html)
         - [css](#css)
         - [javascript](#javascript)
@@ -410,6 +412,8 @@ If your major work is with python, it is the only plugin you need. However, its 
 `<Leader>R`:run scripts;`<BS>`:track_point toggle; need `pymode` in `g:plug_groups`
 ### [vim-go for go](https://github.com/fatih/vim-go)
 vim-go requires at least Vim 7.4.1689 or Neovim 0.2.2. need `go` in `g:plug_groups`
+### [vim-perl for perl](https://github.com/vim-perl/vim-perl)
+### php
 ### html
 ### css
 ### javascript

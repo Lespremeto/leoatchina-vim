@@ -115,6 +115,20 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'rhysd/conflict-marker.vim'
             Plug 'mhinz/vim-signify'
         endif
+        if v:version >= 702
+            if count(g:plug_groups, 'airline')
+                Plug 'vim-airline/vim-airline'
+            endif
+            Plug 'nathanaelkane/vim-indent-guides'
+        endif
+        " enhance_status_line
+        Plug 'bling/vim-bufferline'
+        if has('statusline') && (v:version < 702 || !count(g:plug_groups, 'airline'))
+            Plug 'itchyny/lightline.vim'
+            if v:version >= 800 && count(g:plug_groups, 'syntax')
+                Plug 'maximbaz/lightline-ale'
+            endif
+        endif
         " PHP
         if count(g:plug_groups, 'php')
             Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
@@ -131,19 +145,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'tpope/vim-haml'
             Plug 'mattn/emmet-vim'
         endif
-        " enhance_status_line
-        Plug 'bling/vim-bufferline'
-        if has('statusline') && (v:version < 702 || !count(g:plug_groups, 'airline'))
-            Plug 'itchyny/lightline.vim'
-            if v:version >= 800 && count(g:plug_groups, 'syntax')
-                Plug 'maximbaz/lightline-ale'
-            endif
-        endif
-        if v:version >= 702
-            if count(g:plug_groups, 'airline')
-                Plug 'vim-airline/vim-airline'
-            endif
-            Plug 'nathanaelkane/vim-indent-guides'
+        " perl
+        if count(g:plug_groups, 'perl') && executable('perl')
+            Plug 'vim-perl/vim-perl'
         endif
         if v:version >= 703
             " Pymode for python
