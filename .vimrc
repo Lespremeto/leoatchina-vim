@@ -668,8 +668,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         let g:conflict_marker_enable_mappings = 1
         let g:voom_python_versions = [3,2]
         let g:voom_tab_key = "_"
-        nmap <leader>vt :VoomToggle<CR>
-        nmap <Leader>vv :VoomQuit<CR>:Voom<CR><C-w>w
+        nmap gt :VoomToggle<CR>
+        nmap gT :VoomQuit<CR>:Voom<CR><C-w>w
         let g:voom_ft_modes = {
             \ 'markdown': 'markdown',
             \ 'pandoc': 'pandoc',
@@ -1409,7 +1409,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
-        nnoremap gt :ALEGoToDefinitionInTab<CR>
+        nnoremap gf :ALEGoToDefinitionInTab<CR>
         nnoremap gd :ALEGoToDefinition<CR>
     elseif HasDirectory("syntastic")
         let g:syntastic_error_symbol             = 'E'
