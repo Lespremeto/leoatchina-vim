@@ -663,21 +663,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
     if HasDirectory("conflict-marker.vim")
         let g:conflict_marker_enable_mappings = 1
     endif
-    " voom
-    if HasDirectory("voom")
-        let g:conflict_marker_enable_mappings = 1
-        let g:voom_python_versions = [3,2]
-        let g:voom_tab_key = "_"
-        nmap gt :VoomToggle<CR>
-        nmap gT :VoomQuit<CR>:Voom<CR><C-w>w
-        let g:voom_ft_modes = {
-            \ 'markdown': 'markdown',
-            \ 'pandoc': 'pandoc',
-            \ 'c': 'fmr2',
-            \ 'cpp': 'fmr2',
-            \ 'python':'python',
-            \ 'tex': 'latex'}
-    endif
     " multiple-cursors
     if HasDirectory("vim-multiple-cursors")
         let g:multi_cursor_use_default_mapping=0
@@ -1409,7 +1394,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         nmap <C-l><C-l> :ALELint<CR>
         nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
         nmap <silent> <C-l>n <Plug>(ale_next_wrap)
-        nnoremap gf :ALEGoToDefinitionInTab<CR>
+        nnoremap gt :ALEGoToDefinitionInTab<CR>
         nnoremap gd :ALEGoToDefinition<CR>
     elseif HasDirectory("syntastic")
         let g:syntastic_error_symbol             = 'E'

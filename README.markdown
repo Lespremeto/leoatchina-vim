@@ -56,7 +56,6 @@
         - [rust](#rust)
     * [nerdtree](#nerdtree)
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
-    * [VOoM](#voom)
     * [undotree](#undotree)
     * [airline and lightline](#airline-and-lightline)
     * [fugitive](#fugitive)
@@ -363,7 +362,7 @@ Works if without python support.
     nmap <C-l><C-l> :ALELint<CR>
     nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
     nmap <silent> <C-l>n <Plug>(ale_next_wrap)
-    nnoremap gf :ALEGoToDefinitionInTab<CR>
+    nnoremap gt :ALEGoToDefinitionInTab<CR>
     nnoremap gd :ALEGoToDefinition<CR>
 ```
 
@@ -421,10 +420,6 @@ Togglekey:`<Leader>nn`, and key `<Leader>nt`
 
 ## [tagbar](https://github.com/majutsushi/tagbar) and [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
 need `has("ctags")`. Togglekey:`<Leader>tt`
-
-## [VOoM](https://github.com/vim-voom/VOoM)
-VOoM (Vim Outliner of Markups) is a plugin for Vim that emulates a two-pane text outliner.
-Togglekey:`gt`. If voom sidebar has appeared, `gT` will froce content refresh.
 
 ## [undotree](https://github.com/mbbill/undotree)
 Just as it name. Togglekey:`<Leader>u`

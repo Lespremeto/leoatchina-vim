@@ -77,9 +77,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         Plug 'tpope/vim-repeat'
         Plug 'jiangmiao/auto-pairs'
         Plug 'junegunn/vim-easy-align'
-        if g:python_version
-            Plug 'vim-voom/VOoM'
-        endif
         " input method
         if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
             Plug 'leoatchina/ywvim'
