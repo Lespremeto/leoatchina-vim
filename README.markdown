@@ -187,7 +187,7 @@ And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvi
 
 # Main shortcuts
 * `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
-* `<LocalLeader>` to **\**
+* `<LocalLeader>` to **`\`**
 * `<Leader>.` for number + 1, `<Leader>,` for number -1
 * `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug myself
 * `<LocalLeader><LocalLeader` for bracket jump
@@ -439,6 +439,7 @@ As a bionformtion worker, this plug is use in view bam/sam/vcf. need add `bio` i
 
 ## [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
 Hackable plugin, the most import key is ** `<Leader>c<Space>` **|NERDComToggleComment|**
+You can get other shortcuts via the link.
 
 ## Browser tools
 `C-p` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
