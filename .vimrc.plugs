@@ -185,6 +185,10 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                     Plug 'jodosha/vim-godebug', {'for': 'go'}
                 endif
             endif
+            " java
+            if count(g:plug_groups, 'java')
+                Plug 'artur-shaik/vim-javacomplete2'
+            endif
             " rust
             if count(g:plug_groups, 'rust')
                 Plug 'rust-lang/rust.vim'
@@ -358,7 +362,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 " language
                 Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
                 Plug 'ncm2/ncm2-jedi', {'for':'python'}
-                if count(g:plug_groups, 'css')
+                if count(g:plug_groups, 'html')
                     Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
                 endif
                 if count(g:plug_groups, 'javascript')
