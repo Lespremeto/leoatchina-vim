@@ -1196,7 +1196,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
-        call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+        au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
             \ 'name': 'buffer',
             \ 'whitelist': ['*'],
             \ 'blacklist': ['go'],
@@ -1238,13 +1238,13 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             autocmd User asyncomplete_setup call asyncomplete#register_source(
                 \ asyncomplete#sources#racer#get_source_options())
         endif
-        if HasDirectory("ultisnips")
+        if HasDirectory("asyncomplete-ultisnips.vim")
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
                 \ 'name': 'ultisnips',
                 \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#ultisnips#completor')
                 \ }))
-        elseif HasDirectory("neosnippet")
+        elseif HasDirectory("asyncomplete-neosnippet.vim")
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
                 \ 'name': 'neosnippet',
                 \ 'whitelist': ['*'],

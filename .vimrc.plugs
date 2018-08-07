@@ -90,6 +90,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'iamcco/mathjax-support-for-mkdp', {'for':'markdown'}
             Plug 'iamcco/markdown-preview.vim', {'for':'markdown'}
             Plug 'plasticboy/vim-markdown', {'for':'markdown'}
+            Plug 'vim-voom/VOoM', {'for': 'markdown'}
             if v:version >= 704
                 Plug 'mzlogin/vim-markdown-toc', {'for':'markdown'}
             else
@@ -375,9 +376,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                     Plug 'ncm2/ncm2-go', {'for':'go'}
                 endif
             elseif g:complete_engine == "asyncomplete"
-                if !(executable('pyls') && g:python_version == 3)
-                    echoe "Suggest you to `pip3 install python-language-server`"
-                endif
                 Plug 'prabirshrestha/asyncomplete.vim'
                 Plug 'prabirshrestha/async.vim'
                 Plug 'prabirshrestha/vim-lsp'
@@ -402,18 +400,8 @@ if (has('job') || python_version || has('nvim') || has('lua'))
                 endif
                 if g:complete_snippet == 'ultisnips'
                     Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-                    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-                        \ 'name': 'ultisnips',
-                        \ 'whitelist': ['*'],
-                        \ 'completor': function('asyncomplete#sources#ultisnips#completor')
-                        \ }))
                 elseif g:complete_snippet == 'neosnippet'
                     Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
-                    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-                        \ 'name': 'neosnippet',
-                        \ 'whitelist': ['*'],
-                        \ 'completor': function('asyncomplete#sources#neosnippet#completor')
-                        \ }))
                 endif
             elseif g:complete_engine == "neocomplete"
                 Plug 'Shougo/neoinclude.vim'
