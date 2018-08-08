@@ -23,7 +23,7 @@ else
     let g:python_version = 0
 endif
 " use vim-plug to install plugs
-if (has('job') || python_version || has('nvim') || has('lua'))
+if (has('job') || g:python_version || has('nvim') || has('lua'))
     " plug install path
     if has('nvim')
         let $PLUG_PATH = '~/.nvim/plug'
@@ -77,8 +77,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         Plug 'tpope/vim-repeat'
         Plug 'jiangmiao/auto-pairs'
         Plug 'junegunn/vim-easy-align'
-        " voom
-        Plug 'vim-voom/VOoM', {'for': 'markdown'}
         " input method
         if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
             Plug 'leoatchina/ywvim'
@@ -88,7 +86,9 @@ if (has('job') || python_version || has('nvim') || has('lua'))
             Plug 'bioSyntax/bioSyntax-vim'
         endif
         " markdown
-        if has("gui_running") && python_version  " gvim for markdown preview
+        if has("gui_running") && g:python_version  " gvim for markdown preview
+            " voom
+            Plug 'vim-voom/VOoM', {'for': 'markdown'}
             Plug 'iamcco/mathjax-support-for-mkdp', {'for':'markdown'}
             Plug 'iamcco/markdown-preview.vim', {'for':'markdown'}
             Plug 'plasticboy/vim-markdown', {'for':'markdown'}
@@ -153,7 +153,7 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         endif
         if v:version >= 703
             " Pymode for python
-            if count(g:plug_groups, 'pymode') && python_version
+            if count(g:plug_groups, 'pymode') && g:python_version
                 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
             endif
             if executable('ctags')

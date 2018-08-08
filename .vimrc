@@ -410,7 +410,7 @@ if has("user_commands")
     command! -bang Qa qa<bang>
 endif
 " Plugins, if vim-plug works
-if (has('job') || python_version || has('nvim') || has('lua'))
+if (has('job') || g:python_version || has('nvim') || has('lua'))
     function! HasDirectory(dir)
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
