@@ -85,7 +85,7 @@
 **PLEASE FORGIVE ME FOR MY POOR ENGLISH!!**
 
 # Introduction
-This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But meet my needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
+This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But in order to meet my furthers needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
 
 You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim.
 
@@ -96,7 +96,7 @@ Hereafter is spf13's introduction to his vim config
 # Requirements
 `Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and `Git 2.0+` is prefered for advanced fearutures
 
-And I wish you has a basic understanding for vim, know how to read this config.
+And I wish you have a basic understanding for vim, know how to read the config files to find what I not mention here.
 
 # Install
 ## Linux, \*nix, Mac OSX
@@ -109,7 +109,7 @@ And I wish you has a basic understanding for vim, know how to read this config.
 ```bash
   git clone https://github.com/leoatchina/tools-leoatchina-vim.git
   cd leoatchina-vim
-  click setup.cmd with admin rights
+  click setup.cmd with administrator rights
   open vim, do :PlugInstall
 ```
 
@@ -151,20 +151,20 @@ OR
 ```
 ## Windows
 ```bash
-  click delete.cmd with admin rights
+  click delete.cmd with administrator rights
 ```
 
 # How it works
-After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` for Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
+After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` in Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
-The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins installation, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change. The default contents of `.vimrc.local` is
+The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change. The default contents of `.vimrc.local` is
 > let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet']
 
-The typical variables that could be add to `g:plug_groups` are `pymode`,`airline`,`airline`, `youcompleteme`, etc.
+And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
+
+The typical variables that could be add to `g:plug_groups` are `pymode`,`go`,`airline`, `youcompleteme`, etc.
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
-
-And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
 
 `.vimrc.clean` it is an bash file which is set to delete `~/.vimswap` & `~/.vimviews` folders. Also be linked as `~/.vimrc.clean`
 
@@ -271,10 +271,10 @@ A smart and parallel plug manage plugin, instead of [vundle](https://github.com/
 You can check how it is installed via `install.sh` or `setup.cmd`
 
 ## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
-这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过**`CTRL+\`**开启,**`CTRL+^`**进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`或者`pinyin`.
+这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下t过**`CTRL+\`**开启,**`CTRL+^`**进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`或者`pinyin`.
 
 ## Markdown
-Markdown styntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for open url under cursor.
+Markdown styntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for `:Voom markdown`(with [voom](https://github.com/vim-voom/VOoM))
 
 This `README` is written mostly macvim, and Atom.
 
@@ -309,11 +309,11 @@ There is variable `smartcomplete` in `g:plug_groups` contained in `.vimrc.local`
 
 By default, when neovim and python3 support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
 
-If you are install older vim7.3 (default installed by ubuntu apt-get, centos yum), if `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has semantic completion funtion, theirs finishment is completed with snippets support
+If you are install older vim7.4- (default installed by ubuntu , centos), `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has barely semantic completion funtions, their finishments are completed with snippets support
 
 You can also force to install the completion engine in `g:plug_groups`, just replace `smartcomplete` with it, but if the vim feature and enviroment not support the plug you choose, the engine will fall to `neocomplcache`.
 
-`youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups`, and is the one with the best performance. Since it is hard to install, I advice you not write it to `.vimrc.local` only you have a deep understanding to you system
+`youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups` while not be installed with `smartcomplete`, and is the one with the best performance. Since it is hard to install, I advice you not to write it in `.vimrc.local` only when you have a deep understanding to you system
 
 It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
@@ -324,20 +324,17 @@ Needs `python` or `python3`
 > `nnoremap go :YcmCompleter GoToDefinitionElseDeclaration`
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
-Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.
-
-Need `+python3`
+Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.Need `+python3`
 
 ### [completor](https://github.com/maralla/completor.vim)
-Completor is an asynchronous code completion framework for vim8. New features of vim8 are used to implement the fast completion engine with low overhead. Need `python3`
+Completor is an asynchronous code completion framework for vim8. New features of vim8 are used to implement the fast completion engine with low overhead. Need `+python3`
 
 ### [ncm2](https://github.com/ncm2/ncm2)
-NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `python3`
+NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `+python3`
 
-Its popup menu is differnt from others.
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
-Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed. But if you want `python` support(actruely python3), you should `pip3 install python-language-server`
+Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed. But if you want `python` support(actrually python3), you should `pip3 install python-language-server`
 
 ### [neocomplete](https://github.com/Shougo/neocomplete.vim)
 neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.Use snippets for completion, faster than `neocomplcache`
@@ -345,7 +342,7 @@ neocomplete is the abbreviation of "neo-completion with cache". It provides keyw
 
 ### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
 neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
-**It is the last complete engine this config choose**
+**It is the last complete engine in this config , since it has the newst requirements choose**
 
 
 ## Complete Snippets, vim 7.4+ is also required

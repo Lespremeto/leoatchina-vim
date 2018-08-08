@@ -426,6 +426,25 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         smap <silent><F11> <Esc>:FullscreenToggle<cr>
         vmap <silent><F11> <Esc>:FullscreenToggle<cr>
     endif
+    " voom
+    if HasDirectory('VOom')
+        let g:voom_python_versions = [3,2]
+        if has('gui_running')
+            au FileType markdown nmap <silent> <C-q> :Voom markdown<Cr>
+            au FileType markdown vmap <silent> <C-q> <ESC>:Voom markdown<Cr>
+            au FileType markdown imap <silent> <C-q> <ESC>:Voom markdown<Cr>
+        endif
+        nmap <leader>vt :VoomToggle<CR>
+        nmap <leader>vv :VoomQuit<CR>:Voom<CR><C-w>w
+        let g:voom_tab_key = "<C-Tab>"
+        let g:voom_ft_modes = {
+            \ 'markdown': 'markdown',
+            \ 'pandoc': 'pandoc',
+            \ 'c': 'fmr2',
+            \ 'cpp': 'fmr2',
+            \ 'python':'python',
+            \ 'tex': 'latex'}
+    endif
     " markdown preview for gvim
     if has("gui_running") && HasDirectory('markdown-preview.vim')
         let g:vim_markdown_folding_disabled = 1
@@ -435,9 +454,6 @@ if (has('job') || python_version || has('nvim') || has('lua'))
         au FileType markdown vmap <silent> <C-z> <Plug>MarkdownPreview
         au FileType markdown nmap <silent> <C-s> <Plug>StopMarkdownPreview
         au FileType markdown vmap <silent> <C-s> <Plug>StopMarkdownPreview
-        au FileType markdown nmap <silent> <C-q> <Plug>Markdown_OpenUrlUnderCursor
-        au FileType markdown vmap <silent> <C-q> <Plug>Markdown_OpenUrlUnderCursor
-        au FileType markdown imap <silent> <C-q> <Plug>Markdown_EditUrlUnderCursor
         au FileType markdown nmap ]] <Plug>Markdown_MoveToNextHeader
         au FileType markdown nmap [[ <Plug>Markdown_MoveToPreviousHeader
         au FileType markdown nmap ][ <Plug>Markdown_MoveToNextSiblingHeader
