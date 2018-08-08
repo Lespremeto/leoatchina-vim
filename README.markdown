@@ -54,7 +54,6 @@
         - [vim-perl](#vim-perl)
         - [php](#php)
         - [html](#html)
-        - [css](#css)
         - [javascript](#javascript)
         - [rust](#rust)
     * [nerdtree](#nerdtree)
@@ -332,7 +331,6 @@ Completor is an asynchronous code completion framework for vim8. New features of
 ### [ncm2](https://github.com/ncm2/ncm2)
 NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `+python3`
 
-
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed. But if you want `python` support(actrually python3), you should `pip3 install python-language-server`
 
@@ -354,7 +352,6 @@ Works if with python support.
 
 ### [neosnippet](https://github.com/Shougo/neosnippet.vim)
 Works if without python support.
-
 
 ## Syntax Check
 ### [ale](https://github.com/w0rp/ale.git)
@@ -442,7 +439,6 @@ vim-go requires at least Vim 7.4.1689 or Neovim 0.2.2. need `go` in `g:plug_grou
 ### [vim-perl](https://github.com/vim-perl/vim-perl)
 ### php
 ### html
-### css
 ### javascript
 ### rust
 
