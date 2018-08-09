@@ -429,16 +429,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             source ~/.vimrc.after
         endif
     call plug#end()
-    function! s:PlugReinstall()
-        :PlugClean
-        :PlugInstall
-    endfunction
-    command! PlugReinstall call s:PlugReinstall()
-    function! s:PlugNew()
-        :PlugClean
-        :PlugUpdate
-    endfunction
-    command! PlugNew call s:PlugNew()
+    command! PlugReinstall PlugClean! | PlugInstall --sync
+    command! PlugNew PlugClean! | PlugUpdate --sync
 else
     echom "Inorder to install plugins with vim-plug, your vim should be with any of `+job`, `+python`, `+python3`, `+ruby`, or use Neovim"
 endif
