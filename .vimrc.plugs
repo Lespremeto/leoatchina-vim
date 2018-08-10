@@ -361,24 +361,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-neoinclude'
                 Plug 'Shougo/neoinclude.vim'
                 Plug 'Shougo/neco-syntax'
-                " only use ultisnips
-                if g:complete_snippet == "ultisnips"
-                    Plug 'ncm2/ncm2-ultisnips'
-                endif
                 " language
                 Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
-                Plug 'ncm2/ncm2-jedi', {'for':'python'}
                 if count(g:plug_groups, 'html')
                     Plug 'ncm2/ncm2-cssomni', {'for':['html','css', 'css3']}
                 endif
-                if count(g:plug_groups, 'javascript')
-                    Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
-                endif
-                if count(g:plug_groups, 'rust')
-                    Plug 'ncm2/ncm2-racer', {'for':'rust'}
-                endif
-                if count(g:plug_groups, 'go')
-                    Plug 'ncm2/ncm2-go', {'for':'go'}
+                Plug 'autozimu/LanguageClient-neovim', {
+					\ 'branch': 'next',
+					\ 'do': 'bash install.sh',
+					\ }
+                if g:complete_snippet == "ultisnips"
+                    Plug 'ncm2/ncm2-ultisnips'
                 endif
             elseif g:complete_engine == "asyncomplete"
                 Plug 'prabirshrestha/asyncomplete.vim'

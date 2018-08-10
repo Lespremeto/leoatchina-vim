@@ -1208,6 +1208,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'complete_pattern': ':\s*',
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
             \ })
+        let g:LanguageClient_serverCommands = {
+            \ 'go': ['go-langserver'],
+            \ 'rust': ['rls'],
+            \ 'javascript': ['tcp://127.0.0.1:2089'],
+            \ 'python': ['pyls'],
+            \ }
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
         set shortmess+=c
         set completeopt+=noinsert,noselect
