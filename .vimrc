@@ -1117,7 +1117,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    if HasDirectory("deoplete.nvim")
+    if HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
@@ -1143,12 +1143,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasDirectory('ultisnips')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif HasDirectory("completor.vim")
+    elseif HasDirectory("completor.vim") && g:complete_engine == "completor"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-    elseif HasDirectory("YouCompleteMe")
+    elseif HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
@@ -1193,7 +1193,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif HasDirectory("ncm2")
+    elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -1208,7 +1208,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'complete_pattern': ':\s*',
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
             \ })
-    elseif HasDirectory("asyncomplete.vim")
+    elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
@@ -1267,7 +1267,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
                 \ }))
         endif
-    elseif HasDirectory("neocomplete.vim")
+    elseif HasDirectory("neocomplete.vim") && g:complete_engine == "neocomplete"
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1287,7 +1287,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif HasDirectory("neocomplcache.vim")
+    elseif HasDirectory("neocomplcache.vim") && g:complete_engine == "neocomplcache"
         let g:neocomplcache_enable_insert_char_pre       = 1
         let g:neocomplcache_enable_at_startup            = 1
         let g:neocomplcache_enable_auto_select           = 0
