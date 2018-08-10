@@ -368,14 +368,13 @@ au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
 au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
-au BufNewFile,BufRead *.yml setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
+au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " preceding line best in a plugin but here for now.
 au BufNewFile,BufRead *.coffee set filetype=coffee
 " sepcial setting for different type of files
 au BufNewFile,BufRead *.py
     \ set foldmethod=indent
 au FileType python au BufWritePost <buffer> :%retab
-" yaml
 au FileType haskell,puppet,ruby setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
