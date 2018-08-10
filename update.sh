@@ -15,15 +15,15 @@ msg() {
 if program_exists "vim"; then
     echo
     msg "Starting update plugins for vim"
-    vim +PlugClean! +PlugUpdate +qall
+    vim +PlugNew +qall
 fi
 if program_exists "nvim"; then
     echo
     msg "Starting update plugins for nvim"
-    nvim +PlugClean! +PlugUpdate +qall
+    nvim +PlugNew +qall
 fi
 if program_exists "gvim"; then
     echo
     msg "Starting update plugins for gvim"
-    gvim +PlugClean! +PlugUpdate +qall
+    gvim +PlugNew +qall
 fi
