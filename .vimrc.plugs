@@ -144,12 +144,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " HTML
         if count(g:plug_groups, 'html')
             Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
-            Plug 'tpope/vim-haml'
-            Plug 'mattn/emmet-vim'
+            Plug 'tpope/vim-haml', {'for':['css','htm', 'html', 'xml', 'css3']}
+            Plug 'mattn/emmet-vim', {'for':['css','htm', 'html', 'xml', 'css3']}
         endif
         " perl
-        if count(g:plug_groups, 'perl') && executable('perl')
-            Plug 'vim-perl/vim-perl'
+        if count(g:plug_groups, 'perl')
+            Plug 'vim-perl/vim-perl', {'for': 'perl'}
         endif
         if v:version >= 703
             " Pymode for python
@@ -189,11 +189,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " java
             if count(g:plug_groups, 'java')
-                Plug 'artur-shaik/vim-javacomplete2'
+                Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
             endif
             " rust
             if count(g:plug_groups, 'rust')
-                Plug 'rust-lang/rust.vim'
+                Plug 'rust-lang/rust.vim', {'for': 'rust'}
+            endif
+            " julia
+            if count(g:plug_groups, 'julia')
+                Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
             endif
             " browser tool
             let g:browser_tool = "ctrlp"
