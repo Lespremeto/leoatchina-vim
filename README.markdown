@@ -168,11 +168,11 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 `.vimrc.clean` it is an bash file which is set to delete `~/.vimswap` & `~/.vimviews` folders. Also be linked as `~/.vimrc.clean`
 
 # Main changes from spf13
-* use `vim-plug` instead of `vundle`, more quick and more smart
-* totally simplify, delete `fork`,`before` files , which are redundent for most users
+* use `vim-plug` instead of `vundle`, taster and smarter
+* totally simplified, delete `fork`,`before` files , which are redundent for most users
 * delete lots of variables for feature settings
-* just have mentioned before, the link is from the cloned folder
-* not support **XP**
+* just as I have mentioned before, the link is from the cloned folder
+* not support **XP** any more
 
 # Some features
 * no backup file
@@ -207,7 +207,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun))
 * `F11`: full screen toggle, but sometimes not work
 * `F12`: paste toggle
-* tab/buffer control
+* `tab/buffer control`
     - set tabpagemax=10
     - cmap Tabe tabe
     - nnoremap <silent>-          :tabprevious<CR>
@@ -225,7 +225,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
     - nnoremap <LocalLeader><Backspace> :buffers<CR>
     - nnoremap <LocalLeader>]           :bn<CR>
     - nnoremap <LocalLeader>[           :bp<CR>
-* copy & paste
+* `copy & paste`
     - vnoremap <Leader>y  "+y
     - nnoremap <Leader>y  "+y
     - nnoremap <Leader>yy "+yy
@@ -237,7 +237,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
     - nnoremap <Leader>P "*P
     - vnoremap <Leader>p "+p
     - vnoremap <Leader>P "*P
-* Some other shortcuts
+* `Some other shortcuts`
     - nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
     - nnoremap <Leader>fd :set nofoldenable! nofoldenable?<CR>
     - nnoremap <Leader>fw :set nowrap! nowrap?<CR>
