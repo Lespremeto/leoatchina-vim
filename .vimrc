@@ -363,25 +363,26 @@ set guioptions-=R
 " 没有菜单和工具条
 set guioptions-=m
 set guioptions-=T
+" General
+au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+au BufNewFile,BufRead *.html.twig set filetype=html.twig
+au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
+au BufNewFile,BufRead *.pandoc set filetype=pandoc
+au BufNewFile,BufRead *.yml setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
+" preceding line best in a plugin but here for now.
+au BufNewFile,BufRead *.coffee set filetype=coffee
 " sepcial setting for different type of files
 au BufNewFile,BufRead *.py
     \ set foldmethod=indent
 au FileType python au BufWritePost <buffer> :%retab
 " yaml
-au FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
-" Remove trailing whiteSpaces and ^M chars
-au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
-au BufNewFile,BufRead *.html.twig set filetype=html.twig
-au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
-au BufNewFile,BufRead *.pandoc set filetype=pandoc
-" preceding line best in a plugin but here for now.
-au BufNewFile,BufRead *.coffee set filetype=coffee
+au FileType haskell,puppet,ruby setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
 au FileType haskell,rust setlocal nospell
-" General
-au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+" Remove trailing whiteSpaces and ^M chars
+au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
 " Map g* keys in Normal, Operator-pending, and Visual+select
 noremap $ :call WrapRelativeMotion("$")<CR>
 noremap 0 :call WrapRelativeMotion("0")<CR>
