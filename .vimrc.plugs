@@ -39,6 +39,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " complete_engine && complete_snippet
         let g:complete_engine  = "None"
         let g:complete_snippet = "ultisnips"
+        let g:smart_engine_select = 0
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
@@ -229,8 +230,54 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ctrlpvim/ctrlp.vim'
                 Plug 'tacahiroy/ctrlp-funky'
             endif
+            " engines
+            if count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
+                if executable('cmake') && g:python_version && !WINDOWS()
+                    let g:complete_engine = "YCM"
+                else
+                    echoe "Cannot install YouCompleteMe, smart select a complete_engine."
+                    let g:smart_engine_select = 1
+                endif
+            elseif count(g:plug_groups, 'deoplete')
+                if g:python_version == 3 && v:version >= 800 && has('timers')
+                    let g:complete_engine = "deoplete"
+                else
+                    echoe "Cannot install deoplete, smart select a complete_engine."
+                    let g:smart_engine_select = 1
+                endif
+            elseif count(g:plug_groups, 'ncm2')
+                if g:python_version == 3 && v:version >= 800
+                    let g:complete_engine = "ncm2"
+                else
+                    echoe "Cannot install ncm2, smart select a complete_engine."
+                    let g:smart_engine_select = 1
+                endif
+            elseif count(g:plug_groups, 'completor')
+                if g:python_version && v:version >= 800 && !has('nvim')
+                    let g:complete_engine = "completor"
+                else
+                    echoe "Cannot install completor, smart select a complete_engine."
+                    let g:smart_engine_select = 1
+                endif
+            elseif count(g:plug_groups, 'asyncomplete')
+                if v:version >= 800
+                    let g:complete_engine = "asyncomplete"
+                else
+                    echoe "Cannot install asyncomplete, smart select a complete_engine."
+                    let g:smart_engine_select = 1
+                endif
+            elseif count(g:plug_groups, 'neocomplete')
+                if has('lua')
+                    let g:complete_engine = "neocomplete"
+                else
+                    echoe "Cannot install neocomplete, smart select a complete_engine."
+                    let g:smart_engine_select = 1
+                endif
+            elseif count(g:plug_groups, 'neocomplcache')
+                let g:complete_engine = "neocomplcache"
+            endif
             " smart select
-            if count(g:plug_groups, 'smartcomplete')
+            if count(g:plug_groups, 'smartcomplete') || g:smart_engine_select
                 " nvim
                 if has('nvim')
                     if v:version >= 800
@@ -250,7 +297,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     endif
                 " vim8
                 elseif v:version >= 800
-                    if g:python_version && WINDOWS()
+                    if g:python_version
                         let g:complete_engine = "completor"
                     else
                         let g:complete_engine = "asyncomplete"
@@ -260,51 +307,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 else
                     let g:complete_engine = "neocomplcache"
                 endif
-            elseif count(g:plug_groups, 'deoplete')
-                if g:python_version == 3 && v:version >= 800 && has('timers')
-                    let g:complete_engine = "deoplete"
-                else
-                    echoe "Cannot install deoplete, install neocomplcache instead."
-                    let g:complete_engine = "neocomplcache"
-                endif
-            elseif count(g:plug_groups, 'ncm2')
-                if g:python_version == 3 && v:version >= 800 && has('nvim')
-                    let g:complete_engine = "ncm2"
-                else
-                    echoe "Cannot install ncm2, install neocomplcache instead."
-                    let g:complete_engine = "neocomplcache"
-                endif
-            elseif count(g:plug_groups, 'completor')
-                if g:python_version && v:version >= 800 && !has('nvim')
-                    let g:complete_engine = "completor"
-                else
-                    echoe "Cannot install completor, install neocomplcache instead."
-                    let g:complete_engine = "neocomplcache"
-                endif
-            elseif count(g:plug_groups, 'asyncomplete')
-                if v:version >= 800
-                    let g:complete_engine = "asyncomplete"
-                else
-                    echoe "Cannot install asyncomplete, install neocomplcache instead."
-                    let g:complete_engine = "neocomplcache"
-                endif
-            elseif count(g:plug_groups, 'neocomplete')
-                if has('lua')
-                    let g:complete_engine = "neocomplete"
-                else
-                    echoe "Cannot install neocomplete, install neocomplcache instead."
-                    let g:complete_engine = "neocomplcache"
-                endif
-            elseif count(g:plug_groups, 'neocomplcache')
-                let g:complete_engine = "neocomplcache"
-            elseif count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
-                if executable('cmake') && g:python_version && !WINDOWS()
-                    let g:complete_engine = "YCM"
-                else
-                    echoe "Cannot install YouCompleteMe, install neocomplcache instead."
-                    let g:complete_engine = "neocomplcache"
-                endif
             endif
+            unlet g:smart_engine_select
             " install snippets plugins
             if g:complete_engine != "None"
                 Plug 'Shougo/neco-vim'
@@ -357,7 +361,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-github'
                 Plug 'ncm2/ncm2-tagprefix'
                 Plug 'filipekiss/ncm2-look.vim'
-                Plug 'ncm2/ncm2-vim'
+                Plug 'ncm2/ncm2-vim', {'for':'vim'}
                 Plug 'ncm2/ncm2-neoinclude'
                 Plug 'Shougo/neoinclude.vim'
                 Plug 'Shougo/neco-syntax'
