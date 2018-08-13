@@ -199,6 +199,7 @@ imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 nmap <BS>  <Nop>
 nmap <C-h> <Nop>
 nmap <C-j> <Nop>
+imap <C-k> <Nop>
 nmap <C-k> <Nop>
 nmap <C-f> <Nop>
 vmap <C-f> <Nop>
@@ -1333,6 +1334,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasDirectory('ultisnip')
             " remap Ultisnips for compatibility
             let g:UltiSnipsNoPythonWarning = 0
+            let g:UltiSnipsExpandTrigger = "<C-k>"
             let g:UltiSnipsListSnippets = "<C-l>"
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
@@ -1386,7 +1388,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 let g:go_snippet_engine = "neosnippet"
             endif
         else
-            inoremap <silent><expr> <C-k> pumvisible()? "<C-y>":"<C-k>"
+            inoremap <silent><expr> <C-k> pumvisible()? "\<C-y>":"\<C-k>"
         endif
     endif
     if HasDirectory("ale")
