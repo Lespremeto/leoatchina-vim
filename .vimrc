@@ -1331,10 +1331,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>"   : "\<PageUp>"
         inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
         " ultisnip
-        if HasDirectory('ultisnip')
+        if HasDirectory('ultisnips')
             " remap Ultisnips for compatibility
             let g:UltiSnipsNoPythonWarning = 0
-            let g:UltiSnipsExpandTrigger = "<C-k>"
             let g:UltiSnipsListSnippets = "<C-l>"
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
@@ -1358,6 +1357,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             endfunction
             au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
             " Ulti的代码片段的文件夹
             let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
@@ -1365,7 +1365,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:neosnippet#enable_completed_snippet = 1
             " c-f to jump
             smap <C-f> <Plug>(neosnippet_jump)
-            function! g:Neo_Snippet_Tab()
+            function! g:NeoSnippet_Tab()
                 if pumvisible()
                     if neosnippet#expandable()
                         return neosnippet#mappings#expand_impl()
@@ -1380,15 +1380,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     return "\<Tab>"
                 endif
             endfunction
-            au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:Neo_Snippet_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>"
+            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>"
             " Use honza's snippets.
             let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
             " Enable neosnippets when using go
             if count(g:plug_groups, 'go')
                 let g:go_snippet_engine = "neosnippet"
             endif
-        else
-            inoremap <silent><expr> <C-k> pumvisible()? "\<C-y>":"\<C-k>"
         endif
     endif
     if HasDirectory("ale")
