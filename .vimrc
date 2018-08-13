@@ -1334,6 +1334,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasDirectory('ultisnips')
             " remap Ultisnips for compatibility
             let g:UltiSnipsNoPythonWarning = 0
+            let g:UltiSnipsExpandTrigger = "<Nop>"
             let g:UltiSnipsListSnippets = "<C-l>"
             let g:UltiSnipsJumpForwardTrigger = '<C-f>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
