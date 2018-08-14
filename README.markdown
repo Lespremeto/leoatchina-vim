@@ -51,10 +51,12 @@
         - [Pymode for python](#pymode-for-python)
         - [vim-go for go](#vim-go-for-go)
         - [vim-perl](#vim-perl)
+        - [java](#java)
         - [php](#php)
         - [html](#html)
         - [javascript](#javascript)
         - [rust](#rust)
+        - [julia](#julia)
     * [nerdtree](#nerdtree)
     * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
     * [undotree](#undotree)
@@ -269,15 +271,15 @@ A smart and parallel plug manage plugin, instead of [vundle](https://github.com/
 You can check how it is installed via `install.sh` or `setup.cmd`
 
 ## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
-这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下t过**CTRL+\**开启,**CTRL+^**进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
+这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下t过`CTRL+\\`开启,`CTRL+^`进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
 
 ## Markdown
 Markdown styntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for `:Voom markdown`(with [voom](https://github.com/vim-voom/VOoM))
 
-This `README` is written mostly macvim, and Atom.
+This `README` is written mostly with macvim, and Atom.
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
-Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped some xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  these themes.
+Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  these themes.
 Default themes:
 - [gruvbox](https://github.com/morhetz/gruvbox) for vim
 - [hybrid_material](https://github.com/kristijanhusak/vim-hybrid-material) for gvim
@@ -428,16 +430,22 @@ A async run plugin for vim8/nvim
 ```
 
 ## language support
+
 ### [Pymode for python](https://github.com/python-mode/python-mode)
 If your major work is with python, it is the only plugin you need. However, its so huge that I prefer not using it.
-`<Leader>R`:run scripts;`<BS>`:track_point toggle; need `pymode` in `g:plug_groups`
+`<Leader>R`:run scripts;`<BS>`:track_point toggle
+need `pymode` in `g:plug_groups`
+
 ### [vim-go for go](https://github.com/fatih/vim-go)
 vim-go requires at least Vim 7.4.1689 or Neovim 0.2.2. need `go` in `g:plug_groups`
+
 ### [vim-perl](https://github.com/vim-perl/vim-perl)
+### java
 ### php
 ### html
 ### javascript
 ### rust
+### julia
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)
 Togglekey:`<Leader>nn`, and key `<Leader>nt`
@@ -513,7 +521,10 @@ command list
 if has `surround`, use `.` to `repead`
 
 ## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
-
+```
+    nmap <localleader><Cr> <Plug>(EasyAlign)
+    vmap <Cr> <Plug>(EasyAlign)
+```
 ## [EasyMotion](https://github.com/easymotion/vim-easymotion)
 ```
     nmap <C-j><C-j> <Plug>(easymotion-w)
