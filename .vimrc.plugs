@@ -252,15 +252,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     echoe "Cannot install ncm2, smart select a complete_engine."
                     let g:smart_engine_select = 1
                 endif
-            elseif count(g:plug_groups, 'completor')
-                if g:python_version && v:version >= 800 && !has('nvim')
-                    let g:complete_engine = "completor"
-                else
-                    echoe "Cannot install completor, smart select a complete_engine."
-                    let g:smart_engine_select = 1
-                endif
             elseif count(g:plug_groups, 'asyncomplete')
-                if v:version >= 800
+                if v:version >= 800 && has('timers')
                     let g:complete_engine = "asyncomplete"
                 else
                     echoe "Cannot install asyncomplete, smart select a complete_engine."
@@ -282,11 +275,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if has('nvim')
                     if v:version >= 800
                         if g:python_version == 3
-                            if WINDOWS()
-                                let g:complete_engine = "deoplete"
-                            else
-                                let g:complete_engine = "ncm2"
-                            endif
+                            let g:complete_engine = "ncm2"
                         else
                             let g:complete_engine = "asyncomplete"
                         endif
@@ -297,8 +286,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     endif
                 " vim8
                 elseif v:version >= 800
-                    if g:python_version
-                        let g:complete_engine = "completor"
+                    if g:python_version == 3
+                        let g:complete_engine = "deoplete"
                     else
                         let g:complete_engine = "asyncomplete"
                     endif
@@ -343,11 +332,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 if count(g:plug_groups, 'javascript')
                     Plug 'carlitux/deoplete-ternjs'
-                endif
-            elseif g:complete_engine == "completor"
-                Plug 'maralla/completor.vim'
-                if g:complete_snippet == "neosnippet"
-                    Plug 'maralla/completor-neosnippet'
                 endif
             elseif g:complete_engine == "ncm2"
                 Plug 'ncm2/ncm2'

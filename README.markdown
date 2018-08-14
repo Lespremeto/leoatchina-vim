@@ -30,7 +30,6 @@
         - [Smart Engines Selection](#smart-engines-selection)
         - [YouCompleteMe](#youcompleteme)
         - [deoplete](#deoplete)
-        - [completor](#completor)
         - [ncm2](#ncm2)
         - [asyncomplete](#asyncomplete)
         - [neocomplete](#neocomplete)
@@ -301,13 +300,13 @@ Default themes:
 ```
 
 ## Complete Engines, vim 7.4+ is required
-**7** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `completor`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
+**6** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
 ### Smart Engines Selection
 There is variable `"smartcomplete"` in `"g:plug_groups"` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no python`, `windows` or `linux` or `mac`.
 I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-By default, when `neovim` and `python3` support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , `completor`, and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
+By default, when `neovim` and `python3` support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
 
 If you are install older vim7.4- (default installed by ubuntu , centos), `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has barely semantic completion funtions, their finishments are completed with snippets support
 
@@ -325,9 +324,6 @@ Needs `python` or `python3`
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
 Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.Need `+python3`
-
-### [completor](https://github.com/maralla/completor.vim)
-Completor is an asynchronous code completion framework for vim8. New features of vim8 are used to implement the fast completion engine with low overhead. Need `+python3`
 
 ### [ncm2](https://github.com/ncm2/ncm2)
 NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `+python3`
