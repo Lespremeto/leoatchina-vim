@@ -271,7 +271,7 @@ A smart and parallel plug manage plugin, instead of [vundle](https://github.com/
 You can check how it is installed via `install.sh` or `setup.cmd`
 
 ## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
-这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下t过`CTRL+\\`开启,`CTRL+^`进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
+这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下t过`CTRL+\`开启,`CTRL+^`进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
 
 ## Markdown
 Markdown styntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for `:Voom markdown`(with [voom](https://github.com/vim-voom/VOoM))
