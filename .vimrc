@@ -257,8 +257,8 @@ inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
 vnoremap <F1> <ESC>:tab help<Space>
 " F2 toggle hlsearch
-nnoremap <F2> set nohlsearch! nohlsearch?<CR>
-nnoremap <leader>fh set nohlsearch! nohlsearch?<CR>
+nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
+nnoremap <leader>fh :set nohlsearch! nohlsearch?<CR>
 inoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 vnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 snoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
