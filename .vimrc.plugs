@@ -150,7 +150,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " perl
         if count(g:plug_groups, 'perl')
-            Plug 'vim-perl/vim-perl', {'for': 'perl'}
+            Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
         if v:version >= 703
             " Pymode for python

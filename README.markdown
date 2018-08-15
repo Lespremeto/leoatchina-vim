@@ -94,9 +94,9 @@ Hereafter is spf13's introduction to his vim config
 
 
 # Requirements
-`Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and `Git 2.0+` is prefered for advanced fearutures
+`Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and `Git 2.0+` is prefered for advanced features
 
-And I wish you have a basic understanding for vim, know how to read the config files to find what I not mention here.
+And I wish you have a basic understanding of vim, know how to read the config files to find what I have not mentioned here.
 
 # Install
 ## Linux, \*nix, Mac OSX
@@ -120,7 +120,7 @@ And I wish you have a basic understanding for vim, know how to read the config f
 ```
 ## windows
 ```bash
-  cd leoatchina-vi#m
+  cd leoatchina-vim
   git pull
   open vim, do :PlugReinstall
 ```
@@ -143,6 +143,7 @@ OR
 ```bash
   open vim; do :PlugNew
 ```
+
 # Delete
 ## Linux, \*nix, Mac OSX
 ```bash
@@ -157,7 +158,7 @@ OR
 # How it works
 After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` in Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
-The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugClean`, `:PlugInstall`, the plugsin will change. The default contents of `.vimrc.local` is
+The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugReinstall`, the plugins will change. The default contents of `.vimrc.local` is:
 > let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet']
 
 And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
@@ -262,6 +263,8 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 # Plugins and their shortcuts
 Hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.
 
+At first I planned to detailly introduce every plugins, but actually it is easy for users to find the original repos of the plugins, and find the detail introduces for plugsin via search engines. So , I simplly made
+
 Just as I have mentioned, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugins `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
 
 You can open `.vimrc.plugs` for these features
@@ -271,7 +274,7 @@ A smart and parallel plug manage plugin, instead of [vundle](https://github.com/
 You can check how it is installed via `install.sh` or `setup.cmd`
 
 ## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
-这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下t过`CTRL+\`开启,`CTRL+^`进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
+这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过**CTRL+\ **开启,**CTRL+^ **进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
 
 ## Markdown
 Markdown styntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for `:Voom markdown`(with [voom](https://github.com/vim-voom/VOoM))
