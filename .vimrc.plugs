@@ -56,10 +56,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if !exists('g:plug_groups')
             let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'python']
         endif
-        " fullscreen
-        if (has('nvim') && WINDOWS()) || (has('gui_running') && !WINDOWS())
-            Plug 'lambdalisue/vim-fullscreen'
-        endif
         " general
         Plug 'tpope/vim-fugitive'
         if v:version < 702
@@ -239,14 +235,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     let g:smart_engine_select = 1
                 endif
             elseif count(g:plug_groups, 'deoplete')
-                if g:python_version == 3 && v:version >= 800 && has('timers')
+                if g:python_version == 3 && v:version >= 800 && has('timers') && !WINDOWS()
                     let g:complete_engine = "deoplete"
                 else
                     echoe "Cannot install deoplete, smart select a complete_engine."
                     let g:smart_engine_select = 1
                 endif
             elseif count(g:plug_groups, 'ncm2')
-                if g:python_version == 3 && v:version >= 800 && has('nvim')
+                if g:python_version == 3 && v:version >= 800 && has('nvim') && !WINDOWS()
                     let g:complete_engine = "ncm2"
                 else
                     echoe "Cannot install ncm2, smart select a complete_engine."
@@ -274,7 +270,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 " nvim
                 if has('nvim')
                     if v:version >= 800
-                        if g:python_version == 3
+                        if g:python_version == 3 && !WINDOWS()
                             let g:complete_engine = "ncm2"
                         else
                             let g:complete_engine = "asyncomplete"
@@ -286,7 +282,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     endif
                 " vim8
                 elseif v:version >= 800
-                    if g:python_version == 3
+                    if g:python_version == 3 && !WINDOWS()
                         let g:complete_engine = "deoplete"
                     else
                         let g:complete_engine = "asyncomplete"

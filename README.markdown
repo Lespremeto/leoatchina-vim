@@ -207,7 +207,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `F3`: show register strings
 * `F4`: toggle quickrun windows
 * `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun))
-* `F11`: full screen toggle, but sometimes not work
+* `F11`: full screen toggle
 * `F12`: paste toggle
 * `tab/buffer control`
     - set tabpagemax=10

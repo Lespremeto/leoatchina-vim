@@ -252,17 +252,18 @@ map zh zH
 noremap <silent>j gj
 noremap <silent>k gk
 " F1 for help
-nnoremap <F1> <ESC>:tab help<Space>
+nnoremap <F1> :tab help<Space>
 inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
 vnoremap <F1> <ESC>:tab help<Space>
 " F2 toggle hlsearch
-nnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+nnoremap <F2> set nohlsearch! nohlsearch?<CR>
+nnoremap <leader>fh set nohlsearch! nohlsearch?<CR>
 inoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 vnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 snoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 " F3 show clipboard
-nnoremap <F3> <ESC>:reg<Cr>
+nmap <F3> :reg<Cr>
 inoremap <F3> <ESC>:reg<Cr>
 vnoremap <F3> <ESC>:reg<Cr>
 snoremap <F3> <ESC>:reg<Cr>
@@ -415,18 +416,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     function! HasDirectory(dir)
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
-    " vim-fullscreen
-    if HasDirectory("vim_fullscreen")
-        let g:fullscreen#enable_default_keymap = 1
-        if has('nvim')
-            let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
-            let g:fullscreen#stop_command  = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
-        endif
-        nmap <silent><F11> :FullscreenToggle<cr>
-        imap <silent><F11> <Esc>:FullscreenToggle<cr>
-        smap <silent><F11> <Esc>:FullscreenToggle<cr>
-        vmap <silent><F11> <Esc>:FullscreenToggle<cr>
-    endif
     " voom
     if HasDirectory('VOom')
         let g:voom_python_versions = [3,2]
