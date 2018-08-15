@@ -39,7 +39,7 @@
         - [neosnippet](#neosnippet)
     * [Syntax Check](#syntax-check)
         - [ale](#ale)
-        - [styntastic](#styntastic)
+        - [syntastic](#syntastic)
     * [Search/Replace tools](#searchreplace-tools)
         - [FlyGrep](#flygrep)
         - [Ctrlsf](#ctrlsf)
@@ -263,7 +263,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 # Plugins and their shortcuts
 Hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.
 
-At first I planned to detailly introduce every plugins, but actually it is easy for users to find the original repos of the plugins, and find the detail introduces for plugsin via search engines. So , I simplly made
+At first I planned to detailly introduce every plugins, but actually it is easy for users to find the original repos of the plugins, and find the detail introduces for plugsin via search engines. So , I simplly write something about the plugins, sometime only list the shortcut
 
 Just as I have mentioned, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugins `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
 
@@ -277,7 +277,7 @@ You can check how it is installed via `install.sh` or `setup.cmd`
 这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过**CTRL+\ **开启,**CTRL+^ **进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
 
 ## Markdown
-Markdown styntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for `:Voom markdown`(with [voom](https://github.com/vim-voom/VOoM))
+Markdown syntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for `:Voom markdown`(with [voom](https://github.com/vim-voom/VOoM))
 
 This `README` is written mostly with macvim, and Atom.
 
@@ -365,7 +365,7 @@ Works if without python support.
     nnoremap gd :ALEGoToDefinition<CR>
 ```
 
-### [styntastic](https://github.com/vim-syntastic/syntastic.git)
+### [syntastic](https://github.com/vim-syntastic/syntastic.git)
 Works is not fits the need of `ale`,
 
 ## Search/Replace tools
