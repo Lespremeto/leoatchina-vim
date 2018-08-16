@@ -68,9 +68,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
-        if !count(g:plug_groups, 'oni')
-            Plug 'leoatchina/vim-colorschemes-collections'
-        endif
+        Plug 'leoatchina/vim-colorschemes-collections'
         " text
         Plug 'tpope/vim-surround'
         Plug 'tpope/vim-repeat'
@@ -115,9 +113,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'gorodinskiy/vim-coloresque'
             Plug 'rhysd/conflict-marker.vim'
             Plug 'mhinz/vim-signify'
-            Plug 'nathanaelkane/vim-indent-guides'
+            if v:version >= 702
+                Plug 'nathanaelkane/vim-indent-guides'
+            endif
         endif
-        if !count(g:plug_groups, 'oni') && has('statusline')
+        if has('statusline')
             Plug 'bling/vim-bufferline'
             if v:version >= 702 && count(g:plug_groups, 'airline')
                 Plug 'vim-airline/vim-airline'
