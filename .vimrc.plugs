@@ -68,7 +68,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
-        Plug 'leoatchina/vim-colorschemes-collections'
+        if !count(g:plug_groups, 'oni')
+            Plug 'leoatchina/vim-colorschemes-collections'
+        endif
         " text
         Plug 'tpope/vim-surround'
         Plug 'tpope/vim-repeat'
@@ -113,19 +115,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'gorodinskiy/vim-coloresque'
             Plug 'rhysd/conflict-marker.vim'
             Plug 'mhinz/vim-signify'
-        endif
-        if v:version >= 702
-            if count(g:plug_groups, 'airline')
-                Plug 'vim-airline/vim-airline'
-            endif
             Plug 'nathanaelkane/vim-indent-guides'
         endif
-        " enhance_status_line
-        Plug 'bling/vim-bufferline'
-        if has('statusline') && (v:version < 702 || !count(g:plug_groups, 'airline'))
-            Plug 'itchyny/lightline.vim'
-            if v:version >= 800 && count(g:plug_groups, 'syntax')
-                Plug 'maximbaz/lightline-ale'
+        if !count(g:plug_groups, 'oni') && has('statusline')
+            Plug 'bling/vim-bufferline'
+            if v:version >= 702 && count(g:plug_groups, 'airline')
+                Plug 'vim-airline/vim-airline'
+            elseif v:version < 702 || !count(g:plug_groups, 'airline')
+                Plug 'itchyny/lightline.vim'
+                if v:version >= 800 && count(g:plug_groups, 'syntax')
+                    Plug 'maximbaz/lightline-ale'
+                endif
             endif
         endif
         " PHP
