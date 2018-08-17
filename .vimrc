@@ -29,8 +29,8 @@ filetype plugin indent on   " Automatically detect file types.
 filetype on                 " 开启文件类型侦测
 filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
 syntax on
-"
-syn keyword Customhl contained TODO FIXME XXX IMPORTANT ATTENTION
+" set english input method when insert
+set noimdisable
 " Identify platform
 silent function! OSX()
     return has('macunix')
