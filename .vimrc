@@ -216,18 +216,19 @@ nnoremap <C-y> <C-b>
 " tab control
 set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
-nnoremap <silent>-          :tabprevious<CR>
-nnoremap <silent><Tab>      :tabnext<CR>
-nnoremap <Leader>tp         :tabprevious<CR>
-nnoremap <Leader>tn         :tabnext<CR>
-nnoremap <leader>-          :tabm -1<CR>
-nnoremap <leader><Tab>      :tabm +1<CR>
-nnoremap <localleader>-     :tabfirst<CR>
-nnoremap <localleader><Tab> :tablast<CR>
-nnoremap <Leader>te         :tabe<Space>
-nnoremap <Leader>ts         :tab  split<CR>
-nnoremap <Leader>tw         :tabs<CR>
-nnoremap <Leader>tm         :tabm<Space>
+" compatible with xshell
+nnoremap <Leader>tp           :tabprevious<CR>
+nnoremap <Leader>tn           :tabnext<CR>
+nnoremap <silent><Tab>        :tabnext<CR>
+nnoremap <silent><S-Tab>      :tabprevious<CR>
+nnoremap <leader><Tab>        :tabm +1<CR>
+nnoremap <leader><S-Tab>      :tabm -1<CR>
+nnoremap <localleader><Tab>   :tablast<CR>
+nnoremap <localleader><S-Tab> :tabfirst<CR>
+nnoremap <Leader>te           :tabe<Space>
+nnoremap <Leader>ts           :tab  split<CR>
+nnoremap <Leader>tw           :tabs<CR>
+nnoremap <Leader>tm           :tabm<Space>
 " buffer switch
 nnoremap <localleader><Backspace> :buffers<CR>
 nnoremap <localleader>]           :bn<CR>
