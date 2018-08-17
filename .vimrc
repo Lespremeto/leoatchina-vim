@@ -29,6 +29,8 @@ filetype plugin indent on   " Automatically detect file types.
 filetype on                 " 开启文件类型侦测
 filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
 syntax on
+"
+syn keyword Customhl contained TODO FIXME XXX IMPORTANT ATTENTION
 " Identify platform
 silent function! OSX()
     return has('macunix')
@@ -192,7 +194,7 @@ vmap <C-a> ^
 smap <C-a> ^
 imap <C-a> <Esc>I
 nmap <C-e> $
-vmap <C-e> $
+vmap <C-e> $<Left>
 smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 " C-f/b in insert mode
