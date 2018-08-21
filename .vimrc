@@ -373,7 +373,7 @@ au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
 au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
-au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
+au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java,*.js,*.json,*.vue,*.ts setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " preceding line best in a plugin but here for now.
 au BufNewFile,BufRead *.coffee set filetype=coffee
 " sepcial setting for different type of files
