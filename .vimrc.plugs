@@ -251,6 +251,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     echoe "Cannot install ncm2, smart select a complete_engine."
                     let g:smart_engine_select = 1
                 endif
+            elseif count(g:plug_groups, 'coc')
+                if has('nvim') && v:version >= 800 && !WINDOWS() && executable('node') && executable('yarn')
+                    let g:complete_engine = "coc"
+                else
+                    echoe "Cannot install coc, smart select a complete_engine."
+                    let g:smart_engine_select = 1
+                endif
             elseif count(g:plug_groups, 'asyncomplete')
                 if v:version >= 800 && has('timers')
                     let g:complete_engine = "asyncomplete"
@@ -275,6 +282,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     if v:version >= 800
                         if g:python_version == 3 && !WINDOWS()
                             let g:complete_engine = "ncm2"
+                        elseif executable('node') && executable('yarn') && !WINDOWS()
+                            let g:complete_engine = "coc"
                         else
                             let g:complete_engine = "asyncomplete"
                         endif
@@ -285,7 +294,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     endif
                 " vim8
                 elseif v:version >= 800
-                    if g:python_version == 3 && !WINDOWS()
+                    if g:python_version == 3
                         let g:complete_engine = "deoplete"
                     else
                         let g:complete_engine = "asyncomplete"
@@ -358,6 +367,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if g:complete_snippet == "ultisnips"
                     Plug 'ncm2/ncm2-ultisnips'
                 endif
+            elseif g:complete_engine == "coc"
+                Plug 'neoclide/coc.nvim', {'do': './install.sh'}
             elseif g:complete_engine == "asyncomplete"
                 Plug 'prabirshrestha/asyncomplete.vim'
                 Plug 'prabirshrestha/async.vim'
