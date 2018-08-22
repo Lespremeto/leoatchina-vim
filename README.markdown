@@ -255,10 +255,8 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
     - nmap <Leader><Up>   :resize +3<CR>
     - nmap <Leader><Left> :vertical resize -3<CR>
     - nmap <Leader><Right>:vertical resize +3<CR>
-    - vnoremap < <gv
-    - vnoremap > >gv
-    - nnoremap < <<
-    - nnoremap > >>
+    - vnoremap << <gv
+    - vnoremap >> >gv
 
 # Plugins and their shortcuts
 Hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.

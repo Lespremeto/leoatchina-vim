@@ -296,10 +296,8 @@ nmap <Leader><Up>    :resize +3<CR>
 nmap <Leader><Left>  :vertical resize -3<CR>
 nmap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-nnoremap < <<
-nnoremap > >>
+vnoremap << <gv
+vnoremap >> >gv
 "离开插入模式后关闭预览窗口
 au InsertLeave * if pumvisible() == 0|pclose|endif
 " auto close qfixwindows when leave vim
