@@ -1214,6 +1214,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
+        if v:version >= 800
+            if has('nvim) || has('lua')
+                let g:asyncomplete_smart_completion = 1
+            endif
+        endif
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
             \ 'name': 'buffer',
             \ 'whitelist': ['*'],
