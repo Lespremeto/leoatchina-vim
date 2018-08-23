@@ -1213,7 +1213,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
         if v:version >= 800
-            if has('nvim) || has('lua')
+            if has('nvim') || has('lua')
                 let g:asyncomplete_smart_completion = 1
             endif
         endif
