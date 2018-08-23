@@ -1108,38 +1108,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    if HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
-        set shortmess+=c
-        set completeopt+=noinsert,noselect
-        let g:deoplete#enable_at_startup = 1
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
-        if !has('nvim')
-            let g:deoplete#enable_yarp = 1
-        endif
-        let g:deoplete#enable_camel_case = 1
-        " Enable heavy omni completion.
-        if !exists('g:deoplete#keyword_patterns')
-            let g:deoplete#keyword_patterns = {}
-        endif
-        call deoplete#custom#option('omni_patterns', {
-            \ 'java' : '[^. *\t]\.\w*',
-            \ 'php'  : '[^. \t]->\h\w*\|\h\w*::',
-            \ 'perl' : '\h\w*->\h\w*\|\h\w*::',
-            \ 'c'    : '[^.[:digit:] *\t]\%(\.\|->\)',
-            \ 'cpp'  : '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
-            \ 'ruby' : '[^. *\t]\.\h\w*\|\h\w*::',
-            \ 'go'   : '\h\w*\.\?',
-        \})
-        if HasDirectory('ultisnips')
-            call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
-        endif
-    elseif HasDirectory("completor.vim") && g:complete_engine == "completor"
-        set shortmess+=c
-        set completeopt+=noinsert,noselect
-        let g:completor_set_options = 0
-        let g:completor_auto_trigger = 1
-    elseif HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
+    if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
@@ -1184,6 +1153,32 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
+        set shortmess+=c
+        set completeopt+=noinsert,noselect
+        let g:deoplete#enable_at_startup = 1
+        " <BS>: close popup and delete backword char.
+        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+        if !has('nvim')
+            let g:deoplete#enable_yarp = 1
+        endif
+        let g:deoplete#enable_camel_case = 1
+        " Enable heavy omni completion.
+        if !exists('g:deoplete#keyword_patterns')
+            let g:deoplete#keyword_patterns = {}
+        endif
+        call deoplete#custom#option('omni_patterns', {
+            \ 'java' : '[^. *\t]\.\w*',
+            \ 'php'  : '[^. \t]->\h\w*\|\h\w*::',
+            \ 'perl' : '\h\w*->\h\w*\|\h\w*::',
+            \ 'c'    : '[^.[:digit:] *\t]\%(\.\|->\)',
+            \ 'cpp'  : '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
+            \ 'ruby' : '[^. *\t]\.\h\w*\|\h\w*::',
+            \ 'go'   : '\h\w*\.\?',
+        \})
+        if HasDirectory('ultisnips')
+            call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
+        endif
     elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1206,6 +1201,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'python': ['pyls'],
             \ }
     elseif HasDirectory("coc.nvim") && g:complete_engine == "coc"
+        set shortmess+=c
         let g:coc_sinnpet_next = "<C-f>"
         let g:coc_sinnpet_prev = "<C-b>"
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
@@ -1256,7 +1252,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 \ }))
         endif
         if count(g:plug_groups, 'rust')
-            autocmd User asyncomplete_setup call asyncomplete#register_source(
+            au User asyncomplete_setup call asyncomplete#register_source(
                 \ asyncomplete#sources#racer#get_source_options())
         endif
         if HasDirectory("asyncomplete-ultisnips.vim")
