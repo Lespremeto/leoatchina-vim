@@ -1,1 +1,1 @@
-let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet']
+let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet', 'bio']
