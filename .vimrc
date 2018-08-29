@@ -1313,12 +1313,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     " smart completion use neosnippet to expand
     if g:complete_engine !="None"
         " headache confict
+        imap <expr><C-j>  pumvisible()? "()\<Left>":"\<CR>"
         if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
             imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
-            imap <expr><C-j> pumvisible()? "\<C-[>a":"\<CR>"
         else
             imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
-            imap <expr><C-j> pumvisible()? "\<C-y>":"\<CR>"
         endif
         inoremap <expr> <Up>       pumvisible() ? "\<C-p>"                  : "\<Up>"
         inoremap <expr> <Down>     pumvisible() ? "\<C-n>"                  : "\<Down>"
@@ -1341,7 +1340,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     if g:ulti_expand_res
                         return "\<Right>"
                     else
-                        if empty(v:completed_item) || !len(get(v:completed_item,'menu'))
+                        if !exists('v:completed_item') || empty(v:completed_item)
                             return "\<C-n>"
                         else
                             return "\<C-y>"
@@ -1365,7 +1364,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     if neosnippet#expandable()
                         return neosnippet#mappings#expand_impl()
                     else
-                        if empty(v:completed_item) || !len(get(v:completed_item,'menu'))
+                        if !exists('v:completed_item') || empty(v:completed_item)
                             return "\<C-n>"
                         else
                             return "\<C-y>"

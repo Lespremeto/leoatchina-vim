@@ -252,7 +252,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     let g:smart_engine_select = 1
                 endif
             elseif count(g:plug_groups, 'coc')
-                if has('nvim') && v:version >= 800 && !WINDOWS() && executable('node') && executable('yarn')
+                if has('nvim') && v:version >= 800 && executable('node') && executable('yarn')
                     let g:complete_engine = "coc"
                 else
                     echoe "Cannot install coc, smart select a complete_engine."
