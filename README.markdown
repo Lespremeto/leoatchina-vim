@@ -31,6 +31,7 @@
         - [YouCompleteMe](#youcompleteme)
         - [deoplete](#deoplete)
         - [ncm2](#ncm2)
+        - [coc](#coc)
         - [asyncomplete](#asyncomplete)
         - [neocomplete](#neocomplete)
         - [neocomplcache](#neocomplcache)
@@ -309,7 +310,8 @@ Default themes:
 There is variable `"smartcomplete"` in `"g:plug_groups"` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no python`, `windows` or `linux` or `mac`.
 I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-By default, when `neovim` and `python3` support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python, `asyncomplete`. If vim8 , with python2/3 support in windows , and `asyncomplete` other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`. For example, if `python` added to `g:plug_groups`, `deoplete-jedi` will also be installed with `deoplete`
+By default, when `neovim` and `python3` support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python but `node` and `yarn` are executable, `coc.nvim` will be install, otherwise `asyncomplete`.
+If `vim8` , with python3 support , `deoplete` is the complete_engine, then if `node` and `yarn` are in `$PATH`, `coc.nvim` is the solution,  and `asyncomplete` in other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`.
 
 If you are install older vim7.4- (default installed by ubuntu , centos), `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has barely semantic completion funtions, their finishments are completed with snippets support
 
@@ -331,12 +333,15 @@ Deoplete is the abbreviation of "dark powered neo-completion". It provides an ex
 ### [ncm2](https://github.com/ncm2/ncm2)
 NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `+python3`
 
+### [coc](https://github.com/neoclide/coc.nvim)
+It's a completion framework, language server client with bundled extensions from VSCode that just works.
+Need `node` and `yarn`, no need of `+python3`.
+
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed. But if you want `python` support(actrually python3), you should `pip3 install python-language-server`
 
 ### [neocomplete](https://github.com/Shougo/neocomplete.vim)
 neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.Use snippets for completion, faster than `neocomplcache`
-
 
 ### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
 neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
@@ -364,7 +369,7 @@ Works if without python support.
 ```
 
 ### [syntastic](https://github.com/vim-syntastic/syntastic.git)
-Works is not fits the need of `ale`,
+Works is not fits the need of `ale`
 
 ## Search/Replace tools
 The main leader key is `C-f`,

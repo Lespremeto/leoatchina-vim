@@ -313,7 +313,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neco-vim'
             endif
             if g:complete_engine == "neocomplete" || g:complete_engine == "neocomplcache" || count(g:plug_groups, 'snippet')
-                "if g:python_version && (!has('nvim') || has('nvim') && !WINDOWS()) && g:complete_snippet == "ultisnips"
                 if g:python_version &&  g:complete_snippet == "ultisnips"
                     Plug 'SirVer/ultisnips'
                     Plug 'honza/vim-snippets'
