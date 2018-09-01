@@ -252,7 +252,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     let g:smart_engine_select = 1
                 endif
             elseif count(g:plug_groups, 'coc')
-                if (has('nvim') && v:version >= 800 || !has('nvim') && v:version >= 801) && executable('node') && executable('yarn')
+                if has('nvim') && v:version >= 800 && executable('node') && executable('yarn')
                     let g:complete_engine = "coc"
                 else
                     echoe "Cannot install coc, smart select a complete_engine."
@@ -296,8 +296,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 elseif v:version >= 800
                     if g:python_version == 3
                         let g:complete_engine = "deoplete"
-                    elseif v:version >= 801 && executable('node') && executable('yarn')
-                        let g:complete_engine = "coc"
                     else
                         let g:complete_engine = "asyncomplete"
                     endif
@@ -369,7 +367,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'ncm2/ncm2-ultisnips'
                 endif
             elseif g:complete_engine == "coc"
-                Plug 'neoclide/coc.nvim', {'do': './install.sh'}
+                Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
             elseif g:complete_engine == "asyncomplete"
                 Plug 'prabirshrestha/asyncomplete.vim'
                 Plug 'prabirshrestha/async.vim'
