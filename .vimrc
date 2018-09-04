@@ -175,7 +175,7 @@ nmap ! :!
 let mapleader=' '
 let maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
-set pastetoggle=<F12>
+set pastetoggle=<F4>
 " 定义快捷键保存当前窗口内容
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
@@ -190,13 +190,12 @@ nnoremap <localleader><localleader> %
 nnoremap <Leader>, <C-X>
 nnoremap <Leader>. <C-A>
 nmap <C-a> <Nop>
-nmap <C-a> <Nop>
 vmap <C-a> ^
 smap <C-a> ^
 imap <C-a> <Esc>I
 vmap <C-e> $<Left>
 smap <C-e> $<Left>
-imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
+imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A\<Left>"
 " C-f/b in insert mode
 nmap <BS>  <Nop>
 nmap <C-b> <Nop>
@@ -1483,9 +1482,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endfunction
         command! ToggleQuickfix
                     \ call ToggleQuickfix()
-        nnoremap <silent><F4> :ToggleQuickfix<cr>
-        inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
-        vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
-        snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
+        nnoremap <silent><F6> :ToggleQuickfix<cr>
+        inoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
+        vnoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
+        snoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
     endif
 endif
