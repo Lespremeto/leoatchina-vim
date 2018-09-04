@@ -189,32 +189,30 @@ nnoremap <localleader><localleader> %
 " remap c-a/e , for home/end
 nnoremap <Leader>, <C-X>
 nnoremap <Leader>. <C-A>
-nmap <C-a> ^
+nmap <C-a> <Nop>
+nmap <C-a> <Nop>
 vmap <C-a> ^
 smap <C-a> ^
 imap <C-a> <Esc>I
-nmap <C-e> $
 vmap <C-e> $<Left>
 smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 " C-f/b in insert mode
 nmap <BS>  <Nop>
+nmap <C-b> <Nop>
 nmap <C-h> <Nop>
 nmap <C-j> <Nop>
-imap <C-k> <Nop>
 nmap <C-k> <Nop>
 nmap <C-f> <Nop>
 vmap <C-f> <Nop>
-nmap <C-b> <Nop>
 vmap <C-b> <Nop>
+imap <C-k> <Nop>
 imap <C-f> <Right>
 imap <C-b> <Left>
 " Find merge conflict markers
 nmap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 " and ask which one to jump to
 nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-nnoremap <C-x> <C-f>
-nnoremap <C-y> <C-b>
 " tab control
 set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
