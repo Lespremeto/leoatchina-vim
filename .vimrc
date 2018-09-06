@@ -195,7 +195,7 @@ smap <C-a> ^
 imap <C-a> <Esc>I
 vmap <C-e> $<Left>
 smap <C-e> $<Left>
-imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A\<Left>"
+imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 " C-f/b in insert mode
 nmap <BS>  <Nop>
 nmap <C-b> <Nop>
@@ -770,7 +770,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     if HasDirectory('ctrlsf.vim')
         let g:ctrlsf_position='right'
         nmap <C-F>s <Plug>CtrlSFPrompt
-        nmap <C-F>c <Plug>CtrlSFCwordPath
+        nmap <C-F>w <Plug>CtrlSFCwordPath
         nmap <C-F>p <Plug>CtrlSFPwordPath
         nmap <C-F>o :CtrlSFOpen<CR>
         nmap <C-F>t :CtrlSFToggle<CR>
