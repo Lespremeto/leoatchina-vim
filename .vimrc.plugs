@@ -122,7 +122,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         if has('statusline')
             Plug 'bling/vim-bufferline'
-            if v:version >= 702 && count(g:plug_groups, 'airline')
+            if v:version >= 702 && count(g:plug_groups, 'airline') || OSX() && has('gui_running')
                 Plug 'vim-airline/vim-airline'
             elseif v:version < 702 || !count(g:plug_groups, 'airline')
                 Plug 'itchyny/lightline.vim'
