@@ -165,6 +165,7 @@ if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
 endif
 " Key (re)Mappings
+nnoremap * *``
 " some internal key remap
 map  gt <Nop>
 map  gT <Nop>
@@ -676,7 +677,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:multi_cursor_select_all_key      = '<localleader><C-n>'
         let g:multi_cursor_next_key            = '<C-n>'
         let g:multi_cursor_prev_key            = '<C-\>'
-        let g:multi_cursor_skip_key            = '<C-h>'
+        let g:multi_cursor_skip_key            = '<C-x>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
