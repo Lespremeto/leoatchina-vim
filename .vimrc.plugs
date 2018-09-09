@@ -156,23 +156,23 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'majutsushi/tagbar'
             endif
         endif
-        " syntax check and run method
-        if v:version >= 800
-            if count(g:plug_groups, 'syntax')
-                Plug 'w0rp/ale'
-            endif
-            if executable('ctags')
-                Plug 'ludovicchabant/vim-gutentags'
-            endif
-            Plug 'skywind3000/asyncrun.vim'
-            Plug 'wsdjeg/FlyGrep.vim'
-        elseif v:version >= 704
-            if count(g:plug_groups, 'syntax')
-                Plug 'vim-syntastic/syntastic'
-            endif
-        endif
         " plugins for vim7.4 or later
         if v:version >= 704
+            " syntax check and run method
+            if v:version >= 800
+                if count(g:plug_groups, 'syntax')
+                    Plug 'w0rp/ale'
+                endif
+                if executable('ctags')
+                    Plug 'ludovicchabant/vim-gutentags'
+                endif
+                Plug 'skywind3000/asyncrun.vim'
+                Plug 'wsdjeg/FlyGrep.vim'
+            else
+                if count(g:plug_groups, 'syntax')
+                    Plug 'vim-syntastic/syntastic'
+                endif
+            endif
             Plug 'terryma/vim-multiple-cursors'
             Plug 'thinca/vim-quickrun'
             " Go

@@ -49,7 +49,6 @@
         - [vim-quickrun](#vim-quickrun)
         - [asyncrun](#asyncrun)
     * [language support](#language-support)
-        - [Pymode for python](#pymode-for-python)
         - [vim-go for go](#vim-go-for-go)
         - [vim-perl](#vim-perl)
         - [java](#java)
@@ -164,7 +163,7 @@ The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `
 
 And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
 
-The typical variables that could be add to `g:plug_groups` are `pymode`,`go`,`airline`, `youcompleteme`, etc.
+The typical variables that could be add to `g:plug_groups` are `go`,`airline`, `youcompleteme`, etc.
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
@@ -203,13 +202,13 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode
 * `!` for `:!`
-* `F1`: tab help
-* `F2`: toggle search results highlight
-* `F3`: show register strings
-* `F4`: toggle quickrun windows
-* `F5`: run script (with plugin [vim-quickrun](https://github.com/thinca/vim-quickrun))
+* `F1`:  tab help
+* `F2`:  toggle search results highlight
+* `F3`:  show register strings
+* `F4`:  paste toggle (F12 is for `tmux`)
+* `F5`:  run script (with plugin [vim-quickrun](https: //github.com/thinca/vim-quickrun))
+* `F6`:  toggle quickrun windows
 * `F11`: full screen toggle
-* `F12`: paste toggle
 * `tab/buffer control`
     - set tabpagemax=10
     - cmap Tabe tabe
@@ -436,11 +435,6 @@ A async run plugin for vim8/nvim
 ```
 
 ## language support
-
-### [Pymode for python](https://github.com/python-mode/python-mode)
-If your major work is with python, it is the only plugin you need. However, its so huge that I prefer not using it.
-`<Leader>R`:run scripts;`<BS>`:track_point toggle
-need `pymode` in `g:plug_groups`
 
 ### [vim-go for go](https://github.com/fatih/vim-go)
 vim-go requires at least Vim 7.4.1689 or Neovim 0.2.2. need `go` in `g:plug_groups`
