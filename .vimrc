@@ -846,55 +846,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         au FileType go nmap <Leader>v <Plug>(go-doc-vertical)
         au FileType go nmap <leader>c <Plug>(go-coverage)
     endif
-    " PyMode
-    if HasDirectory("python-mode")
-        " python version
-        if g:python_version     == 3
-            let g:pymode_python  = 'python3'
-        else
-            let g:pymode_python  = 'python'
-        endif
-        let g:pymode_syntax = 0
-        let g:pymode_syntax_all = 0
-        " disable pymode_rope and pymode_folding for slow problem
-        let g:pymode_rope             = 0
-        let g:pymode_folding          = 0
-        let g:pymode_trim_whiteSpaces = 0
-        let g:pymode_options          = 0
-        " doc for python
-        let g:pymode_doc              = 1
-        " motion
-        let g:pymode_motion           = 1
-        " run python
-        let g:pymode_run_bind         = '<leader>R'
-        " breakpoint
-        let g:pymode_breakpoint       = 1
-        let g:pymode_breakpoint_bind  = '<BS>'
-        let g:pymode_breakpoint_cmd   = 'import pdb;pdb.set_trace()'
-        " pymode check disable
-        if count(g:plug_groups, 'syntax')
-            let g:pymode_lint = 0
-            let g:pymode_rope_goto_definition_bind = '<Nop>'
-        else
-            nmap <C-l><C-l> :PymodeLint<CR>
-            let g:pymode_rope_goto_definition_bind = 'gd'
-            let g:pymode_lint            = 1
-            let g:pymode_lint_signs      = 1
-            " no check when write
-            let g:pymode_lint_on_write   = 0
-            " check when save
-            let g:pymode_lint_unmodified = 0
-            " not check of fly
-            let g:pymode_lint_on_fly     = 0
-            " show message of error line
-            let g:pymode_lint_message    = 1
-            " checkers
-            let g:pymode_lint_checkers   = ['pyflakes', 'pep8']
-            let g:pymode_lint_ignore     = "E128,E2,E3,E501"
-            " not Auto open cwindow (quickfix) if any errors have been found
-            let g:pymode_lint_cwindow    = 0
-        endif
-    endif
     " browser seris
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
         nnoremap <silent>   <C-p>      :FZF<CR>

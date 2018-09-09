@@ -152,10 +152,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
         if v:version >= 703
-            " Pymode for python
-            if count(g:plug_groups, 'pymode') && g:python_version
-                Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-            endif
             if executable('ctags')
                 Plug 'majutsushi/tagbar'
             endif
