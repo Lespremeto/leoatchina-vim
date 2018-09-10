@@ -197,16 +197,13 @@ imap <C-a> <Esc>I
 vmap <C-e> $<Left>
 smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
-" C-f/b in insert mode
-nmap <BS>  <Nop>
-nmap <C-b> <Nop>
-nmap <C-h> <Nop>
-nmap <C-j> <Nop>
-nmap <C-k> <Nop>
+" some ctrl+ key remap
+nmap <C-j> $
+nmap <C-k> ^
 nmap <C-f> <Nop>
+nmap <C-b> <Nop>
 vmap <C-f> <Nop>
 vmap <C-b> <Nop>
-imap <C-k> <Nop>
 imap <C-f> <Right>
 imap <C-b> <Left>
 " Find merge conflict markers
