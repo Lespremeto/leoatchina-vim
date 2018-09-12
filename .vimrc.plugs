@@ -363,7 +363,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'ncm2/ncm2-ultisnips'
                 endif
             elseif g:complete_engine == "coc"
-                Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+                if WINDOWS()
+                    Plug 'neoclide/coc.nvim', {'do': './install.cmd'}
+                else
+                    Plug 'neoclide/coc.nvim', {'do': 'bash install.sh'}
+                endif
             elseif g:complete_engine == "asyncomplete"
                 Plug 'prabirshrestha/asyncomplete.vim'
                 Plug 'prabirshrestha/async.vim'
