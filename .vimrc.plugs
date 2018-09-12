@@ -53,6 +53,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let $PATH.=";".$HOME."\\.vim-windows-tools"
         endif
         if OSX()
+            Plug 'rizzatti/dash.vim'
             Plug 'ybian/smartim'
         endif
         " list only the plugin groups you will use
@@ -107,8 +108,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'brooth/far.vim'
         if executable('ag') || executable('ack') || executable('rg') || executable('pt')
             Plug 'dyng/ctrlsf.vim'
-        elseif v:version >= 800 && !WINDOWS() && executable('ctags')
-            Plug 'damage220/vim-finder'
         endif
         " signs
         if has('signs')

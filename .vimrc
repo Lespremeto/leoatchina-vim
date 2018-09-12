@@ -767,13 +767,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         nmap <C-F>s <Plug>CtrlSFPrompt
         nmap <C-F>w <Plug>CtrlSFCwordPath
         nmap <C-F>p <Plug>CtrlSFPwordPath
-        nmap <C-F>o :CtrlSFOpen<CR>
         nmap <C-F>t :CtrlSFToggle<CR>
+        vmap <C-F>t <ESC>:CtrlSFToggle<CR>
         " vmap
         vmap <C-F>s <Plug>CtrlSFVwordExec
         vmap <C-F>f <Plug>CtrlSFVwordPath
-    elseif HasDirectory('vim-finder')
-        nnoremap <C-f>s :finder<Space>
     else
         nnoremap <C-f>s :vimgrep<Space>
     endif
