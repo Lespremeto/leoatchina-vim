@@ -1146,10 +1146,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'javascript': ['tcp://127.0.0.1:2089'],
             \ 'python': ['pyls'],
             \ }
-    elseif HasDirectory("coc.nvim") && g:complete_engine == "coc"
-        set shortmess+=c
-        let g:coc_sinnpet_next = "<C-f>"
-        let g:coc_sinnpet_prev = "<C-b>"
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
         set shortmess+=c
         set completeopt+=noinsert,noselect
