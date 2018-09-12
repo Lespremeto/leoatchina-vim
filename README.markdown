@@ -31,7 +31,6 @@
         - [YouCompleteMe](#youcompleteme)
         - [deoplete](#deoplete)
         - [ncm2](#ncm2)
-        - [coc](#coc)
         - [asyncomplete](#asyncomplete)
         - [neocomplete](#neocomplete)
         - [neocomplcache](#neocomplcache)
@@ -193,10 +192,10 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `<Leader>.` for number + 1, `<Leader>,` for number -1
 * `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug myself
 * `<LocalLeader><LocalLeader` for bracket jump
-* `c-a` to the head of a line, `c-e` to end in normal/visual/inesert mode, compatible with linux
-* `c-f`, `c-b`, `c-k`, `c-l`, `g` work like `Leader` key in normal mode
+* `c-a` to the head of a line, `c-e` to end in visual/insert mode, compatible with linux.
+* `c-f`, `c-b`, `c-h`, `c-l`, `g` work like `Leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
-* `c-x` instead of 'c-e' for fullscreen jump, pairs with `c-y`
+* 'c-j' to end of sentence, 'c-k' to the beginning
 * `c-p` invoke browser tools `fzf` or `LeaderF` or `denite` or `Ctrlp`
 * `gc` for gcommit, `+` for `:Git`
 * `~` instead of `Q`, and `Q` for quit current buffer at once
@@ -209,6 +208,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `F5`:  run script (with plugin [vim-quickrun](https: //github.com/thinca/vim-quickrun))
 * `F6`:  toggle quickrun windows
 * `F11`: full screen toggle
+* 'F12': is for tmux, I have to mention it here.
 * `tab/buffer control`
     - set tabpagemax=10
     - cmap Tabe tabe
@@ -309,16 +309,17 @@ Default themes:
 There is variable `"smartcomplete"` in `"g:plug_groups"` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no python`, `windows` or `linux` or `mac`.
 I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-By default, when `neovim` and `python3` support, `deoplete` for windows, `ncm2` for linux and mac, if nevovim without python but `node` and `yarn` are executable, `coc.nvim` will be install, otherwise `asyncomplete`.
-If `vim8` , with python3 support , `deoplete` is the complete_engine, then if `node` and `yarn` are in `$PATH`, `coc.nvim` is the solution,  and `asyncomplete` in other situation. These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`.
+By default, with '+python3' support and not windows, `deoplete` for 'vim8', `ncm2` for 'neovim',  otherwise `asyncomplete`.
 
-If you are install older vim7.4- (default installed by ubuntu , centos), `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has barely semantic completion funtions, their finishments are completed with snippets support
+These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`.
 
-You can also force to install the completion engine in `g:plug_groups`, just replace `smartcomplete` with it, but if the vim feature and enviroment not support the plug you choose, the engine will fall to `neocomplcache`.
+If you are install older vim7.4- (default installed by ubuntu , centos), `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has barely semantic completion funtions, their finishments are completed with snippets support.
 
-`youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups` while not be installed with `smartcomplete`, and is the one with the best performance. Since it is hard to install, I advice you not to write it in `.vimrc.local` only when you have a deep understanding to you system
+You can also force to install the completion engine in `g:plug_groups`, just replace `smartcomplete` with it, but if the vim feature and enviroment not support the plug you choose, the engine will fall to `neocomplcache` which is the one with the least requires.
 
-It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work ). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
+`youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups`,  which not be installed with `smartcomplete`, and is the one with the best performance. Since it is hard to install, I advice you not to write it in `.vimrc.local` untill you have a deep understanding to you system.
+
+It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
@@ -331,10 +332,6 @@ Deoplete is the abbreviation of "dark powered neo-completion". It provides an ex
 
 ### [ncm2](https://github.com/ncm2/ncm2)
 NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `+python3`
-
-### [coc](https://github.com/neoclide/coc.nvim)
-It's a completion framework, language server client with bundled extensions from VSCode that just works.
-Need `node` and `yarn`, no need of `+python3`.
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed. But if you want `python` support(actrually python3), you should `pip3 install python-language-server`

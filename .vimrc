@@ -188,9 +188,6 @@ cmap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 nnoremap <localleader><localleader> %
 " remap c-a/e , for home/end
-nnoremap <Leader>, <C-X>
-nnoremap <Leader>. <C-A>
-nmap <C-a> <Nop>
 vmap <C-a> ^
 smap <C-a> ^
 imap <C-a> <Esc>I
