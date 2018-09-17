@@ -200,10 +200,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if !WINDOWS()
                     let g:browser_tool = "fzf"
                 endif
-            elseif count(g:plug_groups, 'denite')
-                if g:python_version == 3 && v:version >= 800
-                    let g:browser_tool = "denite"
-                endif
             elseif count(g:plug_groups, 'LeaderF') || count(g:plug_groups, 'leaderf')
                 if g:python_version && executable('gcc')
                     let g:browser_tool = "LeaderF"
@@ -212,8 +208,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if g:browser_tool == "fzf"
                 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
                 Plug 'junegunn/fzf.vim'
-            elseif g:browser_tool == "denite"
-                Plug 'shougo/denite.nvim'
             elseif g:browser_tool == "LeaderF"
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
