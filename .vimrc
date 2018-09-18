@@ -899,8 +899,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:Lf_ShortcutF = '<C-p>'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_ShortcutB = '<leader>B'
-        nmap <leader>lf :Leaderf
-        nmap <leader>lF :LeaderfF
+        nmap <leader>ld :Leaderf
+        nmap <leader>lf :LeaderfF
         nmap <leader>lb :LeaderfB
         nmap <leader>lm :LeaderfM
     elseif HasDirectory("ctrlp.vim")

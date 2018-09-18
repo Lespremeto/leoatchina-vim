@@ -66,7 +66,6 @@
     * [Browser tools](#browser-tools)
         - [fzf.vim](#fzfvim)
         - [LeaderF](#leaderf)
-        - [denite](#denite)
         - [ctrlp](#ctrlp)
     * [surround](#surround)
     * [repeat](#repeat)
@@ -196,7 +195,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `c-f`, `c-b`, `c-h`, `c-l`, `g` work like `Leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
 * 'c-j' to end of sentence, 'c-k' to the beginning
-* `c-p` invoke browser tools `fzf` or `LeaderF` or `denite` or `Ctrlp`
+* `c-p` invoke browser tools `fzf` or `LeaderF` or `Ctrlp`
 * `gc` for gcommit, `+` for `:Git`
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode
@@ -208,7 +207,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `F5`:  run script (with plugin [vim-quickrun](https: //github.com/thinca/vim-quickrun))
 * `F6`:  toggle quickrun windows
 * `F11`: full screen toggle
-* 'F12': is for tmux, I have to mention it here.
+* 'F12': is for tmux, I have to mention it here
 * `tab/buffer control`
     - set tabpagemax=10
     - cmap Tabe tabe
@@ -474,8 +473,6 @@ You can install only one of them , by write the plugins name in `~/.vimrc.local`
 fzf runs asynchronously and can be orders of magnitude faster than similar Vim plugins.
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
 This plugin is mainly used for locating files, buffers, mrus, tags in large project.
-### [denite](https://github.com/Shougo/denite.nvim)
-Denite is a dark powered plugin for Neovim/Vim to unite all interfaces. It can replace many features or plugins with its interface. It is like a fuzzy finder, but is more generic. You can extend the interface and create the sources.
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
 Full path fuzzy file, buffer, mru, tag, ... finder for Vim. No need of python
 
