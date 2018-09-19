@@ -955,12 +955,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     set completeopt-=preview
     set completeopt+=menuone
     " ominifuc
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
+    if g:complete_engine == "None"
+        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    elseif HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
@@ -1005,6 +1006,27 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
+        set shortmess+=c
+        set completeopt+=noinsert,noselect
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+        au User Ncm2Plugin call ncm2#register_source({
+            \ 'name' : 'css',
+            \ 'enable' : 1,
+            \ 'priority': 9,
+            \ 'subscope_enable': 1,
+            \ 'scope': ['css','scss'],
+            \ 'mark': 'css',
+            \ 'word_pattern': '[\w\-]+',
+            \ 'complete_pattern': ':\s*',
+            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
+            \ })
+        let g:LanguageClient_serverCommands = {
+            \ 'go': ['go-langserver'],
+            \ 'rust': ['rls'],
+            \ 'javascript': ['tcp://127.0.0.1:2089'],
+            \ 'python': ['pyls'],
+            \ }
     elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1031,27 +1053,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasDirectory('ultisnips')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
+    elseif HasDirectory("completor.vim") && g:complete_engine == "completor"
         set shortmess+=c
         set completeopt+=noinsert,noselect
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-        au User Ncm2Plugin call ncm2#register_source({
-            \ 'name' : 'css',
-            \ 'enable' : 1,
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
-            \ })
-        let g:LanguageClient_serverCommands = {
-            \ 'go': ['go-langserver'],
-            \ 'rust': ['rls'],
-            \ 'javascript': ['tcp://127.0.0.1:2089'],
-            \ 'python': ['pyls'],
-            \ }
+        let g:completor_set_options = 0
+        let g:completor_auto_trigger = 1
+        let g:completor_clang_binary = exepath('clang')
+        if g:python_version == 2
+            let g:completor_python_binary = exepath("python")
+        else
+            let g:completor_python_binary = exepath("python3")
+        endif
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
         set shortmess+=c
         set completeopt+=noinsert,noselect
