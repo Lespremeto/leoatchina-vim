@@ -264,9 +264,9 @@ inoremap <F3> <ESC>:reg<Cr>
 vnoremap <F3> <ESC>:reg<Cr>
 snoremap <F3> <ESC>:reg<Cr>
 " toggleFold
-nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
+nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
-nnoremap <leader>fw :set nowrap! nowrap?<CR>
+nnoremap <leader>tw :set nowrap! nowrap?<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
 " Q
@@ -652,6 +652,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     " indent_guides
     if HasDirectory("vim-indent-guides")
+        nnoremap <leader>ti :IndentGuidesToggle<Cr>
         let g:indent_guides_enable_on_vim_startup = 1
         let g:indent_guides_start_level           = 2
         let g:indent_guides_guide_size            = 1
@@ -1187,8 +1188,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:UltiSnipsNoPythonWarning = 0
             let g:UltiSnipsExpandTrigger = "<Nop>"
             let g:UltiSnipsListSnippets = "<C-l>"
-            let g:UltiSnipsJumpForwardTrigger = '<C-f>'
-            let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
+            let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+            let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
             " Ulti python version
             let g:UltiSnipsUsePythonVersion = g:python_version
             " tab for ExpandTrigger
@@ -1215,8 +1216,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
         elseif HasDirectory('neosnippet')
             let g:neosnippet#enable_completed_snippet = 1
-            " c-f to jump
-            smap <C-f> <Plug>(neosnippet_jump)
+            " jump
+            smap <Tab> <Plug>(neosnippet_jump)
             function! g:NeoSnippet_Tab()
                 if pumvisible()
                     if neosnippet#expandable()
