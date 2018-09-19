@@ -197,7 +197,9 @@ smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 " some ctrl+ key remap
 nmap <C-j> $
+vmap <C-j> $
 nmap <C-k> ^
+vmap <C-k> ^
 nmap <C-f> <Nop>
 nmap <C-b> <Nop>
 vmap <C-f> <Nop>
@@ -1186,8 +1188,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasDirectory('ultisnips')
             " remap Ultisnips for compatibility
             let g:UltiSnipsNoPythonWarning = 0
-            let g:UltiSnipsExpandTrigger = "<Nop>"
             let g:UltiSnipsListSnippets = "<C-l>"
+            let g:UltiSnipsExpandTrigger = "<Nop>"
             let g:UltiSnipsJumpForwardTrigger = '<Tab>'
             let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
             " Ulti python version
@@ -1195,7 +1197,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " tab for ExpandTrigger
             function! g:UltiSnips_Tab()
                 if pumvisible()
-                    call UltiSnips#ExpandSnippet()
+                    call UltiSnips#ExpandSnippetOrJump()
                     if g:ulti_expand_res
                         return "\<Right>"
                     else
@@ -1216,12 +1218,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
         elseif HasDirectory('neosnippet')
             let g:neosnippet#enable_completed_snippet = 1
-            " jump
             smap <Tab> <Plug>(neosnippet_jump)
             function! g:NeoSnippet_Tab()
                 if pumvisible()
-                    if neosnippet#expandable()
-                        return neosnippet#mappings#expand_impl()
+                    if neosnippet#expandable_or_jumpable()
+                        return neosnippet#mappings#expand_or_jump_impl()
                     else
                         if !exists('v:completed_item') || empty(v:completed_item)
                             return "\<C-n>"
