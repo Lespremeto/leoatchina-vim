@@ -408,7 +408,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
             endif
         elseif g:browser_tool == "denite"
-
+            Plug 'Shougo/denite.nvim'
         else
             Plug 'ctrlpvim/ctrlp.vim'
             Plug 'tacahiroy/ctrlp-funky'

@@ -172,6 +172,7 @@ map  gT <Nop>
 map <C-s> <Nop>
 map <C-q> <Nop>
 map <C-z> <Nop>
+imap <C-g> <C-x><C-o>
 nmap ! :!
 let mapleader=' '
 let maplocalleader = '\'
@@ -211,18 +212,18 @@ nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
 " compatible with xshell
-nnoremap <Leader>tp           :tabprevious<CR>
-nnoremap <Leader>tn           :tabnext<CR>
-nnoremap <silent><Tab>        :tabnext<CR>
-nnoremap <silent><S-Tab>      :tabprevious<CR>
-nnoremap <leader><Tab>        :tabm +1<CR>
-nnoremap <leader><S-Tab>      :tabm -1<CR>
-nnoremap <localleader><Tab>   :tablast<CR>
-nnoremap <localleader><S-Tab> :tabfirst<CR>
-nnoremap <Leader>te           :tabe<Space>
-nnoremap <Leader>ts           :tab  split<CR>
-nnoremap <Leader>tw           :tabs<CR>
-nnoremap <Leader>tm           :tabm<Space>
+nnoremap <Leader>tp         :tabprevious<CR>
+nnoremap <Leader>tn         :tabnext<CR>
+nnoremap <silent><Tab>      :tabnext<CR>
+nnoremap <silent>-          :tabprevious<CR>
+nnoremap <leader><Tab>      :tabm +1<CR>
+nnoremap <leader>-          :tabm -1<CR>
+nnoremap <localleader><Tab> :tablast<CR>
+nnoremap <localleader>-     :tabfirst<CR>
+nnoremap <Leader>te         :tabe<Space>
+nnoremap <Leader>ts         :tab  split<CR>
+nnoremap <Leader>tw         :tabs<CR>
+nnoremap <Leader>tm         :tabm<Space>
 " buffer switch
 nnoremap <localleader><Backspace> :buffers<CR>
 nnoremap <localleader>]           :bn<CR>
@@ -350,6 +351,7 @@ set tabstop=4                   " An indentation every four columns
 set softtabstop=4               " Let backSpace delete indent
 set expandtab                   " Tabs are Spaces, not tabs
 set autoindent
+setlocal textwidth=0
 " 没有滚动条
 set guioptions-=l
 set guioptions-=L
@@ -367,8 +369,6 @@ au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java,*.js,*.json,*.vue,*.ts setlocal
 " preceding line best in a plugin but here for now.
 au BufNewFile,BufRead *.coffee set filetype=coffee
 " sepcial setting for different type of files
-au BufNewFile,BufRead *.py
-    \ set foldmethod=indent
 au FileType python au BufWritePost <buffer> :%retab
 au FileType haskell,puppet,ruby setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " Workaround vim-commentary for Haskell
@@ -376,7 +376,7 @@ au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
 au FileType haskell,rust setlocal nospell
 " Remove trailing whiteSpaces and ^M chars
-au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
+au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,eperl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
 " Map g* keys in Normal, Operator-pending, and Visual+select
 noremap $ :call WrapRelativeMotion("$")<CR>
 noremap 0 :call WrapRelativeMotion("0")<CR>
@@ -827,7 +827,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:go_fmt_command                 = "gofmt"
         let g:syntastic_go_checkers          = ['golint', 'govet', 'errcheck']
         let g:syntastic_mode_map             = { 'mode': 'active', 'passive_filetypes': ['go'] }
-        au FileType go imap <C-b>     <C-x><C-o>
         au FileType go nmap <Leader>i <Plug>(go-implements)
         au FileType go nmap <Leader>I <Plug>(go-info)
         au FileType go nmap <Leader>r <Plug>(go-rename)
@@ -955,13 +954,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     set completeopt-=preview
     set completeopt+=menuone
     " ominifuc
-    if g:complete_engine == "None"
-        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    elseif HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
