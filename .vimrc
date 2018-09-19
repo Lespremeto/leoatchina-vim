@@ -1198,7 +1198,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             function! g:UltiSnips_Tab()
                 if pumvisible()
                     call UltiSnips#ExpandSnippetOrJump()
-                    if g:ulti_expand_res
+                    if g:ulti_expand_or_jump_res
                         return "\<Right>"
                     else
                         if !exists('v:completed_item') || empty(v:completed_item)
