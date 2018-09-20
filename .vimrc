@@ -763,20 +763,20 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     " search tools
     if HasDirectory('FlyGrep.vim')
-        nmap <C-f><C-f> :FlyGrep<Cr>
+        nnoremap <C-f><C-f> :FlyGrep<Cr>
+        inoremap <C-f><C-f> <ESC>:FlyGrep<Cr>
     endif
     if HasDirectory('ctrlsf.vim')
         let g:ctrlsf_position='right'
-        nmap <C-F>s <Plug>CtrlSFPrompt
-        nmap <C-F>w <Plug>CtrlSFCwordPath
-        nmap <C-F>p <Plug>CtrlSFPwordPath
-        nmap <C-F>t :CtrlSFToggle<CR>
-        vmap <C-F>t <ESC>:CtrlSFToggle<CR>
-        " vmap
-        vmap <C-F>s <Plug>CtrlSFVwordExec
-        vmap <C-F>f <Plug>CtrlSFVwordPath
-    else
-        nnoremap <C-f>s :vimgrep<Space>
+        nmap     <C-F>f <Plug>CtrlSFPrompt
+        vmap     <C-F>f <Plug>CtrlSFVwordPath
+        vmap     <C-F>F <Plug>CtrlSFVwordExec
+        nmap     <C-F>n <Plug>CtrlSFCwordPath
+        nmap     <C-F>N <Plug>CtrlSFCCwordPath
+        nmap     <C-F>p <Plug>CtrlSFPwordPath
+        nnoremap <C-F>t :CtrlSFToggle<CR>
+    elseif HasDirectory('far.vim')
+        nnoremap <C-f>f :Far<Space>
     endif
     " Shell
     if has('terminal') || has('nvim')

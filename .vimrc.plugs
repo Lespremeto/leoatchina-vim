@@ -110,9 +110,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " search/replace/finder
         Plug 'google/vim-searchindex'
         Plug 'easymotion/vim-easymotion'
-        Plug 'brooth/far.vim'
-        if executable('ag') || executable('ack') || executable('rg') || executable('pt')
+        if (executable('ag') || executable('ack') || executable('rg') || executable('pt')) && v:version >= 800
             Plug 'dyng/ctrlsf.vim'
+        else
+            Plug 'brooth/far.vim'
         endif
         " signs
         if has('signs')
