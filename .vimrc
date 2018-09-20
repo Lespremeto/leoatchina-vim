@@ -1191,8 +1191,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:UltiSnipsRemoveSelectModeMappings = 0
             let g:UltiSnipsListSnippets = "<C-l>"
             let g:UltiSnipsExpandTrigger = "<Nop>"
-            let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-            let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+            let g:UltiSnipsJumpForwardTrigger = '<C-]>'
+            let g:UltiSnipsJumpBackwardTrigger = '<C-\>'
             " Ulti python version
             let g:UltiSnipsUsePythonVersion = g:python_version
             " tab for ExpandTrigger
@@ -1219,11 +1219,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
         elseif HasDirectory('neosnippet')
             let g:neosnippet#enable_completed_snippet = 1
-            smap <Tab> <Plug>(neosnippet_jump)
+            smap <C-\> <Plug>(neosnippet_jump)
             function! g:NeoSnippet_Tab()
                 if pumvisible()
-                    if neosnippet#expandable_or_jumpable()
-                        return neosnippet#mappings#expand_or_jump_impl()
+                    if neosnippet#expandable()
+                        return neosnippet#mappings#expand_impl()
                     else
                         if !exists('v:completed_item') || empty(v:completed_item)
                             return "\<C-n>"
