@@ -1189,10 +1189,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " remap Ultisnips for compatibility
             let g:UltiSnipsNoPythonWarning = 0
             let g:UltiSnipsRemoveSelectModeMappings = 0
-            let g:UltiSnipsListSnippets = "<C-l>"
             let g:UltiSnipsExpandTrigger = "<Nop>"
-            let g:UltiSnipsJumpForwardTrigger = '<C-]>'
-            let g:UltiSnipsJumpBackwardTrigger = '<C-\>'
+            let g:UltiSnipsListSnippets = "<C-\>"
+            let g:UltiSnipsJumpForwardTrigger = "<C-l>"
+            let g:UltiSnipsJumpBackwardTrigger = "<C-h>"
             " Ulti python version
             let g:UltiSnipsUsePythonVersion = g:python_version
             " tab for ExpandTrigger
@@ -1219,7 +1219,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:UltiSnipsSnippetDirectories=["UltiSnips"]
         elseif HasDirectory('neosnippet')
             let g:neosnippet#enable_completed_snippet = 1
-            smap <C-\> <Plug>(neosnippet_jump)
+            smap <C-l> <Plug>(neosnippet_jump)
             function! g:NeoSnippet_Tab()
                 if pumvisible()
                     if neosnippet#expandable()
