@@ -38,7 +38,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     call plug#begin($PLUG_PATH)
         " complete_engine && complete_snippet
         let g:complete_engine  = "None"
-        let g:complete_snippet = "ultisnips"
+        let g:use_ultisnips = 1
         let g:smart_engine_select = 0
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
@@ -291,7 +291,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " install snippets plugins
             if g:complete_engine == "neocomplete" || g:complete_engine == "neocomplcache" || count(g:plug_groups, 'snippet')
-                if g:python_version && g:complete_snippet == "ultisnips"
+                if g:python_version && g:use_ultisnips == 1
+                    let g:complete_snippet = "ultisnips"
                     Plug 'SirVer/ultisnips'
                     Plug 'honza/vim-snippets'
                     Plug 'leoatchina/leoatchina-snippets'
@@ -303,6 +304,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 let g:complete_snippet = "None"
             endif
+            unlet g:use_ultisnips
             " install complete plugins
             if g:complete_engine != "None"
                 Plug 'Shougo/neco-vim'

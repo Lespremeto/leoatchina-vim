@@ -1056,9 +1056,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
     elseif HasDirectory("completor.vim") && g:complete_engine == "completor"
         set shortmess+=c
-        set completeopt+=noinsert,noselect
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
+        let g:completor_complete_options = 'menuone,noselect,noinsert'
         let g:completor_clang_binary = exepath('clang')
         if g:python_version == 2
             let g:completor_python_binary = exepath("python")
