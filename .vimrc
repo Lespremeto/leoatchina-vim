@@ -588,21 +588,33 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 return &readonly && &filetype !=# 'help' ? 'RO' : ''
             endfunction
             if HasDirectory("ale")
-                let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-                    \  [ 'percent' ],
-                    \  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+                let g:lightline.active.right = [
+                    \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+                    \ [ 'percent' ],
+                    \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
                 let g:lightline.component_expand =  {
-                    \  'linter_checking': 'lightline#ale#checking',
-                    \  'linter_warnings': 'lightline#ale#warnings',
-                    \  'linter_errors': 'lightline#ale#errors',
-                    \  'linter_ok': 'lightline#ale#ok'
+                    \ 'linter_checking': 'lightline#ale#checking',
+                    \ 'linter_warnings': 'lightline#ale#warnings',
+                    \ 'linter_errors': 'lightline#ale#errors',
+                    \ 'linter_ok': 'lightline#ale#ok'
                     \ }
                 let g:lightline.component_type = {
-                    \  'linter_checking': 'right',
-                    \  'linter_warnings': 'warning',
-                    \  'linter_errors': 'error',
-                    \  'linter_ok': 'left'
+                    \ 'linter_checking': 'right',
+                    \ 'linter_warnings': 'warning',
+                    \ 'linter_errors': 'error',
+                    \ 'linter_ok': 'left'
                     \ }
+            elseif HasDirectory('neomake')
+                " number of occurrances in the buffer.
+                let g:lightline_neomake#format = '%s: %d'
+                " Separator between displayed Neomake counters.
+                let g:lightline_neomake#sep = ' '
+                let g:lightline.active.right = [
+                    \ ['neomake'],
+                    \ ['percent'],
+                    \ ['filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+                let g:lightline.component_expand = {'neomake':'lightline_neomake#component'}
+                let g:lightline.component_type   = {'neomake':'error'}
             endif
         else
             set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
@@ -610,7 +622,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             set statusline+=%3*\ \ %m%r%y\ %*
             set statusline+=%=%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(%l\/%L\ %c%)%*
             set statusline+=%5*\ %P\ %<
-            " default bg for statusline is 236 in space-vim-dark
             hi User1 cterm=bold ctermfg=232 ctermbg=179
             hi User2 cterm=bold ctermfg=255 ctermbg=100
             hi User3 cterm=None ctermfg=208 ctermbg=238
@@ -732,12 +743,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     " ywvim,vim里的中文输入法
     if HasDirectory("ywvim")
         set showmode
-        if count(g:plug_groups, 'pinyin')
+        if HasPlug('pinyun')
             let g:ywvim_ims=[
                     \['py', '拼音', 'pinyin.ywvim'],
                     \['wb', '五笔', 'wubi.ywvim'],
                 \]
-        elseif count(g:plug_groups, 'wubi')
+        elseif HasPlug('wubi')
             let g:ywvim_ims=[
                     \['wb', '五笔', 'wubi.ywvim'],
                     \['py', '拼音', 'pinyin.ywvim'],
@@ -897,6 +908,95 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
+    elseif g:browser_tool == "denite" && HasDirectory('denite.nvim')
+        nnoremap <C-p> :Denite file/rec buffer<Cr>
+        nnoremap <leader>lf :Denite
+        nnoremap <leader>lb :DeniteBufferDir
+        nnoremap <leader>lw :DeniteCursorWord
+        nnoremap <Leader>/ :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
+        call denite#custom#option('_', {
+                \ 'prompt': 'λ:',
+                \ 'empty': 0,
+                \ 'winheight': 16,
+                \ 'source_names': 'short',
+                \ 'vertical_preview': 1,
+                \ 'auto-accel': 1,
+                \ 'auto-resume': 1,
+            \ })
+        call denite#custom#option('list', {})
+        call denite#custom#option('mpc', {
+                \ 'quit': 0,
+                \ 'mode': 'normal',
+                \ 'winheight': 20,
+            \ })
+        " MATCHERS
+        " Default is 'matcher_fuzzy'
+        call denite#custom#source('tag', 'matchers', ['matcher_substring'])
+        if has('nvim') && &runtimepath =~# '\/cpsm'
+            call denite#custom#source(
+                \ 'buffer,file_mru,file_old,file_rec,grep,mpc,line',
+                \ 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
+        endif
+        " SORTERS
+        " Default is 'sorter_rank'
+        call denite#custom#source('z', 'sorters', ['sorter_z'])
+        " CONVERTERS
+        " Default is none
+        call denite#custom#source(
+            \ 'buffer,file_mru,file_old',
+            \ 'converters', ['converter_relative_word'])
+        " FIND and GREP COMMANDS
+        if executable('ag')
+            " The Silver Searcher
+            call denite#custom#var('file_rec', 'command',
+                \ ['ag', '-U', '--hidden', '--follow', '--nocolor', '--nogroup', '-g', ''])
+            " Setup ignore patterns in your .agignore file!
+            " https://github.com/ggreer/the_silver_searcher/wiki/Advanced-Usage
+            call denite#custom#var('grep', 'command', ['ag'])
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', [])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
+            call denite#custom#var('grep', 'default_opts',
+                \ [ '--skip-vcs-ignores', '--vimgrep', '--smart-case', '--hidden' ])
+        elseif executable('ack')
+            " Ack command
+            call denite#custom#var('grep', 'command', ['ack'])
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', ['--match'])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
+            call denite#custom#var('grep', 'default_opts',
+                \ ['--ackrc', $HOME.'/.config/ackrc', '-H',
+                \ '--nopager', '--nocolor', '--nogroup', '--column'])
+        endif
+        " KEY MAPPINGS
+        let insert_mode_mappings = [
+                \  ['<C-c>', '<denite:enter_mode:normal>', 'noremap'],
+                \  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
+                \  ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
+                \  ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
+                \  ['<Up>', '<denite:assign_previous_text>', 'noremap'],
+                \  ['<Down>', '<denite:assign_next_text>', 'noremap'],
+                \  ['<C-Y>', '<denite:redraw>', 'noremap'],
+            \ ]
+        let normal_mode_mappings = [
+                \   ["'", '<denite:toggle_select_down>', 'noremap'],
+                \   ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
+                \   ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
+                \   ['gg', '<denite:move_to_first_line>', 'noremap'],
+                \   ['st', '<denite:do_action:tabopen>', 'noremap'],
+                \   ['vs', '<denite:do_action:vsplit>', 'noremap'],
+                \   ['sv', '<denite:do_action:split>', 'noremap'],
+                \   ['qt', '<denite:quit>', 'noremap'],
+                \   ['r', '<denite:redraw>', 'noremap'],
+            \ ]
+        for m in insert_mode_mappings
+            call denite#custom#map('insert', m[0], m[1], m[2])
+        endfor
+        for m in normal_mode_mappings
+            call denite#custom#map('normal', m[0], m[1], m[2])
+        endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
         let g:Lf_ShortcutF = '<C-p>'
         let g:Lf_PythonVersion = g:python_version
@@ -1105,14 +1205,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
                 \ })
         endif
-        if count(g:plug_groups, 'go')
+        if HasPlug('go')
             au User asyncomplete_setup  call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
                 \ 'name': 'gocode',
                 \ 'whitelist': ['go'],
                 \ 'completor': function('asyncomplete#sources#gocode#completor'),
                 \ }))
         endif
-        if count(g:plug_groups, 'rust')
+        if HasPlug('rust')
             au User asyncomplete_setup call asyncomplete#register_source(
                 \ asyncomplete#sources#racer#get_source_options())
         endif
@@ -1240,7 +1340,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " Use honza's snippets.
             let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
             " Enable neosnippets when using go
-            if count(g:plug_groups, 'go')
+            if HasPlug('go')
                 let g:go_snippet_engine = "neosnippet"
             endif
         endif
@@ -1272,6 +1372,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         nmap <silent> <C-l>n <Plug>(ale_next_wrap)
         nnoremap gt :ALEGoToDefinitionInTab<CR>
         nnoremap gd :ALEGoToDefinition<CR>
+    elseif HasDirectory('neomake')
+
     elseif HasDirectory("syntastic")
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'

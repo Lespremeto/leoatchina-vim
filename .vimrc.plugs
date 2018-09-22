@@ -58,37 +58,51 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')
-            let g:plug_groups=['smartcomplete', 'snippet', 'syntax']
+            let g:plug_groups=['smartcomplete', 'snippet', 'syntax', 'bio']
         endif
-        if count(g:plug_groups, 'shougo') && g:python_version == 3 && v:version >= 800
+        function! HasPlug(plug)
+            return count(g:plug_groups, a:plug)
+        endfunction
+        if HasPlug('shougo') && g:python_version == 3 && v:version >= 800
             let g:use_shougo = 1
         else
             let g:use_shougo = 0
         endif
         " general
-        Plug 'tpope/vim-fugitive'
-        if v:version < 702
-            Plug 'tpope/vim-git'
-        endif
         Plug 'scrooloose/nerdtree'
-        Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'jistr/vim-nerdtree-tabs'
         Plug 'mhinz/vim-startify'
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
         Plug 'leoatchina/vim-colorschemes-collections'
+        " signs
+        if has('signs')
+            Plug 'kshenoy/vim-signature'
+            Plug 'gorodinskiy/vim-coloresque'
+            Plug 'rhysd/conflict-marker.vim'
+            Plug 'mhinz/vim-signify'
+            if v:version >= 702
+                Plug 'nathanaelkane/vim-indent-guides'
+            endif
+        endif
+        " git
+        Plug 'tpope/vim-fugitive'
+        Plug 'Xuyuanp/nerdtree-git-plugin'
+        if v:version < 702
+            Plug 'tpope/vim-git'
+        endif
         " text
         Plug 'tpope/vim-surround'
         Plug 'tpope/vim-repeat'
         Plug 'jiangmiao/auto-pairs'
         Plug 'junegunn/vim-easy-align'
         " input method
-        if count(g:plug_groups, 'pinyin') || count(g:plug_groups, 'wubi')
+        if HasPlug('wubi') || HasPlug('pinyin')
             Plug 'leoatchina/ywvim'
         endif
         " biosyntax
-        if count(g:plug_groups, 'bio')
+        if HasPlug('bio')
             Plug 'bioSyntax/bioSyntax-vim'
         endif
         " markdown
@@ -115,34 +129,24 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         else
             Plug 'brooth/far.vim'
         endif
-        " signs
-        if has('signs')
-            Plug 'kshenoy/vim-signature'
-            Plug 'gorodinskiy/vim-coloresque'
-            Plug 'rhysd/conflict-marker.vim'
-            Plug 'mhinz/vim-signify'
-            if v:version >= 702
-                Plug 'nathanaelkane/vim-indent-guides'
-            endif
-        endif
         " PHP
-        if count(g:plug_groups, 'php')
+        if HasPlug('php')
             Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
         endif
         " Javascript
-        if count(g:plug_groups, 'javascript')
+        if HasPlug('javascrips')
             Plug 'elzr/vim-json', {'for': 'javascript'}
             Plug 'pangloss/vim-javascript', {'for': 'javascript'}
             Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
         endif
         " HTML
-        if count(g:plug_groups, 'html')
+        if HasPlug('html')
             Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
             Plug 'tpope/vim-haml', {'for':['css','htm', 'html', 'xml', 'css3']}
             Plug 'mattn/emmet-vim', {'for':['css','htm', 'html', 'xml', 'css3']}
         endif
         " perl
-        if count(g:plug_groups, 'perl')
+        if HasPlug('perl')
             Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
         if v:version >= 703
@@ -153,12 +157,16 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " statuslines
         if has('statusline')
             Plug 'bling/vim-bufferline'
-            if v:version >= 702 && count(g:plug_groups, 'airline') || OSX() && has('gui_running')
+            if v:version >= 702 && HasPlug('airline') || OSX() && has('gui_running')
                 Plug 'vim-airline/vim-airline'
-            elseif v:version < 702 || !count(g:plug_groups, 'airline')
+            elseif v:version < 702 || !HasPlug('airline')
                 Plug 'itchyny/lightline.vim'
-                if v:version >= 800 && count(g:plug_groups, 'syntax') && !g:use_shougo
-                    Plug 'maximbaz/lightline-ale'
+                if v:version >= 800 && HasPlug('syntax')
+                    if g:use_shougo
+                        Plug 'mkalinski/vim-lightline_neomake'
+                    else
+                        Plug 'maximbaz/lightline-ale'
+                    endif
                 endif
             endif
         endif
@@ -172,30 +180,32 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ludovicchabant/vim-gutentags'
             endif
             " Go
-            if count(g:plug_groups, 'go')
+            if HasPlug('go')
                 Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
             endif
             " java
-            if count(g:plug_groups, 'java')
+            if HasPlug('java')
                 Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
             endif
             " rust
-            if count(g:plug_groups, 'rust')
+            if HasPlug('rust')
                 Plug 'rust-lang/rust.vim', {'for': 'rust'}
             endif
             " julia
-            if count(g:plug_groups, 'julia')
+            if HasPlug('julia')
                 Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
             endif
             if v:version >= 800
                 Plug 'skywind3000/asyncrun.vim'
                 Plug 'wsdjeg/FlyGrep.vim'
             endif
-            if count(g:plug_groups, 'syntax')
-                if g:use_shougo
-                    Plug 'neomake/neomake'
-                elseif v:version >= 800
-                    Plug 'w0rp/ale'
+            if HasPlug('syntax')
+                if v:version >= 800
+                    if g:use_shougo
+                        Plug 'neomake/neomake'
+                    else
+                        Plug 'w0rp/ale'
+                    endif
                 else
                     Plug 'vim-syntastic/syntastic'
                 endif
@@ -206,63 +216,63 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 " browser_tools
                 let g:browser_tool = "ctrlp"
-                if count(g:plug_groups, 'fzf')
+                if HasPlug('fzf')
                     if !WINDOWS() || WINDOWS() && executable('fzf')
                         let g:browser_tool = "fzf"
                     endif
-                elseif count(g:plug_groups, 'LeaderF') || count(g:plug_groups, 'leaderf')
+                elseif HasPlug('LeaderF') || HasPlug('leaderf')
                     if g:python_version && executable('gcc')
                         let g:browser_tool = "LeaderF"
                     endif
                 endif
                 " complete_engine
-                if count(g:plug_groups, 'youcompleteme') || count(g:plug_groups, 'YCM')
+                if HasPlug('youcompleteme') || HasPlug('YCM')
                     if executable('cmake') && g:python_version && !WINDOWS()
                         let g:complete_engine = "YCM"
                     else
                         echoe "Cannot install YouCompleteMe, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif count(g:plug_groups, 'ncm2')
+                elseif HasPlug('ncm2')
                     if g:python_version == 3 && v:version >= 800 && has('nvim') && !WINDOWS()
                         let g:complete_engine = "ncm2"
                     else
                         echoe "Cannot install ncm2, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif count(g:plug_groups, 'deoplete')
+                elseif HasPlug('deoplete')
                     if g:python_version == 3 && v:version >= 800
                         let g:complete_engine = "deoplete"
                     else
                         echoe "Cannot install deoplete, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif count(g:plug_groups, 'completor')
+                elseif HasPlug('completor')
                     if g:python_version && v:version >= 800 && !has('nvim')
                         let g:complete_engine = "completor"
                     else
                         echoe "Cannot install completor, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif count(g:plug_groups, 'asyncomplete')
+                elseif HasPlug('asyncomplete')
                     if v:version >= 800
                         let g:complete_engine = "asyncomplete"
                     else
                         echoe "Cannot install asyncomplete, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif count(g:plug_groups, 'neocomplete')
+                elseif HasPlug('neocomplete')
                     if has('lua')
                         let g:complete_engine = "neocomplete"
                     else
                         echoe "Cannot install neocomplete, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif count(g:plug_groups, 'neocomplcache')
+                elseif HasPlug('neocomplcache')
                     let g:complete_engine = "neocomplcache"
                 endif
                 " smart select
-                if count(g:plug_groups, 'smartcomplete') || g:smart_engine_select
+                if HasPlug('smartcomplete') || g:smart_engine_select
                     " nvim
                     if has('nvim')
                         if v:version >= 800
@@ -291,7 +301,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             endif
             " install snippets plugins
-            if g:complete_engine == "neocomplete" || g:complete_engine == "neocomplcache" || count(g:plug_groups, 'snippet')
+            if HasPlug('snippet')
                 if g:python_version && g:use_ultisnips == 1
                     let g:complete_snippet = "ultisnips"
                     Plug 'SirVer/ultisnips'
@@ -305,7 +315,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 let g:complete_snippet = "None"
             endif
-            unlet g:use_ultisnips
             " install complete plugins
             if g:complete_engine != "None"
                 Plug 'Shougo/neco-vim'
@@ -331,7 +340,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neco-syntax'
                 " language
                 Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
-                if count(g:plug_groups, 'html')
+                if HasPlug('html')
                     Plug 'ncm2/ncm2-cssomni', {'for':['html','css', 'css3']}
                 endif
                 Plug 'autozimu/LanguageClient-neovim', {
@@ -352,10 +361,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neoinclude.vim'
                 Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp']}
                 Plug 'zchee/deoplete-jedi', {'for': 'python'}
-                if count(g:plug_groups, 'go')
+                if HasPlug('go')
                     Plug 'zchee/deoplete-go', {'for': 'go'}
                 endif
-                if count(g:plug_groups, 'javascript')
+                if HasPlug('javascrips')
                     Plug 'carlitux/deoplete-ternjs'
                 endif
             elseif g:complete_engine == "completor"
@@ -373,14 +382,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neco-syntax'
                 Plug 'prabirshrestha/asyncomplete-necovim.vim'
                 Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
-                if count(g:plug_groups, 'go')
+                if HasPlug('go')
                     Plug 'prabirshrestha/asyncomplete-gocode.vim'
                 endif
-                if count(g:plug_groups, 'javascript')
+                if HasPlug('javascripts')
                     Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
                     Plug 'prabirshrestha/asyncomplete-flow.vim'
                 endif
-                if count(g:plug_groups, 'rust')
+                if HasPlug('rust')
                     Plug 'keremc/asyncomplete-racer.vim'
                 endif
                 if g:complete_snippet == 'ultisnips'
