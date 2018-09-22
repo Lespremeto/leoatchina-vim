@@ -134,7 +134,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
         endif
         " Javascript
-        if HasPlug('javascrips')
+        if HasPlug('javascript')
             Plug 'elzr/vim-json', {'for': 'javascript'}
             Plug 'pangloss/vim-javascript', {'for': 'javascript'}
             Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
@@ -364,7 +364,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if HasPlug('go')
                     Plug 'zchee/deoplete-go', {'for': 'go'}
                 endif
-                if HasPlug('javascrips')
+                if HasPlug('javascript')
                     Plug 'carlitux/deoplete-ternjs'
                 endif
             elseif g:complete_engine == "completor"
@@ -385,7 +385,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if HasPlug('go')
                     Plug 'prabirshrestha/asyncomplete-gocode.vim'
                 endif
-                if HasPlug('javascripts')
+                if HasPlug('javascript')
                     Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
                     Plug 'prabirshrestha/asyncomplete-flow.vim'
                 endif
