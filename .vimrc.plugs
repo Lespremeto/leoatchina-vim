@@ -124,11 +124,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " search/replace/finder
         Plug 'google/vim-searchindex'
         Plug 'easymotion/vim-easymotion'
-        if (executable('ag') || executable('ack') || executable('rg') || executable('pt')) && v:version >= 800
-            Plug 'dyng/ctrlsf.vim'
-        else
-            Plug 'brooth/far.vim'
-        endif
         " PHP
         if HasPlug('php')
             Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
@@ -196,8 +191,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
             endif
             if v:version >= 800
-                Plug 'skywind3000/asyncrun.vim'
+                if !g:use_shougo
+                    Plug 'skywind3000/asyncrun.vim'
+                endif
                 Plug 'wsdjeg/FlyGrep.vim'
+                if (executable('ag') || executable('ack') || executable('rg') || executable('pt'))
+                    Plug 'dyng/ctrlsf.vim'
+                endif
+            else
+                Plug 'brooth/far.vim'
             endif
             if HasPlug('syntax')
                 if v:version >= 800
