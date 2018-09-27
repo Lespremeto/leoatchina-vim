@@ -24,6 +24,7 @@ set mousehide           " Hide the mouse cursor while typing
 set noimdisable
 set timeout
 set timeoutlen=500 ttimeoutlen=50
+set conceallevel=0
 " 不同文件类型加载不同插件
 filetype plugin indent on   " Automatically detect file types.
 filetype on                 " 开启文件类型侦测
@@ -172,7 +173,6 @@ map  gT <Nop>
 map <C-s> <Nop>
 map <C-q> <Nop>
 map <C-z> <Nop>
-imap <C-g> <C-x><C-o>
 nmap ! :!
 let mapleader=' '
 let maplocalleader = '\'
@@ -188,18 +188,19 @@ cmap w!! w !sudo tee % >/dev/null
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 nnoremap <localleader><localleader> %
-" remap c-a/e , for home/end
+" some ctrl+ key remap
+imap <C-v> <Nop>
+imap <C-i> <Nop>
 vmap <C-a> ^
-smap <C-a> ^
 imap <C-a> <Esc>I
 vmap <C-e> $<Left>
-smap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
-" some ctrl+ key remap
 nmap <C-j> $
 vmap <C-j> $
 nmap <C-k> ^
 vmap <C-k> ^
+nmap <C-g> <Nop>
+vmap <C-g> <Nop>
 nmap <C-f> <Nop>
 nmap <C-b> <Nop>
 vmap <C-f> <Nop>
@@ -459,15 +460,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:vmt_cycle_list_item_markers = 1
         endif
     endif
-    " autopairs
-    if HasDirectory("auto-pairs")
-        let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-        let g:AutoPairsShortcutToggle     = "<C-b>t"
-        let g:AutoPairsShortcutFastWrap   = "<C-b>f"
-        let g:AutoPairsShortcutJump       = "<C-b>j"
-        let g:AutoPairsShortcutBackInsert = "<C-b>i"
-        inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
-    endif
     " fugitive
     if HasDirectory("vim-fugitive")
         nnoremap + :Git<Space>
@@ -700,6 +692,20 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endfunction
     endif
+    " autopairs
+    if HasDirectory("auto-pairs")
+        let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
+        let g:AutoPairsShortcutToggle     = "<C-b>t"
+        let g:AutoPairsShortcutFastWrap   = "<C-b>f"
+        let g:AutoPairsShortcutJump       = "<C-b>j"
+        let g:AutoPairsShortcutBackInsert = "<C-b>i"
+        inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
+    endif
+    " typecast
+    if HasDirectory('typecast.vim')
+        nmap <C-b>c <Plug>typecast
+        xmap <C-b>c <Plug>typecast
+    endif
     " NerdTree
     if HasDirectory("nerdtree")
         nmap <leader>nn :NERDTreeTabsToggle<CR>
@@ -830,26 +836,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     if HasDirectory("vim-easymotion")
         nmap <C-j><C-j> <Plug>(easymotion-w)
         nmap <C-k><C-k> <Plug>(easymotion-b)
-    endif
-    " Go program
-    if isdirectory(expand($PLUG_PATH."vim-go"))
-        let g:go_highlight_functions         = 1
-        let g:go_highlight_methods           = 1
-        let g:go_highlight_structs           = 1
-        let g:go_highlight_operators         = 1
-        let g:go_highlight_build_constraints = 1
-        let g:go_fmt_command                 = "gofmt"
-        let g:syntastic_go_checkers          = ['golint', 'govet', 'errcheck']
-        let g:syntastic_mode_map             = { 'mode': 'active', 'passive_filetypes': ['go'] }
-        au FileType go nmap <Leader>i <Plug>(go-implements)
-        au FileType go nmap <Leader>I <Plug>(go-info)
-        au FileType go nmap <Leader>r <Plug>(go-rename)
-        au FileType go nmap <leader>R <Plug>(go-run)
-        au FileType go nmap <leader>b <Plug>(go-build)
-        au FileType go nmap <leader>t <Plug>(go-test)
-        au FileType go nmap <Leader>d <Plug>(go-doc)
-        au FileType go nmap <Leader>v <Plug>(go-doc-vertical)
-        au FileType go nmap <leader>c <Plug>(go-coverage)
     endif
     " browser seris
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
@@ -1057,12 +1043,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     set completeopt-=preview
     set completeopt+=menuone
     " ominifuc
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
+    au FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    au FileType python setlocal omnifunc=pythoncomplete#Complete
+    au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    if g:complete_engine == "None"
+        imap <C-i> <C-x><C-o>
+    elseif HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
@@ -1070,6 +1058,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         else
             let g:ycm_python_binary_path = 'python3'
         endif
+        let g:ycm_key_invoke_completion = '<C-i>'
         " add_preview
         let g:ycm_add_preview_to_completeopt = 1
         "  补全后close窗口
@@ -1290,7 +1279,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:UltiSnipsNoPythonWarning = 0
             let g:UltiSnipsRemoveSelectModeMappings = 0
             let g:UltiSnipsExpandTrigger = "<Nop>"
-            let g:UltiSnipsListSnippets = "<C-\>"
+            let g:UltiSnipsListSnippets = "<C-g><C-l>"
             let g:UltiSnipsJumpForwardTrigger = "<C-l>"
             let g:UltiSnipsJumpBackwardTrigger = "<C-h>"
             " Ulti python version
@@ -1339,11 +1328,82 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>"
             " Use honza's snippets.
             let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
-            " Enable neosnippets when using go
-            if HasPlug('go')
-                let g:go_snippet_engine = "neosnippet"
-            endif
         endif
+    endif
+    " Go program
+    if HasDirectory("vim-go")
+        let g:go_highlight_functions         = 1
+        let g:go_highlight_methods           = 1
+        let g:go_highlight_structs           = 1
+        let g:go_highlight_operators         = 1
+        let g:go_highlight_build_constraints = 1
+        let g:go_fmt_command                 = "gofmt"
+        let g:syntastic_go_checkers          = ['golint', 'govet', 'errcheck']
+        let g:syntastic_mode_map             = { 'mode': 'active', 'passive_filetypes': ['go'] }
+        " Enable neosnippets when using go
+        if g:complete_snippet == "neosnippet"
+            let g:go_snippet_engine = "neosnippet"
+        endif
+        au Filetype go imap <C-i> <C-x><C-o>
+        au FileType go nmap <C-g>i <Plug>(go-implements)
+        au FileType go nmap <C-g>I <Plug>(go-info)
+        au FileType go nmap <C-g>u <Plug>(go-rename)
+        au FileType go nmap <F5>   <Plug>(go-run)
+        au FileType go nmap <C-g>r <Plug>(go-run)
+        au FileType go nmap <C-g>b <Plug>(go-build)
+        au FileType go nmap <C-g>t <Plug>(go-test)
+        au FileType go nmap <C-g>d <Plug>(go-doc)
+        au FileType go nmap <C-g>D <Plug>(go-doc-vertical)
+        au FileType go nmap <C-g>c <Plug>(go-coverage)
+    endif
+    " java
+    if HasPlug('java')
+        autocmd FileType java setlocal omnifunc=javacomplete#Complete
+    endif
+    if HasDirectory('vim-eclim')
+        au FileType java imap <C-i> <C-x><C-o>
+        let g:EclimCompletionMethod = 'omnifunc'
+        nnoremap <C-g>b  :ProjectBuild<Spapce>
+        nnoremap <C-g>pp :Project
+        nnoremap <C-g>pc :ProjectCreate
+        nnoremap <C-g>pi :ProjectImport
+        nnoremap <C-g>pI :ProjectInfo
+        nnoremap <C-g>pl :ProjectList
+        nnoremap <C-g>pr :ProjectRun
+        nnoremap <C-g>ps :ProjectSettings
+        nnoremap <C-g>po :ProjectOpen
+    endif
+    if HasDirectory("javacomplete2")
+		au FileType java nmap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
+		au FileType java nmap <C-g>ii <Plug>(JavaComplete-Imports-Add)
+		au FileType java nmap <C-g>I <Plug>(JavaComplete-Imports-AddMissing)
+		au FileType java nmap <C-g>g <Plug>(JavaComplete-Generate-AbstractMethods)
+		au FileType java nmap <C-g>m <Plug>(JavaComplete-Imports-RemoveUnused)
+
+		au FileType java imap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
+		au FileType java imap <C-g>ii <Plug>(JavaComplete-Imports-Add)
+		au FileType java imap <C-g>I <Plug>(JavaComplete-Imports-AddMissing)
+		au FileType java imap <C-g>g <Plug>(JavaComplete-Generate-AbstractMethods)
+		au FileType java imap <C-g>m <Plug>(JavaComplete-Imports-RemoveUnused)
+
+		au FileType java nmap <C-g>a <Plug>(JavaComplete-Generate-Accessors)
+		au FileType java nmap <C-g>c <Plug>(JavaComplete-Generate-Constructor)
+		au FileType java nmap <C-g>S <Plug>(JavaComplete-Generate-AccessorSetter)
+		au FileType java nmap <C-g>G <Plug>(JavaComplete-Generate-AccessorGetter)
+		au FileType java nmap <C-g>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+		au FileType java nmap <C-g>T <Plug>(JavaComplete-Generate-ToString)
+		au FileType java nmap <C-g>E <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+		au FileType java nmap <C-g>C <Plug>(JavaComplete-Generate-DefaultConstructor)
+
+		au FileType java imap <C-g>S <Plug>(JavaComplete-Generate-AccessorSetter)
+		au FileType java imap <C-g>G <Plug>(JavaComplete-Generate-AccessorGetter)
+		au FileType java imap <C-g>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+		au FileType java vmap <C-g>S <Plug>(JavaComplete-Generate-AccessorSetter)
+		au FileType java vmap <C-g>G <Plug>(JavaComplete-Generate-AccessorGetter)
+		au FileType java vmap <C-g>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+		au FileType java nmap <silent> <buffer> <C-g>n <Plug>(JavaComplete-Generate-NewClass)
+		au FileType java nmap <silent> <buffer> <C-g>N <Plug>(JavaComplete-Generate-ClassInFile)
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
@@ -1374,7 +1434,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     if HasDirectory("asyncrun.vim")
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-        function! s:RUN_ASYNC()
+        function! s:ASYNC_RUN()
             exec "w"
             call asyncrun#quickfix_toggle(8,1)
             if &filetype == 'c'
@@ -1396,10 +1456,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 exec ":AsyncRun go run %"
             endif
         endfunction
-        command! RunAsync call s:RUN_ASYNC()
-        nmap <C-b>r        :RunAsync<CR>
-        nmap <C-b>s        :AsyncStop<CR>
-        nmap <localleade>R :AsyncRun<Space>
+        command! AsyncRunNow call s:ASYNC_RUN()
+        nmap <C-g>r :AsyncRunNow<CR>
+        nmap <C-g>R :AsyncRun<Space>
+        nmap <C-g>s :AsyncStop<CR>
     endif
     if HasDirectory("ale")
         let g:ale_completion_enabled   = 0
@@ -1423,9 +1483,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
+        nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
+        nmap <silent> <C-l>n <Plug>(ale_next_wrap)
         nnoremap <C-l><C-l> :ALELint<CR>
-        nnoremap <silent> <C-l>p <Plug>(ale_previous_wrap)
-        nnoremap <silent> <C-l>n <Plug>(ale_next_wrap)
         nnoremap gt :ALEGoToDefinitionInTab<CR>
         nnoremap gd :ALEGoToDefinition<CR>
     elseif HasDirectory('neomake')
@@ -1454,8 +1514,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Errors
             endif
         endfunction
-        nmap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nmap <silent> <C-l>n :lnext<cr>
-        nmap <silent> <C-l>p :lprevious<cr>
+        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
+        nnoremap <silent> <C-l>n :lnext<cr>
+        nnoremap <silent> <C-l>p :lprevious<cr>
     endif
 endif

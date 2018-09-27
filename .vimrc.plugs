@@ -95,7 +95,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " text
         Plug 'tpope/vim-surround'
         Plug 'tpope/vim-repeat'
+        Plug 'tenfyzhong/typecast.vim'
         Plug 'jiangmiao/auto-pairs'
+        Plug 'junegunn/vim-journal'
         Plug 'junegunn/vim-easy-align'
         " input method
         if HasPlug('wubi') || HasPlug('pinyin')
@@ -144,11 +146,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('perl')
             Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
-        if v:version >= 703
-            if executable('ctags')
-                Plug 'majutsushi/tagbar'
-            endif
-        endif
         " statuslines
         if has('statusline')
             Plug 'bling/vim-bufferline'
@@ -163,6 +160,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         Plug 'maximbaz/lightline-ale'
                     endif
                 endif
+            endif
+        endif
+        " ctags
+        if v:version >= 703
+            if executable('ctags')
+                Plug 'majutsushi/tagbar'
             endif
         endif
         " plugins for vim7.4 or later
@@ -180,7 +183,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " java
             if HasPlug('java')
-                Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+                if executable('java') && executable('gcc') && executable('make')
+                    Plug 'artur-shaik/vim-javacomplete2', {'for':['java', 'class']}
+                    Plug 'dansomething/vim-eclim'
+                else
+                    echoe "Inroder to install java plugins, you shoud update you system"
+                endif
             endif
             " rust
             if HasPlug('rust')
