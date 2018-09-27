@@ -190,15 +190,18 @@ cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 nnoremap <localleader><localleader> %
 " some ctrl+ key remap
 imap <C-v> <Nop>
-imap <C-i> <Nop>
 vmap <C-a> ^
 imap <C-a> <Esc>I
 vmap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
-nmap <C-j> $
-vmap <C-j> $
-nmap <C-k> ^
-vmap <C-k> ^
+nnoremap <localleader>] $
+nnoremap <localleader>[ ^
+vnoremap <localleader>] $
+vnoremap <localleader>[ ^
+nmap <C-j> <Nop>
+vmap <C-j> <Nop>
+nmap <C-k> <Nop>
+vmap <C-k> <Nop>
 nmap <C-g> <Nop>
 vmap <C-g> <Nop>
 nmap <C-f> <Nop>
@@ -229,8 +232,8 @@ nnoremap <Leader>tw         :tabs<CR>
 nnoremap <Leader>tm         :tabm<Space>
 " buffer switch
 nnoremap <localleader><Backspace> :buffers<CR>
-nnoremap <localleader>]           :bn<CR>
-nnoremap <localleader>[           :bp<CR>
+nnoremap <localleader><F11>       :bp<CR>
+nnoremap <localleader><F12>       :bn<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <leader>y  "+y
 nnoremap <leader>y  "+y
@@ -296,8 +299,8 @@ vnoremap << <gv
 vnoremap >> >gv
 "离开插入模式后关闭预览窗口
 au InsertLeave * if pumvisible() == 0|pclose|endif
-" auto close qfixwindows when leave vim
-aug QFClose
+" auto close windows when leave vim
+aug WINDOWClose
     au!
     au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
@@ -331,7 +334,7 @@ set incsearch
 " 显示行号
 set number
 " 在help里显示行号
-autocmd FileType help setlocal number
+au FileType help setlocal number
 " 显示光标当前位置
 set ruler
 " 高亮显示搜索结果
@@ -462,7 +465,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
-        nnoremap + :Git<Space>
+        nnoremap gi :Git<Space>
         nnoremap gc :Gcommit -a -v<CR>
     endif
     " startify
@@ -538,6 +541,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:airline#extensions#tabline#buffer_nr_show = 0
         " shw full_path of the file
         let g:airline_section_c = "\ %F"
+        " syntastic
+        let g:airline#extensions#syntastic#enabled = 1
         if !exists('g:airline_symbols')
             let g:airline_symbols = {}
             let g:airline_symbols.crypt = '🔒'
@@ -730,7 +735,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:NERDTreeWinPos                    =0
         let g:NERDTreeDirArrowExpandable        = '▸'
         let g:NERDTreeDirArrowCollapsible       = '▾'
-        au bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
+        au BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
         " nerdtree-git
         if HasDirectory("nerdtree-git-plugin")
             let g:NERDTreeIndicatorMapCustom = {
@@ -833,6 +838,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
     endif
+    " easymotion
     if HasDirectory("vim-easymotion")
         nmap <C-j><C-j> <Plug>(easymotion-w)
         nmap <C-k><C-k> <Plug>(easymotion-b)
@@ -1043,13 +1049,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     set completeopt-=preview
     set completeopt+=menuone
     " ominifuc
-    au FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    au FileType python setlocal omnifunc=pythoncomplete#Complete
-    au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     if g:complete_engine == "None"
         imap <C-i> <C-x><C-o>
+        au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+        au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+        au FileType python        setlocal omnifunc=pythoncomplete#Complete
+        au FileType java          setlocal omnifunc=javacomplete#Complete
+        au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+        au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     elseif HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1099,7 +1106,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
         set shortmess+=c
         set completeopt+=noinsert,noselect
-        autocmd BufEnter * call ncm2#enable_for_buffer()
+        au BufEnter * call ncm2#enable_for_buffer()
         au User Ncm2Plugin call ncm2#register_source({
             \ 'name' : 'css',
             \ 'enable' : 1,
@@ -1345,65 +1352,85 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:go_snippet_engine = "neosnippet"
         endif
         au Filetype go imap <C-i> <C-x><C-o>
-        au FileType go nmap <C-g>i <Plug>(go-implements)
-        au FileType go nmap <C-g>I <Plug>(go-info)
-        au FileType go nmap <C-g>u <Plug>(go-rename)
+        au FileType go nmap <C-j>i <Plug>(go-implements)
+        au FileType go nmap <C-j>I <Plug>(go-info)
+        au FileType go nmap <C-j>u <Plug>(go-rename)
+        au FileType go nmap <C-j>r <Plug>(go-run)
         au FileType go nmap <F5>   <Plug>(go-run)
-        au FileType go nmap <C-g>r <Plug>(go-run)
-        au FileType go nmap <C-g>b <Plug>(go-build)
-        au FileType go nmap <C-g>t <Plug>(go-test)
-        au FileType go nmap <C-g>d <Plug>(go-doc)
-        au FileType go nmap <C-g>D <Plug>(go-doc-vertical)
-        au FileType go nmap <C-g>c <Plug>(go-coverage)
+        au FileType go nmap <C-j>b <Plug>(go-build)
+        au FileType go nmap <C-j>t <Plug>(go-test)
+        au FileType go nmap <C-j>d <Plug>(go-doc)
+        au FileType go nmap <C-j>D <Plug>(go-doc-vertical)
+        au FileType go nmap <C-j>c <Plug>(go-coverage)
     endif
     " java
-    if HasPlug('java')
-        autocmd FileType java setlocal omnifunc=javacomplete#Complete
-    endif
     if HasDirectory('vim-eclim')
-        au FileType java imap <C-i> <C-x><C-o>
+        au FileType java nnoremap <C-b><C-b>  :ProjectBuild<Space>
+        au FileType java setlocal omnifunc=javacomplete#Complete
+        au Filetype java imap <C-i> <C-x><C-o>
         let g:EclimCompletionMethod = 'omnifunc'
-        nnoremap <C-g>b  :ProjectBuild<Spapce>
-        nnoremap <C-g>pp :Project
-        nnoremap <C-g>pc :ProjectCreate
-        nnoremap <C-g>pi :ProjectImport
-        nnoremap <C-g>pI :ProjectInfo
-        nnoremap <C-g>pl :ProjectList
-        nnoremap <C-g>pr :ProjectRun
-        nnoremap <C-g>ps :ProjectSettings
-        nnoremap <C-g>po :ProjectOpen
+        if exists('g:vimplugin_running')
+            let g:EclimProjectTreeAutoOpen = 1
+        endif
+        nnoremap <C-j>pp :Project
+        nnoremap <C-j>pn :ProjectCreate<Space>
+        nnoremap <C-j>pc :ProjectLCD<CR>
+        nnoremap <C-j>pd :ProjectCD<CR>
+        nnoremap <C-j>pi :ProjectImport<Space>
+        nnoremap <C-j>pI :ProjectInfo<Cr>
+        nnoremap <C-j>po :ProjectOpen<Space>
+        let s:project_tree_is_open = 0
+        function! ToggleProjectTree()
+            if s:project_tree_is_open
+                call eclim#project#tree#ProjectTreeClose()
+                let s:project_tree_is_open = 0
+            else
+                let s:winpos = winnr()
+                let s:winpos = s:winpos + 1
+                call eclim#project#tree#ProjectTree()
+                let s:project_tree_is_open = 1
+                execute s:winpos . "wincmd w"
+            endif
+        endfunction
+        command! ToggleProjectTree call ToggleProjectTree()
+        nnoremap <C-j>pt :ToggleProjectTree<Cr>
+        nnoremap <C-j>pl :ProjectList<Cr>
+        nnoremap <C-j>pa :ProjectsTree<Cr>
+        if has('python')
+            nnoremap <C-b>R :ProjectRun<Cr>
+        endif
     endif
     if HasDirectory("javacomplete2")
-		au FileType java nmap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
-		au FileType java nmap <C-g>ii <Plug>(JavaComplete-Imports-Add)
-		au FileType java nmap <C-g>I <Plug>(JavaComplete-Imports-AddMissing)
-		au FileType java nmap <C-g>g <Plug>(JavaComplete-Generate-AbstractMethods)
-		au FileType java nmap <C-g>m <Plug>(JavaComplete-Imports-RemoveUnused)
+		au FileType java nmap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+		au FileType java nmap <C-j>ii <Plug>(JavaComplete-Imports-Add)
+		au FileType java nmap <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
+		au FileType java nmap <C-j>g <Plug>(JavaComplete-Generate-AbstractMethods)
+		au FileType java nmap <C-j>m <Plug>(JavaComplete-Imports-RemoveUnused)
 
-		au FileType java imap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
-		au FileType java imap <C-g>ii <Plug>(JavaComplete-Imports-Add)
-		au FileType java imap <C-g>I <Plug>(JavaComplete-Imports-AddMissing)
-		au FileType java imap <C-g>g <Plug>(JavaComplete-Generate-AbstractMethods)
-		au FileType java imap <C-g>m <Plug>(JavaComplete-Imports-RemoveUnused)
+		au FileType java imap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+		au FileType java imap <C-j>ii <Plug>(JavaComplete-Imports-Add)
+		au FileType java imap <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
+		au FileType java imap <C-j>g <Plug>(JavaComplete-Generate-AbstractMethods)
+		au FileType java imap <C-j>m <Plug>(JavaComplete-Imports-RemoveUnused)
 
-		au FileType java nmap <C-g>a <Plug>(JavaComplete-Generate-Accessors)
-		au FileType java nmap <C-g>c <Plug>(JavaComplete-Generate-Constructor)
-		au FileType java nmap <C-g>S <Plug>(JavaComplete-Generate-AccessorSetter)
-		au FileType java nmap <C-g>G <Plug>(JavaComplete-Generate-AccessorGetter)
-		au FileType java nmap <C-g>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-		au FileType java nmap <C-g>T <Plug>(JavaComplete-Generate-ToString)
-		au FileType java nmap <C-g>E <Plug>(JavaComplete-Generate-EqualsAndHashCode)
-		au FileType java nmap <C-g>C <Plug>(JavaComplete-Generate-DefaultConstructor)
+		au FileType java nmap <C-j>a <Plug>(JavaComplete-Generate-Accessors)
+		au FileType java nmap <C-j>c <Plug>(JavaComplete-Generate-Constructor)
+		au FileType java nmap <C-j>S <Plug>(JavaComplete-Generate-AccessorSetter)
+		au FileType java nmap <C-j>G <Plug>(JavaComplete-Generate-AccessorGetter)
+		au FileType java nmap <C-j>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+		au FileType java nmap <C-j>T <Plug>(JavaComplete-Generate-ToString)
+		au FileType java nmap <C-j>E <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+		au FileType java nmap <C-j>C <Plug>(JavaComplete-Generate-DefaultConstructor)
 
-		au FileType java imap <C-g>S <Plug>(JavaComplete-Generate-AccessorSetter)
-		au FileType java imap <C-g>G <Plug>(JavaComplete-Generate-AccessorGetter)
-		au FileType java imap <C-g>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-		au FileType java vmap <C-g>S <Plug>(JavaComplete-Generate-AccessorSetter)
-		au FileType java vmap <C-g>G <Plug>(JavaComplete-Generate-AccessorGetter)
-		au FileType java vmap <C-g>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+		au FileType java imap <C-j>S <Plug>(JavaComplete-Generate-AccessorSetter)
+		au FileType java imap <C-j>G <Plug>(JavaComplete-Generate-AccessorGetter)
+		au FileType java imap <C-j>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+		au FileType java vmap <C-j>S <Plug>(JavaComplete-Generate-AccessorSetter)
+		au FileType java vmap <C-j>G <Plug>(JavaComplete-Generate-AccessorGetter)
+		au FileType java vmap <C-j>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
 
-		au FileType java nmap <silent> <buffer> <C-g>n <Plug>(JavaComplete-Generate-NewClass)
-		au FileType java nmap <silent> <buffer> <C-g>N <Plug>(JavaComplete-Generate-ClassInFile)
+		au FileType java nmap <silent> <buffer> <C-j>n <Plug>(JavaComplete-Generate-NewClass)
+		au FileType java nmap <silent> <buffer> <C-j>N <Plug>(JavaComplete-Generate-ClassInFile)
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
@@ -1412,21 +1439,20 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         snoremap <F5> <ESC>:QuickRun<Cr>
         vnoremap <F5> <ESC>:QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
-        let g:quickfix_is_open = 0
+        let s:quickfix_is_open = 0
         function! ToggleQuickfix()
-            if g:quickfix_is_open
+            if s:quickfix_is_open
                 cclose
                 cclose
-                let g:quickfix_is_open = 0
+                let s:quickfix_is_open = 0
                 execute g:quickfix_return_to_window . "wincmd w"
             else
-                let g:quickfix_return_to_window = winnr()
+                let s:quickfix_return_to_window = winnr()
                 copen
-                let g:quickfix_is_open = 1
+                let s:quickfix_is_open = 1
             endif
         endfunction
-        command! ToggleQuickfix
-                    \ call ToggleQuickfix()
+        command! ToggleQuickfix call ToggleQuickfix()
         nnoremap <silent><F6> :ToggleQuickfix<cr>
         inoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
         vnoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
@@ -1457,9 +1483,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endfunction
         command! AsyncRunNow call s:ASYNC_RUN()
-        nmap <C-g>r :AsyncRunNow<CR>
-        nmap <C-g>R :AsyncRun<Space>
-        nmap <C-g>s :AsyncStop<CR>
+        nmap <C-b>r :AsyncRunNow<CR>
+        nmap <C-b>a :AsyncRun<Space>
+        nmap <C-b>s :AsyncStop<CR>
+        au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
     endif
     if HasDirectory("ale")
         let g:ale_completion_enabled   = 0
