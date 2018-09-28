@@ -218,7 +218,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " complete_engine
                 if HasPlug('youcompleteme') || HasPlug('YCM')
-                    if executable('make') && execute('gcc') && g:python_version && !WINDOWS()
+                    if executable('make') && executable('gcc') && g:python_version && !WINDOWS()
                         let g:complete_engine = "YCM"
                     else
                         echoe "Cannot install YouCompleteMe, smart select a complete_engine."
