@@ -399,7 +399,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " java
             if HasPlug('java')
-                if executable('java') && g:complete_engine == "YCM"
+                if executable('java') && executable('gcc') && executable('make')
                     Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
                     Plug 'dansomething/vim-eclim'
                 else

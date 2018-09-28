@@ -1050,14 +1050,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     set completeopt-=preview
     set completeopt+=menuone
     " ominifuc
-    if g:complete_engine == "None"
-        imap <C-i> <C-x><C-o>
-        au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
-        au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
-        au FileType python        setlocal omnifunc=pythoncomplete#Complete
-        au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
-        au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    elseif HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
+    au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+    au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+    au FileType python        setlocal omnifunc=pythoncomplete#Complete
+    au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+    au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
@@ -1107,17 +1105,43 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         set shortmess+=c
         set completeopt+=noinsert,noselect
         au BufEnter * call ncm2#enable_for_buffer()
-        au User Ncm2Plugin call ncm2#register_source({
-            \ 'name' : 'css',
-            \ 'enable' : 1,
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
-            \ })
+        if HasPlug('html')
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'css',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['css','scss'],
+                \ 'mark': 'css',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': ':\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
+                \ })
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'html',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['htm','html', 'markdown'],
+                \ 'mark': 'html',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': ':\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'htmlcomplete#CompleteTags']
+                \ })
+        endif
+        if HasPlug('java')
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'java',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['java','class'],
+                \ 'mark': 'java',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': '.\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
+                \ })
+        endif
         let g:LanguageClient_serverCommands = {
             \ 'go': ['go-langserver'],
             \ 'rust': ['rls'],
@@ -1134,18 +1158,20 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:deoplete#enable_yarp = 1
         endif
         let g:deoplete#enable_camel_case = 1
-        " Enable heavy omni completion.
-        if !exists('g:deoplete#keyword_patterns')
-            let g:deoplete#keyword_patterns = {}
-        endif
+        " omni completion.
         call deoplete#custom#option('omni_patterns', {
-            \ 'java' : '[^. *\t]\.\w*',
-            \ 'php'  : '[^. \t]->\h\w*\|\h\w*::',
-            \ 'perl' : '\h\w*->\h\w*\|\h\w*::',
-            \ 'c'    : '[^.[:digit:] *\t]\%(\.\|->\)',
-            \ 'cpp'  : '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
-            \ 'ruby' : '[^. *\t]\.\h\w*\|\h\w*::',
-            \ 'go'   : '\h\w*\.\?',
+            \ 'java' :'[^. *\t]\.\w*',
+            \ 'php'  :'[^. \t]->\h\w*\|\h\w*::',
+            \ 'perl' :'\h\w*->\h\w*\|\h\w*::',
+            \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
+            \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
+            \ 'go'   :'\h\w*\.\?',
+        \})
+        " keyword_patterns is python grep
+        call deoplete#custom#option('keyword_patterns', {
+            \ '_'    :'[a-zA-Z_]\k*',
+            \ 'tex'  :'\\?[a-zA-Z_]\w*',
+            \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
         \})
         if HasDirectory('ultisnips')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
@@ -1162,6 +1188,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:completor_python_binary = exepath("python3")
         endif
         let g:completor_css_omni_trigger  = '([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
+        let g:completor_java_omni_trigger  = '[^. *\t]\.\w*'
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1464,21 +1491,21 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             call asyncrun#quickfix_toggle(8,1)
             if &filetype == 'c'
                 exec ":AsyncRun g++ % -o %<"
-                exec ":AsyncRun ./%<"
+                exec ":AsyncRun -raw=1 ./%<"
             elseif &filetype == 'cpp'
                 exec ":AsyncRun g++ % -o %<"
-                exec ":AsyncRun ./%<"
+                exec ":AsyncRun -raw=1 ./%<"
             elseif &filetype == 'java'
-                exec ":AsyncRun javac %"
-                exec ":AsyncRun java %<"
+                exec ":AsyncRun -raw=1 javac %"
+                exec ":AsyncRun -raw=1 java %<"
             elseif &filetype == 'sh'
-                exec ":AsyncRun bash %"
+                exec ":AsyncRun -raw=1 bash %"
             elseif &filetype == 'python'
-                exec ":AsyncRun python %"
+                exec ":AsyncRun -raw=1 python %"
             elseif &filetype == 'perl'
-                exec ":AsyncRun perl %"
+                exec ":AsyncRun -raw=1 perl %"
             elseif &filetype == 'go'
-                exec ":AsyncRun go run %"
+                exec ":AsyncRun -raw=1 go run %"
             endif
         endfunction
         command! AsyncRunNow call s:ASYNC_RUN()
