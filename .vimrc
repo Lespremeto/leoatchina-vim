@@ -1087,7 +1087,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'cpp,cuda,objcpp' : ['->', '.', '::'],
             \ 'perl' : ['->'],
             \ 'php' : ['->', '::'],
-            \ 'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \ 'cs,java,javascript,typescript,python,perl6,scala,vb,elixir,go' : ['.'],
             \ 'ruby' : ['.', '::'],
             \ 'lua' : ['.', ':'],
             \ 'erlang' : [':'],
@@ -1269,76 +1269,73 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     endif
     " smart completion use neosnippet to expand
-    if g:complete_engine !="None"
-        " headache confict
-        imap <expr><C-j>  pumvisible()? "()\<Left>":"\<CR>"
-        if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
-            imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
-        else
-            imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
-        endif
-        inoremap <expr> <Up>       pumvisible() ? "\<C-p>"                  : "\<Up>"
-        inoremap <expr> <Down>     pumvisible() ? "\<C-n>"                  : "\<Down>"
-        inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>"   : "\<PageUp>"
-        inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
-        " ultisnip
-        if HasDirectory('ultisnips')
-            " remap Ultisnips for compatibility
-            let g:UltiSnipsNoPythonWarning = 0
-            let g:UltiSnipsRemoveSelectModeMappings = 0
-            let g:UltiSnipsExpandTrigger = "<Nop>"
-            let g:UltiSnipsListSnippets = "<C-g><C-l>"
-            let g:UltiSnipsJumpForwardTrigger = "<C-l>"
-            let g:UltiSnipsJumpBackwardTrigger = "<C-h>"
-            " Ulti python version
-            let g:UltiSnipsUsePythonVersion = g:python_version
-            " tab for ExpandTrigger
-            function! g:UltiSnips_Tab()
-                if pumvisible()
-                    call UltiSnips#ExpandSnippetOrJump()
-                    if g:ulti_expand_or_jump_res
-                        return "\<Right>"
-                    else
-                        if !exists('v:completed_item') || empty(v:completed_item)
-                            return "\<C-n>"
-                        else
-                            return "\<C-y>"
-                        endif
-                    endif
-                else
-                    return "\<Tab>"
-                endif
-            endfunction
-            au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
-            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
-            " Ulti的代码片段的文件夹
-            let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
-            let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-        elseif HasDirectory('neosnippet')
-            let g:neosnippet#enable_completed_snippet = 1
-            smap <C-l> <Plug>(neosnippet_jump)
-            function! g:NeoSnippet_Tab()
-                if pumvisible()
-                    if neosnippet#expandable()
-                        return neosnippet#mappings#expand_impl()
-                    else
-                        if !exists('v:completed_item') || empty(v:completed_item)
-                            return "\<C-n>"
-                        else
-                            return "\<C-y>"
-                        endif
-                    endif
-                else
-                    return "\<Tab>"
-                endif
-            endfunction
-            au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>"
-            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>"
-            " Use honza's snippets.
-            let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
-        endif
+    imap <expr><C-j>  pumvisible()? "()\<Left>":"\<CR>"
+    if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
+        imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
+    else
+        imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
     endif
-    " Go program
+    inoremap <expr> <Up>       pumvisible() ? "\<C-p>"                  : "\<Up>"
+    inoremap <expr> <Down>     pumvisible() ? "\<C-n>"                  : "\<Down>"
+    inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>"   : "\<PageUp>"
+    inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
+    " ultisnip
+    if HasDirectory('ultisnips')
+        " remap Ultisnips for compatibility
+        let g:UltiSnipsNoPythonWarning = 0
+        let g:UltiSnipsRemoveSelectModeMappings = 0
+        let g:UltiSnipsExpandTrigger = "<Nop>"
+        let g:UltiSnipsListSnippets = "<C-g><C-l>"
+        let g:UltiSnipsJumpForwardTrigger = "<C-l>"
+        let g:UltiSnipsJumpBackwardTrigger = "<C-h>"
+        " Ulti python version
+        let g:UltiSnipsUsePythonVersion = g:python_version
+        " tab for ExpandTrigger
+        function! g:UltiSnips_Tab()
+            if pumvisible()
+                call UltiSnips#ExpandSnippetOrJump()
+                if g:ulti_expand_or_jump_res
+                    return "\<Right>"
+                else
+                    if !exists('v:completed_item') || empty(v:completed_item)
+                        return "\<C-n>"
+                    else
+                        return "\<C-y>"
+                    endif
+                endif
+            else
+                return "\<Tab>"
+            endif
+        endfunction
+        au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
+        au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
+        " Ulti的代码片段的文件夹
+        let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
+        let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+    elseif HasDirectory('neosnippet')
+        let g:neosnippet#enable_completed_snippet = 1
+        smap <C-l> <Plug>(neosnippet_jump)
+        function! g:NeoSnippet_Tab()
+            if pumvisible()
+                if neosnippet#expandable()
+                    return neosnippet#mappings#expand_impl()
+                else
+                    if !exists('v:completed_item') || empty(v:completed_item)
+                        return "\<C-n>"
+                    else
+                        return "\<C-y>"
+                    endif
+                endif
+            else
+                return "\<Tab>"
+            endif
+        endfunction
+        au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>"
+        au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>"
+        " Use honza's snippets.
+        let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
+    endif
+    " Go
     if HasDirectory("vim-go")
         let g:go_highlight_functions         = 1
         let g:go_highlight_methods           = 1
