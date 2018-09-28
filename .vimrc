@@ -1102,7 +1102,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap gT :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1365,72 +1365,72 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     " java
     if HasDirectory('vim-eclim')
-        au FileType java nnoremap <C-b><C-b>  :ProjectBuild<Space>
+        au FileType java nnoremap <C-b><C-b>  :ProjectBuild<Cr>
         au FileType java setlocal omnifunc=javacomplete#Complete
         au Filetype java imap <C-i> <C-x><C-o>
         let g:EclimCompletionMethod = 'omnifunc'
-        if exists('g:vimplugin_running')
-            let g:EclimProjectTreeAutoOpen = 1
-        endif
-        nnoremap <C-j>pp :Project
-        nnoremap <C-j>pn :ProjectCreate<Space>
-        nnoremap <C-j>pc :ProjectLCD<CR>
-        nnoremap <C-j>pd :ProjectCD<CR>
-        nnoremap <C-j>pi :ProjectImport<Space>
-        nnoremap <C-j>pI :ProjectInfo<Cr>
-        nnoremap <C-j>po :ProjectOpen<Space>
         let s:project_tree_is_open = 0
         function! ToggleProjectTree()
             if s:project_tree_is_open
                 call eclim#project#tree#ProjectTreeClose()
                 let s:project_tree_is_open = 0
             else
-                let s:winpos = winnr()
-                let s:winpos = s:winpos + 1
+                let s:winpos = winnr() + 1
                 call eclim#project#tree#ProjectTree()
                 let s:project_tree_is_open = 1
                 execute s:winpos . "wincmd w"
             endif
-        endfunction
+        endfunctio
         command! ToggleProjectTree call ToggleProjectTree()
-        nnoremap <C-j>pt :ToggleProjectTree<Cr>
-        nnoremap <C-j>pl :ProjectList<Cr>
-        nnoremap <C-j>pa :ProjectsTree<Cr>
+        nnoremap <leader>nt :ToggleProjectTree<Cr>
+        nnoremap <leader>nl :ProjectList<Cr>
+        nnoremap <leader>na :ProjectsTree<Cr>
+        nnoremap <C-j>pp :Project
+        nnoremap <C-j>pr :ProjectRefresh<Cr>
+        nnoremap <C-j>pn :ProjectCreate<Space>
+        nnoremap <C-j>pc :ProjectLCD<CR>
+        nnoremap <C-j>pd :ProjectCD<CR>
+        nnoremap <C-j>pm :ProjectMove<Space>
+        nnoremap <C-j>pi :ProjectImport<Space>
+        nnoremap <C-j>pI :ProjectInfo<Cr>
+        nnoremap <C-j>po :ProjectOpen<Space>
         if has('python')
             nnoremap <C-b>R :ProjectRun<Cr>
         endif
     endif
-    if HasDirectory("javacomplete2")
-		au FileType java nmap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
-		au FileType java nmap <C-j>ii <Plug>(JavaComplete-Imports-Add)
-		au FileType java nmap <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
-		au FileType java nmap <C-j>g <Plug>(JavaComplete-Generate-AbstractMethods)
-		au FileType java nmap <C-j>m <Plug>(JavaComplete-Imports-RemoveUnused)
+    if HasDirectory("vim-javacomplete2")
+        au FileType java nmap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+        au FileType java nmap <C-j>I <Plug>(JavaComplete-Imports-Add)
+        au FileType java nmap <C-j>M <Plug>(JavaComplete-Imports-AddMissing)
+        au FileType java nmap <C-j>U <Plug>(JavaComplete-Imports-RemoveUnused)
 
-		au FileType java imap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
-		au FileType java imap <C-j>ii <Plug>(JavaComplete-Imports-Add)
-		au FileType java imap <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
-		au FileType java imap <C-j>g <Plug>(JavaComplete-Generate-AbstractMethods)
-		au FileType java imap <C-j>m <Plug>(JavaComplete-Imports-RemoveUnused)
+        au FileType java imap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+        au FileType java imap <C-j>I <Plug>(JavaComplete-Imports-Add)
+        au FileType java imap <C-j>M <Plug>(JavaComplete-Imports-AddMissing)
+        au FileType java imap <C-j>U <Plug>(JavaComplete-Imports-RemoveUnused)
 
-		au FileType java nmap <C-j>a <Plug>(JavaComplete-Generate-Accessors)
-		au FileType java nmap <C-j>c <Plug>(JavaComplete-Generate-Constructor)
-		au FileType java nmap <C-j>S <Plug>(JavaComplete-Generate-AccessorSetter)
-		au FileType java nmap <C-j>G <Plug>(JavaComplete-Generate-AccessorGetter)
-		au FileType java nmap <C-j>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-		au FileType java nmap <C-j>T <Plug>(JavaComplete-Generate-ToString)
-		au FileType java nmap <C-j>E <Plug>(JavaComplete-Generate-EqualsAndHashCode)
-		au FileType java nmap <C-j>C <Plug>(JavaComplete-Generate-DefaultConstructor)
+        au FileType java nmap <C-j>k <Plug>(JavaComplete-Generate-Accessors)
+        au FileType java nmap <C-j>c <Plug>(JavaComplete-Generate-Constructor)
+        au FileType java nmap <C-j>t <Plug>(JavaComplete-Generate-ToString)
+        au FileType java nmap <C-j>e <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+        au FileType java nmap <C-j>d <Plug>(JavaComplete-Generate-DefaultConstructor)
 
-		au FileType java imap <C-j>S <Plug>(JavaComplete-Generate-AccessorSetter)
-		au FileType java imap <C-j>G <Plug>(JavaComplete-Generate-AccessorGetter)
-		au FileType java imap <C-j>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-		au FileType java vmap <C-j>S <Plug>(JavaComplete-Generate-AccessorSetter)
-		au FileType java vmap <C-j>G <Plug>(JavaComplete-Generate-AccessorGetter)
-		au FileType java vmap <C-j>A <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+        au FileType java nmap <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+        au FileType java nmap <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+        au FileType java nmap <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+        au FileType java nmap <C-j>A <Plug>(JavaComplete-Generate-AbstractMethods)
 
-		au FileType java nmap <silent> <buffer> <C-j>n <Plug>(JavaComplete-Generate-NewClass)
-		au FileType java nmap <silent> <buffer> <C-j>N <Plug>(JavaComplete-Generate-ClassInFile)
+        au FileType java imap <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+        au FileType java imap <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+        au FileType java imap <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+        au FileType java imap <C-j>A <Plug>(JavaComplete-Generate-AbstractMethods)
+
+        au FileType java vmap <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+        au FileType java vmap <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+        au FileType java vmap <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+        au FileType java nmap <silent> <buffer> <C-j>n <Plug>(JavaComplete-Generate-NewClass)
+        au FileType java nmap <silent> <buffer> <C-j>N <Plug>(JavaComplete-Generate-ClassInFile)
     endif
     " run_tools
     if HasDirectory("vim-quickrun")

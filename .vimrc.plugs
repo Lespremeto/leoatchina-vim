@@ -184,7 +184,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " java
             if HasPlug('java')
                 if executable('java') && executable('gcc') && executable('make')
-                    Plug 'artur-shaik/vim-javacomplete2', {'for':['java', 'class']}
+                    Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
                     Plug 'dansomething/vim-eclim'
                 else
                     echoe "Inroder to install java plugins, you shoud update you system"
