@@ -177,27 +177,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if executable('ctags')
                 Plug 'ludovicchabant/vim-gutentags'
             endif
-            " Go
-            if HasPlug('go')
-                Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
-            endif
-            " java
-            if HasPlug('java')
-                if executable('java') && executable('gcc') && executable('make')
-                    Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
-                    Plug 'dansomething/vim-eclim'
-                else
-                    echoe "Inroder to install java plugins, you shoud update you system"
-                endif
-            endif
-            " rust
-            if HasPlug('rust')
-                Plug 'rust-lang/rust.vim', {'for': 'rust'}
-            endif
-            " julia
-            if HasPlug('julia')
-                Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
-            endif
+            " search tools
             if v:version >= 800
                 if !g:use_shougo
                     Plug 'skywind3000/asyncrun.vim'
@@ -209,6 +189,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 Plug 'brooth/far.vim'
             endif
+            " sytax
             if HasPlug('syntax')
                 if v:version >= 800
                     if g:use_shougo
@@ -220,11 +201,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'vim-syntastic/syntastic'
                 endif
             endif
+            " browser tools & complete tools
             if g:use_shougo
                 let g:browser_tool = "denite"
                 let g:complete_engine = "deoplete"
             else
-                " browser_tools
                 let g:browser_tool = "ctrlp"
                 if HasPlug('fzf')
                     if !WINDOWS() || WINDOWS() && executable('fzf')
@@ -237,7 +218,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " complete_engine
                 if HasPlug('youcompleteme') || HasPlug('YCM')
-                    if executable('cmake') && g:python_version && !WINDOWS()
+                    if executable('make') && execute('gcc') && g:python_version && !WINDOWS()
                         let g:complete_engine = "YCM"
                     else
                         echoe "Cannot install YouCompleteMe, smart select a complete_engine."
@@ -415,6 +396,27 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if g:complete_snippet == 'ultisnips'
                     Plug 'JazzCore/neocomplcache-ultisnips'
                 endif
+            endif
+            " java
+            if HasPlug('java')
+                if executable('java') && g:complete_engine == "YCM"
+                    Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+                    Plug 'dansomething/vim-eclim'
+                else
+                    echoe "Inroder to install java plugins, you shoud update you system"
+                endif
+            endif
+            " Go
+            if HasPlug('go')
+                Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
+            endif
+            " rust
+            if HasPlug('rust')
+                Plug 'rust-lang/rust.vim', {'for': 'rust'}
+            endif
+            " julia
+            if HasPlug('julia')
+                Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
             endif
         endif
         " install browser tools

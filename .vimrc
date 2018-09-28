@@ -27,6 +27,7 @@ set timeoutlen=500 ttimeoutlen=50
 set conceallevel=0
 " 不同文件类型加载不同插件
 filetype plugin indent on   " Automatically detect file types.
+set omnifunc=syntaxcomplete#Complete
 filetype on                 " 开启文件类型侦测
 filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
 syntax on
@@ -1054,7 +1055,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
         au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
         au FileType python        setlocal omnifunc=pythoncomplete#Complete
-        au FileType java          setlocal omnifunc=javacomplete#Complete
         au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
         au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     elseif HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
@@ -1161,6 +1161,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         else
             let g:completor_python_binary = exepath("python3")
         endif
+        let g:completor_css_omni_trigger  = '([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1364,41 +1365,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         au FileType go nmap <C-j>c <Plug>(go-coverage)
     endif
     " java
-    if HasDirectory('vim-eclim')
-        au FileType java nnoremap <C-b><C-b>  :ProjectBuild<Cr>
+    if HasDirectory("vim-javacomplete2")
         au FileType java setlocal omnifunc=javacomplete#Complete
         au Filetype java imap <C-i> <C-x><C-o>
-        let g:EclimCompletionMethod = 'omnifunc'
-        let s:project_tree_is_open = 0
-        function! ToggleProjectTree()
-            if s:project_tree_is_open
-                call eclim#project#tree#ProjectTreeClose()
-                let s:project_tree_is_open = 0
-            else
-                let s:winpos = winnr() + 1
-                call eclim#project#tree#ProjectTree()
-                let s:project_tree_is_open = 1
-                execute s:winpos . "wincmd w"
-            endif
-        endfunctio
-        command! ToggleProjectTree call ToggleProjectTree()
-        nnoremap <leader>nt :ToggleProjectTree<Cr>
-        nnoremap <leader>nl :ProjectList<Cr>
-        nnoremap <leader>na :ProjectsTree<Cr>
-        nnoremap <C-j>pp :Project
-        nnoremap <C-j>pr :ProjectRefresh<Cr>
-        nnoremap <C-j>pn :ProjectCreate<Space>
-        nnoremap <C-j>pc :ProjectLCD<CR>
-        nnoremap <C-j>pd :ProjectCD<CR>
-        nnoremap <C-j>pm :ProjectMove<Space>
-        nnoremap <C-j>pi :ProjectImport<Space>
-        nnoremap <C-j>pI :ProjectInfo<Cr>
-        nnoremap <C-j>po :ProjectOpen<Space>
-        if has('python')
-            nnoremap <C-b>R :ProjectRun<Cr>
-        endif
-    endif
-    if HasDirectory("vim-javacomplete2")
+
         au FileType java nmap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
         au FileType java nmap <C-j>I <Plug>(JavaComplete-Imports-Add)
         au FileType java nmap <C-j>M <Plug>(JavaComplete-Imports-AddMissing)
@@ -1431,6 +1401,38 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
 
         au FileType java nmap <silent> <buffer> <C-j>n <Plug>(JavaComplete-Generate-NewClass)
         au FileType java nmap <silent> <buffer> <C-j>N <Plug>(JavaComplete-Generate-ClassInFile)
+    endif
+    if HasDirectory('vim-eclim')
+        au FileType java nnoremap <C-b><C-b>  :ProjectBuild<Cr>
+        let g:EclimCompletionMethod = 'omnifunc'
+        let s:project_tree_is_open = 0
+        function! ToggleProjectTree()
+            if s:project_tree_is_open
+                call eclim#project#tree#ProjectTreeClose()
+                let s:project_tree_is_open = 0
+            else
+                let s:winpos = winnr() + 1
+                call eclim#project#tree#ProjectTree()
+                let s:project_tree_is_open = 1
+                execute s:winpos . "wincmd w"
+            endif
+        endfunctio
+        command! ToggleProjectTree call ToggleProjectTree()
+        nnoremap <leader>nt :ToggleProjectTree<Cr>
+        nnoremap <leader>nl :ProjectList<Cr>
+        nnoremap <leader>na :ProjectsTree<Cr>
+        nnoremap <C-j>pp :Project
+        nnoremap <C-j>pr :ProjectRefresh<Cr>
+        nnoremap <C-j>pn :ProjectCreate<Space>
+        nnoremap <C-j>pc :ProjectLCD<CR>
+        nnoremap <C-j>pd :ProjectCD<CR>
+        nnoremap <C-j>pm :ProjectMove<Space>
+        nnoremap <C-j>pi :ProjectImport<Space>
+        nnoremap <C-j>pI :ProjectInfo<Cr>
+        nnoremap <C-j>po :ProjectOpen<Space>
+        if has('python')
+            nnoremap <C-b>R :ProjectRun<Cr>
+        endif
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
