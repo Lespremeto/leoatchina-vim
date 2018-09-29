@@ -195,12 +195,15 @@ vmap <C-a> ^
 imap <C-a> <Esc>I
 vmap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
-nnoremap <localleader>] $
-nnoremap <localleader>[ ^
-vnoremap <localleader>] $
-vnoremap <localleader>[ ^
+nnoremap ge $
+nnoremap ga ^
+vnoremap ge $
+vnoremap ga ^
 nmap <C-j> <Nop>
 vmap <C-j> <Nop>
+imap <C-j> <Nop>
+imap <C-j>. <C-x><C-o>
+imap <C-j>, <C-x><C-u>
 nmap <C-k> <Nop>
 vmap <C-k> <Nop>
 nmap <C-g> <Nop>
@@ -287,7 +290,7 @@ nmap <Leader>q :q!
 nmap <Leader>Q :qa!
 " 设置分割页面
 nmap <leader>\ :vsplit<Space>
-nmap <leader><leader>\ :split<Space>
+nmap <leader>_ :split<Space>
 nmap <leader>= <C-W>=
 "设置垂直高度减增
 nmap <Leader><Down>  :resize -3<CR>
@@ -372,9 +375,9 @@ au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
 au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
-au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java,*.js,*.json,*.vue,*.ts setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
-" preceding line best in a plugin but here for now.
 au BufNewFile,BufRead *.coffee set filetype=coffee
+au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
+au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java,*.js,*.json,*.vue,*.ts setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " sepcial setting for different type of files
 au FileType python au BufWritePost <buffer> :%retab
 au FileType haskell,puppet,ruby setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
@@ -830,6 +833,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             nmap <C-h>T :tab terminal
         endif
     endif
+    " neoformat
+    if HasDirectory('neoformat')
+        nnoremap gF :Neoformat<Space>
+        vnoremap gF :Neoformat!<Space>
+    endif
     " easy-align
     if HasDirectory("vim-easy-align")
         nmap <localleader><Cr> <Plug>(EasyAlign)
@@ -844,7 +852,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         nmap <C-j><C-j> <Plug>(easymotion-w)
         nmap <C-k><C-k> <Plug>(easymotion-b)
     endif
-    " browser seris
+    " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
         nnoremap <silent> <C-p>      :FZF<CR>
         nnoremap <silent> <leader>lb :Buffers<CR>
@@ -1100,7 +1108,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap gT :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap <silent>go :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1145,8 +1153,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:LanguageClient_serverCommands = {
             \ 'go': ['go-langserver'],
             \ 'rust': ['rls'],
-            \ 'javascript': ['tcp://127.0.0.1:2089'],
             \ 'python': ['pyls'],
+            \ 'typescript': ['javascript-typescript-stdio'],
+            \ 'javascript': ['javascript-typescript-stdio'],
             \ }
     elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
         set shortmess+=c
@@ -1221,6 +1230,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'whitelist': ['*'],
             \ 'completor': function('asyncomplete#sources#necosyntax#completor'),
             \ }))
+        au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necovim#get_source_options({
+            \ 'name': 'necovim',
+            \ 'whitelist': ['vim'],
+            \ 'completor': function('asyncomplete#sources#necovim#completor'),
+            \ }))
         if executable('pyls')
             au User lsp_setup call lsp#register_server({
                 \ 'name': 'pyls',
@@ -1228,6 +1242,23 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 \ 'whitelist': ['python'],
                 \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
                 \ })
+        endif
+        if HasDirectory('asyncomplete-tags.vim')
+            au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+                \ 'name': 'tags',
+                \ 'whitelist': ['c'],
+                \ 'completor': function('asyncomplete#sources#tags#completor'),
+                \ 'config': {
+                \    'max_file_size': 50000000,
+                \  },
+                \ }))
+        endif
+        if HasPlug('typejavascript')
+            au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tscompletejob#get_source_options({
+                \ 'name': 'tscompletejob',
+                \ 'whitelist': ['typescript'],
+                \ 'completor': function('asyncomplete#sources#tscompletejob#completor'),
+                \ }))
         endif
         if HasPlug('go')
             au User asyncomplete_setup  call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
@@ -1295,8 +1326,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     endif
-    " smart completion use neosnippet to expand
-    imap <expr><C-j>  pumvisible()? "()\<Left>":"\<CR>"
+    " smart completion
+    inoremap <expr><C-k>  pumvisible()? "()\<Left>":"\<C-k>"
     if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
         imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
     else
@@ -1335,7 +1366,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endfunction
         au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
-        au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
+        au BufEnter * exec "inoremap <silent> <C-i> <C-R>=g:UltiSnips_Tab()<cr>"
         " Ulti的代码片段的文件夹
         let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
@@ -1358,11 +1389,46 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endfunction
         au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>"
-        au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>"
+        au BufEnter * exec "inoremap <silent> <C-i> <C-R>=g:NeoSnippet_Tab()<cr>"
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
     endif
-    " Go
+    " javascript language
+    if HasDirectory('vim-javascript')
+        let g:javascript_plugin_jsdoc = 1
+        let g:javascript_plugin_ngdoc = 1
+        let g:javascript_plugin_flow = 1
+        au  FileType Javascript setlocal conceallevel=1
+        let g:javascript_conceal_function             = "ƒ"
+        let g:javascript_conceal_null                 = "ø"
+        let g:javascript_conceal_this                 = "@"
+        let g:javascript_conceal_return               = "⇚"
+        let g:javascript_conceal_undefined            = "¿"
+        let g:javascript_conceal_NaN                  = "ℕ"
+        let g:javascript_conceal_prototype            = "¶"
+        let g:javascript_conceal_static               = "•"
+        let g:javascript_conceal_super                = "Ω"
+        let g:javascript_conceal_arrow_function       = "⇒"
+        let g:javascript_conceal_noarg_arrow_function = "🞅"
+        let g:javascript_conceal_underscore_arrow_function = "🞅"
+    endif
+    if HasDirectory('vim-jsdoc')
+        au FileType javascript nmap <C-j>j <Plug>(jsdoc)
+    endif
+    " php language
+    if HasDirectory('phpcomplete.vim')
+        let g:phpcomplete_mappings = {
+           \ 'jump_to_def':        '<C-]>',
+           \ 'jump_to_def_split':  '<C-W><C-_>',
+           \ 'jump_to_def_vsplit': '<C-W><C-\>',
+           \ 'jump_to_def_tabnew': '<C-W><C-]>',
+           \}
+    endif
+    " html language
+    if HasDirectory('emmet-vim')
+        let g:user_emmet_leader_key='<C-J>'
+    endif
+    " Go language
     if HasDirectory("vim-go")
         let g:go_highlight_functions         = 1
         let g:go_highlight_methods           = 1
@@ -1376,7 +1442,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if g:complete_snippet == "neosnippet"
             let g:go_snippet_engine = "neosnippet"
         endif
-        au Filetype go imap <C-i> <C-x><C-o>
         au FileType go nmap <C-j>i <Plug>(go-implements)
         au FileType go nmap <C-j>I <Plug>(go-info)
         au FileType go nmap <C-j>u <Plug>(go-rename)
@@ -1391,7 +1456,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     " java
     if HasDirectory("vim-javacomplete2")
         au FileType java setlocal omnifunc=javacomplete#Complete
-        au Filetype java imap <C-i> <C-x><C-o>
 
         au FileType java nmap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
         au FileType java nmap <C-j>I <Plug>(JavaComplete-Imports-Add)

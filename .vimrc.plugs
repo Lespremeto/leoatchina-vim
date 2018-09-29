@@ -76,6 +76,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
         Plug 'leoatchina/vim-colorschemes-collections'
+        Plug 'mattn/webapi-vim'
+        Plug 'sbdchd/neoformat'
         " signs
         if has('signs')
             Plug 'kshenoy/vim-signature'
@@ -128,19 +130,21 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'easymotion/vim-easymotion'
         " PHP
         if HasPlug('php')
-            Plug 'arnaud-lb/vim-php-namespace', {'for' : 'php'}
+            Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
         endif
         " Javascript
         if HasPlug('javascript')
-            Plug 'elzr/vim-json', {'for': 'javascript'}
             Plug 'pangloss/vim-javascript', {'for': 'javascript'}
             Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
         endif
         " HTML
         if HasPlug('html')
-            Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
-            Plug 'tpope/vim-haml', {'for':['css','htm', 'html', 'xml', 'css3']}
             Plug 'mattn/emmet-vim', {'for':['css','htm', 'html', 'xml', 'css3']}
+            Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
+        endif
+        " typescripts
+        if HasPlug('typescript')
+           Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
         endif
         " perl
         if HasPlug('perl')
@@ -323,24 +327,34 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-bufword'
                 Plug 'ncm2/ncm2-path'
                 Plug 'ncm2/ncm2-github'
+                Plug 'ncm2/ncm2-tmux'
                 Plug 'ncm2/ncm2-tagprefix'
                 Plug 'filipekiss/ncm2-look.vim'
-                Plug 'ncm2/ncm2-vim', {'for':'vim'}
+                Plug 'jsfaint/gen_tags.vim'
+                Plug 'ncm2/ncm2-syntax'
+                Plug 'ncm2/ncm2-neoinclude'
+                Plug 'wellle/tmux-complete.vim'
+                Plug 'yuki-ycino/ncm2-dictionary'
                 Plug 'ncm2/ncm2-neoinclude'
                 Plug 'Shougo/neoinclude.vim'
                 Plug 'Shougo/neco-syntax'
                 " language
                 Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
+                " vim
+                Plug 'ncm2/ncm2-vim', {'for':'vim'}
                 if HasPlug('html')
                     Plug 'ncm2/ncm2-cssomni', {'for':['html','css', 'css3']}
+                endif
+                if HasPlug('php')
+                    Plug 'phpactor/ncm2-phpactor',  {'for': 'php'}
+
                 endif
                 Plug 'autozimu/LanguageClient-neovim', {
 					\ 'branch': 'next',
 					\ 'do': 'bash install.sh',
 					\ }
-                if g:complete_snippet == "ultisnips"
-                    Plug 'ncm2/ncm2-ultisnips'
-                endif
+                " use ultisnps only
+                Plug 'ncm2/ncm2-ultisnips'
             elseif g:complete_engine == "deoplete"
                 if has('nvim')
                     Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
@@ -369,16 +383,26 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'prabirshrestha/asyncomplete-buffer.vim'
                 Plug 'prabirshrestha/asyncomplete-emoji.vim'
                 Plug 'prabirshrestha/asyncomplete-file.vim'
-                Plug 'prabirshrestha/asyncomplete-tags.vim'
+                " vim
                 Plug 'Shougo/neco-syntax'
                 Plug 'prabirshrestha/asyncomplete-necovim.vim'
                 Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+                " ctags
+                if executable('ctags')
+                    Plug 'prabirshrestha/asyncomplete-tags.vim'
+                    if has("gui_running")
+                        Plug 'ludovicchabant/vim-gutentags'
+                    endif
+                endif
                 if HasPlug('go')
                     Plug 'prabirshrestha/asyncomplete-gocode.vim'
                 endif
                 if HasPlug('javascript')
-                    Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
                     Plug 'prabirshrestha/asyncomplete-flow.vim'
+                endif
+                if HasPlug('typescript')
+                    Plug 'runoshun/tscompletejob'
+                    Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
                 endif
                 if HasPlug('rust')
                     Plug 'keremc/asyncomplete-racer.vim'
@@ -397,7 +421,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'JazzCore/neocomplcache-ultisnips'
                 endif
             endif
-            " java
+            " java language
             if HasPlug('java')
                 if executable('java') && executable('gcc') && executable('make')
                     Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
@@ -406,15 +430,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     echoe "Inroder to install java plugins, you shoud update you system"
                 endif
             endif
-            " Go
+            " Go language
             if HasPlug('go')
                 Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
             endif
-            " rust
+            " rust language
             if HasPlug('rust')
                 Plug 'rust-lang/rust.vim', {'for': 'rust'}
             endif
-            " julia
+            " julia language
             if HasPlug('julia')
                 Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
             endif
