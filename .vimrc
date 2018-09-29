@@ -197,7 +197,7 @@ vmap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 nnoremap ge $
 nnoremap ga ^
-vnoremap ge $
+vnoremap ge $h
 vnoremap ga ^
 nmap <C-j> <Nop>
 vmap <C-j> <Nop>
@@ -1327,7 +1327,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     endif
     " smart completion
-    inoremap <expr><C-k>  pumvisible()? "()\<Left>":"\<C-k>"
+    inoremap <expr><C-j>  pumvisible()? "()\<Left>":"\<C-j>"
     if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
         imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
     else
@@ -1366,7 +1366,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endfunction
         au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
-        au BufEnter * exec "inoremap <silent> <C-i> <C-R>=g:UltiSnips_Tab()<cr>"
+        au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
         " Ulti的代码片段的文件夹
         let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
@@ -1389,7 +1389,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endfunction
         au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>"
-        au BufEnter * exec "inoremap <silent> <C-i> <C-R>=g:NeoSnippet_Tab()<cr>"
+        au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>"
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
     endif
