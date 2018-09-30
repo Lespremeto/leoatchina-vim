@@ -469,8 +469,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
-        nnoremap gi :Git<Space>
-        nnoremap gc :Gcommit -a -v<CR>
+        nnoremap g<Cr> :Git<Space>
+        nnoremap gc    :Gcommit -a -v<CR>
     endif
     " startify
     if HasDirectory("vim-startify")

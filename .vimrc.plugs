@@ -283,7 +283,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         endif
                     " vim8
                     elseif v:version >= 800
-                        if g:python_version
+                        if g:python_version == 3
+                            let g:complete_engine = "deoplete"
+                        elseif g:python_version == 2
                             let g:complete_engine = "completor"
                         else
                             let g:complete_engine = "asyncomplete"
