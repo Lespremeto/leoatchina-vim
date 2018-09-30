@@ -168,18 +168,14 @@ if filereadable(expand("~/.vimrc.plugs"))
 endif
 " Key (re)Mappings
 nnoremap * *``
-" some internal key remap
-map  gt <Nop>
-map  gT <Nop>
-map <C-s> <Nop>
-map <C-q> <Nop>
-map <C-z> <Nop>
-nmap ! :!
+nnoremap ! :!
+vnoremap / y/<C-r>0
+vnoremap ; y:%s/<C-r>0
 let g:mapleader=' '
 let g:maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
 set pastetoggle=<F4>
-" 定义快捷键保存当前窗口内容
+" 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
@@ -190,6 +186,9 @@ cmap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 nnoremap <localleader><localleader> %
 " some ctrl+ key remap
+map <C-s> <Nop>
+map <C-q> <Nop>
+map <C-z> <Nop>
 imap <C-v> <Nop>
 vmap <C-a> ^
 imap <C-a> <Esc>I
@@ -221,6 +220,8 @@ nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " tab control
 set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
+map  gt <Nop>
+map  gT <Nop>
 " compatible with xshell
 nnoremap <Leader>tp         :tabprevious<CR>
 nnoremap <Leader>tn         :tabnext<CR>
