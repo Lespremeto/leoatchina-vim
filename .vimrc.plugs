@@ -314,6 +314,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " install complete plugins
             if g:complete_engine != "None"
+                Plug 'Shougo/vimshell.vim'
                 Plug 'Shougo/neco-vim'
             endif
             if g:complete_engine == "YCM"

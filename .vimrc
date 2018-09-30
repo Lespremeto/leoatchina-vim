@@ -175,8 +175,8 @@ map <C-s> <Nop>
 map <C-q> <Nop>
 map <C-z> <Nop>
 nmap ! :!
-let mapleader=' '
-let maplocalleader = '\'
+let g:mapleader=' '
+let g:maplocalleader = '\'
 " pastetoggle (sane indentation on pastes)
 set pastetoggle=<F4>
 " 定义快捷键保存当前窗口内容
@@ -1057,12 +1057,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     set completeopt-=menu
     set completeopt-=preview
     set completeopt+=menuone
-    " ominifuc
-    au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
-    au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
-    au FileType python        setlocal omnifunc=pythoncomplete#Complete
-    au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
-    au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set shortmess+=c
         set completeopt+=noinsert,noselect
@@ -1285,6 +1279,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 \ }))
         endif
     elseif HasDirectory("neocomplete.vim") && g:complete_engine == "neocomplete"
+        " ominifuc
+        au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+        au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+        au FileType python        setlocal omnifunc=pythoncomplete#Complete
+        au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+        au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1305,6 +1305,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
     elseif HasDirectory("neocomplcache.vim") && g:complete_engine == "neocomplcache"
+        " ominifuc
+        au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+        au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+        au FileType python        setlocal omnifunc=pythoncomplete#Complete
+        au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+        au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
         let g:neocomplcache_enable_insert_char_pre       = 1
         let g:neocomplcache_enable_at_startup            = 1
         let g:neocomplcache_enable_auto_select           = 0
