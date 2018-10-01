@@ -166,7 +166,7 @@ endif
 if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
 endif
-" Key (re)Mappings
+" Key reMappings
 nnoremap * *``
 nnoremap ! :!
 vnoremap / y/<C-r>0
@@ -263,30 +263,30 @@ nnoremap <F1> :tab help<Space>
 inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
 vnoremap <F1> <ESC>:tab help<Space>
+cnoremap <F1> <ESC>:tab help<Space>
 " F2 toggle hlsearch
 nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
-nnoremap <leader>fh :set nohlsearch! nohlsearch?<CR>
 inoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 vnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 snoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+cnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 " F3 show clipboard
-nmap <F3> :reg<Cr>
+nnoremap <F3> :reg<Cr>
 inoremap <F3> <ESC>:reg<Cr>
 vnoremap <F3> <ESC>:reg<Cr>
 snoremap <F3> <ESC>:reg<Cr>
+cnoremap <F3> <ESC>:reg<Cr>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
+" 定义快捷键保存
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
+nmap <Leader>WQ :wa<CR>:q<CR>
 " Q
 nnoremap ~ Q
 nnoremap Q :q!<CR>
-" 定义快捷键保存所有窗口内容并退出 vim
-nmap <Leader>WQ :wa<CR>:q<CR>
-" 定义快捷键关闭当前窗口
-nmap <Leader>q :q!
 " 不做任何保存，直接退出 vim
 nmap <Leader>Q :qa!
 " 设置分割页面
