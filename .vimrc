@@ -232,9 +232,9 @@ nnoremap <leader>-          :tabm -1<CR>
 nnoremap <localleader><Tab> :tablast<CR>
 nnoremap <localleader>-     :tabfirst<CR>
 nnoremap <Leader>te         :tabe<Space>
-nnoremap <Leader>ts         :tab  split<CR>
-nnoremap <Leader>tw         :tabs<CR>
 nnoremap <Leader>tm         :tabm<Space>
+nnoremap <Leader>tsp        :tab split<CR>
+nnoremap <Leader>tss        :tabs<CR>
 " buffer switch
 nnoremap <localleader><Backspace> :buffers<CR>
 nnoremap <localleader><F11>       :bp<CR>
@@ -265,6 +265,7 @@ snoremap <F1> <ESC>:tab help<Space>
 vnoremap <F1> <ESC>:tab help<Space>
 cnoremap <F1> <ESC>:tab help<Space>
 " F2 toggle hlsearch
+nnoremap <silent><leader>th :set nohlsearch! nohlsearch?<CR>
 nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
 inoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
 vnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
@@ -284,11 +285,11 @@ nnoremap <leader>tw :set nowrap! nowrap?<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
 nmap <Leader>WQ :wa<CR>:q<CR>
-" Q
+" quit
 nnoremap ~ Q
 nnoremap Q :q!<CR>
-" 不做任何保存，直接退出 vim
-nmap <Leader>Q :qa!
+nnoremap <leader>q :q!
+nnoremap <Leader>Q :qa!
 " 设置分割页面
 nmap <leader>\ :vsplit<Space>
 nmap <leader>_ :split<Space>
@@ -416,7 +417,7 @@ if has("user_commands")
     command! -bang Qa qa<bang>
 endif
 " Plugins, if vim-plug works
-if (has('job') || g:python_version || has('nvim') || has('lua'))
+if has('job') || g:python_version || has('nvim') || has('lua')
     function! HasDirectory(dir)
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
@@ -470,8 +471,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
-        nnoremap g<Cr> :Git<Space>
         nnoremap gc    :Gcommit -a -v<CR>
+        nnoremap g<Cr> :Git<Space>
     endif
     " startify
     if HasDirectory("vim-startify")
@@ -488,19 +489,19 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:startify_files_number = 5
         let g:startify_session_number = 5
         let g:startify_list_order = [
-            \ ['   最近项目:'],
-            \ 'sessions',
-            \ ['   最近文件:'],
-            \ 'files',
-            \ ['   快捷命令:'],
-            \ 'commands',
-            \ ['   常用书签:'],
-            \ 'bookmarks',
+                \ ['   最近项目:'],
+                \ 'sessions',
+                \ ['   最近文件:'],
+                \ 'files',
+                \ ['   快捷命令:'],
+                \ 'commands',
+                \ ['   常用书签:'],
+                \ 'bookmarks',
             \ ]
         let g:startify_commands = [
-            \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
-            \ {'h': ['帮助', 'help howto']},
-            \ {'v': ['版本', 'version']}
+                \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
+                \ {'h': ['帮助', 'help howto']},
+                \ {'v': ['版本', 'version']}
             \ ]
     endif
     " themes
@@ -1622,7 +1623,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:syntastic_warning_symbol           = 'W'
         let g:syntastic_check_on_open            = 0
         let g:syntastic_check_on_wq              = -1
-        let g:syntastic_python_checkers          = ['flake8'] " 使用pyflakes,速度比pylint快
+        let g:syntastic_python_checkers          = ['flake8']
         let g:syntastic_javascript_checkers      = ['jsl', 'jshint']
         let g:syntastic_html_checkers            = ['tidy', 'jshint']
         let g:syntastic_enable_highlighting      = 0
