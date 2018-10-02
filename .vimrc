@@ -795,7 +795,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " search tools
     if HasDirectory('FlyGrep.vim')
-        nnoremap <leader><F1> :FlyGrep<Cr>
+        nnoremap <C-f>g :FlyGrep<Cr>
     endif
     if HasDirectory('ctrlsf.vim')
         let g:ctrlsf_position='right'
@@ -805,7 +805,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap     <C-F>n <Plug>CtrlSFCwordPath
         nmap     <C-F>N <Plug>CtrlSFCCwordPath
         nmap     <C-F>p <Plug>CtrlSFPwordPath
-        nnoremap <C-F>t :CtrlSFToggle<CR>
     elseif HasDirectory('far.vim')
         nnoremap <C-f>f :Far<Space>
     endif

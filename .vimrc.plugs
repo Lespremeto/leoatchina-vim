@@ -83,6 +83,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'leoatchina/vim-colorschemes-collections'
         Plug 'mattn/webapi-vim'
         Plug 'sbdchd/neoformat'
+        if v:version < 800
+            Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+        endif
         " signs
         if has('signs')
             Plug 'kshenoy/vim-signature'
@@ -106,14 +109,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'jiangmiao/auto-pairs'
         Plug 'junegunn/vim-journal'
         Plug 'junegunn/vim-easy-align'
-        " input method
-        if HasPlug('wubi') || HasPlug('pinyin')
-            Plug 'leoatchina/ywvim'
-        endif
-        " biosyntax
-        if HasPlug('bio')
-            Plug 'bioSyntax/bioSyntax-vim'
-        endif
         " markdown
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown'}
         if has("gui_running") && g:python_version  " gvim for markdown preview
@@ -130,30 +125,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         else
             Plug 'tpope/vim-markdown', {'for':'markdown'}
         endif
-        " search/replace/finder
-        Plug 'google/vim-searchindex'
-        Plug 'easymotion/vim-easymotion'
-        " PHP
-        if HasPlug('php')
-            Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
+        " input method
+        if HasPlug('wubi') || HasPlug('pinyin')
+            Plug 'leoatchina/ywvim'
         endif
-        " Javascript
-        if HasPlug('javascript')
-            Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-            Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
-        endif
-        " HTML
-        if HasPlug('html')
-            Plug 'mattn/emmet-vim', {'for':['css','htm', 'html', 'xml', 'css3']}
-            Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
-        endif
-        " typescripts
-        if HasPlug('typescript')
-           Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
-        endif
-        " perl
-        if HasPlug('perl')
-            Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
+        " biosyntax
+        if HasPlug('bio')
+            Plug 'bioSyntax/bioSyntax-vim'
         endif
         " statuslines
         if has('statusline')
@@ -171,6 +149,37 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             endif
         endif
+        " search/replace/finder
+        Plug 'google/vim-searchindex'
+        Plug 'easymotion/vim-easymotion'
+        " debug tools for python c java ternjs .....
+        if HasPlug('debug')
+            Plug 'sillybun/vim-repl'
+            Plug 'idanarye/vim-vebugger'
+            Plug 'skywind3000/vim-preview'
+        endif
+        " HTML
+        if HasPlug('html')
+            Plug 'mattn/emmet-vim', {'for':['css','htm', 'html', 'xml', 'css3']}
+            Plug 'hail2u/vim-css3-syntax', {'for':['css','htm', 'html', 'xml', 'css3']}
+        endif
+        " PHP
+        if HasPlug('php')
+            Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
+        endif
+        " Javascript
+        if HasPlug('javascript')
+            Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+            Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
+        endif
+        " typescripts
+        if HasPlug('typescript')
+           Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
+        endif
+        " perl
+        if HasPlug('perl')
+            Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
+        endif
         " ctags
         if  (has('patch1058') && v:version == 703 || v:version >= 800)
             if executable('ctags')
@@ -178,12 +187,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ludovicchabant/vim-gutentags'
             endif
         endif
+        " quickrun
+        if v:version >= 702
+            Plug 'thinca/vim-quickrun'
+        endif
         " plugins for vim7.4 or later
         if v:version >= 704
-            " syntax check and run method
+            " syntax check/change and run method
             Plug 'terryma/vim-multiple-cursors'
-            Plug 'thinca/vim-quickrun'
-            " search tools
             if v:version >= 800
                 if !g:use_shougo
                     Plug 'skywind3000/asyncrun.vim'
@@ -195,7 +206,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 Plug 'brooth/far.vim'
             endif
-            " sytax
+            " syntax
             if HasPlug('syntax')
                 if v:version >= 800
                     if g:use_shougo
@@ -338,7 +349,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-tagprefix'
                 Plug 'filipekiss/ncm2-look.vim'
                 Plug 'ncm2/ncm2-syntax'
-                Plug 'ncm2/ncm2-neoinclude'
                 Plug 'wellle/tmux-complete.vim'
                 Plug 'yuki-ycino/ncm2-dictionary'
                 Plug 'ncm2/ncm2-neoinclude'
@@ -428,7 +438,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neocomplete.vim'
             elseif g:complete_engine == "neocomplcache"
                 Plug 'Shougo/neocomplcache.vim'
-                Plug 'Shougo/vimproc.vim', {'do' : 'make'}
             endif
             " java language
             if HasPlug('java')
@@ -436,7 +445,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
                     Plug 'dansomething/vim-eclim'
                 else
-                    echoe "Inroder to install java plugins, you shoud update you system"
+                    echoe "In order to install java plugins, you shoud update you system"
                 endif
             endif
             " Go language
@@ -479,8 +488,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             source ~/.vimrc.after
         endif
     call plug#end()
-    command! PlugReinstall PlugClean! | PlugInstall --sync
+    command! PlugRe PlugClean! | PlugInstall --sync
     command! PlugNew PlugClean! | PlugUpdate --sync
 else
-    echom "Inorder to install plugins with vim-plug, your vim should be with any of `+job`, `+python`, `+python3`, `+ruby`, or use Neovim"
+    echom "In order to install plugins with vim-plug, your vim should be with any of `+job`, `+python`, `+python3`, `+ruby`, or use Neovim"
 endif
