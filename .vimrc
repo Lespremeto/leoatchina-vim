@@ -1059,8 +1059,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     set completeopt-=menu
     set completeopt-=preview
     set completeopt+=menuone
+    set shortmess+=c
     if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
-        set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python'
@@ -1106,7 +1106,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 跳转到定义处
         nnoremap <silent>go :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
-        set shortmess+=c
         set completeopt+=noinsert,noselect
         au BufEnter * call ncm2#enable_for_buffer()
         if HasPlug('html')
@@ -1154,7 +1153,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'javascript': ['javascript-typescript-stdio'],
             \ }
     elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
-        set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
         " <BS>: close popup and delete backword char.
@@ -1182,7 +1180,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
     elseif HasDirectory("completor.vim") && g:complete_engine == "completor"
-        set shortmess+=c
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
         let g:completor_complete_options = 'menuone,noselect,noinsert'
@@ -1195,7 +1192,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:completor_css_omni_trigger  = '([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
         let g:completor_java_omni_trigger  = '[^. *\t]\.\w*'
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
-        set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
         if v:version >= 800
@@ -1307,6 +1303,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
     elseif HasDirectory("neocomplcache.vim") && g:complete_engine == "neocomplcache"
+        let g:neocomplcache_enable_at_startup = 1
         " ominifuc
         au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
         au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
@@ -1351,16 +1348,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:UltiSnipsNoPythonWarning = 0
         let g:UltiSnipsRemoveSelectModeMappings = 0
         let g:UltiSnipsExpandTrigger = "<Nop>"
-        let g:UltiSnipsListSnippets = "<C-g><C-g>"
-        let g:UltiSnipsJumpForwardTrigger = "<C-l>"
-        let g:UltiSnipsJumpBackwardTrigger = "<C-h>"
+        let g:UltiSnipsListSnippets = "<C-l>"
+        let g:UltiSnipsJumpForwardTrigger = "<Tab>"
+        let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
         " Ulti python version
         let g:UltiSnipsUsePythonVersion = g:python_version
         " tab for ExpandTrigger
         function! g:UltiSnips_Tab()
             if pumvisible()
-                call UltiSnips#ExpandSnippetOrJump()
-                if g:ulti_expand_or_jump_res
+                call UltiSnips#ExpandSnippet()
+                if g:ulti_expand_res
                     return "\<Right>"
                 else
                     if !exists('v:completed_item') || empty(v:completed_item)
@@ -1370,17 +1367,23 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     endif
                 endif
             else
-                return "\<Tab>"
+                call UltiSnips#JumpForwards()
+                if g:ulti_jump_forwards_res
+                    return "\<Right>"
+                else
+                    return "\<Tab>"
+                endif
             endif
         endfunction
-        au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
-        au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
+        inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>
+        inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>
+        smap <C-k> <Tab>
         " Ulti的代码片段的文件夹
         let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
     elseif HasDirectory('neosnippet')
         let g:neosnippet#enable_completed_snippet = 1
-        smap <C-l> <Plug>(neosnippet_jump)
+        smap <Tab> <Plug>(neosnippet_jump_or_expand)
         function! g:NeoSnippet_Tab()
             if pumvisible()
                 if neosnippet#expandable()
@@ -1393,11 +1396,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     endif
                 endif
             else
-                return "\<Tab>"
+                if neosnippet#jumpable()
+                    return neosnippet#mappings#jump_impl()
+                else
+                    return "\<Tab>"
+                endif
             endif
         endfunction
-        au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>"
-        au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>"
+        inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>
+        inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
     endif

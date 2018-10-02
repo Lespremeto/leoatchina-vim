@@ -304,11 +304,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " install snippets plugins
             if HasPlug('snippet')
-                if g:python_version && g:use_ultisnips == 1
+                Plug 'leoatchina/leoatchina-snippets'
+                if g:python_version && g:use_ultisnips == 1 && g:complete_engine != "neocomplcache"
                     let g:complete_snippet = "ultisnips"
                     Plug 'SirVer/ultisnips'
                     Plug 'honza/vim-snippets'
-                    Plug 'leoatchina/leoatchina-snippets'
                 else
                     let g:complete_snippet = "neosnippet"
                     Plug 'Shougo/neosnippet'
@@ -425,10 +425,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neocomplete.vim'
             elseif g:complete_engine == "neocomplcache"
                 Plug 'Shougo/neocomplcache.vim'
-                Plug 'Shougo/vimproc.vim'
-                if g:complete_snippet == 'ultisnips'
-                    Plug 'JazzCore/neocomplcache-ultisnips'
-                endif
+                Plug 'Shougo/vimproc.vim', {'do' : 'make'}
             endif
             " java language
             if HasPlug('java')
