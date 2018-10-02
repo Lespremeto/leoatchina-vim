@@ -791,8 +791,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " search tools
     if HasDirectory('FlyGrep.vim')
-        nnoremap <C-f><C-f> :FlyGrep<Cr>
-        inoremap <C-f><C-f> <ESC>:FlyGrep<Cr>
+        nnoremap <leader><F1> :FlyGrep<Cr>
     endif
     if HasDirectory('ctrlsf.vim')
         let g:ctrlsf_position='right'

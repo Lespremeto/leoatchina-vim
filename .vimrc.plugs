@@ -214,6 +214,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if g:use_shougo
                 let g:browser_tool = "denite"
                 let g:complete_engine = "deoplete"
+                let g:use_ultisnips = 0
             else
                 let g:browser_tool = "ctrlp"
                 if HasPlug('fzf')
@@ -317,6 +318,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 let g:complete_snippet = "None"
             endif
+            unlet g:use_ultisnips
             " install complete plugins
             if g:complete_engine != "None"
                 Plug 'Shougo/vimshell.vim'
@@ -338,7 +340,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-tmux'
                 Plug 'ncm2/ncm2-tagprefix'
                 Plug 'filipekiss/ncm2-look.vim'
-                Plug 'jsfaint/gen_tags.vim'
                 Plug 'ncm2/ncm2-syntax'
                 Plug 'ncm2/ncm2-neoinclude'
                 Plug 'wellle/tmux-complete.vim'
