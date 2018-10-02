@@ -172,9 +172,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endif
         " ctags
-        if v:version >= 703
+        if  (has('patch1058') && v:version == 703 || v:version >= 800)
             if executable('ctags')
                 Plug 'majutsushi/tagbar'
+                Plug 'ludovicchabant/vim-gutentags'
             endif
         endif
         " plugins for vim7.4 or later
@@ -182,10 +183,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " syntax check and run method
             Plug 'terryma/vim-multiple-cursors'
             Plug 'thinca/vim-quickrun'
-            " ctags
-            if executable('ctags')
-                Plug 'ludovicchabant/vim-gutentags'
-            endif
             " search tools
             if v:version >= 800
                 if !g:use_shougo
@@ -221,13 +218,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     if !WINDOWS() || WINDOWS() && executable('fzf')
                         let g:browser_tool = "fzf"
                     endif
-                elseif HasPlug('LeaderF') || HasPlug('leaderf')
+                elseif (HasPlug('LeaderF') || HasPlug('leaderf')) && (has('patch330') && v:version == 704 || v:version >= 800)
                     if g:python_version && executable('gcc')
                         let g:browser_tool = "LeaderF"
                     endif
                 endif
                 " complete_engine
-                if HasPlug('youcompleteme') || HasPlug('YCM')
+                if HasPlug('youcompleteme') || HasPlug('YCM') && (has('patch1578') && v:version == 704 || v:version >= 800)
                     if executable('make') && executable('gcc') && g:python_version && !WINDOWS()
                         let g:complete_engine = "YCM"
                     else
@@ -347,6 +344,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-neoinclude'
                 Plug 'Shougo/neoinclude.vim'
                 Plug 'Shougo/neco-syntax'
+                " gtags
+                if executable('gtags')
+                    Plug 'jsfaint/gen_tags.vim'
+                endif
                 " language
                 Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
                 " vim
@@ -371,6 +372,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'Shougo/deoplete.nvim'
                     Plug 'roxma/vim-hug-neovim-rpc'
                     Plug 'roxma/nvim-yarp'
+                endif
+                " gtags
+                if executable('gtags')
+                    Plug 'jsfaint/gen_tags.vim'
                 endif
                 Plug 'Shougo/neoinclude.vim'
                 Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp']}
@@ -399,9 +404,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 " ctags
                 if executable('ctags')
                     Plug 'prabirshrestha/asyncomplete-tags.vim'
-                    if has("gui_running")
-                        Plug 'ludovicchabant/vim-gutentags'
-                    endif
                 endif
                 if HasPlug('go')
                     Plug 'prabirshrestha/asyncomplete-gocode.vim'

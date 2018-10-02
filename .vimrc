@@ -198,11 +198,15 @@ nnoremap ge $
 nnoremap ga ^
 vnoremap ge $h
 vnoremap ga ^
+nmap <C-h> <Nop>
+vmap <C-h> <Nop>
 nmap <C-j> <Nop>
 vmap <C-j> <Nop>
-imap <C-j> <Nop>
+imap <expr><C-j>  pumvisible()? "()\<Left>":"\<Cr>"
 imap <C-j>. <C-x><C-o>
 imap <C-j>, <C-x><C-u>
+imap <C-v> <C-r>0
+cmap <C-v> <C-r>0
 nmap <C-k> <Nop>
 vmap <C-k> <Nop>
 nmap <C-g> <Nop>
@@ -346,8 +350,8 @@ set ruler
 " 高亮显示搜索结果
 set hlsearch
 set incsearch                   " Find as you type search
-set smartcase                   " Case sensitive when uc present
 set ignorecase                  " Case insensitive search
+set smartcase                   " Case sensitive when uc present
 " 一些格式
 set backspace=indent,eol,start  " BackSpace for dummies
 set linespace=0                 " No extra Spaces between rows
@@ -853,6 +857,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap <C-j><C-j> <Plug>(easymotion-w)
         nmap <C-k><C-k> <Plug>(easymotion-b)
     endif
+    " UndoTree
+    if HasDirectory("undotree")
+        nnoremap <silent><leader>u :UndotreeToggle<CR>
+        " If undotree is opened, it is likely one wants to interact with it.
+        let g:undotree_SetFocusWhenToggle = 0
+        if has("persistent_undo")
+            set undodir=~/.vim/undodir/
+            set undofile
+        endif
+    endif
     " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
         nnoremap <silent> <C-p>      :FZF<CR>
@@ -1044,17 +1058,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         nnoremap <leader>lm :CtrlPMRU<CR>
     endif
-    " UndoTree
-    if HasDirectory("undotree")
-        nnoremap <silent><leader>u :UndotreeToggle<CR>
-        " If undotree is opened, it is likely one wants to interact with it.
-        let g:undotree_SetFocusWhenToggle = 0
-        if has("persistent_undo")
-            set undodir=~/.vim/undodir/
-            set undofile
-        endif
-    endif
-    " complete_engine && complete_snippet
+    " complete_engine
     set completeopt-=menu
     set completeopt-=preview
     set completeopt+=menuone
@@ -1330,8 +1334,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     endif
-    " completion_method
-    inoremap <expr><C-j>  pumvisible()? "()\<Left>":"\<C-j>"
+    " complete_snippet
     if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
         imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
     else
