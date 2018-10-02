@@ -63,8 +63,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         function! HasPlug(plug)
             return count(g:plug_groups, a:plug)
         endfunction
-        if HasPlug('shougo') && g:python_version == 3 && v:version >= 800
-            let g:use_shougo = 1
+        if HasPlug('shougo')
+            if g:python_version == 3 && v:version >= 800
+                let g:use_shougo = 1
+            else
+                let g:use_shougo = 0
+                let g:smart_engine_select = 1
+            endif
         else
             let g:use_shougo = 0
         endif
@@ -420,6 +425,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neocomplete.vim'
             elseif g:complete_engine == "neocomplcache"
                 Plug 'Shougo/neocomplcache.vim'
+                Plug 'Shougo/vimproc.vim'
                 if g:complete_snippet == 'ultisnips'
                     Plug 'JazzCore/neocomplcache-ultisnips'
                 endif
