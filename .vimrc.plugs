@@ -83,6 +83,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'leoatchina/vim-colorschemes-collections'
         Plug 'mattn/webapi-vim'
         Plug 'sbdchd/neoformat'
+        Plug 'skywind3000/vim-preview'
         if v:version < 800
             Plug 'Shougo/vimproc.vim', {'do' : 'make'}
         endif
@@ -156,7 +157,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('debug')
             Plug 'sillybun/vim-repl'
             Plug 'idanarye/vim-vebugger'
-            Plug 'skywind3000/vim-preview'
         endif
         " HTML
         if HasPlug('html')
@@ -184,7 +184,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if  (has('patch1058') && v:version == 703 || v:version >= 800)
             if executable('ctags')
                 Plug 'majutsushi/tagbar'
+            endif
+            if executable('gtags')
                 Plug 'ludovicchabant/vim-gutentags'
+                Plug 'skywind3000/gutentags_plus'
+                Plug 'skywind3000/vim-preview'
             endif
         endif
         " quickrun

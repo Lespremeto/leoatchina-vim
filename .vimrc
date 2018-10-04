@@ -226,6 +226,14 @@ set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
 map  gt <Nop>
 map  gT <Nop>
+tnoremap <C-w>h <C-\><C-N><C-w>h
+tnoremap <C-w>j <C-\><C-N><C-w>j
+tnoremap <C-w>k <C-\><C-N><C-w>k
+tnoremap <C-w>l <C-\><C-N><C-w>l
+tnoremap <C-w><right> <C-\><C-N><C-w><right>
+tnoremap <C-w><left>  <C-\><C-N><C-w><left>
+tnoremap <C-w><down>  <C-\><C-N><C-w><down>
+tnoremap <C-w><up>    <C-\><C-N><C-w><up>
 " compatible with xshell
 nnoremap <Leader>tp         :tabprevious<CR>
 nnoremap <Leader>tn         :tabnext<CR>
@@ -647,28 +655,25 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         nmap <silent><leader>tt :TagbarToggle<CR>
         nmap <silent><leader>tj :TagbarOpen j<CR>
-        " AutoCloseTag
-        " Make it so AutoCloseTag works for xml and xhtml files as well
-        au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-            \ nmap <Leader>ta <Plug>ToggleAutoCloseMappings
-        if HasDirectory("vim-gutentags")
-            set tags=./.tags;,.tags
-            " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-            let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-            " 所生成的数据文件的名称
-            let g:gutentags_ctags_tagfile = '.tags'
-            " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-            let s:vim_tags = expand("~/.cache/tags")
-            let g:gutentags_cache_dir = s:vim_tags
-            " 配置 ctags 的参数
-            let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-            let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-            let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-            " 检测 ~/.cache/tags 不存在就新建
-            if !isdirectory(s:vim_tags)
-                silent! call mkdir(s:vim_tags, 'p')
-            endif
+    endif
+    " gtags
+    if HasDirectory("vim-gutentags")
+        set tags=./.tags;,.tags
+        " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+        let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+        " 所生成的数据文件的名称
+        let g:gutentags_ctags_tagfile = '.tags'
+        " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+        let s:vim_tags = expand("~/.cache/tags")
+        " 检测 ~/.cache/tags 不存在就新建
+        if !isdirectory(s:vim_tags)
+            silent! call mkdir(s:vim_tags, 'p')
         endif
+        let g:gutentags_cache_dir = s:vim_tags
+        " 配置 ctags 的参数
+        let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+        let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+        let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
     endif
     " indent_guides
     if HasDirectory("vim-indent-guides")
@@ -710,10 +715,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " autopairs
     if HasDirectory("auto-pairs")
         let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-        let g:AutoPairsShortcutToggle     = "<C-b>t"
-        let g:AutoPairsShortcutFastWrap   = "<C-b>f"
-        let g:AutoPairsShortcutJump       = "<C-b>j"
-        let g:AutoPairsShortcutBackInsert = "<C-b>i"
+        let g:AutoPairsShortcutToggle     = "<C-k>t"
+        let g:AutoPairsShortcutFastWrap   = "<C-k>f"
+        let g:AutoPairsShortcutJump       = "<C-k>j"
+        let g:AutoPairsShortcutBackInsert = "<C-k>i"
         inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
     endif
     " typecast
@@ -812,14 +817,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if has('terminal') || has('nvim')
         tnoremap <C-[> <C-\><C-n>
         tnoremap <ESC> <C-\><C-n>
-        tnoremap <C-w>h <C-\><C-N><C-w>h
-        tnoremap <C-w>j <C-\><C-N><C-w>j
-        tnoremap <C-w>k <C-\><C-N><C-w>k
-        tnoremap <C-w>l <C-\><C-N><C-w>l
-        tnoremap <C-w><right> <C-\><C-N><C-w><right>
-        tnoremap <C-w><left>  <C-\><C-N><C-w><left>
-        tnoremap <C-w><down>  <C-\><C-N><C-w><down>
-        tnoremap <C-w><up>    <C-\><C-N><C-w><up>
         if has('nvim')
             tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
             nmap <C-h>v :vsplit term://bash<Cr>i
@@ -1537,6 +1534,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             nnoremap <C-b>R :ProjectRun<Cr>
         endif
     endif
+    " preview tools, you have to map meta key in term
+    if HasDirectory('vim-preview')
+
+    endif
     " run_tools
     if HasDirectory("vim-quickrun")
         nnoremap <F5> :QuickRun<Cr>
@@ -1649,5 +1650,20 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
         nnoremap <silent> <C-l>n :lnext<cr>
         nnoremap <silent> <C-l>p :lprevious<cr>
+    endif
+    " Debug
+    if HasDirectory('vim-repl')
+        nnoremap <C-b>t :REPLToggle<Cr>
+        let g:sendtorepl_invoke_key = "<C-b>w"          "传送代码快捷键，默认为<leader>w
+        let g:repl_program = {
+            \	"python": "python",
+            \	"default": "bash",
+            \	}
+        let g:repl_exit_commands = {
+			\	"python": "quit()",
+			\	"bash": "exit",
+			\	"zsh": "exit",
+			\	"default": "exit",
+			\	}
     endif
 endif
