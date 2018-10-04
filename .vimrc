@@ -122,7 +122,7 @@ command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 function! s:ExpandFilenameAndExecute(command, file)
     execute a:command . " " . expand(a:file, ":p")
 endfunction
-nnoremap <C-h>s :Shell<Space>
+nnoremap <C-h>l :Shell<Space>
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 " Restore cursor to file position in previous editing session
 function! ResCur()
@@ -173,8 +173,6 @@ vnoremap / y/<C-r>0
 vnoremap ; y:%s/<C-r>0
 let g:mapleader=' '
 let g:maplocalleader = '\'
-" pastetoggle (sane indentation on pastes)
-set pastetoggle=<F4>
 " 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 " Allow using the repeat operator with a visual selection (!)
@@ -221,7 +219,7 @@ imap <C-b> <Left>
 nmap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 " and ask which one to jump to
 nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-" tab control
+" tabs control
 set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
 map  gt <Nop>
@@ -245,12 +243,12 @@ nnoremap <localleader><Tab> :tablast<CR>
 nnoremap <localleader>-     :tabfirst<CR>
 nnoremap <Leader>te         :tabe<Space>
 nnoremap <Leader>tm         :tabm<Space>
-nnoremap <Leader>tsp        :tab split<CR>
-nnoremap <Leader>tss        :tabs<CR>
+nnoremap <Leader>ts         :tab  split<CR>
+nnoremap <Leader>tS         :tabs<CR>
 " buffer switch
-nnoremap <localleader><Backspace> :buffers<CR>
-nnoremap <localleader><F11>       :bp<CR>
-nnoremap <localleader><F12>       :bn<CR>
+nnoremap <leader>bl :buffers<CR>
+nnoremap <leader>bp :bp<CR>
+nnoremap <leader>bn :bn<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <leader>y  "+y
 nnoremap <leader>y  "+y
@@ -276,13 +274,8 @@ inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
 vnoremap <F1> <ESC>:tab help<Space>
 cnoremap <F1> <ESC>:tab help<Space>
-" F2 toggle hlsearch
-nnoremap <silent><leader>th :set nohlsearch! nohlsearch?<CR>
-nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
-inoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
-vnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
-snoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
-cnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
+" pastetoggle (sane indentation on pastes)
+set pastetoggle=<F2>
 " F3 show clipboard
 nnoremap <F3> :reg<Cr>
 inoremap <F3> <ESC>:reg<Cr>
@@ -293,6 +286,8 @@ cnoremap <F3> <ESC>:reg<Cr>
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
+" <C-h><C-h> toggle hlsearch
+nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
 " 定义快捷键保存
 nmap <Leader>w :w<CR>
 nmap <Leader>W :wq!<CR>
@@ -647,7 +642,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " ctags
     if HasDirectory("tagbar")
         let g:tagbar_sort = 0
-        set tags=./tags;/,~/.cache/tags
+        set tags=./.tags;,.tags
         " Make tags placed in .git/tags file available in all levels of a repository
         let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
         if gitroot != ''
@@ -658,7 +653,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " gtags
     if HasDirectory("vim-gutentags")
-        set tags=./.tags;,.tags
         " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
         let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
         " 所生成的数据文件的名称
@@ -674,6 +668,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
         let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+        let $GTAGSLABEL = 'native-pygments'
     endif
     " indent_guides
     if HasDirectory("vim-indent-guides")
@@ -820,17 +815,17 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if has('nvim')
             tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
             nmap <C-h>v :vsplit term://bash<Cr>i
-            nmap <C-h>h :split  term://bash<Cr>i
+            nmap <C-h>s :split  term://bash<Cr>i
             nmap <C-h>t :tabe   term://bash<Cr>i
             nmap <C-h>V :vsplit term://
-            nmap <C-h>H :split  term://
+            nmap <C-h>S :split  term://
             nmap <C-h>T :tabe   term://
         else
             nmap <C-h>v :vertical terminal<cr>bash<cr>
-            nmap <C-h>h :terminal<cr>bash<cr>
+            nmap <C-h>s :terminal<cr>bash<cr>
             nmap <C-h>t :tab terminal<Cr>bash<Cr>
             nmap <C-h>V :vertical terminal
-            nmap <C-h>H :terminal
+            nmap <C-h>S :terminal
             nmap <C-h>T :tab terminal
         endif
     endif
@@ -1559,10 +1554,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <silent><F6> :ToggleQuickfix<cr>
-        inoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
-        vnoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
-        snoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
+        nnoremap <silent><F4> :ToggleQuickfix<cr>
+        inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
+        vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
+        snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
     endif
     if HasDirectory("asyncrun.vim")
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']

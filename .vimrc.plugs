@@ -40,6 +40,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:complete_engine  = "None"
         let g:use_ultisnips = 1
         let g:smart_engine_select = 0
+        " $GTAGSCONF should be set in .local file
+        let $GTAGSCONF = ""
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
@@ -185,10 +187,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if executable('ctags')
                 Plug 'majutsushi/tagbar'
             endif
-            if executable('gtags')
-                Plug 'ludovicchabant/vim-gutentags'
-                Plug 'skywind3000/gutentags_plus'
-                Plug 'skywind3000/vim-preview'
+            if executable('gtags') && HasPlug('gtags')
+                if $GTAGSCONF == ""
+                    echom("please set $GTAGSCONF in your .local file,")
+                    echom("and pip install pygments!")
+                else
+                    Plug 'ludovicchabant/vim-gutentags'
+                    Plug 'skywind3000/gutentags_plus'
+                    Plug 'skywind3000/vim-preview'
+                endif
             endif
         endif
         " quickrun
