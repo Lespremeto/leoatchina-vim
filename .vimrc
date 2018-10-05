@@ -122,7 +122,7 @@ command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 function! s:ExpandFilenameAndExecute(command, file)
     execute a:command . " " . expand(a:file, ":p")
 endfunction
-nnoremap <C-h>l :Shell<Space>
+nnoremap <C-h>s :Shell<Space>
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 " Restore cursor to file position in previous editing session
 function! ResCur()
@@ -191,6 +191,8 @@ vmap <C-a> ^
 imap <C-a> <Esc>I
 vmap <C-e> $<Left>
 imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
+cmap <C-a> <Home>
+cmap <C-e> <End>
 nnoremap ge $
 nnoremap ga ^
 vnoremap ge $h
@@ -818,15 +820,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         tnoremap <ESC> <C-\><C-n>
         if has('nvim')
             tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-            nmap <C-h>v :vsplit term://bash<Cr>i
-            nmap <C-h>s :split  term://bash<Cr>i
+            nmap <C-h>\ :vsplit term://bash<Cr>i
+            nmap <C-h>_ :split  term://bash<Cr>i
             nmap <C-h>t :tabe   term://bash<Cr>i
             nmap <C-h>V :vsplit term://
             nmap <C-h>S :split  term://
             nmap <C-h>T :tabe   term://
         else
-            nmap <C-h>v :vertical terminal<cr>bash<cr>
-            nmap <C-h>s :terminal<cr>bash<cr>
+            nmap <C-h>\ :vertical terminal<cr>bash<cr>
+            nmap <C-h>_ :terminal<cr>bash<cr>
             nmap <C-h>t :tab terminal<Cr>bash<Cr>
             nmap <C-h>V :vertical terminal
             nmap <C-h>S :terminal

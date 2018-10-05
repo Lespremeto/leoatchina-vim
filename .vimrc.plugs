@@ -85,7 +85,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'leoatchina/vim-colorschemes-collections'
         Plug 'mattn/webapi-vim'
         Plug 'sbdchd/neoformat'
-        Plug 'skywind3000/vim-preview'
         if v:version < 800
             Plug 'Shougo/vimproc.vim', {'do' : 'make'}
         endif
@@ -183,14 +182,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
         " ctags
-        if  (has('patch1058') && v:version == 703 || v:version >= 800)
+        if  has('patch1058') && v:version == 703 || v:version >= 800
             if executable('ctags')
                 Plug 'majutsushi/tagbar'
             endif
             if executable('gtags') && HasPlug('gtags')
                 if $GTAGSCONF == ""
-                    echom("please set $GTAGSCONF in your .local file,")
-                    echom("and pip install pygments!")
+                    echom("Please set $GTAGSCONF in your .local file, and pip install pygments!")
                 else
                     Plug 'ludovicchabant/vim-gutentags'
                     Plug 'skywind3000/gutentags_plus'
@@ -207,12 +205,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " syntax check/change and run method
             Plug 'terryma/vim-multiple-cursors'
             if v:version >= 800
-                if !g:use_shougo
-                    Plug 'skywind3000/asyncrun.vim'
-                endif
                 Plug 'wsdjeg/FlyGrep.vim'
                 if (executable('ag') || executable('ack') || executable('rg') || executable('pt'))
                     Plug 'dyng/ctrlsf.vim'
+                endif
+                if !g:use_shougo
+                    Plug 'skywind3000/asyncrun.vim'
                 endif
             else
                 Plug 'brooth/far.vim'
