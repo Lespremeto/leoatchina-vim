@@ -224,14 +224,6 @@ set tabpagemax=10 " Only show 10 tabs
 cmap Tabe tabe
 map  gt <Nop>
 map  gT <Nop>
-tnoremap <C-w>h <C-\><C-N><C-w>h
-tnoremap <C-w>j <C-\><C-N><C-w>j
-tnoremap <C-w>k <C-\><C-N><C-w>k
-tnoremap <C-w>l <C-\><C-N><C-w>l
-tnoremap <C-w><right> <C-\><C-N><C-w><right>
-tnoremap <C-w><left>  <C-\><C-N><C-w><left>
-tnoremap <C-w><down>  <C-\><C-N><C-w><down>
-tnoremap <C-w><up>    <C-\><C-N><C-w><up>
 " compatible with xshell
 nnoremap <Leader>tp         :tabprevious<CR>
 nnoremap <Leader>tn         :tabnext<CR>
@@ -815,6 +807,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " Shell
     if has('terminal') || has('nvim')
+        tnoremap <C-w>h <C-\><C-N><C-w>h
+        tnoremap <C-w>j <C-\><C-N><C-w>j
+        tnoremap <C-w>k <C-\><C-N><C-w>k
+        tnoremap <C-w>l <C-\><C-N><C-w>l
+        tnoremap <C-w><right> <C-\><C-N><C-w><right>
+        tnoremap <C-w><left>  <C-\><C-N><C-w><left>
+        tnoremap <C-w><down>  <C-\><C-N><C-w><down>
+        tnoremap <C-w><up>    <C-\><C-N><C-w><up>
         tnoremap <C-[> <C-\><C-n>
         tnoremap <ESC> <C-\><C-n>
         if has('nvim')
