@@ -842,8 +842,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " neoformat
     if HasDirectory('neoformat')
-        nnoremap gF :Neoformat<Space>
-        vnoremap gF :Neoformat!<Space>
+        nnoremap gT :Neoformat<Space>
+        vnoremap gT :Neoformat!<Space>
     endif
     " easy-align
     if HasDirectory("vim-easy-align")
@@ -871,7 +871,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <F10>      :FZF<CR>
+        nnoremap <silent> <C-_>      :FZF<CR>
         nnoremap <silent> <leader>lb :Buffers<CR>
         nnoremap <silent> <Leader>lf :FZF<Space>
         nnoremap <silent> <Leader>lt :Filetypes<CR>
@@ -927,7 +927,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == "denite" && HasDirectory('denite.nvim')
-        nnoremap <F10> :Denite file/rec buffer<Cr>
+        nnoremap <C-_> :Denite file/rec buffer<Cr>
         nnoremap <leader>lf :Denite
         nnoremap <leader>lb :DeniteBufferDir
         nnoremap <leader>lw :DeniteCursorWord
@@ -1016,7 +1016,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<F10>'
+        let g:Lf_ShortcutF = '<C-_>'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_ShortcutB = '<leader>B'
         nmap <leader>ld :Leaderf
@@ -1024,7 +1024,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap <leader>lb :LeaderfB
         nmap <leader>lm :LeaderfM
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<F10>'
+        let g:ctrlp_map = '<C-_>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
