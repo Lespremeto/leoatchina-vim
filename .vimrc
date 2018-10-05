@@ -697,12 +697,17 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
         function! Multiple_cursors_before()
-            if exists(':NeoCompleteLock') == 2
+            if g:complete_engine == "complete"
+                call completor#disable_autocomplete()
+            elseif g:complete_engine == "neocomplete"
                 exe 'NeoCompleteLock'
             endif
         endfunction
+
         function! Multiple_cursors_after()
-            if exists(':NeoCompleteUnlock') == 2
+            if g:complete_engine == "complete"
+                call completor#enable_autocomplete()
+            elseif g:complete_engine == "neocomplete"
                 exe 'NeoCompleteUnlock'
             endif
         endfunction
@@ -1498,7 +1503,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         au FileType java nmap <silent> <buffer> <C-g>N <Plug>(JavaComplete-Generate-ClassInFile)
     endif
     if HasDirectory('vim-eclim')
-        au FileType java nnoremap <C-b><C-b>  :ProjectBuild<Cr>
         let g:EclimCompletionMethod = 'omnifunc'
         let s:project_tree_is_open = 0
         function! ToggleProjectTree()
@@ -1516,15 +1520,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <leader>nt :ToggleProjectTree<Cr>
         nnoremap <leader>nl :ProjectList<Cr>
         nnoremap <leader>na :ProjectsTree<Cr>
-        nnoremap <C-j>pp :Project
-        nnoremap <C-j>pr :ProjectRefresh<Cr>
-        nnoremap <C-j>pn :ProjectCreate<Space>
-        nnoremap <C-j>pc :ProjectLCD<CR>
-        nnoremap <C-j>pd :ProjectCD<CR>
-        nnoremap <C-j>pm :ProjectMove<Space>
-        nnoremap <C-j>pi :ProjectImport<Space>
-        nnoremap <C-j>pI :ProjectInfo<Cr>
-        nnoremap <C-j>po :ProjectOpen<Space>
+        au FileType java nnoremap <C-g>pb  :ProjectBuild<Cr>
+        nnoremap <C-g>pp :Project
+        nnoremap <C-g>pr :ProjectRefresh<Cr>
+        nnoremap <C-g>pn :ProjectCreate<Space>
+        nnoremap <C-g>pc :ProjectLCD<CR>
+        nnoremap <C-g>pd :ProjectCD<CR>
+        nnoremap <C-g>pm :ProjectMove<Space>
+        nnoremap <C-g>pi :ProjectImport<Space>
+        nnoremap <C-g>pI :ProjectInfo<Cr>
+        nnoremap <C-g>po :ProjectOpen<Space>
         if has('python')
             nnoremap <C-b>R :ProjectRun<Cr>
         endif

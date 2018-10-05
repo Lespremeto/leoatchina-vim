@@ -94,7 +94,7 @@ setup_plug() {
     export SHELL='/bin/sh'
     echo
     msg "Starting update/install plugins for $1"
-    "$1" +PlugReinstall +qall
+    "$1" +PlugRe +qall
     export SHELL="$system_shell"
     success "Successfully updated/installed plugins using vim-plug for $1"
     debug
