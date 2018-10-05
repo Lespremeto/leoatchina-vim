@@ -187,7 +187,6 @@ nnoremap <localleader><localleader> %
 map <C-s> <Nop>
 map <C-q> <Nop>
 map <C-z> <Nop>
-imap <C-v> <Nop>
 vmap <C-a> ^
 imap <C-a> <Esc>I
 vmap <C-e> $<Left>
