@@ -182,10 +182,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
         " ctags
-        if  has('patch1058') && v:version == 703 || v:version >= 800
+        if  has('patch1058') && v:version == 703 || v:version >= 704
             if executable('ctags')
                 Plug 'majutsushi/tagbar'
             endif
+        endif
+        " gtags
+        if v:version >= 800
             if executable('gtags') && HasPlug('gtags')
                 if $GTAGSCONF == ""
                     echom("Please set $GTAGSCONF in your .local file, and pip install pygments!")

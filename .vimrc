@@ -166,65 +166,67 @@ endif
 if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
 endif
+" leader key
+let g:mapleader=' '
+let g:maplocalleader = '\'
+" 定义快捷键使用
+nnoremap <leader><Cr> :source ~/.vimrc<CR>
+cnoremap w!! w !sudo tee % >/dev/null
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+nnoremap <localleader><localleader> %
 " Key reMappings
 nnoremap * *``
 nnoremap ! :!
 vnoremap / y/<C-r>0
 vnoremap ; y:%s/<C-r>0
-let g:mapleader=' '
-let g:maplocalleader = '\'
-" 定义快捷键使用
-nnoremap <leader><Cr> :source ~/.vimrc<CR>
-" Allow using the repeat operator with a visual selection (!)
 vnoremap . :normal .<CR>
-" For when you forget to sudo.. Really Write the file.
-cmap w!! w !sudo tee % >/dev/null
-" Some helpers to edit mode
-" http://vimcasts.org/e/14
-cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-nnoremap <localleader><localleader> %
+" gt
+nnoremap gt <Nop>
+nnoremap gT <Nop>
+vnoremap gt <Nop>
+vnoremap gT <Nop>
+snoremap gt <Nop>
+snoremap gT <Nop>
 " some ctrl+ key remap
-map <C-s> <Nop>
-map <C-q> <Nop>
-map <C-z> <Nop>
-vmap <C-a> ^
-imap <C-a> <Esc>I
-vmap <C-e> $<Left>
-imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
-cmap <C-a> <Home>
-cmap <C-e> <End>
+nnoremap <C-s> <Nop>
+nnoremap <C-q> <Nop>
+nnoremap <C-z> <Nop>
+vnoremap <C-a> ^
+inoremap <C-a> <Esc>I
+vnoremap <C-e> $<Left>
+inoremap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 nnoremap ge $
 nnoremap ga ^
 vnoremap ge $h
 vnoremap ga ^
-nmap <C-h> <Nop>
-vmap <C-h> <Nop>
-nmap <C-j> <Nop>
-vmap <C-j> <Nop>
-imap <expr><C-j>  pumvisible()? "()\<Left>":"\<Cr>"
-imap <C-j>. <C-x><C-o>
-imap <C-j>, <C-x><C-u>
-imap <C-v> <C-r>0
-cmap <C-v> <C-r>0
-nmap <C-k> <Nop>
-vmap <C-k> <Nop>
-nmap <C-g> <Nop>
-vmap <C-g> <Nop>
-nmap <C-f> <Nop>
-nmap <C-b> <Nop>
-vmap <C-f> <Nop>
-vmap <C-b> <Nop>
-imap <C-f> <Right>
-imap <C-b> <Left>
+nnoremap <C-h> <Nop>
+vnoremap <C-h> <Nop>
+nnoremap <C-j> <Nop>
+vnoremap <C-j> <Nop>
+inoremap <expr><C-j>  pumvisible()? "()\<Left>":"\<Cr>"
+inoremap <C-j>. <C-x><C-o>
+inoremap <C-j>, <C-x><C-u>
+inoremap <C-v> <C-r>0
+cnoremap <C-v> <C-r>0
+nnoremap <C-k> <Nop>
+vnoremap <C-k> <Nop>
+nnoremap <C-g> <Nop>
+vnoremap <C-g> <Nop>
+nnoremap <C-f> <Nop>
+nnoremap <C-b> <Nop>
+vnoremap <C-f> <Nop>
+vnoremap <C-b> <Nop>
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
 " Find merge conflict markers
-nmap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
+nnoremap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 " and ask which one to jump to
-nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+nnoremap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " tabs control
 set tabpagemax=10 " Only show 10 tabs
-cmap Tabe tabe
-map  gt <Nop>
-map  gT <Nop>
+cnoremap Tabe tabe
 " compatible with xshell
 nnoremap <Leader>tp         :tabprevious<CR>
 nnoremap <Leader>tn         :tabnext<CR>
@@ -256,8 +258,8 @@ nnoremap <leader>P "*P
 vnoremap <leader>p "+p
 vnoremap <leader>P "*P
 " Easier horizontal scrolling
-map zl zL
-map zh zH
+noremap zl zL
+noremap zh zH
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
@@ -282,24 +284,24 @@ nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " <C-h><C-h> toggle hlsearch
 nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
 " 定义快捷键保存
-nmap <Leader>w :w<CR>
-nmap <Leader>W :wq!<CR>
-nmap <Leader>WQ :wa<CR>:q<CR>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>W :wq!<CR>
+nnoremap <Leader>WQ :wa<CR>:q<CR>
 " quit
 nnoremap ~ Q
 nnoremap Q :q!<CR>
 nnoremap <leader>q :q!
 nnoremap <Leader>Q :qa!
 " 设置分割页面
-nmap <leader>\ :vsplit<Space>
-nmap <leader>_ :split<Space>
-nmap <leader>= <C-W>=
+nnoremap <leader>\ :vsplit<Space>
+nnoremap <leader>_ :split<Space>
+nnoremap <leader>= <C-W>=
 "设置垂直高度减增
-nmap <Leader><Down>  :resize -3<CR>
-nmap <Leader><Up>    :resize +3<CR>
+nnoremap <Leader><Down>  :resize -3<CR>
+nnoremap <Leader><Up>    :resize +3<CR>
 "设置水平宽度减增
-nmap <Leader><Left>  :vertical resize -3<CR>
-nmap <Leader><Right> :vertical resize +3<CR>
+nnoremap <Leader><Left>  :vertical resize -3<CR>
+nnoremap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
 vnoremap << <gv
 vnoremap >> >gv
@@ -641,8 +643,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if gitroot != ''
             let &tags = &tags . ',' . gitroot . '/.git/tags'
         endif
-        nmap <silent><leader>tt :TagbarToggle<CR>
-        nmap <silent><leader>tj :TagbarOpen j<CR>
+        nnoremap <silent><leader>tt :TagbarToggle<CR>
+        nnoremap <silent><leader>tj :TagbarOpen j<CR>
+        nnoremap <C-]> <C-w><C-]>
+        nnoremap <C-w><C-]> <C-]>
+        nnoremap <C-\> <C-w><C-]><C-w>T
     endif
     " gtags
     if HasDirectory("vim-gutentags")
@@ -661,6 +666,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
         let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+        let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
         let $GTAGSLABEL = 'native-pygments'
     endif
     " indent_guides
@@ -684,7 +690,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:multi_cursor_start_key           = 'g<C-n>'
         let g:multi_cursor_select_all_key      = '<localleader><C-n>'
         let g:multi_cursor_next_key            = '<C-n>'
-        let g:multi_cursor_prev_key            = '<C-\>'
+        let g:multi_cursor_prev_key            = '<C-p>'
         let g:multi_cursor_skip_key            = '<C-x>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
@@ -696,7 +702,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 exe 'NeoCompleteLock'
             endif
         endfunction
-
         function! Multiple_cursors_after()
             if g:complete_engine == "complete"
                 call completor#enable_autocomplete()
@@ -866,7 +871,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <C-p>      :FZF<CR>
+        nnoremap <silent> <F10>      :FZF<CR>
         nnoremap <silent> <leader>lb :Buffers<CR>
         nnoremap <silent> <Leader>lf :FZF<Space>
         nnoremap <silent> <Leader>lt :Filetypes<CR>
@@ -922,7 +927,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == "denite" && HasDirectory('denite.nvim')
-        nnoremap <C-p> :Denite file/rec buffer<Cr>
+        nnoremap <F10> :Denite file/rec buffer<Cr>
         nnoremap <leader>lf :Denite
         nnoremap <leader>lb :DeniteBufferDir
         nnoremap <leader>lw :DeniteCursorWord
@@ -1011,7 +1016,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-p>'
+        let g:Lf_ShortcutF = '<F10>'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_ShortcutB = '<leader>B'
         nmap <leader>ld :Leaderf
@@ -1019,7 +1024,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap <leader>lb :LeaderfB
         nmap <leader>lm :LeaderfM
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<C-p>'
+        let g:ctrlp_map = '<F10>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
