@@ -207,12 +207,12 @@ nnoremap <C-h> <Nop>
 vnoremap <C-h> <Nop>
 nnoremap <C-j> <Nop>
 vnoremap <C-j> <Nop>
+inoremap <C-j>. <C-x><C-o>
+inoremap <C-j>, <C-x><C-u>
 nnoremap <C-k> <Nop>
 vnoremap <C-k> <Nop>
 nnoremap <C-g> <Nop>
 vnoremap <C-g> <Nop>
-inoremap <C-g> <C-x><C-o>
-inoremap <C-g>, <C-x><C-u>
 nnoremap <C-f> <Nop>
 nnoremap <C-b> <Nop>
 vnoremap <C-f> <Nop>
@@ -1403,15 +1403,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>
-        "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>
-        "smap <C-k> <Tab>
+        inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>
+        smap <C-k> <Tab>
         " Ulti的代码片段的文件夹
         let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
     elseif HasDirectory('neosnippet')
         let g:neosnippet#enable_completed_snippet = 1
         smap <Tab> <Plug>(neosnippet_jump_or_expand)
-        "smap <C-k> <Plug>(neosnippet_jump_or_expand)
+        smap <C-k> <Plug>(neosnippet_jump_or_expand)
         function! g:NeoSnippet_Tab()
             if pumvisible()
                 if neosnippet#expandable()
@@ -1432,22 +1432,34 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>
+        inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
     endif
     " complete_parameter
     if HasDirectory("CompleteParameter.vim")
         inoremap <silent><expr> ; complete_parameter#pre_complete(";")
-        smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-        imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-        imap <m-u> <Plug>(complete_parameter#overload_up)
-        smap <m-u> <Plug>(complete_parameter#overload_up)
-        smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-        imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-        imap <m-d> <Plug>(complete_parameter#overload_down)
-        smap <m-d> <Plug>(complete_parameter#overload_down)
+        if OSX() && has('gui_running')
+            smap <D-j> <Plug>(complete_parameter#goto_next_parameter)
+            imap <D-j> <Plug>(complete_parameter#goto_next_parameter)
+            smap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
+            imap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
+            imap <D-u> <Plug>(complete_parameter#overload_up)
+            smap <D-u> <Plug>(complete_parameter#overload_up)
+            imap <D-d> <Plug>(complete_parameter#overload_down)
+            smap <D-d> <Plug>(complete_parameter#overload_down)
+        else
+            smap <ESC>j <Plug>(complete_parameter#goto_next_parameter)
+            imap <ESC>j <Plug>(complete_parameter#goto_next_parameter)
+            smap <ESC>k <Plug>(complete_parameter#goto_previous_parameter)
+            imap <ESC>k <Plug>(complete_parameter#goto_previous_parameter)
+            imap <ESC>u <Plug>(complete_parameter#overload_up)
+            smap <ESC>u <Plug>(complete_parameter#overload_up)
+            imap <ESC>d <Plug>(complete_parameter#overload_down)
+            smap <ESC>d <Plug>(complete_parameter#overload_down)
+        endif
     else
-        inoremap <silent><expr> ; pumvisible()?"()\<left>":";"
+        inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?"()\<left>":";"
     endif
     " javascript language
     if HasDirectory('vim-javascript')
@@ -1579,12 +1591,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
-        nnoremap gk :PreviewScroll -1<cr>
-        nnoremap gj :PreviewScroll +1<cr>
-        nnoremap <m-k> :PreviewScroll -1<cr>
-        nnoremap <m-j> :PreviewScroll +1<cr>
-        inoremap <m-k> <c-\><c-o>:PreviewScroll -1<cr>
-        inoremap <m-j> <c-\><c-o>:PreviewScroll +1<cr>
+        nnoremap gp :PreviewScroll -1<cr>
+        nnoremap gn :PreviewScroll +1<cr>
+        if OSX() && has('gui_running')
+            nnoremap <D-p> :PreviewScroll -1<cr>
+            nnoremap <D-n> :PreviewScroll +1<cr>
+        else
+            nnoremap <ESC>p :PreviewScroll -1<cr>
+            nnoremap <ESC>n :PreviewScroll +1<cr>
+        endif
         nnoremap <C-p>t :PreviewTag<Cr>
         nnoremap <C-p>f :PreviewFile<Space>
         nnoremap <C-p>s :PreviewSignature!<Cr>
