@@ -205,15 +205,14 @@ nnoremap <C-h> <Nop>
 vnoremap <C-h> <Nop>
 nnoremap <C-j> <Nop>
 vnoremap <C-j> <Nop>
-inoremap <expr><C-j>  pumvisible()? "()\<Left>":"\<Cr>"
-inoremap <C-j>. <C-x><C-o>
-inoremap <C-j>, <C-x><C-u>
 inoremap <C-v> <C-r>0
 cnoremap <C-v> <C-r>0
 nnoremap <C-k> <Nop>
 vnoremap <C-k> <Nop>
 nnoremap <C-g> <Nop>
 vnoremap <C-g> <Nop>
+inoremap <C-g>. <C-x><C-o>
+inoremap <C-g>, <C-x><C-u>
 nnoremap <C-f> <Nop>
 nnoremap <C-b> <Nop>
 vnoremap <C-f> <Nop>
@@ -879,7 +878,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <C-p>      :FZF<CR>
+        nnoremap <silent> <C-j><Cr>  :FZF<CR>
         nnoremap <silent> <C-j>b :Buffers<CR>
         nnoremap <silent> <C-j>f :FZF<Space>
         nnoremap <silent> <C-j>t :Filetypes<CR>
@@ -935,7 +934,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == "denite" && HasDirectory('denite.nvim')
-        nnoremap <C-p> :Denite file/rec buffer<Cr>
+        nnoremap <C-j><Cr>  :Denite file/rec buffer<Cr>
         nnoremap <C-j>f :Denite
         nnoremap <C-j>b :DeniteBufferDir
         nnoremap <C-j>w :DeniteCursorWord
@@ -1024,7 +1023,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-p>'
+        let g:Lf_ShortcutF = '<C-j><Cr>'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_CacheDirectory = expand('~/.vim/cache')
         if !isdirectory(g:Lf_CacheDirectory)
@@ -1044,7 +1043,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
            \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
        \ }
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<C-p>'
+        let g:ctrlp_map = '<C-j><Cr>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
@@ -1403,8 +1402,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>
-        inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>
-        smap <C-k> <Tab>
+        "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>
+        "smap <C-k> <Tab>
         " Ulti的代码片段的文件夹
         let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
@@ -1431,9 +1430,21 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>
-        inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>
+        "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
+    endif
+    " complete_parameter
+    if HasDirectory("CompleteParameter.vim")
+        inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+        smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+        imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+        imap <m-u> <Plug>(complete_parameter#overload_up)
+        smap <m-u> <Plug>(complete_parameter#overload_up)
+        smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+        imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+        imap <m-d> <Plug>(complete_parameter#overload_down)
+        smap <m-d> <Plug>(complete_parameter#overload_down)
     endif
     " javascript language
     if HasDirectory('vim-javascript')
@@ -1565,7 +1576,20 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
-
+        nnoremap gk :PreviewScroll -1<cr>
+        nnoremap gj :PreviewScroll +1<cr>
+        nnoremap <m-k> :PreviewScroll -1<cr>
+        nnoremap <m-j> :PreviewScroll +1<cr>
+        inoremap <m-k> <c-\><c-o>:PreviewScroll -1<cr>
+        inoremap <m-j> <c-\><c-o>:PreviewScroll +1<cr>
+        nnoremap <C-p>t :PreviewTag<Cr>
+        nnoremap <C-p>f :PreviewFile<Space>
+        nnoremap <C-p>s :PreviewSignature!<Cr>
+        inoremap <C-p>s <c-\><c-o>:PreviewSignature!<Cr>
+        nnoremap <C-p>g :PreviewGoto
+        nnoremap <C-p>p :PreviewQuickfix
+        autocmd FileType qf nnoremap <silent><buffer> P :PreviewQuickfix<cr>
+        autocmd FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
