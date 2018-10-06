@@ -1591,19 +1591,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
-        nnoremap gp :PreviewScroll -1<cr>
-        nnoremap gn :PreviewScroll +1<cr>
-        if OSX() && has('gui_running')
-            nnoremap <D-p> :PreviewScroll -1<cr>
-            nnoremap <D-n> :PreviewScroll +1<cr>
-        else
-            nnoremap <ESC>p :PreviewScroll -1<cr>
-            nnoremap <ESC>n :PreviewScroll +1<cr>
-        endif
         nnoremap <C-p>t :PreviewTag<Cr>
-        nnoremap <C-p>f :PreviewFile<Space>
+        nnoremap <C-p>p :PreviewScroll -1<cr>
+        nnoremap <C-p>n :PreviewScroll +1<cr>
+        inoremap <C-p>p :PreviewScroll -1<cr>
+        inoremap <C-p>n :PreviewScroll +1<cr>
+        nnoremap <C-p>q :PreviewClose<Cr>
         nnoremap <C-p>s :PreviewSignature!<Cr>
         inoremap <C-p>s <c-\><c-o>:PreviewSignature!<Cr>
+        nnoremap <C-p>f :PreviewFile<Space>
         nnoremap <C-p>g :PreviewGoto
         nnoremap <C-p>p :PreviewQuickfix
         autocmd FileType qf nnoremap <silent><buffer> P :PreviewQuickfix<cr>
