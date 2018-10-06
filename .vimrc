@@ -1436,7 +1436,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " complete_parameter
     if HasDirectory("CompleteParameter.vim")
-        inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+        inoremap <silent><expr> ; complete_parameter#pre_complete("()")
         smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
         imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
         imap <m-u> <Plug>(complete_parameter#overload_up)

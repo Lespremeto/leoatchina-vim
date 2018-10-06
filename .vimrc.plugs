@@ -344,7 +344,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if g:complete_engine != "None"
                 Plug 'Shougo/vimshell.vim'
                 Plug 'Shougo/neco-vim'
-                Plug 'tenfyzhong/CompleteParameter.vim'
+                if v:version == 704 && has('patch774') || v:version >= 800
+                    Plug 'tenfyzhong/CompleteParameter.vim'
+                endif
             endif
             if g:complete_engine == "YCM"
                 if g:python_version == 2
