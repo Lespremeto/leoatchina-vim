@@ -1,1 +1,6 @@
 let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet', 'bio']
+"gtags settings, https://zhuanlan.zhihu.com/p/36279445
+"let $GTAGSCONF = '/path/to/your/gtags.conf'
+"if HasDirectory("vim-gutentags") && universary ctags
+    "let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+"endif

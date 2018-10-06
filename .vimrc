@@ -666,7 +666,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
         let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-        let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
         let $GTAGSLABEL = 'native-pygments'
     endif
     " indent_guides
@@ -1625,8 +1624,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
         nmap <silent> <C-l>n <Plug>(ale_next_wrap)
         nnoremap <C-l><C-l> :ALELint<CR>
-        nnoremap gt :ALEGoToDefinitionInTab<CR>
-        nnoremap gd :ALEGoToDefinition<CR>
     elseif HasDirectory('neomake')
         nnoremap <C-l><C-l> :Neomake<CR>
         let g:neomake_error_sign   = {'text':'E', 'texthl':'NeomakeErrorSign'}
