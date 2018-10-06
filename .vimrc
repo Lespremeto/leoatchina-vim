@@ -188,6 +188,8 @@ vnoremap gT <Nop>
 snoremap gt <Nop>
 snoremap gT <Nop>
 " some ctrl+ key remap
+inoremap <C-v> <C-r>0
+cnoremap <C-v> <C-r>0
 nnoremap <C-s> <Nop>
 nnoremap <C-q> <Nop>
 nnoremap <C-z> <Nop>
@@ -205,13 +207,11 @@ nnoremap <C-h> <Nop>
 vnoremap <C-h> <Nop>
 nnoremap <C-j> <Nop>
 vnoremap <C-j> <Nop>
-inoremap <C-v> <C-r>0
-cnoremap <C-v> <C-r>0
 nnoremap <C-k> <Nop>
 vnoremap <C-k> <Nop>
 nnoremap <C-g> <Nop>
 vnoremap <C-g> <Nop>
-inoremap <C-g>. <C-x><C-o>
+inoremap <C-g> <C-x><C-o>
 inoremap <C-g>, <C-x><C-u>
 nnoremap <C-f> <Nop>
 nnoremap <C-b> <Nop>
@@ -219,6 +219,12 @@ vnoremap <C-f> <Nop>
 vnoremap <C-b> <Nop>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
+" use full double ctrl+ click
+nnoremap <C-h><C-g> <C-g>
+nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
+nnoremap <C-h><C-j> <C-j>
+nnoremap <C-h><C-k> <C-k>
+nnoremap <C-h><C-l> <C-l>
 " Find merge conflict markers
 nnoremap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 " and ask which one to jump to
@@ -268,7 +274,7 @@ inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
 vnoremap <F1> <ESC>:tab help<Space>
 cnoremap <F1> <ESC>:tab help<Space>
-" pastetoggle (sane indentation on pastes)
+" F2 pastetoggle (sane indentation on pastes)
 set pastetoggle=<F2>
 " F3 show clipboard
 nnoremap <F3> :reg<Cr>
@@ -280,12 +286,6 @@ cnoremap <F3> <ESC>:reg<Cr>
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
-nnoremap <C-h><C-g> <C-g>
-" <C-h><C-h> toggle hlsearch
-nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
-nnoremap <C-h><C-j> <C-j>
-nnoremap <C-h><C-k> <C-k>
-nnoremap <C-h><C-l> <C-l>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
@@ -1083,9 +1083,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-j>m :CtrlPMRU<CR>
     endif
     " complete_engine
-    set completeopt-=menu
+    set completeopt-=menuone
     set completeopt-=preview
-    set completeopt+=menuone
+    set completeopt+=menu
     set shortmess+=c
     if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set completeopt+=noinsert,noselect
@@ -1209,7 +1209,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     elseif HasDirectory("completor.vim") && g:complete_engine == "completor"
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-        let g:completor_complete_options = 'menuone,noselect,noinsert'
+        let g:completor_complete_options = 'menu,noselect,noinsert'
         let g:completor_clang_binary = exepath('clang')
         if g:python_version == 2
             let g:completor_python_binary = exepath("python")
@@ -1436,7 +1436,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " complete_parameter
     if HasDirectory("CompleteParameter.vim")
-        inoremap <silent><expr> ; complete_parameter#pre_complete("()")
+        inoremap <silent><expr> ; complete_parameter#pre_complete(";")
         smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
         imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
         imap <m-u> <Plug>(complete_parameter#overload_up)
