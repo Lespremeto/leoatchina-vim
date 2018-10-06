@@ -281,8 +281,12 @@ cnoremap <F3> <ESC>:reg<Cr>
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
+nnoremap <C-h><C-g> <C-g>
 " <C-h><C-h> toggle hlsearch
 nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
+nnoremap <C-h><C-j> <C-j>
+nnoremap <C-h><C-k> <C-k>
+nnoremap <C-h><C-l> <C-l>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
@@ -295,7 +299,6 @@ nnoremap <Leader>Q :qa!
 " 设置分割页面
 nnoremap <leader>\ :vsplit<Space>
 nnoremap <leader>_ :split<Space>
-nnoremap <leader>= <C-W>=
 "设置垂直高度减增
 nnoremap <Leader><Down>  :resize -3<CR>
 nnoremap <Leader><Up>    :resize +3<CR>
@@ -475,6 +478,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory("vim-fugitive")
         nnoremap gc    :Gcommit -a -v<CR>
         nnoremap g<Cr> :Git<Space>
+        if HasDirectory("vim-signify")
+            nnoremap gs :SignifyDiff<CR>
+        endif
     endif
     " startify
     if HasDirectory("vim-startify")
@@ -488,8 +494,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ '+---------------------------------------------------------+',
             \ ]
         let g:startify_session_dir = '~/.vim/session'
-        let g:startify_files_number = 5
-        let g:startify_session_number = 5
+        if !isdirectory(g:startify_session_dir)
+            silent! call mkdir(g:startify_session_dir, 'p')
+        endif
+        let g:startify_files_number = 8
+        let g:startify_session_number = 8
         let g:startify_list_order = [
                 \ ['   最近项目:'],
                 \ 'sessions',
@@ -689,7 +698,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:multi_cursor_start_key           = 'g<C-n>'
         let g:multi_cursor_select_all_key      = '<localleader><C-n>'
         let g:multi_cursor_next_key            = '<C-n>'
-        let g:multi_cursor_prev_key            = '<C-p>'
+        let g:multi_cursor_prev_key            = '<C-_>'
         let g:multi_cursor_skip_key            = '<C-x>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
@@ -870,15 +879,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <C-_>      :FZF<CR>
-        nnoremap <silent> <leader>lb :Buffers<CR>
-        nnoremap <silent> <Leader>lf :FZF<Space>
-        nnoremap <silent> <Leader>lt :Filetypes<CR>
-        nnoremap <silent> <Leader>lg :GFiles?<CR>
-        nnoremap <silent> <Leader>lm :Maps<CR>
-        nnoremap <silent> <Leader>lc :Commits<CR>
-        nnoremap <silent> <Leader>lk :Colors<CR>
-        nnoremap <silent> <Leader>lh :History/<CR>
+        nnoremap <silent> <C-p>      :FZF<CR>
+        nnoremap <silent> <C-j>b :Buffers<CR>
+        nnoremap <silent> <C-j>f :FZF<Space>
+        nnoremap <silent> <C-j>t :Filetypes<CR>
+        nnoremap <silent> <C-j>g :GFiles?<CR>
+        nnoremap <silent> <C-j>m :Maps<CR>
+        nnoremap <silent> <C-j>c :Commits<CR>
+        nnoremap <silent> <C-j>k :Colors<CR>
+        nnoremap <silent> <C-j>h :History/<CR>
         " Mapping selecting mappings
         nmap <leader><tab> <plug>(fzf-maps-n)
         xmap <leader><tab> <plug>(fzf-maps-x)
@@ -926,10 +935,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == "denite" && HasDirectory('denite.nvim')
-        nnoremap <C-_> :Denite file/rec buffer<Cr>
-        nnoremap <leader>lf :Denite
-        nnoremap <leader>lb :DeniteBufferDir
-        nnoremap <leader>lw :DeniteCursorWord
+        nnoremap <C-p> :Denite file/rec buffer<Cr>
+        nnoremap <C-j>f :Denite
+        nnoremap <C-j>b :DeniteBufferDir
+        nnoremap <C-j>w :DeniteCursorWord
         nnoremap <Leader>/ :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
         call denite#custom#option('_', {
                 \ 'prompt': 'λ:',
@@ -1015,15 +1024,27 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-_>'
+        let g:Lf_ShortcutF = '<C-p>'
         let g:Lf_PythonVersion = g:python_version
-        let g:Lf_ShortcutB = '<leader>B'
-        nmap <leader>ld :Leaderf
-        nmap <leader>lf :LeaderfF
-        nmap <leader>lb :LeaderfB
-        nmap <leader>lm :LeaderfM
+        let g:Lf_CacheDirectory = expand('~/.vim/cache')
+        if !isdirectory(g:Lf_CacheDirectory)
+            silent! call mkdir(g:Lf_CacheDirectory, 'p')
+        endif
+        let g:Lf_ShortcutB = '<C-j>b'
+        nmap <C-j>l :Leaderf
+        nmap <C-j>f :LeaderfF
+        nmap <C-j>n :LeaderfB
+        nmap <C-j>m :LeaderfM
+        let g:Lf_NormalMap = {
+           \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+           \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+           \ "Mru":         [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+           \ "Tag":         [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+           \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+           \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+       \ }
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<C-_>'
+        let g:ctrlp_map = '<C-p>'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
@@ -1035,7 +1056,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
         elseif executable('ack')
             let s:ctrlp_fallback = 'ack %s --nocolor -f'
-            " On Windows use "dir" as fallback command.
+        elseif executable('rg')
+            set grepprg=rg\ --color=never
+            let s:ctrlp_fallback = 'rg %s --color=never --glob ""'
+        " On Windows use "dir" as fallback command.
         elseif WINDOWS()
             let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
         else
@@ -1055,9 +1079,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             " CtrlP extensions
             let g:ctrlp_extensions = ['funky']
             " funky
-            nnoremap <Leader>lf :CtrlPFunky<Cr>
+            nnoremap <C-j>f :CtrlPFunky<Cr>
         endif
-        nnoremap <leader>lm :CtrlPMRU<CR>
+        nnoremap <C-j>m :CtrlPMRU<CR>
     endif
     " complete_engine
     set completeopt-=menu
@@ -1108,7 +1132,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap <silent>go :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap <silent>g<C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
         set completeopt+=noinsert,noselect
         au BufEnter * call ncm2#enable_for_buffer()
@@ -1431,15 +1455,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:javascript_conceal_underscore_arrow_function = "🞅"
     endif
     if HasDirectory('vim-jsdoc')
-        au FileType javascript nmap <C-j>j <Plug>(jsdoc)
+        au FileType javascript nmap <C-g>j <Plug>(jsdoc)
     endif
     " php language
     if HasDirectory('phpcomplete.vim')
         let g:phpcomplete_mappings = {
-           \ 'jump_to_def':        '<C-]>',
-           \ 'jump_to_def_split':  '<C-W><C-_>',
+           \ 'jump_to_def':        '<C-\><C-]>',
+           \ 'jump_to_def_split':  '<C-]>',
            \ 'jump_to_def_vsplit': '<C-W><C-\>',
-           \ 'jump_to_def_tabnew': '<C-W><C-]>',
+           \ 'jump_to_def_tabnew': '<C-\>',
            \}
     endif
     " html language

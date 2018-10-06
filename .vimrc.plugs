@@ -85,6 +85,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'leoatchina/vim-colorschemes-collections'
         Plug 'mattn/webapi-vim'
         Plug 'sbdchd/neoformat'
+        Plug 'tpope/vim-unimpaired'
         if v:version < 800
             Plug 'Shougo/vimproc.vim', {'do' : 'make'}
         endif
