@@ -1083,9 +1083,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-j>m :CtrlPMRU<CR>
     endif
     " complete_engine
-    set completeopt-=menuone
+    set completeopt-=menu
     set completeopt-=preview
-    set completeopt+=menu
+    set completeopt+=menuone
     set shortmess+=c
     if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set completeopt+=noinsert,noselect
@@ -1173,11 +1173,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ })
         endif
         let g:LanguageClient_serverCommands = {
-            \ 'go': ['go-langserver'],
-            \ 'rust': ['rls'],
-            \ 'python': ['pyls'],
-            \ 'typescript': ['javascript-typescript-stdio'],
-            \ 'javascript': ['javascript-typescript-stdio'],
+                \ 'go': ['go-langserver'],
+                \ 'rust': ['rls'],
+                \ 'python': ['pyls'],
+                \ 'typescript': ['javascript-typescript-stdio'],
+                \ 'javascript': ['javascript-typescript-stdio'],
             \ }
     elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
         set completeopt+=noinsert,noselect
@@ -1188,7 +1188,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:deoplete#enable_yarp = 1
         endif
         let g:deoplete#enable_camel_case = 1
-        " omni completion.
+        " omni completion is vim grep
         call deoplete#custom#option('omni_patterns', {
             \ 'java' :'[^. *\t]\.\w*',
             \ 'php'  :'[^. \t]->\h\w*\|\h\w*::',
@@ -1209,7 +1209,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     elseif HasDirectory("completor.vim") && g:complete_engine == "completor"
         let g:completor_set_options = 0
         let g:completor_auto_trigger = 1
-        let g:completor_complete_options = 'menu,noselect,noinsert'
+        let g:completor_complete_options = 'menuone,noselect,noinsert'
         let g:completor_clang_binary = exepath('clang')
         if g:python_version == 2
             let g:completor_python_binary = exepath("python")
@@ -1217,6 +1217,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:completor_python_binary = exepath("python3")
         endif
         let g:completor_css_omni_trigger  = '([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
+        let g:completor_php_omni_trigger  = '[^. *\t]\.\w*'
         let g:completor_java_omni_trigger  = '[^. *\t]\.\w*'
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
         set completeopt+=noinsert,noselect
@@ -1231,36 +1232,36 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'whitelist': ['*'],
             \ 'blacklist': ['go'],
             \ 'completor': function('asyncomplete#sources#buffer#completor'),
-            \ }))
+        \ }))
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
             \ 'name': 'file',
             \ 'whitelist': ['*'],
             \ 'priority': 10,
             \ 'completor': function('asyncomplete#sources#file#completor')
-            \ }))
+        \ }))
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
             \ 'name': 'omni',
             \ 'whitelist': ['*'],
             \ 'blacklist': ['c', 'cpp', 'html'],
             \ 'completor': function('asyncomplete#sources#omni#completor')
-            \  }))
+        \  }))
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
             \ 'name': 'necosyntax',
             \ 'whitelist': ['*'],
             \ 'completor': function('asyncomplete#sources#necosyntax#completor'),
-            \ }))
+        \ }))
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necovim#get_source_options({
             \ 'name': 'necovim',
             \ 'whitelist': ['vim'],
             \ 'completor': function('asyncomplete#sources#necovim#completor'),
-            \ }))
+        \ }))
         if executable('pyls')
             au User lsp_setup call lsp#register_server({
                 \ 'name': 'pyls',
                 \ 'cmd': {server_info->['pyls']},
                 \ 'whitelist': ['python'],
                 \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
-                \ })
+            \ })
         endif
         if HasDirectory('asyncomplete-tags.vim')
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
@@ -1270,21 +1271,21 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'config': {
                 \    'max_file_size': 50000000,
                 \  },
-                \ }))
+            \ }))
         endif
         if HasPlug('typejavascript')
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tscompletejob#get_source_options({
                 \ 'name': 'tscompletejob',
                 \ 'whitelist': ['typescript'],
                 \ 'completor': function('asyncomplete#sources#tscompletejob#completor'),
-                \ }))
+            \ }))
         endif
         if HasPlug('go')
             au User asyncomplete_setup  call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
                 \ 'name': 'gocode',
                 \ 'whitelist': ['go'],
                 \ 'completor': function('asyncomplete#sources#gocode#completor'),
-                \ }))
+            \ }))
         endif
         if HasPlug('rust')
             au User asyncomplete_setup call asyncomplete#register_source(
@@ -1295,13 +1296,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'name': 'ultisnips',
                 \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#ultisnips#completor')
-                \ }))
+            \ }))
         elseif HasDirectory("asyncomplete-neosnippet.vim")
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
                 \ 'name': 'neosnippet',
                 \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
-                \ }))
+            \ }))
         endif
     elseif HasDirectory("neocomplete.vim") && g:complete_engine == "neocomplete"
         " ominifuc
@@ -1410,6 +1411,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     elseif HasDirectory('neosnippet')
         let g:neosnippet#enable_completed_snippet = 1
         smap <Tab> <Plug>(neosnippet_jump_or_expand)
+        "smap <C-k> <Plug>(neosnippet_jump_or_expand)
         function! g:NeoSnippet_Tab()
             if pumvisible()
                 if neosnippet#expandable()
@@ -1430,7 +1432,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>
-        "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
     endif
@@ -1445,6 +1446,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
         imap <m-d> <Plug>(complete_parameter#overload_down)
         smap <m-d> <Plug>(complete_parameter#overload_down)
+    else
+        inoremap <silent><expr> ; pumvisible()?"()\<left>":";"
     endif
     " javascript language
     if HasDirectory('vim-javascript')
