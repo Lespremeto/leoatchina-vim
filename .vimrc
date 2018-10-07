@@ -23,7 +23,7 @@ set mouse=a             " Automatically enable mouse usage
 set mousehide           " Hide the mouse cursor while typing
 set noimdisable
 set timeout
-set timeoutlen=500 ttimeoutlen=50
+set timeoutlen=500 ttimeoutlen=300
 set conceallevel=0
 " 不同文件类型加载不同插件
 filetype plugin indent on   " Automatically detect file types.
@@ -188,8 +188,6 @@ vnoremap gT <Nop>
 snoremap gt <Nop>
 snoremap gT <Nop>
 " some ctrl+ key remap
-inoremap <C-v> <C-r>0
-cnoremap <C-v> <C-r>0
 nnoremap <C-s> <Nop>
 nnoremap <C-q> <Nop>
 nnoremap <C-z> <Nop>
@@ -203,8 +201,6 @@ nnoremap ge $
 nnoremap ga ^
 vnoremap ge $h
 vnoremap ga ^
-nnoremap <C-h> <Nop>
-vnoremap <C-h> <Nop>
 nnoremap <C-j> <Nop>
 vnoremap <C-j> <Nop>
 inoremap <C-j> <Nop>
@@ -214,12 +210,19 @@ nnoremap <C-k> <Nop>
 vnoremap <C-k> <Nop>
 nnoremap <C-g> <Nop>
 vnoremap <C-g> <Nop>
-nnoremap <C-f> <Nop>
 nnoremap <C-b> <Nop>
-vnoremap <C-f> <Nop>
 vnoremap <C-b> <Nop>
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
+snoremap <C-b> <Nop>
+inoremap <C-b> <Nop>
+cnoremap <C-b> <Nop>
+inoremap <C-l> <Right>
+cnoremap <C-l> <Right>
+nnoremap <C-h> <Nop>
+vnoremap <C-h> <Nop>
+nnoremap <C-f> <Nop>
+vnoremap <C-f> <Nop>
+inoremap <C-f> <Left>
+cnoremap <C-f> <Left>
 " use full double ctrl+ click
 nnoremap <C-h><C-g> <C-g>
 nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
@@ -275,14 +278,14 @@ inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
 vnoremap <F1> <ESC>:tab help<Space>
 cnoremap <F1> <ESC>:tab help<Space>
-" F2 pastetoggle (sane indentation on pastes)
-set pastetoggle=<F2>
 " F3 show clipboard
 nnoremap <F3> :reg<Cr>
 inoremap <F3> <ESC>:reg<Cr>
 vnoremap <F3> <ESC>:reg<Cr>
 snoremap <F3> <ESC>:reg<Cr>
 cnoremap <F3> <ESC>:reg<Cr>
+" F12 pastetoggle (sane indentation on pastes)
+set pastetoggle=<F12>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
@@ -436,14 +439,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         nmap <leader>vt :VoomToggle<CR>
         nmap <leader>vv :VoomQuit<CR>:Voom<CR><C-w>w
-        let g:voom_tab_key = "<C-Tab>"
+        let g:voom_tab_key = "<C-tab>"
         let g:voom_ft_modes = {
             \ 'markdown': 'markdown',
             \ 'pandoc': 'pandoc',
             \ 'c': 'fmr2',
             \ 'cpp': 'fmr2',
             \ 'python':'python',
-            \ 'tex': 'latex'}
+        \ 'tex': 'latex'}
     endif
     " markdown preview for gvim
     if has("gui_running") && HasDirectory('markdown-preview.vim')
@@ -879,14 +882,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <C-j><Cr>  :FZF<CR>
+        nnoremap <silent> <C-j>k  :FZF<CR>
         nnoremap <silent> <C-j>b :Buffers<CR>
         nnoremap <silent> <C-j>f :FZF<Space>
         nnoremap <silent> <C-j>t :Filetypes<CR>
         nnoremap <silent> <C-j>g :GFiles?<CR>
         nnoremap <silent> <C-j>m :Maps<CR>
         nnoremap <silent> <C-j>c :Commits<CR>
-        nnoremap <silent> <C-j>k :Colors<CR>
+        nnoremap <silent> <C-j>C :Colors<CR>
         nnoremap <silent> <C-j>h :History/<CR>
         " Mapping selecting mappings
         nmap <leader><tab> <plug>(fzf-maps-n)
@@ -935,7 +938,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == "denite" && HasDirectory('denite.nvim')
-        nnoremap <C-j><Cr>  :Denite file/rec buffer<Cr>
+        nnoremap <C-j>k  :Denite file/rec buffer<Cr>
         nnoremap <C-j>f :Denite
         nnoremap <C-j>b :DeniteBufferDir
         nnoremap <C-j>w :DeniteCursorWord
@@ -1024,7 +1027,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-j><Cr>'
+        let g:Lf_ShortcutF = '<C-j>k'
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_CacheDirectory = expand('~/.vim/cache')
         if !isdirectory(g:Lf_CacheDirectory)
@@ -1044,7 +1047,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
            \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
        \ }
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<C-j><Cr>'
+        let g:ctrlp_map = '<C-j>k'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
@@ -1376,7 +1379,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:UltiSnipsNoPythonWarning = 0
         let g:UltiSnipsRemoveSelectModeMappings = 0
         let g:UltiSnipsExpandTrigger = "<Nop>"
-        let g:UltiSnipsListSnippets = "<C-l>"
+        let g:UltiSnipsListSnippets = "<C-_>"
         let g:UltiSnipsJumpForwardTrigger = "<Tab>"
         let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
         " Ulti python version
@@ -1440,6 +1443,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " complete_parameter
     if HasDirectory("CompleteParameter.vim")
         inoremap <silent><expr> ; complete_parameter#pre_complete(";")
+        inoremap <silent><expr> ( complete_parameter#pre_complete("()")
         if OSX() && has('gui_running')
             smap <D-j> <Plug>(complete_parameter#goto_next_parameter)
             imap <D-j> <Plug>(complete_parameter#goto_next_parameter)
@@ -1586,9 +1590,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-g>pi :ProjectImport<Space>
         nnoremap <C-g>pI :ProjectInfo<Cr>
         nnoremap <C-g>po :ProjectOpen<Space>
-        if has('python')
-            nnoremap <C-b>R :ProjectRun<Cr>
-        endif
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
@@ -1596,9 +1597,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap gp :PreviewScroll -1<cr>
         nnoremap gn :PreviewScroll +1<cr>
         if OSX() && has('gui_running')
-            nnoremap <D-Cr>s :PreviewSignature!<Cr>
-            nnoremap <D-Cr>q :PreviewQuickfix
-            nnoremap <D-Cr>g :PreviewGoto<Space>
+            nnoremap <D-PageUp>   :PreviewScroll -1<cr>
+            nnoremap <D-PageDown> :PreviewScroll +1<cr>
+            inoremap <D-PageUp>   <c-\><c-o>:PreviewScroll -1<cr>
+            inoremap <D-PageDown> <c-\><c-o>:PreviewScroll +1<cr>
+            nnoremap <D-End>      :PreviewSignature!<Cr>
+            nnoremap <D-Home>     :PreviewQuickfix
+            nnoremap <D-Cr>g      :PreviewGoto<Space>
         else
             nnoremap <ESC>p :PreviewScroll -1<cr>
             nnoremap <ESC>n :PreviewScroll +1<cr>
@@ -1665,9 +1670,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! AsyncRunNow call s:ASYNC_RUN()
-        nmap <C-b>r :AsyncRunNow<CR>
-        nmap <C-b>a :AsyncRun<Space>
-        nmap <C-b>s :AsyncStop<CR>
+        nmap <C-l>r :AsyncRunNow<CR>
+        nmap <C-l>a :AsyncRun<Space>
+        nmap <C-l>s :AsyncStop<CR>
         au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
     endif
     if HasDirectory("ale")
@@ -1727,8 +1732,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " Debug
     if HasDirectory('vim-repl')
-        nnoremap <C-b>t :REPLToggle<Cr>
-        let g:sendtorepl_invoke_key = "<C-b>w"          "传送代码快捷键，默认为<leader>w
+        nnoremap <C-l>t :REPLToggle<Cr>
+        let g:sendtorepl_invoke_key = "<C-l>w"          "传送代码快捷键，默认为<leader>w
         let g:repl_program = {
             \	"python": "python",
             \	"default": "bash",
