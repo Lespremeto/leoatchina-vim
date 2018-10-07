@@ -207,6 +207,7 @@ nnoremap <C-h> <Nop>
 vnoremap <C-h> <Nop>
 nnoremap <C-j> <Nop>
 vnoremap <C-j> <Nop>
+inoremap <C-j> <Nop>
 inoremap <C-j>. <C-x><C-o>
 inoremap <C-j>, <C-x><C-u>
 nnoremap <C-k> <Nop>
@@ -1591,19 +1592,27 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
-        nnoremap <C-p>t :PreviewTag<Cr>
-        nnoremap <C-p>p :PreviewScroll -1<cr>
-        nnoremap <C-p>n :PreviewScroll +1<cr>
-        inoremap <C-p>p :PreviewScroll -1<cr>
-        inoremap <C-p>n :PreviewScroll +1<cr>
-        nnoremap <C-p>q :PreviewClose<Cr>
-        nnoremap <C-p>s :PreviewSignature!<Cr>
-        inoremap <C-p>s <c-\><c-o>:PreviewSignature!<Cr>
-        nnoremap <C-p>f :PreviewFile<Space>
-        nnoremap <C-p>g :PreviewGoto
-        nnoremap <C-p>p :PreviewQuickfix
+        nnoremap <C-p> :PreviewTag<Cr>
+        nnoremap gp :PreviewScroll -1<cr>
+        nnoremap gn :PreviewScroll +1<cr>
+        if OSX() && has('gui_running')
+            nnoremap <D-Cr>s :PreviewSignature!<Cr>
+            nnoremap <D-Cr>q :PreviewQuickfix
+            nnoremap <D-Cr>g :PreviewGoto<Space>
+        else
+            nnoremap <ESC>p :PreviewScroll -1<cr>
+            nnoremap <ESC>n :PreviewScroll +1<cr>
+            inoremap <ESC>p <c-\><c-o>:PreviewScroll -1<cr>
+            inoremap <ESC>n <c-\><c-o>:PreviewScroll +1<cr>
+            nnoremap <ESC>s :PreviewSignature!<Cr>
+            nnoremap <ESC>q :PreviewQuickfix
+            nnoremap <ESC>g :PreviewGoto<Space>
+        endif
+
         autocmd FileType qf nnoremap <silent><buffer> P :PreviewQuickfix<cr>
         autocmd FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
+    else
+        nnoremap <C-p> :echo "<C-p> is mapped for vim-preview with gtags"
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
@@ -1618,7 +1627,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 cclose
                 cclose
                 let s:quickfix_is_open = 0
-                execute g:quickfix_return_to_window . "wincmd w"
+                execute s:quickfix_return_to_window . "wincmd w"
             else
                 let s:quickfix_return_to_window = winnr()
                 copen

@@ -57,6 +57,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if OSX()
             Plug 'rizzatti/dash.vim'
             Plug 'ybian/smartim'
+            if has('gui_running')
+                nnoremap <D-Cr> <Nop>
+                snoremap <D-Cr> <Nop>
+                inoremap <D-Cr> <Nop>
+                vnoremap <D-Cr> <Nop>
+            endif
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')
