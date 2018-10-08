@@ -173,14 +173,14 @@ let g:maplocalleader = '\'
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 cnoremap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-nnoremap <localleader><localleader> %
 " Key reMappings
+nnoremap <localleader><localleader> %
 nnoremap * *``
 nnoremap ! :!
 vnoremap / y/<C-r>0
 vnoremap ; y:%s/<C-r>0
 vnoremap . :normal .<CR>
-" gt
+" gt to nop
 nnoremap gt <Nop>
 nnoremap gT <Nop>
 vnoremap gt <Nop>
@@ -604,19 +604,19 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 let g:lightline.active.right = [
                     \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
                     \ [ 'percent' ],
-                    \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+                \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
                 let g:lightline.component_expand =  {
                     \ 'linter_checking': 'lightline#ale#checking',
                     \ 'linter_warnings': 'lightline#ale#warnings',
                     \ 'linter_errors': 'lightline#ale#errors',
                     \ 'linter_ok': 'lightline#ale#ok'
-                    \ }
+                \ }
                 let g:lightline.component_type = {
                     \ 'linter_checking': 'right',
                     \ 'linter_warnings': 'warning',
                     \ 'linter_errors': 'error',
                     \ 'linter_ok': 'left'
-                    \ }
+                \ }
             elseif HasDirectory('neomake')
                 " number of occurrances in the buffer.
                 let g:lightline_neomake#format = '%s: %d'
@@ -625,7 +625,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 let g:lightline.active.right = [
                     \ ['neomake'],
                     \ ['percent'],
-                    \ ['filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+                    \ ['filetype', 'fileformat', 'fileencoding', 'lineinfo']
+                \ ]
                 let g:lightline.component_expand = {'neomake':'lightline_neomake#component'}
                 let g:lightline.component_type   = {'neomake':'error'}
             endif
