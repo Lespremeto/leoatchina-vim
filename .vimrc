@@ -210,19 +210,16 @@ nnoremap <C-k> <Nop>
 vnoremap <C-k> <Nop>
 nnoremap <C-g> <Nop>
 vnoremap <C-g> <Nop>
-nnoremap <C-b> <Nop>
-vnoremap <C-b> <Nop>
-snoremap <C-b> <Nop>
-inoremap <C-b> <Nop>
-cnoremap <C-b> <Nop>
-inoremap <C-l> <Right>
-cnoremap <C-l> <Right>
 nnoremap <C-h> <Nop>
 vnoremap <C-h> <Nop>
 nnoremap <C-f> <Nop>
 vnoremap <C-f> <Nop>
-inoremap <C-f> <Left>
-cnoremap <C-f> <Left>
+inoremap <C-f> <right>
+cnoremap <C-f> <right>
+nnoremap <C-x> <Nop>
+nnoremap <C-b> <C-x>
+inoremap <C-b> <Left>
+cnoremap <C-b> <Left>
 " use full double ctrl+ click
 nnoremap <C-h><C-g> <C-g>
 nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
@@ -278,14 +275,13 @@ inoremap <F1> <ESC>:tab help<Space>
 snoremap <F1> <ESC>:tab help<Space>
 vnoremap <F1> <ESC>:tab help<Space>
 cnoremap <F1> <ESC>:tab help<Space>
+" F2 pastetoggle (sane indentation on pastes)
+set pastetoggle=<F2>
 " F3 show clipboard
 nnoremap <F3> :reg<Cr>
-inoremap <F3> <ESC>:reg<Cr>
 vnoremap <F3> <ESC>:reg<Cr>
 snoremap <F3> <ESC>:reg<Cr>
 cnoremap <F3> <ESC>:reg<Cr>
-" F12 pastetoggle (sane indentation on pastes)
-set pastetoggle=<F12>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
@@ -496,7 +492,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ '|  https://github.com/spf13/spf13-vim                     |',
             \ '+---------------------------------------------------------+',
             \ ]
-        let g:startify_session_dir = '~/.vim/session'
+        let g:startify_session_dir = expand("$HOME/.cache/session")
         if !isdirectory(g:startify_session_dir)
             silent! call mkdir(g:startify_session_dir, 'p')
         endif
@@ -668,7 +664,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 所生成的数据文件的名称
         let g:gutentags_ctags_tagfile = '.tags'
         " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-        let s:vim_tags = expand("~/.cache/tags")
+        let s:vim_tags = expand("$HOME/.cache/tags")
         " 检测 ~/.cache/tags 不存在就新建
         if !isdirectory(s:vim_tags)
             silent! call mkdir(s:vim_tags, 'p')
@@ -702,7 +698,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:multi_cursor_select_all_key      = '<localleader><C-n>'
         let g:multi_cursor_next_key            = '<C-n>'
         let g:multi_cursor_prev_key            = '<C-_>'
-        let g:multi_cursor_skip_key            = '<C-x>'
+        let g:multi_cursor_skip_key            = '<C-h>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
@@ -772,7 +768,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ "Dirty"     : "●",
                 \ "Clean"     : "√",
                 \ "Unknown"   : "?"
-                \ }
+            \ }
         endif
     endif
     " ywvim,vim里的中文输入法
@@ -896,10 +892,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         xmap <leader><tab> <plug>(fzf-maps-x)
         omap <leader><tab> <plug>(fzf-maps-o)
         " insert map
-        imap <c-x><c-k> <plug>(fzf-complete-word)
-        imap <c-x><c-f> <plug>(fzf-complete-path)
-        imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-        imap <c-x><c-l> <plug>(fzf-complete-line)
+        imap <c-j><c-k> <plug>(fzf-complete-word)
+        imap <c-j><c-f> <plug>(fzf-complete-path)
+        imap <c-j><c-g> <plug>(fzf-complete-file-ag)
+        imap <c-j><c-l> <plug>(fzf-complete-line)
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
         " [[B]Commits] Customize the options used by 'git log':
@@ -1028,16 +1024,17 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
         let g:Lf_ShortcutF = '<C-j>k'
+        let g:Lf_ReverseOrder = 1
         let g:Lf_PythonVersion = g:python_version
-        let g:Lf_CacheDirectory = expand('~/.vim/cache')
+        let g:Lf_CacheDirectory = expand('$HOME/.cache/leaderf')
         if !isdirectory(g:Lf_CacheDirectory)
             silent! call mkdir(g:Lf_CacheDirectory, 'p')
         endif
         let g:Lf_ShortcutB = '<C-j>b'
-        nmap <C-j>l :Leaderf
-        nmap <C-j>f :LeaderfF
-        nmap <C-j>n :LeaderfB
-        nmap <C-j>m :LeaderfM
+        nnoremap <C-j>l :Leaderf
+        nnoremap <C-j>f :LeaderfF
+        nnoremap <C-j>b :LeaderfB
+        nnoremap <C-j>m :LeaderfM
         let g:Lf_NormalMap = {
            \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
            \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
@@ -1379,7 +1376,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:UltiSnipsNoPythonWarning = 0
         let g:UltiSnipsRemoveSelectModeMappings = 0
         let g:UltiSnipsExpandTrigger = "<Nop>"
-        let g:UltiSnipsListSnippets = "<C-_>"
+        let g:UltiSnipsListSnippets = "<C-l><C-l>"
         let g:UltiSnipsJumpForwardTrigger = "<Tab>"
         let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
         " Ulti python version
