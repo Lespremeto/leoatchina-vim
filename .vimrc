@@ -1376,13 +1376,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:UltiSnipsNoPythonWarning = 0
         let g:UltiSnipsRemoveSelectModeMappings = 0
         let g:UltiSnipsExpandTrigger = "<Nop>"
-        let g:UltiSnipsListSnippets = "<C-l><C-l>"
+        let g:UltiSnipsListSnippets = "<C-j><C-l>"
         let g:UltiSnipsJumpForwardTrigger = "<Tab>"
         let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
         " Ulti python version
         let g:UltiSnipsUsePythonVersion = g:python_version
         " tab for ExpandTrigger
-        function! g:UltiSnips_Tab()
+        function! g:UltiSnips_Tab(num)
             if pumvisible()
                 call UltiSnips#ExpandSnippet()
                 if g:ulti_expand_res
@@ -1399,12 +1399,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 if g:ulti_jump_forwards_res
                     return "\<Right>"
                 else
-                    return "\<Tab>"
+                    if a:num
+                        return "\<Tab>"
+                    else
+                        return ""
+                    endif
                 endif
             endif
         endfunction
-        inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>
-        inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>
+        inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab(1)<cr>
+        inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab(0)<cr>
         smap <C-k> <Tab>
         " Ulti的代码片段的文件夹
         let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
@@ -1413,7 +1417,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:neosnippet#enable_completed_snippet = 1
         smap <Tab> <Plug>(neosnippet_jump_or_expand)
         smap <C-k> <Plug>(neosnippet_jump_or_expand)
-        function! g:NeoSnippet_Tab()
+        function! g:NeoSnippet_Tab(num)
             if pumvisible()
                 if neosnippet#expandable()
                     return neosnippet#mappings#expand_impl()
@@ -1428,19 +1432,23 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 if neosnippet#jumpable()
                     return neosnippet#mappings#jump_impl()
                 else
-                    return "\<Tab>"
+                    if a:num
+                        return "\<Tab>"
+                    else
+                        return "\<C-k>"
+                    endif
                 endif
             endif
         endfunction
-        inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>
-        inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>
+        inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab(1)<cr>
+        inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab(0)<cr>
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
     endif
     " complete_parameter
     if HasDirectory("CompleteParameter.vim")
-        inoremap <silent><expr> ; complete_parameter#pre_complete(";")
-        inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+        inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):";"
+        inoremap <silent><expr> ( pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):"()\<left>"
         if OSX() && has('gui_running')
             smap <D-j> <Plug>(complete_parameter#goto_next_parameter)
             imap <D-j> <Plug>(complete_parameter#goto_next_parameter)
