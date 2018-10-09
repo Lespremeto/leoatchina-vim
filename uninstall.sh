@@ -13,7 +13,6 @@ rm $HOME/.vimrc.plugs
 rm $HOME/.vimrc.clean
 rm $HOME/.vimrc.update
 rm $HOME/.vimrc.md
-rm $HOME/.tmux.conf
 if [ -f $HOME/.config/nvim/init.vim ];then
     rm $HOME/.config/nvim/init.vim
 fi
