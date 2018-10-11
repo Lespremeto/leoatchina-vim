@@ -1,12 +1,7 @@
 " This is leoatchina's vim config forked from https://github.com/spf13/spf13-vim
 " Sincerely thank him for his great job, and I have made some change according to own requires.
-"                    __ _ _____              _
-"         ___ _ __  / _/ |___ /      __   __(_)_ __ ___
-"        / __| '_ \| |_| | |_ \ _____\ \ / /| | '_ ` _ \
-"        \__ \ |_) |  _| |___) |_____|\ V / | | | | | | |
-"        |___/ .__/|_| |_|____/        \_/  |_|_| |_| |_|
-"            |_|
 " You can find spf13's origin config at http://spf13.com
+
 " Basics
 set nocompatible
 if v:version < 700
@@ -174,7 +169,7 @@ nnoremap <leader><Cr> :source ~/.vimrc<CR>
 cnoremap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 " Key reMappings
-nnoremap <localleader><localleader> %
+nnoremap <Cr> %
 nnoremap * *``
 nnoremap ! :!
 vnoremap / y/<C-r>0
@@ -216,8 +211,6 @@ nnoremap <C-f> <Nop>
 vnoremap <C-f> <Nop>
 inoremap <C-f> <right>
 cnoremap <C-f> <right>
-nnoremap <C-x> <Nop>
-nnoremap <C-b> <C-x>
 inoremap <C-b> <Left>
 cnoremap <C-b> <Left>
 " use full double ctrl+ click
@@ -721,10 +714,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " autopairs
     if HasDirectory("auto-pairs")
         let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-        let g:AutoPairsShortcutToggle     = "<C-k>t"
-        let g:AutoPairsShortcutFastWrap   = "<C-k>f"
-        let g:AutoPairsShortcutJump       = "<C-k>j"
-        let g:AutoPairsShortcutBackInsert = "<C-k>i"
+        let g:AutoPairsShortcutToggle     = "<C-b>t"
+        let g:AutoPairsShortcutFastWrap   = "<C-b>f"
+        let g:AutoPairsShortcutJump       = "<C-b>j"
+        let g:AutoPairsShortcutBackInsert = "<C-b>i"
         inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
     endif
     " typecast
@@ -889,9 +882,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <silent> <C-j>C :Colors<CR>
         nnoremap <silent> <C-j>h :History/<CR>
         " Mapping selecting mappings
-        nmap <leader><tab> <plug>(fzf-maps-n)
-        xmap <leader><tab> <plug>(fzf-maps-x)
-        omap <leader><tab> <plug>(fzf-maps-o)
+        nmap <C-j><tab> <plug>(fzf-maps-n)
+        xmap <C-j><tab> <plug>(fzf-maps-x)
+        omap <C-j><tab> <plug>(fzf-maps-o)
         " insert map
         imap <c-j><c-k> <plug>(fzf-complete-word)
         imap <c-j><c-f> <plug>(fzf-complete-path)
@@ -1308,9 +1301,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
     elseif HasDirectory("neocomplete.vim") && g:complete_engine == "neocomplete"
         " ominifuc
+        if g:python_version == 2
+            au FileType python setlocal omnifunc=pythoncomplete#Complete
+        elseif g:python_version == 3
+            au FileType python setlocal omnifunc=python3complete#Complete
+        endif
         au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
         au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
-        au FileType python        setlocal omnifunc=pythoncomplete#Complete
         au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
         au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
         let g:neocomplete#enable_at_startup = 1
@@ -1436,7 +1433,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     if a:num
                         return "\<Tab>"
                     else
-                        return "\<C-k>"
+                        return ""
                     endif
                 endif
             endif
@@ -1739,16 +1736,20 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " Debug
     if HasDirectory('vim-repl')
         nnoremap <C-l>t :REPLToggle<Cr>
-        let g:sendtorepl_invoke_key = "<C-l>w"          "传送代码快捷键，默认为<leader>w
+        let g:sendtorepl_invoke_key = "<C-l>w"
         let g:repl_program = {
             \	"python": "python",
             \	"default": "bash",
-            \	}
+        \	}
         let g:repl_exit_commands = {
 			\	"python": "quit()",
 			\	"bash": "exit",
 			\	"zsh": "exit",
 			\	"default": "exit",
-			\	}
+        \	}
+    endif
+    if HasDirectory('vim-debugger')
+
+
     endif
 endif
