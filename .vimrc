@@ -442,16 +442,10 @@ if OSX() && has('gui_running')
 else
     nnoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
     nnoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
-    nnoremap <ESC>e :call Tools_PreviousCursor(8)<cr>
-    nnoremap <ESC>y :call Tools_PreviousCursor(9)<Cr>
     inoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
     inoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
-    inoremap <ESC>e :call Tools_PreviousCursor(8)<cr>
-    inoremap <ESC>y :call Tools_PreviousCursor(9)<Cr>
     vnoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
     vnoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
-    vnoremap <ESC>e :call Tools_PreviousCursor(8)<cr>
-    vnoremap <ESC>y :call Tools_PreviousCursor(9)<Cr>
 endif
 " Stupid <C-g>hift key fixes
 if has("user_commands")
@@ -1627,38 +1621,38 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <leader>nt :ToggleProjectTree<Cr>
         nnoremap <leader>nl :ProjectList<Cr>
         nnoremap <leader>na :ProjectsTree<Cr>
-        au FileType java nnoremap <C-g>pb  :ProjectBuild<Cr>
+        au FileType java nnoremap <C-g>pb :ProjectBuild<Cr>
         nnoremap <C-g>pp :Project
         nnoremap <C-g>pr :ProjectRefresh<Cr>
+        nnoremap <C-g>pI :ProjectInfo<Cr>
+        nnoremap <C-g>pd :ProjectCD<Cr>
+        nnoremap <C-g>pc :ProjectLCD<Cr>
         nnoremap <C-g>pn :ProjectCreate<Space>
-        nnoremap <C-g>pc :ProjectLCD<CR>
-        nnoremap <C-g>pd :ProjectCD<CR>
         nnoremap <C-g>pm :ProjectMove<Space>
         nnoremap <C-g>pi :ProjectImport<Space>
-        nnoremap <C-g>pI :ProjectInfo<Cr>
         nnoremap <C-g>po :ProjectOpen<Space>
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
-        nnoremap <C-p>t :PreviewTag<Cr>
-        nnoremap <C-p>p :PreviewScroll -1<cr>
-        nnoremap <C-p>n :PreviewScroll +1<cr>
+        nnoremap <C-p> :PreviewTag<Cr>
         if OSX() && has('gui_running')
-            nnoremap <D-PageUp>   :PreviewScroll -1<cr>
-            nnoremap <D-PageDown> :PreviewScroll +1<cr>
-            inoremap <D-PageUp>   <c-\><c-o>:PreviewScroll -1<cr>
-            inoremap <D-PageDown> <c-\><c-o>:PreviewScroll +1<cr>
-            nnoremap <D-End>      :PreviewSignature!<Cr>
-            nnoremap <D-Home>     :PreviewQuickfix
-            nnoremap <D-Cr>g      :PreviewGoto<Space>
+            nnoremap <D-Up>    :PreviewScroll           -1<cr>
+            nnoremap <D-Down>  :PreviewScroll           +1<cr>
+            inoremap <D-Up>    <c-\><c-o>:PreviewScroll -1<cr>
+            inoremap <D-Down>  <c-\><c-o>:PreviewScroll +1<cr>
+            nnoremap <D-Right> :PreviewSignature!<Cr>
+            nnoremap <D-Left>  :PreviewQuickfix<Space>
+            nnoremap <D-Cr>g   :PreviewGoto<Space>
+            nnoremap <D-Cr>f   :PreviewFile<Space>
         else
             nnoremap <ESC>p :PreviewScroll -1<cr>
             nnoremap <ESC>n :PreviewScroll +1<cr>
             inoremap <ESC>p <c-\><c-o>:PreviewScroll -1<cr>
             inoremap <ESC>n <c-\><c-o>:PreviewScroll +1<cr>
             nnoremap <ESC>s :PreviewSignature!<Cr>
-            nnoremap <ESC>q :PreviewQuickfix
+            nnoremap <ESC>q :PreviewQuickfix<Space>
             nnoremap <ESC>g :PreviewGoto<Space>
+            nnoremap <ESC>f :PreviewGoto<Space>
         endif
 
         autocmd FileType qf nnoremap <silent><buffer> P :PreviewQuickfix<cr>
@@ -1782,16 +1776,19 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-l>t :REPLToggle<Cr>
         let g:sendtorepl_invoke_key = "<C-l>w"
         let g:repl_program = {
-            \	"python3": "python3",
-            \	"python": "python",
             \	"default": "bash",
-        \	}
+        \ }
+        if g:python_version == 2
+            let g:repl_program.python = "python"
+        elseif g:python_version == 3
+            let g:repl_program.python = "python3"
+        endif
         let g:repl_exit_commands = {
 			\	"python": "quit()",
 			\	"bash": "exit",
 			\	"zsh": "exit",
 			\	"default": "exit",
-        \	}
+        \ }
     endif
     if HasDirectory('vim-debugger')
 
