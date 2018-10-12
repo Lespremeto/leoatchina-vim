@@ -9,4 +9,3 @@ let g:plug_groups=['smartcomplete', 'javascript', 'html', 'snippet', 'syntax', '
 " your $PATH, and unmask the corresponse line
 "set pythonthreedll=python36.dll
 "set pythonthreedll=python27.dll
-

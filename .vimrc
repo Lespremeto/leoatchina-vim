@@ -223,7 +223,7 @@ nnoremap <C-h><C-l> <C-l>
 nnoremap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 " and ask which one to jump to
 nnoremap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-" tabs control
+" tab control
 set tabpagemax=10 " Only show 10 tabs
 cnoremap Tabe tabe
 " compatible with xshell
@@ -237,12 +237,12 @@ nnoremap <localleader><Tab> :tablast<CR>
 nnoremap <localleader>-     :tabfirst<CR>
 nnoremap <Leader>te         :tabe<Space>
 nnoremap <Leader>tm         :tabm<Space>
-nnoremap <Leader>ts         :tab  split<CR>
+nnoremap <Leader>ts         :tab split<CR>
 nnoremap <Leader>tS         :tabs<CR>
 " buffer switch
-nnoremap <leader>bl :buffers<CR>
-nnoremap <leader>bp :bp<CR>
-nnoremap <leader>bn :bn<CR>
+nnoremap <localleader><BS> :buffers<CR>
+nnoremap <localleader>[ :bp<CR>
+nnoremap <localleader>] :bn<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <leader>y  "+y
 nnoremap <leader>y  "+y
@@ -290,7 +290,7 @@ nnoremap <leader>q :q!
 nnoremap <Leader>Q :qa!
 " 设置分割页面
 nnoremap <leader>\ :vsplit<Space>
-nnoremap <leader>_ :split<Space>
+nnoremap <leader>= :split<Space>
 "设置垂直高度减增
 nnoremap <Leader><Down>  :resize -3<CR>
 nnoremap <Leader><Up>    :resize +3<CR>
@@ -872,7 +872,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <C-j>k  :FZF<CR>
+        nnoremap <silent> <C-j>k :FZF<CR>
         nnoremap <silent> <C-j>b :Buffers<CR>
         nnoremap <silent> <C-j>f :FZF<Space>
         nnoremap <silent> <C-j>t :Filetypes<CR>
@@ -1738,6 +1738,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-l>t :REPLToggle<Cr>
         let g:sendtorepl_invoke_key = "<C-l>w"
         let g:repl_program = {
+            \	"python3": "python3",
             \	"python": "python",
             \	"default": "bash",
         \	}
