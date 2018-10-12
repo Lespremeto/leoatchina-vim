@@ -401,7 +401,59 @@ vnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
 vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
 vnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
 vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
-" Stupid shift key fixes
+" splic window move manager
+" 0:up, 1:down, 2:pgup, 3:pgdown, 4:top, 5:bottom
+function! g:Tools_PreviousCursor(mode)
+    if winnr('$') <= 1
+        return
+    endif
+    noautocmd silent! wincmd p
+    if a:mode == 0
+        exec "normal! \<c-y>"
+    elseif a:mode == 1
+        exec "normal! \<c-e>"
+    elseif a:mode == 2
+        exec "normal! ".winheight('.')."\<c-y>"
+    elseif a:mode == 3
+        exec "normal! ".winheight('.')."\<c-e>"
+    elseif a:mode == 4
+        normal! gg
+    elseif a:mode == 5
+        normal! G
+    elseif a:mode == 6
+        exec "normal! \<c-u>"
+    elseif a:mode == 7
+        exec "normal! \<c-d>"
+    elseif a:mode == 8
+        exec "normal! k"
+    elseif a:mode == 9
+        exec "normal! j"
+    endif
+    noautocmd silent! wincmd p
+endfunc
+
+if OSX() && has('gui_running')
+    nnoremap <D-u> :call Tools_PreviousCursor(6)<cr>
+    nnoremap <D-d> :call Tools_PreviousCursor(7)<Cr>
+    inoremap <D-u> :call Tools_PreviousCursor(6)<cr>
+    inoremap <D-d> :call Tools_PreviousCursor(7)<Cr>
+    vnoremap <D-u> :call Tools_PreviousCursor(6)<cr>
+    vnoremap <D-d> :call Tools_PreviousCursor(7)<Cr>
+else
+    nnoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
+    nnoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
+    nnoremap <ESC>e :call Tools_PreviousCursor(8)<cr>
+    nnoremap <ESC>y :call Tools_PreviousCursor(9)<Cr>
+    inoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
+    inoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
+    inoremap <ESC>e :call Tools_PreviousCursor(8)<cr>
+    inoremap <ESC>y :call Tools_PreviousCursor(9)<Cr>
+    vnoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
+    vnoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
+    vnoremap <ESC>e :call Tools_PreviousCursor(8)<cr>
+    vnoremap <ESC>y :call Tools_PreviousCursor(9)<Cr>
+endif
+" Stupid <C-g>hift key fixes
 if has("user_commands")
     command! -bang -nargs=* -complete=file E e<bang> <args>
     command! -bang -nargs=* -complete=file W w<bang> <args>
@@ -1368,7 +1420,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     inoremap <expr> <Down>     pumvisible() ? "\<C-n>"                  : "\<Down>"
     inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>"   : "\<PageUp>"
     inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
-    " ultisnip
+    " ultisnips
     if HasDirectory('ultisnips')
         " remap Ultisnips for compatibility
         let g:UltiSnipsNoPythonWarning = 0
@@ -1452,19 +1504,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             imap <D-j> <Plug>(complete_parameter#goto_next_parameter)
             smap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
             imap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
-            imap <D-u> <Plug>(complete_parameter#overload_up)
-            smap <D-u> <Plug>(complete_parameter#overload_up)
-            imap <D-d> <Plug>(complete_parameter#overload_down)
-            smap <D-d> <Plug>(complete_parameter#overload_down)
         else
             smap <ESC>j <Plug>(complete_parameter#goto_next_parameter)
             imap <ESC>j <Plug>(complete_parameter#goto_next_parameter)
             smap <ESC>k <Plug>(complete_parameter#goto_previous_parameter)
             imap <ESC>k <Plug>(complete_parameter#goto_previous_parameter)
-            imap <ESC>u <Plug>(complete_parameter#overload_up)
-            smap <ESC>u <Plug>(complete_parameter#overload_up)
-            imap <ESC>d <Plug>(complete_parameter#overload_down)
-            smap <ESC>d <Plug>(complete_parameter#overload_down)
         endif
     else
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?"()\<left>":";"
@@ -1596,9 +1640,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
-        nnoremap <C-p> :PreviewTag<Cr>
-        nnoremap gp :PreviewScroll -1<cr>
-        nnoremap gn :PreviewScroll +1<cr>
+        nnoremap <C-p>t :PreviewTag<Cr>
+        nnoremap <C-p>p :PreviewScroll -1<cr>
+        nnoremap <C-p>n :PreviewScroll +1<cr>
         if OSX() && has('gui_running')
             nnoremap <D-PageUp>   :PreviewScroll -1<cr>
             nnoremap <D-PageDown> :PreviewScroll +1<cr>
