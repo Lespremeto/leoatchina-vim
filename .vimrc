@@ -41,6 +41,7 @@ endfunction
 " Basics
 if WINDOWS()
     set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+    set winaltkeys=no
     if !has('nvim') && has('gui_running')
         nmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
         imap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
@@ -368,7 +369,10 @@ set guioptions-=r
 set guioptions-=R
 " 没有菜单和工具条
 set guioptions-=m
+set guioptions-=M
 set guioptions-=T
+set guioptions-=e
+set nolist
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
