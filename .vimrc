@@ -405,53 +405,8 @@ vnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
 vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
 vnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
 vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
-" splic window move manager
-" 0:up, 1:down, 2:pgup, 3:pgdown, 4:top, 5:bottom
-function! g:Tools_PreviousCursor(mode)
-    if winnr('$') <= 1
-        return
-    endif
-    noautocmd silent! wincmd p
-    if a:mode == 0
-        exec "normal! \<c-y>"
-    elseif a:mode == 1
-        exec "normal! \<c-e>"
-    elseif a:mode == 2
-        exec "normal! ".winheight('.')."\<c-y>"
-    elseif a:mode == 3
-        exec "normal! ".winheight('.')."\<c-e>"
-    elseif a:mode == 4
-        normal! gg
-    elseif a:mode == 5
-        normal! G
-    elseif a:mode == 6
-        exec "normal! \<c-u>"
-    elseif a:mode == 7
-        exec "normal! \<c-d>"
-    elseif a:mode == 8
-        exec "normal! k"
-    elseif a:mode == 9
-        exec "normal! j"
-    endif
-    noautocmd silent! wincmd p
-endfunc
-
-if OSX() && has('gui_running')
-    nnoremap <D-u> :call Tools_PreviousCursor(6)<cr>
-    nnoremap <D-d> :call Tools_PreviousCursor(7)<Cr>
-    inoremap <D-u> :call Tools_PreviousCursor(6)<cr>
-    inoremap <D-d> :call Tools_PreviousCursor(7)<Cr>
-    vnoremap <D-u> :call Tools_PreviousCursor(6)<cr>
-    vnoremap <D-d> :call Tools_PreviousCursor(7)<Cr>
-else
-    nnoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
-    nnoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
-    inoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
-    inoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
-    vnoremap <ESC>u :call Tools_PreviousCursor(6)<cr>
-    vnoremap <ESC>d :call Tools_PreviousCursor(7)<Cr>
-endif
-function! Terminal_MetaMode(mode)
+" alt meta key
+function! Alt_meta_map(mode)
     set ttimeout
     if $TMUX != ''
         set ttimeoutlen=30
@@ -491,7 +446,44 @@ function! Terminal_MetaMode(mode)
         endfor
     endif
 endfunc
-command! -nargs=0 -bang VimMetaInit call Terminal_MetaMode(<bang>0)
+command! -nargs=0 -bang ALTMetaMap call Alt_meta_map(<bang>0)
+call Alt_meta_map(0)
+nnoremap <M-x> :echo("meta-x pressed!")<Cr>
+" window move manager
+function! g:Tools_PreviousCursor(mode)
+    if winnr('$') <= 1
+        return
+    endif
+    noautocmd silent! wincmd p
+    if a:mode == 0
+        exec "normal! \<c-u>"
+    elseif a:mode == 1
+        exec "normal! \<c-d>"
+    elseif a:mode == 2
+        exec "normal! \<c-y>"
+    elseif a:mode == 3
+        exec "normal! \<c-e>"
+    elseif a:mode == 4
+        exec "normal! ".winheight('.')."\<c-y>"
+    elseif a:mode == 5
+        exec "normal! ".winheight('.')."\<c-e>"
+    elseif a:mode == 6
+        normal! gg
+    elseif a:mode == 7
+        normal! G
+    elseif a:mode == 8
+        exec "normal! k"
+    elseif a:mode == 9
+        exec "normal! j"
+    endif
+    noautocmd silent! wincmd p
+endfunc
+nnoremap <M-u> :call Tools_PreviousCursor(0)<cr>
+nnoremap <M-d> :call Tools_PreviousCursor(1)<Cr>
+inoremap <M-u> :call Tools_PreviousCursor(0)<cr>
+inoremap <M-d> :call Tools_PreviousCursor(1)<Cr>
+vnoremap <M-u> :call Tools_PreviousCursor(0)<cr>
+vnoremap <M-d> :call Tools_PreviousCursor(1)<Cr>
 " Stupid Shift key fixes
 if has("user_commands")
     command! -bang -nargs=* -complete=file E e<bang> <args>
@@ -1538,17 +1530,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory("CompleteParameter.vim")
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):";"
         inoremap <silent><expr> ( pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):"()\<left>"
-        if OSX() && has('gui_running')
-            smap <D-j> <Plug>(complete_parameter#goto_next_parameter)
-            imap <D-j> <Plug>(complete_parameter#goto_next_parameter)
-            smap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
-            imap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
-        else
-            smap <ESC>j <Plug>(complete_parameter#goto_next_parameter)
-            imap <ESC>j <Plug>(complete_parameter#goto_next_parameter)
-            smap <ESC>k <Plug>(complete_parameter#goto_previous_parameter)
-            imap <ESC>k <Plug>(complete_parameter#goto_previous_parameter)
-        endif
+        smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+        imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+        smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+        imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
     else
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?"()\<left>":";"
     endif
@@ -1680,25 +1665,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
         nnoremap <C-p> :PreviewTag<Cr>
-        if OSX() && has('gui_running')
-            nnoremap <D-Up>    :PreviewScroll           -1<cr>
-            nnoremap <D-Down>  :PreviewScroll           +1<cr>
-            inoremap <D-Up>    <c-\><c-o>:PreviewScroll -1<cr>
-            inoremap <D-Down>  <c-\><c-o>:PreviewScroll +1<cr>
-            nnoremap <D-Right> :PreviewSignature!<Cr>
-            nnoremap <D-Left>  :PreviewQuickfix<Space>
-            nnoremap <D-Cr>g   :PreviewGoto<Space>
-            nnoremap <D-Cr>f   :PreviewFile<Space>
-        else
-            nnoremap <ESC>p :PreviewScroll -1<cr>
-            nnoremap <ESC>n :PreviewScroll +1<cr>
-            inoremap <ESC>p <c-\><c-o>:PreviewScroll -1<cr>
-            inoremap <ESC>n <c-\><c-o>:PreviewScroll +1<cr>
-            nnoremap <ESC>s :PreviewSignature!<Cr>
-            nnoremap <ESC>q :PreviewQuickfix<Space>
-            nnoremap <ESC>g :PreviewGoto<Space>
-            nnoremap <ESC>f :PreviewGoto<Space>
-        endif
+        nnoremap <M-p> :PreviewScroll -1<cr>
+        nnoremap <M-n> :PreviewScroll +1<cr>
+        inoremap <M-p> <c-\><c-o>:PreviewScroll -1<cr>
+        inoremap <M-n> <c-\><c-o>:PreviewScroll +1<cr>
+        nnoremap <M-s> :PreviewSignature!<Cr>
+        nnoremap <M-q> :PreviewQuickfix<Space>
+        nnoremap <M-g> :PreviewGoto<Space>
+        nnoremap <M-f> :PreviewFile<Space>
 
         autocmd FileType qf nnoremap <silent><buffer> P :PreviewQuickfix<cr>
         autocmd FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
