@@ -403,7 +403,7 @@ function! Alt_meta_map()
     elseif &ttimeoutlen > 100 || &ttimeoutlen <= 0
         set ttimeoutlen=100
     endif
-    if has('nvim') || has('gui_running') && WINDOWS()
+    if has('nvim') || has('gui_running') && !OSX()
         return
     endif
     function! s:metacode(key)
@@ -417,7 +417,8 @@ function! Alt_meta_map()
     for c in s:list
         call s:metacode(c)
     endfor
-    if has("gui_running") && OSX()
+    "if has("gui_running") && OSX()
+    if has('gui_macvim')
         let a:letters_dict={
             \ 'a':'å',
             \ 'b':'∫',
