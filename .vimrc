@@ -18,7 +18,6 @@ set mouse=a             " Automatically enable mouse usage
 set mousehide           " Hide the mouse cursor while typing
 set noimdisable
 set timeout
-set timeoutlen=500 ttimeoutlen=300
 set conceallevel=0
 " 不同文件类型加载不同插件
 filetype plugin indent on   " Automatically detect file types.
@@ -197,13 +196,8 @@ nnoremap ge $
 nnoremap ga ^
 vnoremap ge $h
 vnoremap ga ^
-nnoremap <C-j> <Nop>
-vnoremap <C-j> <Nop>
-inoremap <C-j> <Nop>
-inoremap <C-j>. <C-x><C-o>
-inoremap <C-j>, <C-x><C-u>
-nnoremap <C-k> <Nop>
-vnoremap <C-k> <Nop>
+inoremap <C-k>. <C-x><C-o>
+inoremap <C-k>, <C-x><C-u>
 nnoremap <C-g> <Nop>
 vnoremap <C-g> <Nop>
 nnoremap <C-h> <Nop>
@@ -216,10 +210,8 @@ inoremap <C-b> <Left>
 cnoremap <C-b> <Left>
 " use full double ctrl+ click
 nnoremap <C-h><C-g> <C-g>
-nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
-nnoremap <C-h><C-j> <C-j>
-nnoremap <C-h><C-k> <C-k>
 nnoremap <C-h><C-l> <C-l>
+nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
 " Find merge conflict markers
 nnoremap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 " and ask which one to jump to
@@ -406,49 +398,100 @@ vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
 vnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
 vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
 " alt meta key
-function! Alt_meta_map(mode)
+function! Alt_meta_map()
     set ttimeout
     if $TMUX != ''
-        set ttimeoutlen=30
-    elseif &ttimeoutlen > 80 || &ttimeoutlen <= 0
-        set ttimeoutlen=80
+        set ttimeoutlen=50
+    elseif &ttimeoutlen > 100 || &ttimeoutlen <= 0
+        set ttimeoutlen=100
     endif
-    if has('nvim') || has('gui_running')
+    if has('nvim') || has('gui_running') && WINDOWS()
         return
     endif
-    function! s:metacode(mode, key)
-        if a:mode == 0
-            exec "set <M-".a:key.">=\e".a:key
-        else
-            exec "set <M-".a:key.">=\e]{0}".a:key."~"
-        endif
+    function! s:metacode(key)
+        exec "set <M-".a:key.">=\e".a:key
     endfunc
-    for i in range(10)
-        call s:metacode(a:mode, nr2char(char2nr('0') + i))
-    endfor
     for i in range(26)
-        call s:metacode(a:mode, nr2char(char2nr('a') + i))
-        call s:metacode(a:mode, nr2char(char2nr('A') + i))
+        call s:metacode(nr2char(char2nr('a') + i))
+        call s:metacode(nr2char(char2nr('A') + i))
     endfor
-    if a:mode != 0
-        for c in [',', '.', '/', ';', '[', ']', '{', '}']
-            call s:metacode(a:mode, c)
-        endfor
-        for c in ['?', ':', '-', '_']
-            call s:metacode(a:mode, c)
-        endfor
-    else
-        for c in [',', '.', '/', ';', '{', '}']
-            call s:metacode(a:mode, c)
-        endfor
-        for c in ['?', ':', '-', '_']
-            call s:metacode(a:mode, c)
+    let s:list = ['-', ';', '/', ',', '.', '_', ':', '?']
+    for c in s:list
+        call s:metacode(c)
+    endfor
+    if has("gui_running") && OSX()
+        let a:letters_dict={
+            \ 'a':'å',
+            \ 'b':'∫',
+            \ 'c':'ç',
+            \ 'd':'∂',
+            \ 'e':'´',
+            \ 'f':'ƒ',
+            \ 'g':'©',
+            \ 'h':'˙',
+            \ 'i':'ˆ',
+            \ 'j':'∆',
+            \ 'k':'˚',
+            \ 'l':'¬',
+            \ 'm':'µ',
+            \ 'n':'˜',
+            \ 'o':'ø',
+            \ 'p':'π',
+            \ 'q':'œ',
+            \ 'r':'®',
+            \ 's':'ß',
+            \ 't':'†',
+            \ 'u':'¨',
+            \ 'v':'√',
+            \ 'w':'∑',
+            \ 'x':'≈',
+            \ 'y':'¥',
+            \ 'z':'Ω',
+            \ 'A':'Å',
+            \ 'B':'ı',
+            \ 'C':'Ç',
+            \ 'D':'∂',
+            \ 'E':'´',
+            \ 'F':'Ï',
+            \ 'G':'˝',
+            \ 'H':'Ó',
+            \ 'I':'ˆ',
+            \ 'J':'Ô',
+            \ 'K':'',
+            \ 'L':'Ò',
+            \ 'M':'Â',
+            \ 'N':'˜',
+            \ 'O':'Ø',
+            \ 'P':'∏',
+            \ 'Q':'Œ',
+            \ 'R':'‰',
+            \ 'S':'Í',
+            \ 'T':'ˇ',
+            \ 'U':'¨',
+            \ 'V':'◊',
+            \ 'W':'„',
+            \ 'X':'˛',
+            \ 'Y':'Á',
+            \ 'Z':'¸',
+            \ '-':'–',
+            \ ';':'…',
+            \ '/':'÷',
+            \ ',':'≤',
+            \ '.':'≥',
+            \ '_':'—',
+            \ ':':'Ú',
+            \ '?':'¿'
+        \ }
+        for c in keys(a:letters_dict)
+            for m in ['nmap', 'vmap', 'smap', 'tmap']
+                exec m." ".a:letters_dict[c]." <M-".c.">"
+            endfor
         endfor
     endif
 endfunc
-command! -nargs=0 -bang ALTMetaMap call Alt_meta_map(<bang>0)
-call Alt_meta_map(0)
-nnoremap <M-x> :echo("meta-x pressed!")<Cr>
+command! -nargs=0 -bang ALTMetaMap call Alt_meta_map()
+call Alt_meta_map()
+" nmap <M--> :echo("meta key works")<Cr>
 " window move manager
 function! g:Tools_PreviousCursor(mode)
     if winnr('$') <= 1
@@ -468,22 +511,18 @@ function! g:Tools_PreviousCursor(mode)
     elseif a:mode == 5
         exec "normal! ".winheight('.')."\<c-e>"
     elseif a:mode == 6
-        normal! gg
-    elseif a:mode == 7
-        normal! G
-    elseif a:mode == 8
         exec "normal! k"
-    elseif a:mode == 9
+    elseif a:mode == 7
         exec "normal! j"
+    elseif a:mode == 8
+        normal! gg
+    elseif a:mode == 9
+        normal! G
     endif
     noautocmd silent! wincmd p
 endfunc
-nnoremap <M-u> :call Tools_PreviousCursor(0)<cr>
-nnoremap <M-d> :call Tools_PreviousCursor(1)<Cr>
-inoremap <M-u> :call Tools_PreviousCursor(0)<cr>
-inoremap <M-d> :call Tools_PreviousCursor(1)<Cr>
-vnoremap <M-u> :call Tools_PreviousCursor(0)<cr>
-vnoremap <M-d> :call Tools_PreviousCursor(1)<Cr>
+nnoremap <silent> <M-u> :call Tools_PreviousCursor(0)<cr>
+nnoremap <silent> <M-d> :call Tools_PreviousCursor(1)<Cr>
 " Stupid Shift key fixes
 if has("user_commands")
     command! -bang -nargs=* -complete=file E e<bang> <args>
@@ -518,7 +557,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'c': 'fmr2',
             \ 'cpp': 'fmr2',
             \ 'python':'python',
-        \ 'tex': 'latex'}
+            \ 'tex': 'latex'
+        \ }
     endif
     " markdown preview for gvim
     if has("gui_running") && HasDirectory('markdown-preview.vim')
@@ -955,24 +995,23 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <C-j>k :FZF<CR>
-        nnoremap <silent> <C-j>b :Buffers<CR>
-        nnoremap <silent> <C-j>f :FZF<Space>
-        nnoremap <silent> <C-j>t :Filetypes<CR>
-        nnoremap <silent> <C-j>g :GFiles?<CR>
-        nnoremap <silent> <C-j>m :Maps<CR>
-        nnoremap <silent> <C-j>c :Commits<CR>
-        nnoremap <silent> <C-j>C :Colors<CR>
-        nnoremap <silent> <C-j>h :History/<CR>
-        " Mapping selecting mappings
-        nmap <C-j><tab> <plug>(fzf-maps-n)
-        xmap <C-j><tab> <plug>(fzf-maps-x)
-        omap <C-j><tab> <plug>(fzf-maps-o)
-        " insert map
-        imap <c-j><c-k> <plug>(fzf-complete-word)
-        imap <c-j><c-f> <plug>(fzf-complete-path)
-        imap <c-j><c-g> <plug>(fzf-complete-file-ag)
-        imap <c-j><c-l> <plug>(fzf-complete-line)
+        nnoremap <silent> <C-k>j :FZF<CR>
+        nnoremap <silent> <C-k>b :Buffers<CR>
+        nnoremap <silent> <C-k>f :FZF<Space>
+        nnoremap <silent> <C-k>t :Filetypes<CR>
+        nnoremap <silent> <C-k>g :GFiles?<CR>
+        nnoremap <silent> <C-k>m :Maps<CR>
+        nnoremap <silent> <C-k>c :Commits<CR>
+        nnoremap <silent> <C-k>C :Colors<CR>
+        nnoremap <silent> <C-k>h :History/<CR>
+        " Mapping selecting mkppings
+        nmap <C-k><tab> <plug>(fzf-maps-n)
+        xmap <C-k><tab> <plug>(fzf-maps-x)
+        omap <C-k><tab> <plug>(fzf-maps-o)
+        imap <c-k><c-f> <plug>(fzf-complete-word)
+        imap <c-k><c-p> <plug>(fzf-complete-path)
+        imap <c-k><c-g> <plug>(fzf-complete-file-ag)
+        imap <c-k><c-l> <plug>(fzf-complete-line)
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
         " [[B]Commits] Customize the options used by 'git log':
@@ -1011,11 +1050,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     elseif g:browser_tool == "denite" && HasDirectory('denite.nvim')
-        nnoremap <C-j>k  :Denite file/rec buffer<Cr>
-        nnoremap <C-j>f :Denite
-        nnoremap <C-j>b :DeniteBufferDir
-        nnoremap <C-j>w :DeniteCursorWord
-        nnoremap <Leader>/ :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
+        nnoremap <C-k>k :Denite file/rec buffer<Cr>
+        nnoremap <C-k>f :Denite
+        nnoremap <C-k>b :DeniteBufferDir
+        nnoremap <C-k>w :DeniteCursorWord
+        nnoremap <Lekder>/ :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
         call denite#custom#option('_', {
                 \ 'prompt': 'λ:',
                 \ 'empty': 0,
@@ -1100,18 +1139,18 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             call denite#custom#map('normal', m[0], m[1], m[2])
         endfor
     elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-j>k'
+        let g:Lf_ShortcutF = '<C-k>j'
         let g:Lf_ReverseOrder = 1
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_CacheDirectory = expand('$HOME/.cache/leaderf')
         if !isdirectory(g:Lf_CacheDirectory)
             silent! call mkdir(g:Lf_CacheDirectory, 'p')
         endif
-        let g:Lf_ShortcutB = '<C-j>b'
-        nnoremap <C-j>l :Leaderf
-        nnoremap <C-j>f :LeaderfF
-        nnoremap <C-j>b :LeaderfB
-        nnoremap <C-j>m :LeaderfM
+        let g:Lf_ShortcutB = '<C-k>b'
+        nnoremap <C-k>l :Leaderf
+        nnoremap <C-k>f :LeaderfF
+        nnoremap <C-k>b :LeaderfB
+        nnoremap <C-k>m :LeaderfM
         let g:Lf_NormalMap = {
            \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
            \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
@@ -1121,7 +1160,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
            \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
        \ }
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<C-j>k'
+        let g:ctrlp_map = '<C-k>j'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
@@ -1156,9 +1195,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             " CtrlP extensions
             let g:ctrlp_extensions = ['funky']
             " funky
-            nnoremap <C-j>f :CtrlPFunky<Cr>
+            nnoremap <C-k>f :CtrlPFunky<Cr>
         endif
-        nnoremap <C-j>m :CtrlPMRU<CR>
+        nnoremap <C-k>m :CtrlPMRU<CR>
     endif
     " complete_engine
     set completeopt-=menu
@@ -1457,7 +1496,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:UltiSnipsNoPythonWarning = 0
         let g:UltiSnipsRemoveSelectModeMappings = 0
         let g:UltiSnipsExpandTrigger = "<Nop>"
-        let g:UltiSnipsListSnippets = "<C-j><C-l>"
+        let g:UltiSnipsListSnippets = "<C-l>"
         let g:UltiSnipsJumpForwardTrigger = "<Tab>"
         let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
         " Ulti python version
@@ -1469,10 +1508,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 if g:ulti_expand_res
                     return "\<Right>"
                 else
-                    if !exists('v:completed_item') || empty(v:completed_item)
-                        return "\<C-n>"
-                    else
+                    if exists('v:completed_item') && !empty(v:completed_item)
                         return "\<C-y>"
+                    else
+                        if a:num
+                            return "\<C-n>"
+                        else
+                            return "\<C-y>"
+                        endif
                     endif
                 endif
             else
@@ -1483,30 +1526,35 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     if a:num
                         return "\<Tab>"
                     else
-                        return ""
+                        return "\<Cr>"
                     endif
                 endif
             endif
         endfunction
         inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab(1)<cr>
-        inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab(0)<cr>
-        smap <C-k> <Tab>
+        inoremap <silent> <C-j> <C-R>=g:UltiSnips_Tab(0)<cr>
+        smap <C-j> <Tab>
+        smap <C-k> <S-Tab>
         " Ulti的代码片段的文件夹
         let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
     elseif HasDirectory('neosnippet')
         let g:neosnippet#enable_completed_snippet = 1
         smap <Tab> <Plug>(neosnippet_jump_or_expand)
-        smap <C-k> <Plug>(neosnippet_jump_or_expand)
+        smap <C-j> <Plug>(neosnippet_jump_or_expand)
         function! g:NeoSnippet_Tab(num)
             if pumvisible()
                 if neosnippet#expandable()
                     return neosnippet#mappings#expand_impl()
                 else
-                    if !exists('v:completed_item') || empty(v:completed_item)
-                        return "\<C-n>"
-                    else
+                    if exists('v:completed_item') && !empty(v:completed_item)
                         return "\<C-y>"
+                    else
+                        if a:num
+                            return "\<C-n>"
+                        else
+                            return "\<C-y>"
+                        endif
                     endif
                 endif
             else
@@ -1516,13 +1564,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     if a:num
                         return "\<Tab>"
                     else
-                        return ""
+                        return "\<Cr>"
                     endif
                 endif
             endif
         endfunction
         inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab(1)<cr>
-        inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab(0)<cr>
+        inoremap <silent> <C-j> <C-R>=g:NeoSnippet_Tab(0)<cr>
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
     endif
@@ -1530,10 +1578,17 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory("CompleteParameter.vim")
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):";"
         inoremap <silent><expr> ( pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):"()\<left>"
-        smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-        imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-        smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-        imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+        if OSX() && has('gui_running')
+            smap <D-j> <Plug>(complete_parameter#goto_next_parameter)
+            imap <D-j> <Plug>(complete_parameter#goto_next_parameter)
+            smap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
+            imap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
+        else
+            smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+            imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+            smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+            imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+        endif
     else
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?"()\<left>":";"
     endif
@@ -1665,19 +1720,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
         nnoremap <C-p> :PreviewTag<Cr>
-        nnoremap <M-p> :PreviewScroll -1<cr>
-        nnoremap <M-n> :PreviewScroll +1<cr>
-        inoremap <M-p> <c-\><c-o>:PreviewScroll -1<cr>
-        inoremap <M-n> <c-\><c-o>:PreviewScroll +1<cr>
+        nnoremap <M-b> :PreviewScroll -1<cr>
+        nnoremap <M-f> :PreviewScroll +1<cr>
         nnoremap <M-s> :PreviewSignature!<Cr>
         nnoremap <M-q> :PreviewQuickfix<Space>
-        nnoremap <M-g> :PreviewGoto<Space>
-        nnoremap <M-f> :PreviewFile<Space>
-
-        autocmd FileType qf nnoremap <silent><buffer> P :PreviewQuickfix<cr>
+        nnoremap <M-G> :PreviewGoto<Space>
+        nnoremap <M-F> :PreviewFile<Space>
+        autocmd FileType qf nnoremap <silent><buffer> q :PreviewQuickfix<cr>
         autocmd FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
     else
-        nnoremap <C-p> :echo "<C-p> is mapped for vim-preview with gtags"
+        nnoremap <C-p> :echo "<C-p> is mapped for vim-preview with gtags"<Cr>
     endif
     " run_tools
     if HasDirectory("vim-quickrun")

@@ -18,8 +18,10 @@ if [ -f $HOME/.config/nvim/init.vim ];then
 fi
 
 rm -rf $HOME/.vim
-rm -rf $HOME/.gvim
+rm -rf $HOME/.mvim
 rm -rf $HOME/.nvim
+rm -rf $HOME/.gvim
+rm -rf $HOME/.gnvim
 if [ -d $HOME/.local/share/nvim ];then
     rm -rf $HOME/.local/share/nvim
 fi

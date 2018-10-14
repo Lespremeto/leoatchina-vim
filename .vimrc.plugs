@@ -20,13 +20,19 @@ endif
 if (has('job') || g:python_version || has('nvim') || has('lua'))
     " plug install path
     if has('nvim')
-        let $PLUG_PATH = '~/.nvim/plug'
-    else
-        if has("gui_running")
-            let $PLUG_PATH = '~/.gvim/plug'
+        if has('gui_running')
+            let $PLUG_PATH = '~/.gnvim/plug'
         else
-            let $PLUG_PATH = '~/.vim/plug'
+            let $PLUG_PATH = '~/.nvim/plug'
         endif
+    elseif has("gui_running")
+        if OSX()
+            let $PLUG_PATH = '~/.mvim/plug'
+        else  
+            let $PLUG_PATH = '~/.gvim/plug'
+        endif
+    else
+        let $PLUG_PATH = '~/.vim/plug'
     endif
     set rtp+=$PLUG_PATH
     call plug#begin($PLUG_PATH)
@@ -37,8 +43,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " $GTAGSCONF should be set in .local file
         let $GTAGSCONF = ""
         " Use local config, some tested feature can be add to it
-        if filereadable(expand("~/.nvimrc.local")) && has('nvim')
+        if filereadable(expand("~/.gnvimrc.local")) && has('nvim') && has("gui_running")
+            source ~/.gnvimrc.local
+        elseif filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
+        elseif filereadable(expand("~/.mvimrc.local")) && has('gui_running') && OSX()
+            source ~/.mvimrc.local
         elseif filereadable(expand("~/.gvimrc.local")) && has('gui_running')
             source ~/.gvimrc.local
         elseif filereadable(expand("~/.vimrc.local"))
