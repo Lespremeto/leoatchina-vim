@@ -819,14 +819,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
         function! Multiple_cursors_before()
-            if g:complete_engine == "complete"
+            if g:complete_engine == "completor"
                 call completor#disable_autocomplete()
             elseif g:complete_engine == "neocomplete"
                 exe 'NeoCompleteLock'
             endif
         endfunction
         function! Multiple_cursors_after()
-            if g:complete_engine == "complete"
+            if g:complete_engine == "completor"
                 call completor#enable_autocomplete()
             elseif g:complete_engine == "neocomplete"
                 exe 'NeoCompleteUnlock'
@@ -1453,9 +1453,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     elseif HasDirectory("neocomplcache.vim") && g:complete_engine == "neocomplcache"
         let g:neocomplcache_enable_at_startup = 1
         " ominifuc
+        if g:python_version == 2
+            au FileType python setlocal omnifunc=pythoncomplete#Complete
+        elseif g:python_version == 3
+            au FileType python setlocal omnifunc=python3complete#Complete
+        endif
         au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
         au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
-        au FileType python        setlocal omnifunc=pythoncomplete#Complete
         au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
         au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
         let g:neocomplcache_enable_insert_char_pre       = 1
