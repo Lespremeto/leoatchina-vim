@@ -186,31 +186,29 @@ snoremap gT <Nop>
 nnoremap <C-s> <Nop>
 nnoremap <C-q> <Nop>
 nnoremap <C-z> <Nop>
+nnoremap <C-g> <Nop>
+nnoremap <C-f> <Nop>
+vnoremap <C-f> <Nop>
+snoremap <C-f> <Nop>
+inoremap <C-f> <right>
+cnoremap <C-f> <right>
+inoremap <C-b> <Left>
+cnoremap <C-b> <Left>
+inoremap <C-k>; <C-x><C-u>
+inoremap <C-k>, <C-x><C-o>
+inoremap <C-k>. <C-x><C-v>
+" a,e for home/end
+nnoremap ge $
+nnoremap ga ^
+vnoremap ge $h
+vnoremap ga ^
 vnoremap <C-a> ^
 inoremap <C-a> <Esc>I
 vnoremap <C-e> $<Left>
 inoremap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-nnoremap ge $
-nnoremap ga ^
-vnoremap ge $h
-vnoremap ga ^
-inoremap <C-k>. <C-x><C-o>
-inoremap <C-k>, <C-x><C-u>
-nnoremap <C-g> <Nop>
-vnoremap <C-g> <Nop>
-nnoremap <C-h> <Nop>
-vnoremap <C-h> <Nop>
-nnoremap <C-f> <Nop>
-vnoremap <C-f> <Nop>
-inoremap <C-f> <right>
-cnoremap <C-f> <right>
-inoremap <C-b> <Left>
-cnoremap <C-b> <Left>
 " use full double ctrl+ click
-nnoremap <C-h><C-g> <C-g>
-nnoremap <C-h><C-l> <C-l>
 nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
 " Find merge conflict markers
 nnoremap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
@@ -950,14 +948,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if has('nvim')
             tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
             nmap <C-h>\ :vsplit term://bash<Cr>i
-            nmap <C-h>_ :split  term://bash<Cr>i
+            nmap <C-h>= :split  term://bash<Cr>i
             nmap <C-h>t :tabe   term://bash<Cr>i
             nmap <C-h>V :vsplit term://
             nmap <C-h>S :split  term://
             nmap <C-h>T :tabe   term://
         else
             nmap <C-h>\ :vertical terminal<cr>bash<cr>
-            nmap <C-h>_ :terminal<cr>bash<cr>
+            nmap <C-h>= :terminal<cr>bash<cr>
             nmap <C-h>t :tab terminal<Cr>bash<Cr>
             nmap <C-h>V :vertical terminal
             nmap <C-h>S :terminal
@@ -1720,8 +1718,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
         nnoremap <C-p> :PreviewTag<Cr>
-        nnoremap <M-b> :PreviewScroll -1<cr>
-        nnoremap <M-f> :PreviewScroll +1<cr>
+        nnoremap <M-p> :PreviewScroll -1<cr>
+        nnoremap <M-n> :PreviewScroll +1<cr>
         nnoremap <M-s> :PreviewSignature!<Cr>
         nnoremap <M-q> :PreviewQuickfix<Space>
         nnoremap <M-G> :PreviewGoto<Space>
