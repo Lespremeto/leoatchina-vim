@@ -1760,6 +1760,57 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
         snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
     endif
+    " syntax check
+    if HasDirectory("ale")
+        let g:ale_completion_enabled   = 0
+        let g:ale_lint_on_enter        = 1
+        let g:ale_lint_on_text_changed = 'always'
+        " signs
+        let g:ale_sign_column_always   = 1
+        let g:ale_set_signs            = 1
+        let g:ale_set_highlights       = 0
+        let g:ale_sign_error           = 'E'
+        let g:ale_sign_warning         = 'W'
+        " message format
+        let g:ale_echo_msg_error_str   = 'E'
+        let g:ale_echo_msg_warning_str = 'W'
+        let g:ale_echo_msg_format      = '[%linter%] %s [%code%]'
+        let g:ale_fix_on_save          = 0
+        let g:ale_set_loclist          = 0
+        let g:ale_set_quickfix         = 0
+        let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
+        let g:ale_python_flake8_options = " --ignore=E501,E251,E226,E221 "
+        " 特定后缀指定lint方式
+        let g:ale_pattern_options_enabled = 1
+        let b:ale_warn_about_trailing_whiteSpace = 0
+        nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
+        nmap <silent> <C-l>n <Plug>(ale_next_wrap)
+        nnoremap <C-l><C-l> :ALELint<CR>
+    elseif HasDirectory("syntastic")
+        let g:syntastic_error_symbol             = 'E'
+        let g:syntastic_warning_symbol           = 'W'
+        let g:syntastic_check_on_open            = 0
+        let g:syntastic_check_on_wq              = -1
+        let g:syntastic_python_checkers          = ['flake8']
+        let g:syntastic_javascript_checkers      = ['jsl', 'jshint']
+        let g:syntastic_html_checkers            = ['tidy', 'jshint']
+        let g:syntastic_enable_highlighting      = 0
+        " to see error location list
+        let g:syntastic_always_populate_loc_list = 0
+        let g:syntastic_auto_loc_list            = 0
+        let g:syntastic_loc_list_height          = 5
+        function! ToggleErrors()
+            let old_last_winnr = winnr('$')
+            lclose
+            if old_last_winnr == winnr('$')
+                Errors
+            endif
+        endfunction
+        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
+        nnoremap <silent> <C-l>n :lnext<cr>
+        nnoremap <silent> <C-l>p :lprevious<cr>
+    endif
+    " asyncrun
     if HasDirectory("asyncrun.vim")
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
         function! s:ASYNC_RUN()
@@ -1789,63 +1840,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap <C-l>a :AsyncRun<Space>
         nmap <C-l>s :AsyncStop<CR>
         au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
-    endif
-    if HasDirectory("ale")
-        let g:ale_completion_enabled   = 0
-        let g:ale_lint_on_enter        = 1
-        let g:ale_lint_on_text_changed = 'always'
-        " signs
-        let g:ale_sign_column_always   = 1
-        let g:ale_set_signs            = 1
-        let g:ale_set_highlights       = 0
-        let g:ale_sign_error           = 'E'
-        let g:ale_sign_warning         = 'W'
-        " message format
-        let g:ale_echo_msg_error_str   = 'E'
-        let g:ale_echo_msg_warning_str = 'W'
-        let g:ale_echo_msg_format      = '[%linter%] %s [%code%]'
-        let g:ale_fix_on_save          = 0
-        let g:ale_set_loclist          = 0
-        let g:ale_set_quickfix         = 0
-        let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
-        let g:ale_python_flake8_options = " --ignore=E501,E251,E226,E221 "
-        " 特定后缀指定lint方式
-        let g:ale_pattern_options_enabled = 1
-        let b:ale_warn_about_trailing_whiteSpace = 0
-        nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
-        nmap <silent> <C-l>n <Plug>(ale_next_wrap)
-        nnoremap <C-l><C-l> :ALELint<CR>
     elseif HasDirectory('neomake')
         nnoremap <C-l><C-l> :Neomake<CR>
         let g:neomake_error_sign   = {'text':'E', 'texthl':'NeomakeErrorSign'}
         let g:neomake_warning_sign = {'text':'W', 'texthl':'NeomakeWarningSign'}
         let g:neomake_message_sign = {'text':'M', 'texthl':'NeomakeMessageSign'}
         let g:neomake_info_sign    = {'text':'I', 'texthl':'NeomakeInfoSign'}
-    elseif HasDirectory("syntastic")
-        let g:syntastic_error_symbol             = 'E'
-        let g:syntastic_warning_symbol           = 'W'
-        let g:syntastic_check_on_open            = 0
-        let g:syntastic_check_on_wq              = -1
-        let g:syntastic_python_checkers          = ['flake8']
-        let g:syntastic_javascript_checkers      = ['jsl', 'jshint']
-        let g:syntastic_html_checkers            = ['tidy', 'jshint']
-        let g:syntastic_enable_highlighting      = 0
-        " to see error location list
-        let g:syntastic_always_populate_loc_list = 0
-        let g:syntastic_auto_loc_list            = 0
-        let g:syntastic_loc_list_height          = 5
-        function! ToggleErrors()
-            let old_last_winnr = winnr('$')
-            lclose
-            if old_last_winnr == winnr('$')
-                Errors
-            endif
-        endfunction
-        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nnoremap <silent> <C-l>n :lnext<cr>
-        nnoremap <silent> <C-l>p :lprevious<cr>
     endif
-    " Debug
+    " vim-repl
     if HasDirectory('vim-repl')
         nnoremap <C-l>t :REPLToggle<Cr>
         let g:sendtorepl_invoke_key = "<C-l>w"
@@ -1864,8 +1866,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
 			\	"default": "exit",
         \ }
     endif
+    " debugger
     if HasDirectory('vim-debugger')
-
 
     endif
 endif
