@@ -1511,14 +1511,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 if g:ulti_expand_res
                     return "\<Right>"
                 else
-                    if exists('v:completed_item') && !empty(v:completed_item)
-                        return "\<C-y>"
+                    if exists('v:completed_item') && empty(v:completed_item)
+                        return "\<C-n>"
                     else
-                        if a:num
-                            return "\<C-n>"
-                        else
-                            return "\<C-y>"
-                        endif
+                        return "\<C-y>"
                     endif
                 endif
             else
@@ -1548,16 +1544,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         smap <C-j> <Plug>(neosnippet_jump_or_expand)
         function! g:NeoSnippet_Tab(num)
             if pumvisible()
-                if exists("v:completed_item") && empty(v:completed_item)
-                    return "\<C-n>"
-                elseif neosnippet#expandable()
+                if neosnippet#expandable()
                     return neosnippet#mappings#expand_impl()
+                elseif exists("v:completed_item") && empty(v:completed_item)
+                    return "\<C-n>"
                 else
-                    if a:num
-                        return "\<C-n>"
-                    else
-                        return "\<C-y>"
-                    endif
+                    return "\<C-y>"
                 endif
             else
                 if neosnippet#jumpable()
