@@ -1541,23 +1541,22 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " Ulti的代码片段的文件夹
         let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
         let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+    " neosnippet
     elseif HasDirectory('neosnippet')
         let g:neosnippet#enable_completed_snippet = 1
         smap <Tab> <Plug>(neosnippet_jump_or_expand)
         smap <C-j> <Plug>(neosnippet_jump_or_expand)
         function! g:NeoSnippet_Tab(num)
             if pumvisible()
-                if neosnippet#expandable()
+                if exists("v:completed_item") && empty(v:completed_item)
+                    return "\<C-n>"
+                elseif neosnippet#expandable()
                     return neosnippet#mappings#expand_impl()
                 else
-                    if exists('v:completed_item') && !empty(v:completed_item)
-                        return "\<C-y>"
+                    if a:num
+                        return "\<C-n>"
                     else
-                        if a:num
-                            return "\<C-n>"
-                        else
-                            return "\<C-y>"
-                        endif
+                        return "\<C-y>"
                     endif
                 endif
             else
