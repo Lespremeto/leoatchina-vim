@@ -197,6 +197,7 @@ cnoremap <C-b> <Left>
 inoremap <C-k>; <C-x><C-u>
 inoremap <C-k>, <C-x><C-o>
 inoremap <C-k>. <C-x><C-v>
+inoremap <C-l> <Nop>
 " a,e for home/end
 nnoremap ge $
 nnoremap ga ^
@@ -317,8 +318,8 @@ set vb
 set nocursorcolumn
 " 光标加亮
 set cursorline
-" 允许折行
-set wrap
+" 不折行
+set nowrap
 " 不折叠
 set nofoldenable
 " 标签控制
@@ -1499,7 +1500,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:UltiSnipsNoPythonWarning = 0
         let g:UltiSnipsRemoveSelectModeMappings = 0
         let g:UltiSnipsExpandTrigger = "<Nop>"
-        let g:UltiSnipsListSnippets = "<C-l>"
+        let g:UltiSnipsListSnippets = "<C-l><C-l>"
         let g:UltiSnipsJumpForwardTrigger = "<Tab>"
         let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
         " Ulti python version
@@ -1819,7 +1820,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             elseif &filetype == 'sh'
                 exec ":AsyncRun -raw=1 bash %"
             elseif &filetype == 'python'
-                exec ":AsyncRun -raw=1 python %"
+                if g:python_version == 3
+                    exec ":AsyncRun -raw=1 python3 %"
+                if g:python_version == 2
+                    exec ":AsyncRun -raw=1 python %"
+                else
+                    echo "Cannot run without python support"
+                endif
             elseif &filetype == 'perl'
                 exec ":AsyncRun -raw=1 perl %"
             elseif &filetype == 'go'
