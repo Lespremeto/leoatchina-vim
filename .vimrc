@@ -39,14 +39,20 @@ silent function! WINDOWS()
 endfunction
 " Basics
 if WINDOWS()
-    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
     set winaltkeys=no
-    if !has('nvim') && has('gui_running')
-        nmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-        imap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-        vmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-        smap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-    endif
+    if has('nvim')
+        if has('gui_running')
+            set runtimepath=$HOME/.gnvim,$VIM/vimfiles,$VIMRUNTIME
+        else
+            set runtimepath=$HOME/.nvim,$VIM/vimfiles,$VIMRUNTIME
+        endif
+    else
+        if has('gui_running')
+            set runtimepath=$HOME/.gvim,$VIM/vimfiles,$VIMRUNTIME
+        else
+            set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+        endif
+    end
 else
     set shell=/bin/sh
     if !has("gui")
