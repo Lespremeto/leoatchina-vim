@@ -1,7 +1,6 @@
 " This is leoatchina's vim config forked from https://github.com/spf13/spf13-vim
 " Sincerely thank him for his great job, and I have made some change according to own requires.
 " You can find spf13's origin config at http://spf13.com
-
 " Basics
 set nocompatible
 if v:version < 700
@@ -263,13 +262,13 @@ noremap <silent>k gk
 " for help
 nnoremap <leader>th :tab help<Space>
 " pastetoggle (sane indentation on pastes)
-set pastetoggle=<leader>tp
-" show clipboard
-nnoremap <leader>tc :reg<Cr>
+nnoremap <leader>tg :set nopaste! nopaste?<CR>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
+" show clipboard
+nnoremap <leader>tc :reg<Cr>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
