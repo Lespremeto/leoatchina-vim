@@ -260,19 +260,12 @@ noremap zh zH
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
-" F1 for help
-nnoremap <F1> :tab help<Space>
-inoremap <F1> <ESC>:tab help<Space>
-snoremap <F1> <ESC>:tab help<Space>
-vnoremap <F1> <ESC>:tab help<Space>
-cnoremap <F1> <ESC>:tab help<Space>
-" F2 pastetoggle (sane indentation on pastes)
-set pastetoggle=<F2>
-" F3 show clipboard
-nnoremap <F3> :reg<Cr>
-vnoremap <F3> <ESC>:reg<Cr>
-snoremap <F3> <ESC>:reg<Cr>
-cnoremap <F3> <ESC>:reg<Cr>
+" for help
+nnoremap <leader>th :tab help<Space>
+" pastetoggle (sane indentation on pastes)
+set pastetoggle=<leader>tp
+" show clipboard
+nnoremap <leader>tc :reg<Cr>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
@@ -739,18 +732,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     \ 'linter_errors': 'error',
                     \ 'linter_ok': 'left'
                 \ }
-            elseif HasDirectory('neomake')
-                " number of occurrances in the buffer.
-                let g:lightline_neomake#format = '%s: %d'
-                " Separator between displayed Neomake counters.
-                let g:lightline_neomake#sep = ' '
-                let g:lightline.active.right = [
-                    \ ['neomake'],
-                    \ ['percent'],
-                    \ ['filetype', 'fileformat', 'fileencoding', 'lineinfo']
-                \ ]
-                let g:lightline.component_expand = {'neomake':'lightline_neomake#component'}
-                let g:lightline.component_type   = {'neomake':'error'}
             endif
         else
             set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
@@ -996,7 +977,28 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
     endif
     " browser tools
-    if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
+    if g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
+        let g:Lf_ShortcutF = '<C-k>j'
+        let g:Lf_ReverseOrder = 1
+        let g:Lf_PythonVersion = g:python_version
+        let g:Lf_CacheDirectory = expand('$HOME/.cache/leaderf')
+        if !isdirectory(g:Lf_CacheDirectory)
+            silent! call mkdir(g:Lf_CacheDirectory, 'p')
+        endif
+        let g:Lf_ShortcutB = '<C-k>b'
+        nnoremap <C-k>l :Leaderf
+        nnoremap <C-k>f :LeaderfF
+        nnoremap <C-k>b :LeaderfB
+        nnoremap <C-k>m :LeaderfM
+        let g:Lf_NormalMap = {
+           \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+           \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+           \ "Mru":         [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+           \ "Tag":         [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+           \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+           \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+       \ }
+    elseif g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
         nnoremap <silent> <C-k>j :FZF<CR>
         nnoremap <silent> <C-k>b :Buffers<CR>
         nnoremap <silent> <C-k>f :FZF<Space>
@@ -1051,116 +1053,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
-    elseif g:browser_tool == "denite" && HasDirectory('denite.nvim')
-        nnoremap <C-k>k :Denite file/rec buffer<Cr>
-        nnoremap <C-k>f :Denite
-        nnoremap <C-k>b :DeniteBufferDir
-        nnoremap <C-k>w :DeniteCursorWord
-        nnoremap <Lekder>/ :call denite#start([{'name': 'grep', 'args': ['', '', '!']}])<cr>
-        call denite#custom#option('_', {
-                \ 'prompt': 'λ:',
-                \ 'empty': 0,
-                \ 'winheight': 16,
-                \ 'source_names': 'short',
-                \ 'vertical_preview': 1,
-                \ 'auto-accel': 1,
-                \ 'auto-resume': 1,
-            \ })
-        call denite#custom#option('list', {})
-        call denite#custom#option('mpc', {
-                \ 'quit': 0,
-                \ 'mode': 'normal',
-                \ 'winheight': 20,
-            \ })
-        " MATCHERS
-        " Default is 'matcher_fuzzy'
-        call denite#custom#source('tag', 'matchers', ['matcher_substring'])
-        if has('nvim') && &runtimepath =~# '\/cpsm'
-            call denite#custom#source(
-                \ 'buffer,file_mru,file_old,file_rec,grep,mpc,line',
-                \ 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
-        endif
-        " SORTERS
-        " Default is 'sorter_rank'
-        call denite#custom#source('z', 'sorters', ['sorter_z'])
-        " CONVERTERS
-        " Default is none
-        call denite#custom#source(
-            \ 'buffer,file_mru,file_old',
-            \ 'converters', ['converter_relative_word'])
-        " FIND and GREP COMMANDS
-        if executable('ag')
-            " The Silver Searcher
-            call denite#custom#var('file_rec', 'command',
-                \ ['ag', '-U', '--hidden', '--follow', '--nocolor', '--nogroup', '-g', ''])
-            " Setup ignore patterns in your .agignore file!
-            " https://github.com/ggreer/the_silver_searcher/wiki/Advanced-Usage
-            call denite#custom#var('grep', 'command', ['ag'])
-            call denite#custom#var('grep', 'recursive_opts', [])
-            call denite#custom#var('grep', 'pattern_opt', [])
-            call denite#custom#var('grep', 'separator', ['--'])
-            call denite#custom#var('grep', 'final_opts', [])
-            call denite#custom#var('grep', 'default_opts',
-                \ [ '--skip-vcs-ignores', '--vimgrep', '--smart-case', '--hidden' ])
-        elseif executable('ack')
-            " Ack command
-            call denite#custom#var('grep', 'command', ['ack'])
-            call denite#custom#var('grep', 'recursive_opts', [])
-            call denite#custom#var('grep', 'pattern_opt', ['--match'])
-            call denite#custom#var('grep', 'separator', ['--'])
-            call denite#custom#var('grep', 'final_opts', [])
-            call denite#custom#var('grep', 'default_opts',
-                \ ['--ackrc', $HOME.'/.config/ackrc', '-H',
-                \ '--nopager', '--nocolor', '--nogroup', '--column'])
-        endif
-        " KEY MAPPINGS
-        let insert_mode_mappings = [
-                \  ['<C-c>', '<denite:enter_mode:normal>', 'noremap'],
-                \  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
-                \  ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
-                \  ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
-                \  ['<Up>', '<denite:assign_previous_text>', 'noremap'],
-                \  ['<Down>', '<denite:assign_next_text>', 'noremap'],
-                \  ['<C-Y>', '<denite:redraw>', 'noremap'],
-            \ ]
-        let normal_mode_mappings = [
-                \   ["'", '<denite:toggle_select_down>', 'noremap'],
-                \   ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
-                \   ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
-                \   ['gg', '<denite:move_to_first_line>', 'noremap'],
-                \   ['st', '<denite:do_action:tabopen>', 'noremap'],
-                \   ['vs', '<denite:do_action:vsplit>', 'noremap'],
-                \   ['sv', '<denite:do_action:split>', 'noremap'],
-                \   ['qt', '<denite:quit>', 'noremap'],
-                \   ['r', '<denite:redraw>', 'noremap'],
-            \ ]
-        for m in insert_mode_mappings
-            call denite#custom#map('insert', m[0], m[1], m[2])
-        endfor
-        for m in normal_mode_mappings
-            call denite#custom#map('normal', m[0], m[1], m[2])
-        endfor
-    elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-k>j'
-        let g:Lf_ReverseOrder = 1
-        let g:Lf_PythonVersion = g:python_version
-        let g:Lf_CacheDirectory = expand('$HOME/.cache/leaderf')
-        if !isdirectory(g:Lf_CacheDirectory)
-            silent! call mkdir(g:Lf_CacheDirectory, 'p')
-        endif
-        let g:Lf_ShortcutB = '<C-k>b'
-        nnoremap <C-k>l :Leaderf
-        nnoremap <C-k>f :LeaderfF
-        nnoremap <C-k>b :LeaderfB
-        nnoremap <C-k>m :LeaderfM
-        let g:Lf_NormalMap = {
-           \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
-           \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
-           \ "Mru":         [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
-           \ "Tag":         [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
-           \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
-           \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
-       \ }
     elseif HasDirectory("ctrlp.vim")
         let g:ctrlp_map = '<C-k>j'
         let g:ctrlp_cmd = 'CtrlP'
@@ -1717,10 +1609,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
-        nnoremap <F5> :QuickRun<Cr>
-        inoremap <F5> <ESC>:QuickRun<Cr>
-        snoremap <F5> <ESC>:QuickRun<Cr>
-        vnoremap <F5> <ESC>:QuickRun<Cr>
+        nnoremap <C-l>r :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let s:quickfix_is_open = 0
         function! ToggleQuickfix()
@@ -1736,10 +1625,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <silent><F4> :ToggleQuickfix<cr>
-        inoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
-        vnoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
-        snoremap <silent><F4> <ESC>:ToggleQuickfix<cr>
+        nnoremap <C-l>q :ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
@@ -1823,16 +1709,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! AsyncRunNow call s:ASYNC_RUN()
-        nmap <C-l>r :AsyncRunNow<CR>
-        nmap <C-l>a :AsyncRun<Space>
+        nmap <C-l>a :AsyncRunNow<CR>
         nmap <C-l>s :AsyncStop<CR>
         au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
-    elseif HasDirectory('neomake')
-        nnoremap <C-l><C-l> :Neomake<CR>
-        let g:neomake_error_sign   = {'text':'E', 'texthl':'NeomakeErrorSign'}
-        let g:neomake_warning_sign = {'text':'W', 'texthl':'NeomakeWarningSign'}
-        let g:neomake_message_sign = {'text':'M', 'texthl':'NeomakeMessageSign'}
-        let g:neomake_info_sign    = {'text':'I', 'texthl':'NeomakeInfoSign'}
     endif
     " vim-repl
     if HasDirectory('vim-repl')
