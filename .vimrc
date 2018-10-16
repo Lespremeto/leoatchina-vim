@@ -820,16 +820,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
         function! Multiple_cursors_before()
-            if g:complete_engine == "completor"
-                call completor#disable_autocomplete()
-            elseif g:complete_engine == "neocomplete"
+            if g:complete_engine == "neocomplete"
                 exe 'NeoCompleteLock'
             endif
         endfunction
         function! Multiple_cursors_after()
-            if g:complete_engine == "completor"
-                call completor#enable_autocomplete()
-            elseif g:complete_engine == "neocomplete"
+            if g:complete_engine == "neocomplete"
                 exe 'NeoCompleteUnlock'
             endif
         endfunction
@@ -1323,19 +1319,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if HasDirectory('ultisnips')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif HasDirectory("completor.vim") && g:complete_engine == "completor"
-        let g:completor_set_options = 0
-        let g:completor_auto_trigger = 1
-        let g:completor_complete_options = 'menuone,noselect,noinsert'
-        let g:completor_clang_binary = exepath('clang')
-        if g:python_version == 2
-            let g:completor_python_binary = exepath("python")
-        else
-            let g:completor_python_binary = exepath("python3")
-        endif
-        let g:completor_css_omni_trigger  = '([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
-        let g:completor_php_omni_trigger  = '[^. *\t]\.\w*'
-        let g:completor_java_omni_trigger  = '[^. *\t]\.\w*'
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1

@@ -281,13 +281,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         echoe "Cannot install deoplete, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif HasPlug('completor')
-                    if g:python_version && v:version >= 800 && !has('nvim')
-                        let g:complete_engine = "completor"
-                    else
-                        echoe "Cannot install completor, smart select a complete_engine."
-                        let g:smart_engine_select = 1
-                    endif
                 elseif HasPlug('asyncomplete')
                     if v:version >= 800
                         let g:complete_engine = "asyncomplete"
@@ -324,8 +317,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     elseif v:version >= 800
                         if g:python_version == 3
                             let g:complete_engine = "deoplete"
-                        elseif g:python_version == 2
-                            let g:complete_engine = "completor"
                         else
                             let g:complete_engine = "asyncomplete"
                         endif
@@ -356,7 +347,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if g:complete_engine != "None"
                 Plug 'Shougo/vimshell.vim'
                 Plug 'Shougo/neco-vim'
-                let s:engines = ['YCM', 'deoplete', 'completor', 'neocomplete']
+                let s:engines = ['YCM', 'deoplete', 'neocomplete']
                 if (v:version == 704 && has('patch774') || v:version >= 800) && index(s:engines, g:complete_engine) >= 0
                     Plug 'tenfyzhong/CompleteParameter.vim'
                 endif
@@ -425,8 +416,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if HasPlug('javascript')
                     Plug 'carlitux/deoplete-ternjs'
                 endif
-            elseif g:complete_engine == "completor"
-                Plug 'maralla/completor.vim'
             elseif g:complete_engine == "asyncomplete"
                 Plug 'prabirshrestha/asyncomplete.vim'
                 Plug 'prabirshrestha/async.vim'
