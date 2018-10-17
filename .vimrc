@@ -268,7 +268,7 @@ nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " show clipboard
-nnoremap <leader>tc :reg<Cr>
+nnoremap <leader>tr :reg<Cr>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
