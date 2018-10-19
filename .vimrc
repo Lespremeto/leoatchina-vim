@@ -1,11 +1,5 @@
 " This is leoatchina's vim config forked from https://github.com/spf13/spf13-vim
 " Sincerely thank him for his great job, and I have made some change according to own requires.
-"                    __ _ _____              _
-"         ___ _ __  / _/ |___ /      __   __(_)_ __ ___
-"        / __| '_ \| |_| | |_ \ _____\ \ / /| | '_ ` _ \
-"        \__ \ |_) |  _| |___) |_____|\ V / | | | | | | |
-"        |___/ .__/|_| |_|____/        \_/  |_|_| |_| |_|
-"            |_|
 " You can find spf13's origin config at http://spf13.com
 " Basics
 set nocompatible
@@ -23,9 +17,10 @@ set mouse=a             " Automatically enable mouse usage
 set mousehide           " Hide the mouse cursor while typing
 set noimdisable
 set timeout
-set timeoutlen=500 ttimeoutlen=50
+set conceallevel=0
 " 不同文件类型加载不同插件
 filetype plugin indent on   " Automatically detect file types.
+set omnifunc=syntaxcomplete#Complete
 filetype on                 " 开启文件类型侦测
 filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
 syntax on
@@ -41,15 +36,11 @@ endfunction
 silent function! WINDOWS()
     return  (has('win32') || has('win64'))
 endfunction
-" Basics
+" Basics, set vim-plug install path
+set rtp=$HOME/.vim-plug
 if WINDOWS()
-    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
-    if !has('nvim') && has('gui_running')
-        nmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-        imap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-        vmap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-        smap <F11> <esc>:call libcallnr('gvim_fullscreen.dll', 'ToggleFullscreen', 0)<cr>
-    endif
+    set winaltkeys=no
+    set rtp+=$VIMRUNTIME
 else
     set shell=/bin/sh
     if !has("gui")
@@ -164,69 +155,80 @@ endif
 if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
 endif
-" Key (re)Mappings
-nnoremap * *``
-" some internal key remap
-map  gt <Nop>
-map  gT <Nop>
-map <C-s> <Nop>
-map <C-q> <Nop>
-map <C-z> <Nop>
-nmap ! :!
-let mapleader=' '
-let maplocalleader = '\'
-" pastetoggle (sane indentation on pastes)
-set pastetoggle=<F4>
-" 定义快捷键保存当前窗口内容
+" leader key
+let g:mapleader=' '
+let g:maplocalleader = '\'
+" 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
-" Allow using the repeat operator with a visual selection (!)
-vnoremap . :normal .<CR>
-" For when you forget to sudo.. Really Write the file.
-cmap w!! w !sudo tee % >/dev/null
-" Some helpers to edit mode
-" http://vimcasts.org/e/14
+cnoremap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-nnoremap <localleader><localleader> %
-" remap c-a/e , for home/end
-vmap <C-a> ^
-smap <C-a> ^
-imap <C-a> <Esc>I
-vmap <C-e> $<Left>
-smap <C-e> $<Left>
-imap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
+" Key reMappings
+nnoremap <Cr> %
+nnoremap * *``
+nnoremap ! :!
+vnoremap / y/<C-r>0
+vnoremap ; y:%s/<C-r>0
+vnoremap . :normal .<CR>
+" gt to nop
+nnoremap gt <Nop>
+nnoremap gT <Nop>
+vnoremap gt <Nop>
+vnoremap gT <Nop>
+snoremap gt <Nop>
+snoremap gT <Nop>
 " some ctrl+ key remap
-nmap <C-j> $
-nmap <C-k> ^
-nmap <C-f> <Nop>
-nmap <C-b> <Nop>
-vmap <C-f> <Nop>
-vmap <C-b> <Nop>
-imap <C-f> <Right>
-imap <C-b> <Left>
+nnoremap <C-s> <Nop>
+nnoremap <C-q> <Nop>
+nnoremap <C-z> <Nop>
+nnoremap <C-g> <Nop>
+nnoremap <C-f> <Nop>
+vnoremap <C-f> <Nop>
+snoremap <C-f> <Nop>
+inoremap <C-f> <right>
+cnoremap <C-f> <right>
+inoremap <C-b> <Left>
+cnoremap <C-b> <Left>
+inoremap <C-k>; <C-x><C-u>
+inoremap <C-k>, <C-x><C-o>
+inoremap <C-k>. <C-x><C-v>
+inoremap <C-l> <Nop>
+" a,e for home/end
+nnoremap ge $
+nnoremap ga ^
+vnoremap ge $h
+vnoremap ga ^
+vnoremap <C-a> ^
+inoremap <C-a> <Esc>I
+vnoremap <C-e> $<Left>
+inoremap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+" use full double ctrl+ click
+nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
 " Find merge conflict markers
-nmap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
+nnoremap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 " and ask which one to jump to
-nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+nnoremap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " tab control
 set tabpagemax=10 " Only show 10 tabs
-cmap Tabe tabe
+cnoremap Tabe tabe
 " compatible with xshell
-nnoremap <Leader>tp           :tabprevious<CR>
-nnoremap <Leader>tn           :tabnext<CR>
-nnoremap <silent><Tab>        :tabnext<CR>
-nnoremap <silent><S-Tab>      :tabprevious<CR>
-nnoremap <leader><Tab>        :tabm +1<CR>
-nnoremap <leader><S-Tab>      :tabm -1<CR>
-nnoremap <localleader><Tab>   :tablast<CR>
-nnoremap <localleader><S-Tab> :tabfirst<CR>
-nnoremap <Leader>te           :tabe<Space>
-nnoremap <Leader>ts           :tab  split<CR>
-nnoremap <Leader>tw           :tabs<CR>
-nnoremap <Leader>tm           :tabm<Space>
+nnoremap <Leader>tp         :tabprevious<CR>
+nnoremap <Leader>tn         :tabnext<CR>
+nnoremap <silent><Tab>      :tabnext<CR>
+nnoremap <silent>-          :tabprevious<CR>
+nnoremap <leader><Tab>      :tabm +1<CR>
+nnoremap <leader>-          :tabm -1<CR>
+nnoremap <localleader><Tab> :tablast<CR>
+nnoremap <localleader>-     :tabfirst<CR>
+nnoremap <Leader>te         :tabe<Space>
+nnoremap <Leader>tm         :tabm<Space>
+nnoremap <Leader>ts         :tab split<CR>
+nnoremap <Leader>tS         :tabs<CR>
 " buffer switch
-nnoremap <localleader><Backspace> :buffers<CR>
-nnoremap <localleader>]           :bn<CR>
-nnoremap <localleader>[           :bp<CR>
+nnoremap <localleader><BS> :buffers<CR>
+nnoremap <localleader>[ :bp<CR>
+nnoremap <localleader>] :bn<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <leader>y  "+y
 nnoremap <leader>y  "+y
@@ -241,59 +243,46 @@ nnoremap <leader>P "*P
 vnoremap <leader>p "+p
 vnoremap <leader>P "*P
 " Easier horizontal scrolling
-map zl zL
-map zh zH
+noremap zl zL
+noremap zh zH
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
-" F1 for help
-nnoremap <F1> :tab help<Space>
-inoremap <F1> <ESC>:tab help<Space>
-snoremap <F1> <ESC>:tab help<Space>
-vnoremap <F1> <ESC>:tab help<Space>
-" F2 toggle hlsearch
-nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
-nnoremap <leader>fh :set nohlsearch! nohlsearch?<CR>
-inoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
-vnoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
-snoremap <F2> <ESC>:set nohlsearch! nohlsearch?<CR>
-" F3 show clipboard
-nmap <F3> :reg<Cr>
-inoremap <F3> <ESC>:reg<Cr>
-vnoremap <F3> <ESC>:reg<Cr>
-snoremap <F3> <ESC>:reg<Cr>
+" for help
+nnoremap <leader>th :tab help<Space>
+" pastetoggle (sane indentation on pastes)
+nnoremap <leader>tg :set nopaste! nopaste?<CR>
 " toggleFold
-nnoremap <leader>fd :set nofoldenable! nofoldenable?<CR>
+nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
-nnoremap <leader>fw :set nowrap! nowrap?<CR>
-nmap <Leader>w :w<CR>
-nmap <Leader>W :wq!<CR>
-" Q
+nnoremap <leader>tw :set nowrap! nowrap?<CR>
+" show clipboard
+nnoremap <leader>tr :reg<Cr>
+" 定义快捷键保存
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>W :wq!<CR>
+nnoremap <Leader>WQ :wa<CR>:q<CR>
+" quit
 nnoremap ~ Q
 nnoremap Q :q!<CR>
-" 定义快捷键保存所有窗口内容并退出 vim
-nmap <Leader>WQ :wa<CR>:q<CR>
-" 定义快捷键关闭当前窗口
-nmap <Leader>q :q!
-" 不做任何保存，直接退出 vim
-nmap <Leader>Q :qa!
+nnoremap <leader>q :q!
+nnoremap <Leader>Q :qa!
 " 设置分割页面
-nmap <leader>\ :vsplit<Space>
-nmap <leader><leader>\ :split<Space>
-nmap <leader>= <C-W>=
+nnoremap <leader>\ :vsplit<Space>
+nnoremap <leader>= :split<Space>
 "设置垂直高度减增
-nmap <Leader><Down>  :resize -3<CR>
-nmap <Leader><Up>    :resize +3<CR>
+nnoremap <Leader><Down>  :resize -3<CR>
+nnoremap <Leader><Up>    :resize +3<CR>
 "设置水平宽度减增
-nmap <Leader><Left>  :vertical resize -3<CR>
-nmap <Leader><Right> :vertical resize +3<CR>
+nnoremap <Leader><Left>  :vertical resize -3<CR>
+nnoremap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
 vnoremap << <gv
 vnoremap >> >gv
 "离开插入模式后关闭预览窗口
 au InsertLeave * if pumvisible() == 0|pclose|endif
-" auto close qfixwindows when leave vim
-aug QFClose
+" auto close windows when leave vim
+aug WINDOWClose
     au!
     au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
@@ -316,8 +305,8 @@ set vb
 set nocursorcolumn
 " 光标加亮
 set cursorline
-" 允许折行
-set wrap
+" 不折行
+set nowrap
 " 不折叠
 set nofoldenable
 " 标签控制
@@ -327,14 +316,14 @@ set incsearch
 " 显示行号
 set number
 " 在help里显示行号
-autocmd FileType help setlocal number
+au FileType help setlocal number
 " 显示光标当前位置
 set ruler
 " 高亮显示搜索结果
 set hlsearch
 set incsearch                   " Find as you type search
-set smartcase                   " Case sensitive when uc present
 set ignorecase                  " Case insensitive search
+set smartcase                   " Case sensitive when uc present
 " 一些格式
 set backspace=indent,eol,start  " BackSpace for dummies
 set linespace=0                 " No extra Spaces between rows
@@ -350,6 +339,7 @@ set tabstop=4                   " An indentation every four columns
 set softtabstop=4               " Let backSpace delete indent
 set expandtab                   " Tabs are Spaces, not tabs
 set autoindent
+setlocal textwidth=0
 " 没有滚动条
 set guioptions-=l
 set guioptions-=L
@@ -357,18 +347,19 @@ set guioptions-=r
 set guioptions-=R
 " 没有菜单和工具条
 set guioptions-=m
+set guioptions-=M
 set guioptions-=T
+set guioptions-=e
+set nolist
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
 au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
-au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java,*.js,*.json,*.vue,*.ts setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
-" preceding line best in a plugin but here for now.
 au BufNewFile,BufRead *.coffee set filetype=coffee
+au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
+au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java,*.js,*.json,*.vue,*.ts setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " sepcial setting for different type of files
-au BufNewFile,BufRead *.py
-    \ set foldmethod=indent
 au FileType python au BufWritePost <buffer> :%retab
 au FileType haskell,puppet,ruby setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " Workaround vim-commentary for Haskell
@@ -376,7 +367,7 @@ au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
 au FileType haskell,rust setlocal nospell
 " Remove trailing whiteSpaces and ^M chars
-au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
+au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,eperl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
 " Map g* keys in Normal, Operator-pending, and Visual+select
 noremap $ :call WrapRelativeMotion("$")<CR>
 noremap 0 :call WrapRelativeMotion("0")<CR>
@@ -392,7 +383,134 @@ vnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
 vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
 vnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
 vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
-" Stupid shift key fixes
+" alt meta key
+function! Alt_meta_map()
+    set ttimeout
+    if $TMUX != ''
+        set ttimeoutlen=50
+    elseif &ttimeoutlen > 100 || &ttimeoutlen <= 0
+        set ttimeoutlen=100
+    endif
+    if has('nvim') || has('gui_running') && !OSX()
+        return
+    endif
+    function! s:metacode(key)
+        exec "set <M-".a:key.">=\e".a:key
+    endfunc
+    for i in range(26)
+        call s:metacode(nr2char(char2nr('a') + i))
+        call s:metacode(nr2char(char2nr('A') + i))
+    endfor
+    let s:list = ['-', ';', '/', ',', '.', '_', ':', '?']
+    for c in s:list
+        call s:metacode(c)
+    endfor
+    "if has("gui_running") && OSX()
+    if has('gui_macvim')
+        let a:letters_dict={
+            \ 'a':'å',
+            \ 'b':'∫',
+            \ 'c':'ç',
+            \ 'd':'∂',
+            \ 'e':'´',
+            \ 'f':'ƒ',
+            \ 'g':'©',
+            \ 'h':'˙',
+            \ 'i':'ˆ',
+            \ 'j':'∆',
+            \ 'k':'˚',
+            \ 'l':'¬',
+            \ 'm':'µ',
+            \ 'n':'˜',
+            \ 'o':'ø',
+            \ 'p':'π',
+            \ 'q':'œ',
+            \ 'r':'®',
+            \ 's':'ß',
+            \ 't':'†',
+            \ 'u':'¨',
+            \ 'v':'√',
+            \ 'w':'∑',
+            \ 'x':'≈',
+            \ 'y':'¥',
+            \ 'z':'Ω',
+            \ 'A':'Å',
+            \ 'B':'ı',
+            \ 'C':'Ç',
+            \ 'D':'∂',
+            \ 'E':'´',
+            \ 'F':'Ï',
+            \ 'G':'˝',
+            \ 'H':'Ó',
+            \ 'I':'ˆ',
+            \ 'J':'Ô',
+            \ 'K':'',
+            \ 'L':'Ò',
+            \ 'M':'Â',
+            \ 'N':'˜',
+            \ 'O':'Ø',
+            \ 'P':'∏',
+            \ 'Q':'Œ',
+            \ 'R':'‰',
+            \ 'S':'Í',
+            \ 'T':'ˇ',
+            \ 'U':'¨',
+            \ 'V':'◊',
+            \ 'W':'„',
+            \ 'X':'˛',
+            \ 'Y':'Á',
+            \ 'Z':'¸',
+            \ '-':'–',
+            \ ';':'…',
+            \ '/':'÷',
+            \ ',':'≤',
+            \ '.':'≥',
+            \ '_':'—',
+            \ ':':'Ú',
+            \ '?':'¿'
+        \ }
+        for c in keys(a:letters_dict)
+            for m in ['nmap', 'vmap', 'smap', 'tmap']
+                exec m." ".a:letters_dict[c]." <M-".c.">"
+            endfor
+        endfor
+    endif
+endfunc
+command! -nargs=0 -bang ALTMetaMap call Alt_meta_map()
+call Alt_meta_map()
+" nmap <M--> :echo("meta key works")<Cr>
+" window move manager
+function! g:Tools_PreviousCursor(mode)
+    if winnr('$') <= 1
+        return
+    endif
+    noautocmd silent! wincmd p
+    if a:mode == 0
+        exec "normal! \<c-u>"
+    elseif a:mode == 1
+        exec "normal! \<c-d>"
+    elseif a:mode == 2
+        exec "normal! \<c-y>"
+    elseif a:mode == 3
+        exec "normal! \<c-e>"
+    elseif a:mode == 4
+        exec "normal! ".winheight('.')."\<c-y>"
+    elseif a:mode == 5
+        exec "normal! ".winheight('.')."\<c-e>"
+    elseif a:mode == 6
+        exec "normal! k"
+    elseif a:mode == 7
+        exec "normal! j"
+    elseif a:mode == 8
+        normal! gg
+    elseif a:mode == 9
+        normal! G
+    endif
+    noautocmd silent! wincmd p
+endfunc
+nnoremap <silent> <M-u> :call Tools_PreviousCursor(0)<cr>
+nnoremap <silent> <M-d> :call Tools_PreviousCursor(1)<Cr>
+" Stupid Shift key fixes
 if has("user_commands")
     command! -bang -nargs=* -complete=file E e<bang> <args>
     command! -bang -nargs=* -complete=file W w<bang> <args>
@@ -405,7 +523,7 @@ if has("user_commands")
     command! -bang Qa qa<bang>
 endif
 " Plugins, if vim-plug works
-if (has('job') || g:python_version || has('nvim') || has('lua'))
+if has('job') || g:python_version || has('nvim') || has('lua')
     function! HasDirectory(dir)
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
@@ -419,14 +537,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         nmap <leader>vt :VoomToggle<CR>
         nmap <leader>vv :VoomQuit<CR>:Voom<CR><C-w>w
-        let g:voom_tab_key = "<C-Tab>"
+        let g:voom_tab_key = "<C-tab>"
         let g:voom_ft_modes = {
             \ 'markdown': 'markdown',
             \ 'pandoc': 'pandoc',
             \ 'c': 'fmr2',
             \ 'cpp': 'fmr2',
             \ 'python':'python',
-            \ 'tex': 'latex'}
+            \ 'tex': 'latex'
+        \ }
     endif
     " markdown preview for gvim
     if has("gui_running") && HasDirectory('markdown-preview.vim')
@@ -457,19 +576,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:vmt_cycle_list_item_markers = 1
         endif
     endif
-    " autopairs
-    if HasDirectory("auto-pairs")
-        let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-        let g:AutoPairsShortcutToggle     = "<C-b>t"
-        let g:AutoPairsShortcutFastWrap   = "<C-b>f"
-        let g:AutoPairsShortcutJump       = "<C-b>j"
-        let g:AutoPairsShortcutBackInsert = "<C-b>i"
-        inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
-    endif
     " fugitive
     if HasDirectory("vim-fugitive")
-        nnoremap + :Git<Space>
-        nnoremap gc :Gcommit -a -v<CR>
+        nnoremap gc    :Gcommit -a -v<CR>
+        nnoremap g<Cr> :Git<Space>
+        if HasDirectory("vim-signify")
+            nnoremap gs :SignifyDiff<CR>
+        endif
     endif
     " startify
     if HasDirectory("vim-startify")
@@ -482,23 +595,26 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ '|  https://github.com/spf13/spf13-vim                     |',
             \ '+---------------------------------------------------------+',
             \ ]
-        let g:startify_session_dir = '~/.vim/session'
-        let g:startify_files_number = 5
-        let g:startify_session_number = 5
+        let g:startify_session_dir = expand("$HOME/.cache/session")
+        if !isdirectory(g:startify_session_dir)
+            silent! call mkdir(g:startify_session_dir, 'p')
+        endif
+        let g:startify_files_number = 8
+        let g:startify_session_number = 8
         let g:startify_list_order = [
-            \ ['   最近项目:'],
-            \ 'sessions',
-            \ ['   最近文件:'],
-            \ 'files',
-            \ ['   快捷命令:'],
-            \ 'commands',
-            \ ['   常用书签:'],
-            \ 'bookmarks',
+                \ ['   最近项目:'],
+                \ 'sessions',
+                \ ['   最近文件:'],
+                \ 'files',
+                \ ['   快捷命令:'],
+                \ 'commands',
+                \ ['   常用书签:'],
+                \ 'bookmarks',
             \ ]
         let g:startify_commands = [
-            \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
-            \ {'h': ['帮助', 'help howto']},
-            \ {'v': ['版本', 'version']}
+                \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
+                \ {'h': ['帮助', 'help howto']},
+                \ {'v': ['版本', 'version']}
             \ ]
     endif
     " themes
@@ -544,6 +660,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:airline#extensions#tabline#buffer_nr_show = 0
         " shw full_path of the file
         let g:airline_section_c = "\ %F"
+        " syntastic
+        let g:airline#extensions#syntastic#enabled = 1
         if !exists('g:airline_symbols')
             let g:airline_symbols = {}
             let g:airline_symbols.crypt = '🔒'
@@ -586,21 +704,22 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 return &readonly && &filetype !=# 'help' ? 'RO' : ''
             endfunction
             if HasDirectory("ale")
-                let g:lightline.active.right = [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-                    \  [ 'percent' ],
-                    \  [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+                let g:lightline.active.right = [
+                    \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+                    \ [ 'percent' ],
+                \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
                 let g:lightline.component_expand =  {
-                    \  'linter_checking': 'lightline#ale#checking',
-                    \  'linter_warnings': 'lightline#ale#warnings',
-                    \  'linter_errors': 'lightline#ale#errors',
-                    \  'linter_ok': 'lightline#ale#ok'
-                    \ }
+                    \ 'linter_checking': 'lightline#ale#checking',
+                    \ 'linter_warnings': 'lightline#ale#warnings',
+                    \ 'linter_errors': 'lightline#ale#errors',
+                    \ 'linter_ok': 'lightline#ale#ok'
+                \ }
                 let g:lightline.component_type = {
-                    \  'linter_checking': 'right',
-                    \  'linter_warnings': 'warning',
-                    \  'linter_errors': 'error',
-                    \  'linter_ok': 'left'
-                    \ }
+                    \ 'linter_checking': 'right',
+                    \ 'linter_warnings': 'warning',
+                    \ 'linter_errors': 'error',
+                    \ 'linter_ok': 'left'
+                \ }
             endif
         else
             set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
@@ -608,7 +727,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             set statusline+=%3*\ \ %m%r%y\ %*
             set statusline+=%=%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(%l\/%L\ %c%)%*
             set statusline+=%5*\ %P\ %<
-            " default bg for statusline is 236 in space-vim-dark
             hi User1 cterm=bold ctermfg=232 ctermbg=179
             hi User2 cterm=bold ctermfg=255 ctermbg=100
             hi User3 cterm=None ctermfg=208 ctermbg=238
@@ -619,39 +737,40 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     " ctags
     if HasDirectory("tagbar")
         let g:tagbar_sort = 0
-        set tags=./tags;/,~/.cache/tags
+        set tags=./.tags;,.tags
         " Make tags placed in .git/tags file available in all levels of a repository
         let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
         if gitroot != ''
             let &tags = &tags . ',' . gitroot . '/.git/tags'
         endif
-        nmap <silent><leader>tt :TagbarToggle<CR>
-        nmap <silent><leader>tj :TagbarOpen j<CR>
-        " AutoCloseTag
-        " Make it so AutoCloseTag works for xml and xhtml files as well
-        au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-            \ nmap <Leader>ta <Plug>ToggleAutoCloseMappings
-        if HasDirectory("vim-gutentags")
-            set tags=./.tags;,.tags
-            " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-            let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-            " 所生成的数据文件的名称
-            let g:gutentags_ctags_tagfile = '.tags'
-            " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-            let s:vim_tags = expand("~/.cache/tags")
-            let g:gutentags_cache_dir = s:vim_tags
-            " 配置 ctags 的参数
-            let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-            let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-            let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-            " 检测 ~/.cache/tags 不存在就新建
-            if !isdirectory(s:vim_tags)
-                silent! call mkdir(s:vim_tags, 'p')
-            endif
+        nnoremap <silent><leader>tt :TagbarToggle<CR>
+        nnoremap <silent><leader>tj :TagbarOpen j<CR>
+        nnoremap <C-]> <C-w><C-]>
+        nnoremap <C-w><C-]> <C-]>
+        nnoremap <C-\> <C-w><C-]><C-w>T
+    endif
+    " gtags
+    if HasDirectory("vim-gutentags")
+        " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+        let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+        " 所生成的数据文件的名称
+        let g:gutentags_ctags_tagfile = '.tags'
+        " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+        let s:vim_tags = expand("$HOME/.cache/tags")
+        " 检测 ~/.cache/tags 不存在就新建
+        if !isdirectory(s:vim_tags)
+            silent! call mkdir(s:vim_tags, 'p')
         endif
+        let g:gutentags_cache_dir = s:vim_tags
+        " 配置 ctags 的参数
+        let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+        let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+        let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+        let $GTAGSLABEL = 'native-pygments'
     endif
     " indent_guides
     if HasDirectory("vim-indent-guides")
+        nnoremap <leader>ti :IndentGuidesToggle<Cr>
         let g:indent_guides_enable_on_vim_startup = 1
         let g:indent_guides_start_level           = 2
         let g:indent_guides_guide_size            = 1
@@ -670,21 +789,35 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:multi_cursor_start_key           = 'g<C-n>'
         let g:multi_cursor_select_all_key      = '<localleader><C-n>'
         let g:multi_cursor_next_key            = '<C-n>'
-        let g:multi_cursor_prev_key            = '<C-\>'
-        let g:multi_cursor_skip_key            = '<C-x>'
+        let g:multi_cursor_prev_key            = '<C-_>'
+        let g:multi_cursor_skip_key            = '<C-h>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
         highlight link multiple_cursors_visual Visual
         function! Multiple_cursors_before()
-            if exists(':NeoCompleteLock') == 2
+            if g:complete_engine == "neocomplete"
                 exe 'NeoCompleteLock'
             endif
         endfunction
         function! Multiple_cursors_after()
-            if exists(':NeoCompleteUnlock') == 2
+            if g:complete_engine == "neocomplete"
                 exe 'NeoCompleteUnlock'
             endif
         endfunction
+    endif
+    " autopairs
+    if HasDirectory("auto-pairs")
+        let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
+        let g:AutoPairsShortcutToggle     = "<C-b>t"
+        let g:AutoPairsShortcutFastWrap   = "<C-b>f"
+        let g:AutoPairsShortcutJump       = "<C-b>j"
+        let g:AutoPairsShortcutBackInsert = "<C-b>i"
+        inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
+    endif
+    " typecast
+    if HasDirectory('typecast.vim')
+        nmap <leader>tc <Plug>typecast
+        xmap <leader>tc <Plug>typecast
     endif
     " NerdTree
     if HasDirectory("nerdtree")
@@ -710,7 +843,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:NERDTreeWinPos                    =0
         let g:NERDTreeDirArrowExpandable        = '▸'
         let g:NERDTreeDirArrowCollapsible       = '▾'
-        au bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
+        au BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
         " nerdtree-git
         if HasDirectory("nerdtree-git-plugin")
             let g:NERDTreeIndicatorMapCustom = {
@@ -723,18 +856,18 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 \ "Dirty"     : "●",
                 \ "Clean"     : "√",
                 \ "Unknown"   : "?"
-                \ }
+            \ }
         endif
     endif
     " ywvim,vim里的中文输入法
     if HasDirectory("ywvim")
         set showmode
-        if count(g:plug_groups, 'pinyin')
+        if HasPlug('pinyun')
             let g:ywvim_ims=[
                     \['py', '拼音', 'pinyin.ywvim'],
                     \['wb', '五笔', 'wubi.ywvim'],
                 \]
-        elseif count(g:plug_groups, 'wubi')
+        elseif HasPlug('wubi')
             let g:ywvim_ims=[
                     \['wb', '五笔', 'wubi.ywvim'],
                     \['py', '拼音', 'pinyin.ywvim'],
@@ -760,25 +893,21 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     " search tools
     if HasDirectory('FlyGrep.vim')
-        nmap <C-f><C-f> :FlyGrep<Cr>
+        nnoremap <C-f>g :FlyGrep<Cr>
     endif
     if HasDirectory('ctrlsf.vim')
         let g:ctrlsf_position='right'
-        nmap <C-F>s <Plug>CtrlSFPrompt
-        nmap <C-F>w <Plug>CtrlSFCwordPath
-        nmap <C-F>p <Plug>CtrlSFPwordPath
-        nmap <C-F>t :CtrlSFToggle<CR>
-        vmap <C-F>t <ESC>:CtrlSFToggle<CR>
-        " vmap
-        vmap <C-F>s <Plug>CtrlSFVwordExec
-        vmap <C-F>f <Plug>CtrlSFVwordPath
-    else
-        nnoremap <C-f>s :vimgrep<Space>
+        nmap     <C-F>f <Plug>CtrlSFPrompt
+        vmap     <C-F>f <Plug>CtrlSFVwordPath
+        vmap     <C-F>F <Plug>CtrlSFVwordExec
+        nmap     <C-F>n <Plug>CtrlSFCwordPath
+        nmap     <C-F>N <Plug>CtrlSFCCwordPath
+        nmap     <C-F>p <Plug>CtrlSFPwordPath
+    elseif HasDirectory('far.vim')
+        nnoremap <C-f>f :Far<Space>
     endif
     " Shell
     if has('terminal') || has('nvim')
-        tnoremap <C-[> <C-\><C-n>
-        tnoremap <ESC> <C-\><C-n>
         tnoremap <C-w>h <C-\><C-N><C-w>h
         tnoremap <C-w>j <C-\><C-N><C-w>j
         tnoremap <C-w>k <C-\><C-N><C-w>k
@@ -787,22 +916,29 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         tnoremap <C-w><left>  <C-\><C-N><C-w><left>
         tnoremap <C-w><down>  <C-\><C-N><C-w><down>
         tnoremap <C-w><up>    <C-\><C-N><C-w><up>
+        tnoremap <C-[> <C-\><C-n>
+        tnoremap <ESC> <C-\><C-n>
         if has('nvim')
             tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-            nmap <C-h>v :vsplit term://bash<Cr>i
-            nmap <C-h>h :split  term://bash<Cr>i
+            nmap <C-h>\ :vsplit term://bash<Cr>i
+            nmap <C-h>= :split  term://bash<Cr>i
             nmap <C-h>t :tabe   term://bash<Cr>i
             nmap <C-h>V :vsplit term://
-            nmap <C-h>H :split  term://
+            nmap <C-h>S :split  term://
             nmap <C-h>T :tabe   term://
         else
-            nmap <C-h>v :vertical terminal<cr>bash<cr>
-            nmap <C-h>h :terminal<cr>bash<cr>
+            nmap <C-h>\ :vertical terminal<cr>bash<cr>
+            nmap <C-h>= :terminal<cr>bash<cr>
             nmap <C-h>t :tab terminal<Cr>bash<Cr>
             nmap <C-h>V :vertical terminal
-            nmap <C-h>H :terminal
+            nmap <C-h>S :terminal
             nmap <C-h>T :tab terminal
         endif
+    endif
+    " neoformat
+    if HasDirectory('neoformat')
+        nnoremap gT :Neoformat<Space>
+        vnoremap gT :Neoformat!<Space>
     endif
     " easy-align
     if HasDirectory("vim-easy-align")
@@ -813,51 +949,61 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
     endif
+    " easymotion
     if HasDirectory("vim-easymotion")
         nmap <C-j><C-j> <Plug>(easymotion-w)
         nmap <C-k><C-k> <Plug>(easymotion-b)
     endif
-    " Go program
-    if isdirectory(expand($PLUG_PATH."vim-go"))
-        let g:go_highlight_functions         = 1
-        let g:go_highlight_methods           = 1
-        let g:go_highlight_structs           = 1
-        let g:go_highlight_operators         = 1
-        let g:go_highlight_build_constraints = 1
-        let g:go_fmt_command                 = "gofmt"
-        let g:syntastic_go_checkers          = ['golint', 'govet', 'errcheck']
-        let g:syntastic_mode_map             = { 'mode': 'active', 'passive_filetypes': ['go'] }
-        au FileType go imap <C-b>     <C-x><C-o>
-        au FileType go nmap <Leader>i <Plug>(go-implements)
-        au FileType go nmap <Leader>I <Plug>(go-info)
-        au FileType go nmap <Leader>r <Plug>(go-rename)
-        au FileType go nmap <leader>R <Plug>(go-run)
-        au FileType go nmap <leader>b <Plug>(go-build)
-        au FileType go nmap <leader>t <Plug>(go-test)
-        au FileType go nmap <Leader>d <Plug>(go-doc)
-        au FileType go nmap <Leader>v <Plug>(go-doc-vertical)
-        au FileType go nmap <leader>c <Plug>(go-coverage)
+    " UndoTree
+    if HasDirectory("undotree")
+        nnoremap <silent><leader>u :UndotreeToggle<CR>
+        " If undotree is opened, it is likely one wants to interact with it.
+        let g:undotree_SetFocusWhenToggle = 0
+        if has("persistent_undo")
+            set undodir=~/.vim/undodir/
+            set undofile
+        endif
     endif
-    " browser seris
-    if g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <C-p>      :FZF<CR>
-        nnoremap <silent> <leader>lb :Buffers<CR>
-        nnoremap <silent> <Leader>lf :FZF<Space>
-        nnoremap <silent> <Leader>lt :Filetypes<CR>
-        nnoremap <silent> <Leader>lg :GFiles?<CR>
-        nnoremap <silent> <Leader>lm :Maps<CR>
-        nnoremap <silent> <Leader>lc :Commits<CR>
-        nnoremap <silent> <Leader>lk :Colors<CR>
-        nnoremap <silent> <Leader>lh :History/<CR>
-        " Mapping selecting mappings
-        nmap <leader><tab> <plug>(fzf-maps-n)
-        xmap <leader><tab> <plug>(fzf-maps-x)
-        omap <leader><tab> <plug>(fzf-maps-o)
-        " insert map
-        imap <c-x><c-k> <plug>(fzf-complete-word)
-        imap <c-x><c-f> <plug>(fzf-complete-path)
-        imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-        imap <c-x><c-l> <plug>(fzf-complete-line)
+    " browser tools
+    if g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
+        let g:Lf_ShortcutF = '<C-k>j'
+        let g:Lf_ReverseOrder = 1
+        let g:Lf_PythonVersion = g:python_version
+        let g:Lf_CacheDirectory = expand('$HOME/.cache/leaderf')
+        if !isdirectory(g:Lf_CacheDirectory)
+            silent! call mkdir(g:Lf_CacheDirectory, 'p')
+        endif
+        let g:Lf_ShortcutB = '<C-k>b'
+        nnoremap <C-k>l :Leaderf
+        nnoremap <C-k>f :LeaderfF
+        nnoremap <C-k>b :LeaderfB
+        nnoremap <C-k>m :LeaderfM
+        let g:Lf_NormalMap = {
+           \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+           \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+           \ "Mru":         [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+           \ "Tag":         [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+           \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+           \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+       \ }
+    elseif g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
+        nnoremap <silent> <C-k>j :FZF<CR>
+        nnoremap <silent> <C-k>b :Buffers<CR>
+        nnoremap <silent> <C-k>f :FZF<Space>
+        nnoremap <silent> <C-k>t :Filetypes<CR>
+        nnoremap <silent> <C-k>g :GFiles?<CR>
+        nnoremap <silent> <C-k>m :Maps<CR>
+        nnoremap <silent> <C-k>c :Commits<CR>
+        nnoremap <silent> <C-k>C :Colors<CR>
+        nnoremap <silent> <C-k>h :History/<CR>
+        " Mapping selecting mkppings
+        nmap <C-k><tab> <plug>(fzf-maps-n)
+        xmap <C-k><tab> <plug>(fzf-maps-x)
+        omap <C-k><tab> <plug>(fzf-maps-o)
+        imap <c-k><c-f> <plug>(fzf-complete-word)
+        imap <c-k><c-p> <plug>(fzf-complete-path)
+        imap <c-k><c-g> <plug>(fzf-complete-file-ag)
+        imap <c-k><c-l> <plug>(fzf-complete-line)
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
         " [[B]Commits] Customize the options used by 'git log':
@@ -895,16 +1041,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
-    elseif g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-p>'
-        let g:Lf_PythonVersion = g:python_version
-        let g:Lf_ShortcutB = '<leader>B'
-        nmap <leader>ld :Leaderf
-        nmap <leader>lf :LeaderfF
-        nmap <leader>lb :LeaderfB
-        nmap <leader>lm :LeaderfM
     elseif HasDirectory("ctrlp.vim")
-        let g:ctrlp_map = '<C-p>'
+        let g:ctrlp_map = '<C-k>j'
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
@@ -916,7 +1054,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
         elseif executable('ack')
             let s:ctrlp_fallback = 'ack %s --nocolor -f'
-            " On Windows use "dir" as fallback command.
+        elseif executable('rg')
+            set grepprg=rg\ --color=never
+            let s:ctrlp_fallback = 'rg %s --color=never --glob ""'
+        " On Windows use "dir" as fallback command.
         elseif WINDOWS()
             let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
         else
@@ -936,38 +1077,23 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " CtrlP extensions
             let g:ctrlp_extensions = ['funky']
             " funky
-            nnoremap <Leader>lf :CtrlPFunky<Cr>
+            nnoremap <C-k>f :CtrlPFunky<Cr>
         endif
-        nnoremap <leader>lm :CtrlPMRU<CR>
+        nnoremap <C-k>m :CtrlPMRU<CR>
     endif
-    " UndoTree
-    if HasDirectory("undotree")
-        nnoremap <silent><leader>u :UndotreeToggle<CR>
-        " If undotree is opened, it is likely one wants to interact with it.
-        let g:undotree_SetFocusWhenToggle = 0
-        if has("persistent_undo")
-            set undodir=~/.vim/undodir/
-            set undofile
-        endif
-    endif
-    " complete_engine && complete_snippet
+    " complete_engine
     set completeopt-=menu
     set completeopt-=preview
     set completeopt+=menuone
-    " ominifuc
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    set shortmess+=c
     if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
-        set shortmess+=c
         set completeopt+=noinsert,noselect
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python'
         else
             let g:ycm_python_binary_path = 'python3'
         endif
+        let g:ycm_key_invoke_completion = '<C-i>'
         " add_preview
         let g:ycm_add_preview_to_completeopt = 1
         "  补全后close窗口
@@ -989,7 +1115,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'cpp,cuda,objcpp' : ['->', '.', '::'],
             \ 'perl' : ['->'],
             \ 'php' : ['->', '::'],
-            \ 'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \ 'cs,java,javascript,typescript,python,perl6,scala,vb,elixir,go' : ['.'],
             \ 'ruby' : ['.', '::'],
             \ 'lua' : ['.', ':'],
             \ 'erlang' : [':'],
@@ -1004,9 +1130,55 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap <silent>g<C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
+        set completeopt+=noinsert,noselect
+        au BufEnter * call ncm2#enable_for_buffer()
+        if HasPlug('html')
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'css',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['css','scss'],
+                \ 'mark': 'css',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': ':\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
+                \ })
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'html',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['htm','html', 'markdown'],
+                \ 'mark': 'html',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': ':\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'htmlcomplete#CompleteTags']
+                \ })
+        endif
+        if HasPlug('java')
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'java',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['java','class'],
+                \ 'mark': 'java',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': '.\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
+                \ })
+        endif
+        let g:LanguageClient_serverCommands = {
+                \ 'go': ['go-langserver'],
+                \ 'rust': ['rls'],
+                \ 'python': ['pyls'],
+                \ 'typescript': ['javascript-typescript-stdio'],
+                \ 'javascript': ['javascript-typescript-stdio'],
+            \ }
     elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
-        set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
         " <BS>: close popup and delete backword char.
@@ -1015,45 +1187,25 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:deoplete#enable_yarp = 1
         endif
         let g:deoplete#enable_camel_case = 1
-        " Enable heavy omni completion.
-        if !exists('g:deoplete#keyword_patterns')
-            let g:deoplete#keyword_patterns = {}
-        endif
+        " omni completion is vim grep
         call deoplete#custom#option('omni_patterns', {
-            \ 'java' : '[^. *\t]\.\w*',
-            \ 'php'  : '[^. \t]->\h\w*\|\h\w*::',
-            \ 'perl' : '\h\w*->\h\w*\|\h\w*::',
-            \ 'c'    : '[^.[:digit:] *\t]\%(\.\|->\)',
-            \ 'cpp'  : '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
-            \ 'ruby' : '[^. *\t]\.\h\w*\|\h\w*::',
-            \ 'go'   : '\h\w*\.\?',
+            \ 'java' :'[^. *\t]\.\w*',
+            \ 'php'  :'[^. \t]->\h\w*\|\h\w*::',
+            \ 'perl' :'\h\w*->\h\w*\|\h\w*::',
+            \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
+            \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
+            \ 'go'   :'\h\w*\.\?',
+        \})
+        " keyword_patterns is python grep
+        call deoplete#custom#option('keyword_patterns', {
+            \ '_'    :'[a-zA-Z_]\k*',
+            \ 'tex'  :'\\?[a-zA-Z_]\w*',
+            \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
         \})
         if HasDirectory('ultisnips')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
-    elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
-        set shortmess+=c
-        set completeopt+=noinsert,noselect
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-        au User Ncm2Plugin call ncm2#register_source({
-            \ 'name' : 'css',
-            \ 'enable' : 1,
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
-            \ })
-        let g:LanguageClient_serverCommands = {
-            \ 'go': ['go-langserver'],
-            \ 'rust': ['rls'],
-            \ 'javascript': ['tcp://127.0.0.1:2089'],
-            \ 'python': ['pyls'],
-            \ }
     elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
-        set shortmess+=c
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
         if v:version >= 800
@@ -1066,40 +1218,62 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'whitelist': ['*'],
             \ 'blacklist': ['go'],
             \ 'completor': function('asyncomplete#sources#buffer#completor'),
-            \ }))
+        \ }))
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
             \ 'name': 'file',
             \ 'whitelist': ['*'],
             \ 'priority': 10,
             \ 'completor': function('asyncomplete#sources#file#completor')
-            \ }))
+        \ }))
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
             \ 'name': 'omni',
             \ 'whitelist': ['*'],
             \ 'blacklist': ['c', 'cpp', 'html'],
             \ 'completor': function('asyncomplete#sources#omni#completor')
-            \  }))
+        \  }))
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
             \ 'name': 'necosyntax',
             \ 'whitelist': ['*'],
             \ 'completor': function('asyncomplete#sources#necosyntax#completor'),
-            \ }))
+        \ }))
+        au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necovim#get_source_options({
+            \ 'name': 'necovim',
+            \ 'whitelist': ['vim'],
+            \ 'completor': function('asyncomplete#sources#necovim#completor'),
+        \ }))
         if executable('pyls')
             au User lsp_setup call lsp#register_server({
                 \ 'name': 'pyls',
                 \ 'cmd': {server_info->['pyls']},
                 \ 'whitelist': ['python'],
                 \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
-                \ })
+            \ })
         endif
-        if count(g:plug_groups, 'go')
+        if HasDirectory('asyncomplete-tags.vim')
+            au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+                \ 'name': 'tags',
+                \ 'whitelist': ['c'],
+                \ 'completor': function('asyncomplete#sources#tags#completor'),
+                \ 'config': {
+                \    'max_file_size': 50000000,
+                \  },
+            \ }))
+        endif
+        if HasPlug('typejavascript')
+            au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tscompletejob#get_source_options({
+                \ 'name': 'tscompletejob',
+                \ 'whitelist': ['typescript'],
+                \ 'completor': function('asyncomplete#sources#tscompletejob#completor'),
+            \ }))
+        endif
+        if HasPlug('go')
             au User asyncomplete_setup  call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
                 \ 'name': 'gocode',
                 \ 'whitelist': ['go'],
                 \ 'completor': function('asyncomplete#sources#gocode#completor'),
-                \ }))
+            \ }))
         endif
-        if count(g:plug_groups, 'rust')
+        if HasPlug('rust')
             au User asyncomplete_setup call asyncomplete#register_source(
                 \ asyncomplete#sources#racer#get_source_options())
         endif
@@ -1108,15 +1282,25 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 \ 'name': 'ultisnips',
                 \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#ultisnips#completor')
-                \ }))
+            \ }))
         elseif HasDirectory("asyncomplete-neosnippet.vim")
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
                 \ 'name': 'neosnippet',
                 \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
-                \ }))
+            \ }))
         endif
     elseif HasDirectory("neocomplete.vim") && g:complete_engine == "neocomplete"
+        " ominifuc
+        if g:python_version == 2
+            au FileType python setlocal omnifunc=pythoncomplete#Complete
+        elseif g:python_version == 3
+            au FileType python setlocal omnifunc=python3complete#Complete
+        endif
+        au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+        au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+        au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+        au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_select = 0
@@ -1137,6 +1321,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
     elseif HasDirectory("neocomplcache.vim") && g:complete_engine == "neocomplcache"
+        let g:neocomplcache_enable_at_startup = 1
+        " ominifuc
+        if g:python_version == 2
+            au FileType python setlocal omnifunc=pythoncomplete#Complete
+        elseif g:python_version == 3
+            au FileType python setlocal omnifunc=python3complete#Complete
+        endif
+        au FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+        au FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+        au FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+        au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
         let g:neocomplcache_enable_insert_char_pre       = 1
         let g:neocomplcache_enable_at_startup            = 1
         let g:neocomplcache_enable_auto_select           = 0
@@ -1158,80 +1353,269 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplcache_omni_patterns.go   = '\h\w*\.\?'
     endif
-    " smart completion use neosnippet to expand
-    if g:complete_engine !="None"
-        " headache confict
-        imap <expr><C-j>  pumvisible()? "()\<Left>":"\<CR>"
-        if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
-            imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
-        else
-            imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
-        endif
-        inoremap <expr> <Up>       pumvisible() ? "\<C-p>"                  : "\<Up>"
-        inoremap <expr> <Down>     pumvisible() ? "\<C-n>"                  : "\<Down>"
-        inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>"   : "\<PageUp>"
-        inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
-        " ultisnip
-        if HasDirectory('ultisnips')
-            " remap Ultisnips for compatibility
-            let g:UltiSnipsNoPythonWarning = 0
-            let g:UltiSnipsExpandTrigger = "<Nop>"
-            let g:UltiSnipsListSnippets = "<C-l>"
-            let g:UltiSnipsJumpForwardTrigger = '<C-f>'
-            let g:UltiSnipsJumpBackwardTrigger = '<C-b>'
-            " Ulti python version
-            let g:UltiSnipsUsePythonVersion = g:python_version
-            " tab for ExpandTrigger
-            function! g:UltiSnips_Tab()
-                if pumvisible()
-                    call UltiSnips#ExpandSnippet()
-                    if g:ulti_expand_res
-                        return "\<Right>"
-                    else
-                        if !exists('v:completed_item') || empty(v:completed_item)
-                            return "\<C-n>"
-                        else
-                            return "\<C-y>"
-                        endif
-                    endif
-                else
-                    return "\<Tab>"
-                endif
-            endfunction
-            au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab()<cr>"
-            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:UltiSnips_Tab()<cr>"
-            " Ulti的代码片段的文件夹
-            let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
-            let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-        elseif HasDirectory('neosnippet')
-            let g:neosnippet#enable_completed_snippet = 1
-            " c-f to jump
-            smap <C-f> <Plug>(neosnippet_jump)
-            function! g:NeoSnippet_Tab()
-                if pumvisible()
-                    if neosnippet#expandable()
-                        return neosnippet#mappings#expand_impl()
-                    else
-                        if !exists('v:completed_item') || empty(v:completed_item)
-                            return "\<C-n>"
-                        else
-                            return "\<C-y>"
-                        endif
-                    endif
-                else
-                    return "\<Tab>"
-                endif
-            endfunction
-            au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab()<cr>"
-            au BufEnter * exec "inoremap <silent> <C-k> <C-R>=g:NeoSnippet_Tab()<cr>"
-            " Use honza's snippets.
-            let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
-            " Enable neosnippets when using go
-            if count(g:plug_groups, 'go')
-                let g:go_snippet_engine = "neosnippet"
-            endif
-        endif
+    " complete_snippet
+    if g:complete_engine == "YCM" || g:complete_engine == "asyncomplete"
+        imap <expr><Cr>  pumvisible()? "\<C-[>a":"\<CR>"
+    else
+        imap <expr><Cr>  pumvisible()? "\<C-y>":"\<CR>"
     endif
+    inoremap <expr> <Up>       pumvisible() ? "\<C-p>"                  : "\<Up>"
+    inoremap <expr> <Down>     pumvisible() ? "\<C-n>"                  : "\<Down>"
+    inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>"   : "\<PageUp>"
+    inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-n>\<C-p>" : "\<PageDown>"
+    " ultisnips
+    if HasDirectory('ultisnips')
+        " remap Ultisnips for compatibility
+        let g:UltiSnipsNoPythonWarning = 0
+        let g:UltiSnipsRemoveSelectModeMappings = 0
+        let g:UltiSnipsExpandTrigger = "<Nop>"
+        let g:UltiSnipsListSnippets = "<C-l><C-l>"
+        let g:UltiSnipsJumpForwardTrigger = "<Tab>"
+        let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+        " Ulti python version
+        let g:UltiSnipsUsePythonVersion = g:python_version
+        " tab for ExpandTrigger
+        function! g:UltiSnips_Tab(num)
+            if pumvisible()
+                call UltiSnips#ExpandSnippet()
+                if g:ulti_expand_res
+                    return "\<Right>"
+                else
+                    if exists('v:completed_item') && empty(v:completed_item)
+                        return "\<C-n>"
+                    else
+                        return "\<C-y>"
+                    endif
+                endif
+            else
+                call UltiSnips#JumpForwards()
+                if g:ulti_jump_forwards_res
+                    return "\<Right>"
+                else
+                    if a:num
+                        return "\<Tab>"
+                    else
+                        return "\<Cr>"
+                    endif
+                endif
+            endif
+        endfunction
+        inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab(1)<cr>
+        inoremap <silent> <C-j> <C-R>=g:UltiSnips_Tab(0)<cr>
+        smap <C-j> <Tab>
+        smap <C-k> <S-Tab>
+        " Ulti的代码片段的文件夹
+        let g:UltiSnipsSnippetsDir = $PLUG_PATH."/leoatchina-snippets/UltiSnips"
+        let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+    " neosnippet
+    elseif HasDirectory('neosnippet')
+        let g:neosnippet#enable_completed_snippet = 1
+        smap <Tab> <Plug>(neosnippet_jump_or_expand)
+        smap <C-j> <Plug>(neosnippet_jump_or_expand)
+        function! g:NeoSnippet_Tab(num)
+            if pumvisible()
+                if neosnippet#expandable()
+                    return neosnippet#mappings#expand_impl()
+                elseif exists("v:completed_item") && empty(v:completed_item)
+                    return "\<C-n>"
+                else
+                    return "\<C-y>"
+                endif
+            else
+                if neosnippet#jumpable()
+                    return neosnippet#mappings#jump_impl()
+                else
+                    if a:num
+                        return "\<Tab>"
+                    else
+                        return "\<Cr>"
+                    endif
+                endif
+            endif
+        endfunction
+        inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab(1)<cr>
+        inoremap <silent> <C-j> <C-R>=g:NeoSnippet_Tab(0)<cr>
+        " Use honza's snippets.
+        let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
+    endif
+    " complete_parameter
+    if HasDirectory("CompleteParameter.vim")
+        inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):";"
+        inoremap <silent><expr> ( pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):"()\<left>"
+        if OSX() && has('gui_running')
+            smap <D-j> <Plug>(complete_parameter#goto_next_parameter)
+            imap <D-j> <Plug>(complete_parameter#goto_next_parameter)
+            smap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
+            imap <D-k> <Plug>(complete_parameter#goto_previous_parameter)
+        else
+            smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+            imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+            smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+            imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+        endif
+    else
+        inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?"()\<left>":";"
+    endif
+    " javascript language
+    if HasDirectory('vim-javascript')
+        let g:javascript_plugin_jsdoc = 1
+        let g:javascript_plugin_ngdoc = 1
+        let g:javascript_plugin_flow = 1
+        au  FileType Javascript setlocal conceallevel=1
+        let g:javascript_conceal_function             = "ƒ"
+        let g:javascript_conceal_null                 = "ø"
+        let g:javascript_conceal_this                 = "@"
+        let g:javascript_conceal_return               = "⇚"
+        let g:javascript_conceal_undefined            = "¿"
+        let g:javascript_conceal_NaN                  = "ℕ"
+        let g:javascript_conceal_prototype            = "¶"
+        let g:javascript_conceal_static               = "•"
+        let g:javascript_conceal_super                = "Ω"
+        let g:javascript_conceal_arrow_function       = "⇒"
+        let g:javascript_conceal_noarg_arrow_function = "🞅"
+        let g:javascript_conceal_underscore_arrow_function = "🞅"
+    endif
+    if HasDirectory('vim-jsdoc')
+        au FileType javascript nmap <C-g>j <Plug>(jsdoc)
+    endif
+    " php language
+    if HasDirectory('phpcomplete.vim')
+        let g:phpcomplete_mappings = {
+           \ 'jump_to_def':        '<C-\><C-]>',
+           \ 'jump_to_def_split':  '<C-]>',
+           \ 'jump_to_def_vsplit': '<C-W><C-\>',
+           \ 'jump_to_def_tabnew': '<C-\>',
+           \}
+    endif
+    " html language
+    if HasDirectory('emmet-vim')
+        let g:user_emmet_leader_key='<C-g>'
+    endif
+    " Go language
+    if HasDirectory("vim-go")
+        let g:go_highlight_functions         = 1
+        let g:go_highlight_methods           = 1
+        let g:go_highlight_structs           = 1
+        let g:go_highlight_operators         = 1
+        let g:go_highlight_build_constraints = 1
+        let g:go_fmt_command                 = "gofmt"
+        let g:syntastic_go_checkers          = ['golint', 'govet', 'errcheck']
+        let g:syntastic_mode_map             = { 'mode': 'active', 'passive_filetypes': ['go'] }
+        " Enable neosnippets when using go
+        if g:complete_snippet == "neosnippet"
+            let g:go_snippet_engine = "neosnippet"
+        endif
+        au FileType go nmap <C-g>i <Plug>(go-implements)
+        au FileType go nmap <C-g>I <Plug>(go-info)
+        au FileType go nmap <C-g>u <Plug>(go-rename)
+        au FileType go nmap <C-g>r <Plug>(go-run)
+        au FileType go nmap <C-g>b <Plug>(go-build)
+        au FileType go nmap <C-g>t <Plug>(go-test)
+        au FileType go nmap <C-g>d <Plug>(go-doc)
+        au FileType go nmap <C-g>D <Plug>(go-doc-vertical)
+        au FileType go nmap <C-g>c <Plug>(go-coverage)
+    endif
+    " java
+    if HasDirectory("vim-javacomplete2")
+        au FileType java setlocal omnifunc=javacomplete#Complete
+
+        au FileType java nmap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
+        au FileType java nmap <C-g>I <Plug>(JavaComplete-Imports-Add)
+        au FileType java nmap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
+        au FileType java nmap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
+
+        au FileType java imap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
+        au FileType java imap <C-g>I <Plug>(JavaComplete-Imports-Add)
+        au FileType java imap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
+        au FileType java imap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
+
+        au FileType java nmap <C-g>m <Plug>(JavaComplete-Generate-Accessors)
+        au FileType java nmap <C-g>c <Plug>(JavaComplete-Generate-Constructor)
+        au FileType java nmap <C-g>t <Plug>(JavaComplete-Generate-ToString)
+        au FileType java nmap <C-g>e <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+        au FileType java nmap <C-g>d <Plug>(JavaComplete-Generate-DefaultConstructor)
+
+        au FileType java nmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
+        au FileType java nmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
+        au FileType java nmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+        au FileType java nmap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
+
+        au FileType java imap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
+        au FileType java imap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
+        au FileType java imap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+        au FileType java imap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
+
+        au FileType java vmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
+        au FileType java vmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
+        au FileType java vmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+        au FileType java nmap <silent> <buffer> <C-g>n <Plug>(JavaComplete-Generate-NewClass)
+        au FileType java nmap <silent> <buffer> <C-g>N <Plug>(JavaComplete-Generate-ClassInFile)
+    endif
+    if HasDirectory('vim-eclim')
+        let g:EclimCompletionMethod = 'omnifunc'
+        let s:project_tree_is_open = 0
+        function! ToggleProjectTree()
+            if s:project_tree_is_open
+                call eclim#project#tree#ProjectTreeClose()
+                let s:project_tree_is_open = 0
+            else
+                let s:winpos = winnr() + 1
+                call eclim#project#tree#ProjectTree()
+                let s:project_tree_is_open = 1
+                execute s:winpos . "wincmd w"
+            endif
+        endfunctio
+        command! ToggleProjectTree call ToggleProjectTree()
+        nnoremap <leader>nt :ToggleProjectTree<Cr>
+        nnoremap <leader>nl :ProjectList<Cr>
+        nnoremap <leader>na :ProjectsTree<Cr>
+        au FileType java nnoremap <C-g>pb :ProjectBuild<Cr>
+        nnoremap <C-g>pp :Project
+        nnoremap <C-g>pr :ProjectRefresh<Cr>
+        nnoremap <C-g>pI :ProjectInfo<Cr>
+        nnoremap <C-g>pd :ProjectCD<Cr>
+        nnoremap <C-g>pc :ProjectLCD<Cr>
+        nnoremap <C-g>pn :ProjectCreate<Space>
+        nnoremap <C-g>pm :ProjectMove<Space>
+        nnoremap <C-g>pi :ProjectImport<Space>
+        nnoremap <C-g>po :ProjectOpen<Space>
+    endif
+    " preview tools, you have to map meta key in term
+    if HasDirectory('vim-preview')
+        nnoremap <C-p> :PreviewTag<Cr>
+        nnoremap <M-p> :PreviewScroll -1<cr>
+        nnoremap <M-n> :PreviewScroll +1<cr>
+        nnoremap <M-s> :PreviewSignature!<Cr>
+        nnoremap <M-q> :PreviewQuickfix<Space>
+        nnoremap <M-G> :PreviewGoto<Space>
+        nnoremap <M-F> :PreviewFile<Space>
+        autocmd FileType qf nnoremap <silent><buffer> q :PreviewQuickfix<cr>
+        autocmd FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
+    else
+        nnoremap <C-p> :echo "<C-p> is mapped for vim-preview with gtags"<Cr>
+    endif
+    " run_tools
+    if HasDirectory("vim-quickrun")
+        nnoremap <C-l>r :QuickRun<Cr>
+        let g:quickrun_config={"_":{"outputter":"message"}}
+        let s:quickfix_is_open = 0
+        function! ToggleQuickfix()
+            if s:quickfix_is_open
+                cclose
+                cclose
+                let s:quickfix_is_open = 0
+                execute s:quickfix_return_to_window . "wincmd w"
+            else
+                let s:quickfix_return_to_window = winnr()
+                copen
+                let s:quickfix_is_open = 1
+            endif
+        endfunction
+        command! ToggleQuickfix call ToggleQuickfix()
+        nnoremap <C-l>q :ToggleQuickfix<cr>
+    endif
+    " syntax check
     if HasDirectory("ale")
         let g:ale_completion_enabled   = 0
         let g:ale_lint_on_enter        = 1
@@ -1241,7 +1625,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:ale_set_signs            = 1
         let g:ale_set_highlights       = 0
         let g:ale_sign_error           = 'E'
-        let g:ale_sign_warning         = 'w'
+        let g:ale_sign_warning         = 'W'
         " message format
         let g:ale_echo_msg_error_str   = 'E'
         let g:ale_echo_msg_warning_str = 'W'
@@ -1254,17 +1638,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
-        nmap <C-l><C-l> :ALELint<CR>
         nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
         nmap <silent> <C-l>n <Plug>(ale_next_wrap)
-        nnoremap gt :ALEGoToDefinitionInTab<CR>
-        nnoremap gd :ALEGoToDefinition<CR>
+        nnoremap <C-l><C-l> :ALELint<CR>
     elseif HasDirectory("syntastic")
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'
         let g:syntastic_check_on_open            = 0
-        let g:syntastic_check_on_wq              = 0
-        let g:syntastic_python_checkers          = ['pyflakes'] " 使用pyflakes,速度比pylint快
+        let g:syntastic_check_on_wq              = -1
+        let g:syntastic_python_checkers          = ['flake8']
         let g:syntastic_javascript_checkers      = ['jsl', 'jshint']
         let g:syntastic_html_checkers            = ['tidy', 'jshint']
         let g:syntastic_enable_highlighting      = 0
@@ -1279,63 +1661,67 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Errors
             endif
         endfunction
-        nmap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nmap <silent> <C-l>n :lnext<cr>
-        nmap <silent> <C-l>p :lprevious<cr>
+        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
+        nnoremap <silent> <C-l>n :lnext<cr>
+        nnoremap <silent> <C-l>p :lprevious<cr>
     endif
+    " asyncrun
     if HasDirectory("asyncrun.vim")
         let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-        function! s:RUN_ASYNC()
+        function! s:ASYNC_RUN()
             exec "w"
             call asyncrun#quickfix_toggle(8,1)
             if &filetype == 'c'
                 exec ":AsyncRun g++ % -o %<"
-                exec ":AsyncRun ./%<"
+                exec ":AsyncRun -raw=1 ./%<"
             elseif &filetype == 'cpp'
                 exec ":AsyncRun g++ % -o %<"
-                exec ":AsyncRun ./%<"
+                exec ":AsyncRun -raw=1 ./%<"
             elseif &filetype == 'java'
-                exec ":AsyncRun javac %"
-                exec ":AsyncRun java %<"
+                exec ":AsyncRun -raw=1 javac %"
+                exec ":AsyncRun -raw=1 java %<"
             elseif &filetype == 'sh'
-                exec ":AsyncRun bash %"
+                exec ":AsyncRun -raw=1 bash %"
             elseif &filetype == 'python'
-                exec ":AsyncRun python %"
+                if g:python_version == 3
+                    exec ":AsyncRun -raw=1 python3 %"
+                if g:python_version == 2
+                    exec ":AsyncRun -raw=1 python %"
+                else
+                    echo "Cannot run without python support"
+                endif
             elseif &filetype == 'perl'
-                exec ":AsyncRun perl %"
+                exec ":AsyncRun -raw=1 perl %"
             elseif &filetype == 'go'
-                exec ":AsyncRun go run %"
+                exec ":AsyncRun -raw=1 go run %"
             endif
         endfunction
-        command! RunAsync call s:RUN_ASYNC()
-        nmap <C-b>r        :RunAsync<CR>
-        nmap <C-b>s        :AsyncStop<CR>
-        nmap <localleade>R :AsyncRun<Space>
+        command! AsyncRunNow call s:ASYNC_RUN()
+        nmap <C-l>a :AsyncRunNow<CR>
+        nmap <C-l>s :AsyncStop<CR>
+        au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
     endif
-    if HasDirectory("vim-quickrun")
-        nnoremap <F5> :QuickRun<Cr>
-        inoremap <F5> <ESC>:QuickRun<Cr>
-        snoremap <F5> <ESC>:QuickRun<Cr>
-        vnoremap <F5> <ESC>:QuickRun<Cr>
-        let g:quickrun_config={"_":{"outputter":"message"}}
-        let g:quickfix_is_open = 0
-        function! ToggleQuickfix()
-            if g:quickfix_is_open
-                cclose
-                cclose
-                let g:quickfix_is_open = 0
-                execute g:quickfix_return_to_window . "wincmd w"
-            else
-                let g:quickfix_return_to_window = winnr()
-                copen
-                let g:quickfix_is_open = 1
-            endif
-        endfunction
-        command! ToggleQuickfix
-                    \ call ToggleQuickfix()
-        nnoremap <silent><F6> :ToggleQuickfix<cr>
-        inoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
-        vnoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
-        snoremap <silent><F6> <ESC>:ToggleQuickfix<cr>
+    " vim-repl
+    if HasDirectory('vim-repl')
+        nnoremap <C-l>t :REPLToggle<Cr>
+        let g:sendtorepl_invoke_key = "<C-l>w"
+        let g:repl_program = {
+            \	"default": "bash",
+        \ }
+        if g:python_version == 2
+            let g:repl_program.python = "python"
+        elseif g:python_version == 3
+            let g:repl_program.python = "python3"
+        endif
+        let g:repl_exit_commands = {
+			\	"python": "quit()",
+			\	"bash": "exit",
+			\	"zsh": "exit",
+			\	"default": "exit",
+        \ }
+    endif
+    " debugger
+    if HasDirectory('vim-debugger')
+
     endif
 endif

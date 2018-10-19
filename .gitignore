@@ -1,5 +1,3 @@
-.DS_Store
+.*Store*
 *tag*
 *.pyc
-.vim/
-assets/

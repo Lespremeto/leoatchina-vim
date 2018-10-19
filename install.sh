@@ -80,10 +80,6 @@ create_symlinks() {
     lnif "$source_path/.vimrc.clean"    "$target_path/.vimrc.clean"
     lnif "$source_path/update.sh"       "$target_path/.vimrc.update"
     lnif "$source_path/README.markdown" "$target_path/.vimrc.md"
-    if program_exists "nvim"; then
-        mkdir -p "$target_path/.config/nvim"
-        lnif "$source_path/.vimrc"      "$target_path/.config/nvim/init.vim"
-    fi
     ret="$?"
     success "Setted up vim symlinks."
     debug
@@ -94,7 +90,7 @@ setup_plug() {
     export SHELL='/bin/sh'
     echo
     msg "Starting update/install plugins for $1"
-    "$1" +PlugReinstall +qall
+    "$1" +PlugRe +qall
     export SHELL="$system_shell"
     success "Successfully updated/installed plugins using vim-plug for $1"
     debug
@@ -104,11 +100,11 @@ install_vim_plug() {
     if [ -d "$2" ];then
         cd "$2"
         git pull
-        cd "$4"
+        cd "$3"
     else
         git clone --depth=1 "$1" "$2" 
     fi
-    success "Successfully installed/updated vim-plug for $3"
+    success "Successfully installed/updated vim-plug!"
     debug
 }
 
@@ -137,22 +133,18 @@ if [ -f $HOME/.vimrc.local ];then
     success "$HOME/.vimrc.local exists."
 else
     cp $APP_PATH/.vimrc.local $HOME/
-    success "$HOME/.vimrc.local does not exist, created it."
+    success "$HOME/.vimrc.local does not exist, copy to it."
 fi
 
 create_symlinks "$APP_PATH" "$HOME"
-
+if [ "$update_vim_plug" -eq '1' ];then
+    install_vim_plug "$PLUG_URL" "$HOME/.vim-plug/autoload" "$APP_PATH"
+fi
 if program_exists "vim"; then
-    if [ "$update_vim_plug" -eq '1' ];then
-        install_vim_plug "$PLUG_URL" "$HOME/.vim/autoload" "vim" "$APP_PATH"
-    fi
     setup_plug "vim"
 fi
 
 if program_exists "nvim"; then
-    if [ "$update_vim_plug" -eq '1' ];then
-        install_vim_plug "$PLUG_URL" "$HOME/.local/share/nvim/site/autoload" "nvim" "$APP_PATH"
-    fi
     setup_plug "nvim"
 fi
 
