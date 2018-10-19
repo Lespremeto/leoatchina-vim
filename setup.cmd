@@ -38,7 +38,9 @@ IF NOT EXIST "%HOME%\.gvim" (
 IF NOT EXIST "%HOME%\.nvim" (
     call mkdir -p "%HOME%\.nvim"
 )
-
+IF NOT EXIST "%HOME%\.gnvim" (
+    call mkdir -p "%HOME%\.gnvim"
+)
 
 IF NOT EXIST "%HOME%\AppData\Local\nvim" (
     call mkdir -p "%HOME%\AppData\Local\nvim"
@@ -46,10 +48,10 @@ IF NOT EXIST "%HOME%\AppData\Local\nvim" (
 call del "%HOME%\AppData\Local\nvim\init.vim"
 call mklink "%HOME%\AppData\Local\nvim\init.vim"  "%APP_PATH%\.vimrc"                 
 
-IF NOT EXIST "%HOME%\.vim\autoload" (
-    call git clone --depth=1 https://github.com/junegunn/vim-plug.git "%HOME%\.vim\autoload"
+IF NOT EXIST "%HOME%\vimfiles\autoload" (
+    call git clone --depth=1 https://github.com/junegunn/vim-plug.git "%HOME%\vimfiles\autoload"
 ) ELSE (
-    call cd "%HOME%\.vim\autoload"
+    call cd "%HOME%\vimfiles\autoload"
     call git pull
 )
 

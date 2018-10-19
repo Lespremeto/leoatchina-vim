@@ -39,19 +39,7 @@ endfunction
 " Basics
 if WINDOWS()
     set winaltkeys=no
-    if has('nvim')
-        if has('gui_running')
-            set runtimepath=$HOME/.gnvim,$VIM/vimfiles,$VIMRUNTIME
-        else
-            set runtimepath=$HOME/.nvim,$VIM/vimfiles,$VIMRUNTIME
-        endif
-    else
-        if has('gui_running')
-            set runtimepath=$HOME/.gvim,$VIM/vimfiles,$VIMRUNTIME
-        else
-            set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
-        endif
-    end
+    set rtp=$HOME/vimfiles
 else
     set shell=/bin/sh
     if !has("gui")
