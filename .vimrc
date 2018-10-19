@@ -37,10 +37,9 @@ silent function! WINDOWS()
     return  (has('win32') || has('win64'))
 endfunction
 " Basics, set vim-plug install path
-set rtp=$HOME/.vim-plug
+set rtp=$HOME/.vim-plug,$VIMRUNTIME
 if WINDOWS()
     set winaltkeys=no
-    set rtp+=$VIMRUNTIME
 else
     set shell=/bin/sh
     if !has("gui")
