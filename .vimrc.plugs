@@ -1,7 +1,6 @@
 " This is leoatchina's vim config forked from https://github.com/spf13/spf13-vim
 " Sincerely thank him for his great job, and I have made some change according to own requires.
 " You can find spf13's origin config  at http://spf13.com
-"
 " python support
 if has('python3') && executable('python3')
     let g:python_version = 3
@@ -237,7 +236,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 let g:browser_tool = "ctrlp"
             endif
             " complete_engine
-            if HasPlug('youcompleteme') || HasPlug('YCM') && (has('patch1578') && v:version == 704 || v:version >= 800)
+            if (HasPlug('youcompleteme') || HasPlug('YCM')) && (has('patch1578') && v:version == 704 || v:version >= 800)
                 if executable('make') && executable('gcc') && g:python_version && !WINDOWS()
                     let g:complete_engine = "YCM"
                 else

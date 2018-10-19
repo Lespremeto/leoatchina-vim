@@ -70,7 +70,6 @@ lnif() {
     ret="$?"
     debug
 }
-
 ############################ SETUP FUNCTIONS
 create_symlinks() {
     local source_path="$1"
