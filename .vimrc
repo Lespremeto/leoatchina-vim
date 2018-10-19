@@ -39,7 +39,7 @@ endfunction
 " Basics
 if WINDOWS()
     set winaltkeys=no
-    set rtp=$HOME/vimfiles
+    set rtp=$HOME/vimfiles,$VIMRUNTIME
 else
     set shell=/bin/sh
     if !has("gui")
