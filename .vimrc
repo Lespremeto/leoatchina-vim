@@ -241,6 +241,8 @@ nnoremap <leader>p "+p
 nnoremap <leader>P "*P
 vnoremap <leader>p "+p
 vnoremap <leader>P "*P
+inoremap <S-Insert> <C-R>*
+cnoremap <S-Insert> <C-R>*
 " Easier horizontal scrolling
 noremap zl zL
 noremap zh zH
