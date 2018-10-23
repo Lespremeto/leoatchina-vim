@@ -1152,8 +1152,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap <silent> gr <Plug>(coc-references)
         let g:coc_snippet_next = '<C-n>'
 	    let g:coc_snippet_prev = '<C-p>'
-        nnoremap <localleader>cc :CocInstall coc-pyls coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur coc-java<Cr>
-        nnoremap <localleader>co :CocInstall coc-stylelint coc-eslint coc-tslint coc-solargraph coc-prettier coc-jest<Cr>
+        nnoremap <localleader>CC :CocInstall coc-pyls coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur coc-java<Cr>
+        nnoremap <localleader>CO :CocInstall coc-stylelint coc-eslint coc-tslint coc-solargraph coc-prettier coc-jest<Cr>
         " Show signature help while editing
         autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
         " Highlight symbol under cursor on CursorHold
