@@ -243,7 +243,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     let g:smart_engine_select = 1
                 endif
             elseif HasPlug('coc')
-                if (has('nvim') && v:version >=800 || v:version >=801) && executable('node') && executable('yarn')
+                if has('nvim') && v:version >=800 && executable('node') && executable('yarn')
                     let g:complete_engine = "coc"
                 else
                     echoe "Cannot install coc, smart select a complete_engine."
@@ -341,9 +341,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             elseif g:complete_engine == "coc"
                 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
-                " if !has('nvim')
-                "     Plug 'neoclide/vim-node-rpc'
-                " endif
             elseif g:complete_engine == "ncm2"
                 Plug 'ncm2/ncm2'
                 Plug 'roxma/nvim-yarp'
@@ -467,10 +464,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " install browser tools
         if g:browser_tool == "fzf"
+            Plug 'junegunn/fzf.vim'
             if !WINDOWS()
                 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
             endif
-            Plug 'junegunn/fzf.vim'
         elseif g:browser_tool == "LeaderF"
             if WINDOWS()
                 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
