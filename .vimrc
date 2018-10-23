@@ -477,7 +477,6 @@ function! Alt_meta_map()
 endfunc
 command! -nargs=0 -bang ALTMetaMap call Alt_meta_map()
 call Alt_meta_map()
-" nmap <M--> :echo("meta key works")<Cr>
 " window move manager
 function! g:Tools_PreviousCursor(mode)
     if winnr('$') <= 1
@@ -526,6 +525,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     function! HasDirectory(dir)
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
+    " full-screen
+    if HasDirectory('vim-fullscreen')
+        if has('nvim')
+            let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
+            let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+        endif
+    endif
     " voom
     if HasDirectory('VOom')
         let g:voom_python_versions = [3,2]
@@ -718,6 +724,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     \ 'linter_warnings': 'warning',
                     \ 'linter_errors': 'error',
                     \ 'linter_ok': 'left'
+                \ }
+            endif
+            if HasDirectory('coc.nvim')
+                let g:lightline.component_function = {
+                    \  'gitbranch': 'fugitive#head',
+                    \  'readonly': 'LightlineReadonly',
+                    \  'cocstatus': 'coc#status',
                 \ }
             endif
         else
@@ -1130,6 +1143,22 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <silent>g<C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    elseif HasDirectory("coc.nvim") && g:complete_engine == "coc"
+        nmap <silent> gd <Plug>(coc-definition)
+        nmap <silent> gy <Plug>(coc-type-definition)
+        nmap <silent> gi <Plug>(coc-implementation)
+        nmap <silent> gr <Plug>(coc-references)
+        let g:coc_snippet_next = '<C-n>'
+	    let g:coc_snippet_prev = '<C-p>'
+        nnoremap <C-l>z :CocInstall<Space>
+        " Show signature help while editing
+        autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
+        " Highlight symbol under cursor on CursorHold
+        autocmd CursorHold * silent call CocActionAsync('highlight')
+        " Use `:Format` for format current buffer
+        command! -nargs=0 Format :call CocAction('format')
+        " Use `:Fold` for fold current buffer
+        command! -nargs=? Fold :call CocAction('fold', <f-args>)
     elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
         set completeopt+=noinsert,noselect
         au BufEnter * call ncm2#enable_for_buffer()
