@@ -528,10 +528,42 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
     " full-screen
-    if HasDirectory('vim-fullscreen')
-        if has('nvim')
+    
+    if has('nvim')
+        if HasDirectory('vim-fullscreen')
             let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
             let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+        endif
+    else
+        if has('gui_running') && has('libcall') 
+            let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
+            function! ToggleFullScreen()
+                call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
+            endfunction
+            map <C-Cr> <Esc>:call ToggleFullScreen()<CR>
+            let g:VimAlpha = 240
+            function! SetAlpha(alpha)
+                let g:VimAlpha = g:VimAlpha + a:alpha
+                if g:VimAlpha < 180
+                    let g:VimAlpha = 180
+                endif
+                if g:VimAlpha > 255
+                    let g:VimAlpha = 255
+                endif
+                call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
+            endfunction
+            nmap <M-q> <Esc>:call SetAlpha(+3)<CR>
+            nmap <M-s> <Esc>:call SetAlpha(-3)<CR>
+            let g:VimTopMost = 0
+            function! SwitchVimTopMostMode()
+                if g:VimTopMost == 0
+                    let g:VimTopMost = 1
+                else
+                    let g:VimTopMost = 0
+                endif
+                call libcall(g:MyVimLib, 'EnableTopMost', g:VimTopMost)
+            endfunction
+            nmap <M-z> <Esc>:call SwitchVimTopMostMode()<CR>
         endif
     endif
     " voom
