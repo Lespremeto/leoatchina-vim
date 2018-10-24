@@ -218,12 +218,33 @@ nnoremap <silent><Tab>      :tabnext<CR>
 nnoremap <silent>-          :tabprevious<CR>
 nnoremap <leader><Tab>      :tabm +1<CR>
 nnoremap <leader>-          :tabm -1<CR>
-nnoremap <localleader><Tab> :tablast<CR>
-nnoremap <localleader>-     :tabfirst<CR>
 nnoremap <Leader>te         :tabe<Space>
 nnoremap <Leader>tm         :tabm<Space>
 nnoremap <Leader>ts         :tab split<CR>
 nnoremap <Leader>tS         :tabs<CR>
+if has('gui_macvim')
+    nnoremap <D-1> :tabn1<CR>
+    nnoremap <D-2> :tabn2<CR>
+    nnoremap <D-3> :tabn3<CR>
+    nnoremap <D-4> :tabn4<CR>
+    nnoremap <D-5> :tabn5<CR>
+    nnoremap <D-6> :tabn6<CR>
+    nnoremap <D-7> :tabn7<CR>
+    nnoremap <D-8> :tabn8<CR>
+    nnoremap <D-9> :tabn9<CR>
+    nnoremap <D-0> :tablast<CR>
+else
+    nnoremap <M-1> :tabn1<CR>
+    nnoremap <M-2> :tabn2<CR>
+    nnoremap <M-3> :tabn3<CR>
+    nnoremap <M-4> :tabn4<CR>
+    nnoremap <M-5> :tabn5<CR>
+    nnoremap <M-6> :tabn6<CR>
+    nnoremap <M-7> :tabn7<CR>
+    nnoremap <M-8> :tabn8<CR>
+    nnoremap <M-9> :tabn9<CR>
+    nnoremap <M-0> :tablast<CR>
+endif
 " buffer switch
 nnoremap <localleader><BS> :buffers<CR>
 nnoremap <localleader>[ :bp<CR>
@@ -402,11 +423,13 @@ function! Alt_meta_map()
         call s:metacode(nr2char(char2nr('a') + i))
         call s:metacode(nr2char(char2nr('A') + i))
     endfor
+    for i in range(10)
+        call s:metacode(nr2char(char2nr('0') + i))
+    endfor
     let s:list = ['-', ';', '/', ',', '.', '_', ':', '?']
     for c in s:list
         call s:metacode(c)
     endfor
-    "if has("gui_running") && OSX()
     if has('gui_macvim')
         let a:letters_dict={
             \ 'a':'å',
@@ -468,7 +491,17 @@ function! Alt_meta_map()
             \ '.':'≥',
             \ '_':'—',
             \ ':':'Ú',
-            \ '?':'¿'
+            \ '?':'¿',
+            \ '0':'º',
+            \ '1':'¡',
+            \ '2':'™',
+            \ '3':'£',
+            \ '4':'¢',
+            \ '5':'∞',
+            \ '6':'§',
+            \ '7':'¶',
+            \ '8':'•',
+            \ '9':'ª'
         \ }
         for c in keys(a:letters_dict)
             for m in ['nmap', 'vmap', 'smap', 'tmap']
@@ -528,14 +561,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
     " full-screen
-    
+
     if has('nvim')
         if HasDirectory('vim-fullscreen')
             let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
             let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
         endif
     else
-        if has('gui_running') && has('libcall') 
+        if has('gui_running') && has('libcall')
             let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
             function! ToggleFullScreen()
                 call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
