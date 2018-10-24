@@ -56,9 +56,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if WINDOWS()
             Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
             let $PATH.=";".$HOME."\\.vim-windows-tools"
-            Plug 'lambdalisue/vim-fullscreen'
-        endif
-        if OSX()
+            if has('nvim')
+                Plug 'lambdalisue/vim-fullscreen'
+            endif
+        elseif OSX()
             Plug 'rizzatti/dash.vim'
             Plug 'ybian/smartim'
             if has('gui_running')
