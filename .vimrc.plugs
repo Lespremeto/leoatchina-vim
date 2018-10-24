@@ -230,7 +230,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " browser tools & complete tools
             if (has('patch330') && v:version == 704 || v:version >= 800) && g:python_version && executable('gcc')
                 let g:browser_tool = "LeaderF"
-            elseif HasPlug('fzf') && (!WINDOWS() || WINDOWS() && executable('fzf'))
+            elseif HasPlug('fzf') && !WINDOWS()
                 let g:browser_tool = "fzf"
             else
                 let g:browser_tool = "ctrlp"
@@ -341,7 +341,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
                 endif
             elseif g:complete_engine == "coc"
-                Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
+                if WINDOWS()
+                    Plug 'neoclide/coc.nvim', {'do': '.\\install.cmd'}
+                else
+                    Plug 'neoclide/coc.nvim', {'do': './install.sh'}
+                endif
             elseif g:complete_engine == "ncm2"
                 Plug 'ncm2/ncm2'
                 Plug 'roxma/nvim-yarp'
