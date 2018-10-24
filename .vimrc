@@ -631,7 +631,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 总是显示状态栏
         set laststatus=2
         if has('nvim')
-            if has("gui_running")
+            if WINDOWS()
                 colorscheme onedark
             else
                 set t_Co=256
@@ -1750,9 +1750,5 @@ if has('job') || g:python_version || has('nvim') || has('lua')
 			\	"zsh": "exit",
 			\	"default": "exit",
         \ }
-    endif
-    " debugger
-    if HasDirectory('vim-debugger')
-
     endif
 endif
