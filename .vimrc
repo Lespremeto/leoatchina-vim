@@ -1589,16 +1589,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " Go language
     if HasDirectory("vim-go")
-        let g:go_highlight_functions         = 1
-        let g:go_highlight_methods           = 1
-        let g:go_highlight_structs           = 1
-        let g:go_highlight_operators         = 1
-        let g:go_highlight_build_constraints = 1
-        let g:go_fmt_command                 = "gofmt"
-        let g:syntastic_go_checkers = ['golint', 'govet']
-        let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-        let g:go_gocode_propose_builtins = 1
-        let g:go_list_type = "quickfix"
+        let g:go_highlight_functions          = 1
+        let g:go_highlight_methods            = 1
+        let g:go_highlight_structs            = 1
+        let g:go_highlight_operators          = 1
+        let g:go_highlight_build_constraints  = 1
+        let g:go_gocode_propose_builtins      = 1
+        let g:go_list_type                    = "quickfix"
+        let g:go_fmt_command                  = "gofmt"
+        let g:syntastic_go_checkers           = ['golint', 'govet']
+        let g:syntastic_mode_map              = { 'mode': 'active', 'passive_filetypes': ['go'] }
         " Enable neosnippets when using go
         if g:complete_snippet == "neosnippet"
             let g:go_snippet_engine = "neosnippet"
