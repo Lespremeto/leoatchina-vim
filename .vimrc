@@ -663,8 +663,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ '|  Welcome to use leoatchina vim config forked from spf13 |',
             \ '|                                                         |',
             \ '|  https://github.com/leoatchina/leoatchina-vim           |',
-            \ '|                                                         |',
-            \ '|  https://github.com/spf13/spf13-vim                     |',
             \ '+---------------------------------------------------------+',
             \ ]
         let g:startify_session_dir = expand("$HOME/.cache/session")
@@ -700,7 +698,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 colorscheme onedark
             else
                 set t_Co=256
-                colorscheme wombat256mod
+                colorscheme hybrid_material
             endif
         elseif has('gui_running')
             colorscheme hybrid_material

@@ -228,10 +228,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             endif
             " browser tools & complete tools
-            if (has('patch330') && v:version == 704 || v:version >= 800) && g:python_version && executable('gcc')
-                let g:browser_tool = "LeaderF"
-            elseif HasPlug('fzf') && !WINDOWS()
+            if HasPlug('fzf') && !WINDOWS()
                 let g:browser_tool = "fzf"
+            elseif (has('patch330') && v:version == 704 || v:version >= 800) && g:python_version && executable('gcc')
+                let g:browser_tool = "LeaderF"
             else
                 let g:browser_tool = "ctrlp"
             endif
