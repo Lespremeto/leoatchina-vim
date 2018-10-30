@@ -467,7 +467,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " install browser tools
         if g:browser_tool == "fzf"
             Plug 'junegunn/fzf.vim'
-            if !WINDOWS()
+            if executable('fzf')
+                Plug exepath('fzf')
+            else
                 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
             endif
         elseif g:browser_tool == "LeaderF"
