@@ -192,10 +192,10 @@ inoremap <C-k>, <C-x><C-o>
 inoremap <C-k>. <C-x><C-v>
 inoremap <C-l> <Nop>
 " a,e for home/end
-nnoremap ge $
-nnoremap ga ^
-vnoremap ge $h
-vnoremap ga ^
+nnoremap <M-e> $
+nnoremap <M-a> ^
+vnoremap <M-e> $h
+vnoremap <M-a> ^
 vnoremap <C-a> ^
 inoremap <C-a> <Esc>I
 vnoremap <C-e> $<Left>
