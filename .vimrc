@@ -49,6 +49,113 @@ else
     endif
 endif
 " Functions
+" alt meta key
+function! Alt_meta_map()
+    set ttimeout
+    if $TMUX != ''
+        set ttimeoutlen=50
+    elseif &ttimeoutlen > 100 || &ttimeoutlen <= 0
+        set ttimeoutlen=100
+    endif
+    if has('nvim') || has('gui_running') && !OSX()
+        return
+    endif
+    function! s:metacode(key)
+        exec "set <M-".a:key.">=\e".a:key
+    endfunc
+    for i in range(26)
+        call s:metacode(nr2char(char2nr('a') + i))
+        call s:metacode(nr2char(char2nr('A') + i))
+    endfor
+    for i in range(10)
+        call s:metacode(nr2char(char2nr('0') + i))
+    endfor
+    let s:list = ['-', ';', '/', ',', '.', '_', ':', '?']
+    for c in s:list
+        call s:metacode(c)
+    endfor
+    if has('gui_macvim')
+        let a:letters_dict={
+            \ 'a':'å',
+            \ 'b':'∫',
+            \ 'c':'ç',
+            \ 'd':'∂',
+            \ 'e':'´',
+            \ 'f':'ƒ',
+            \ 'g':'©',
+            \ 'h':'˙',
+            \ 'i':'ˆ',
+            \ 'j':'∆',
+            \ 'k':'˚',
+            \ 'l':'¬',
+            \ 'm':'µ',
+            \ 'n':'˜',
+            \ 'o':'ø',
+            \ 'p':'π',
+            \ 'q':'œ',
+            \ 'r':'®',
+            \ 's':'ß',
+            \ 't':'†',
+            \ 'u':'¨',
+            \ 'v':'√',
+            \ 'w':'∑',
+            \ 'x':'≈',
+            \ 'y':'¥',
+            \ 'z':'Ω',
+            \ 'A':'Å',
+            \ 'B':'ı',
+            \ 'C':'Ç',
+            \ 'D':'∂',
+            \ 'E':'´',
+            \ 'F':'Ï',
+            \ 'G':'˝',
+            \ 'H':'Ó',
+            \ 'I':'ˆ',
+            \ 'J':'Ô',
+            \ 'K':'',
+            \ 'L':'Ò',
+            \ 'M':'Â',
+            \ 'N':'˜',
+            \ 'O':'Ø',
+            \ 'P':'∏',
+            \ 'Q':'Œ',
+            \ 'R':'‰',
+            \ 'S':'Í',
+            \ 'T':'ˇ',
+            \ 'U':'¨',
+            \ 'V':'◊',
+            \ 'W':'„',
+            \ 'X':'˛',
+            \ 'Y':'Á',
+            \ 'Z':'¸',
+            \ '-':'–',
+            \ ';':'…',
+            \ '/':'÷',
+            \ ',':'≤',
+            \ '.':'≥',
+            \ '_':'—',
+            \ ':':'Ú',
+            \ '?':'¿',
+            \ '0':'º',
+            \ '1':'¡',
+            \ '2':'™',
+            \ '3':'£',
+            \ '4':'¢',
+            \ '5':'∞',
+            \ '6':'§',
+            \ '7':'¶',
+            \ '8':'•',
+            \ '9':'ª'
+        \ }
+        for c in keys(a:letters_dict)
+            for m in ['nmap', 'vmap', 'smap', 'tmap']
+                exec m." ".a:letters_dict[c]." <M-".c.">"
+            endfor
+        endfor
+    endif
+endfunc
+command! -nargs=0 -bang ALTMetaMap call Alt_meta_map()
+call Alt_meta_map()
 " Initialize directories
 function! InitializeDirectories()
     let parent = $HOME
@@ -192,13 +299,11 @@ inoremap <C-k>, <C-x><C-o>
 inoremap <C-k>. <C-x><C-v>
 inoremap <C-l> <Nop>
 " a,e for home/end
-nnoremap <M-e> $
-nnoremap <M-a> ^
-vnoremap <M-e> $h
-vnoremap <M-a> ^
-vnoremap <C-a> ^
+nnoremap <leader>a ^
+nnoremap <leader>e $
+vnoremap <leader>a ^
+vnoremap <leader>e $<Left>
 inoremap <C-a> <Esc>I
-vnoremap <C-e> $<Left>
 inoremap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
@@ -405,113 +510,6 @@ vnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
 vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
 vnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
 vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
-" alt meta key
-function! Alt_meta_map()
-    set ttimeout
-    if $TMUX != ''
-        set ttimeoutlen=50
-    elseif &ttimeoutlen > 100 || &ttimeoutlen <= 0
-        set ttimeoutlen=100
-    endif
-    if has('nvim') || has('gui_running') && !OSX()
-        return
-    endif
-    function! s:metacode(key)
-        exec "set <M-".a:key.">=\e".a:key
-    endfunc
-    for i in range(26)
-        call s:metacode(nr2char(char2nr('a') + i))
-        call s:metacode(nr2char(char2nr('A') + i))
-    endfor
-    for i in range(10)
-        call s:metacode(nr2char(char2nr('0') + i))
-    endfor
-    let s:list = ['-', ';', '/', ',', '.', '_', ':', '?']
-    for c in s:list
-        call s:metacode(c)
-    endfor
-    if has('gui_macvim')
-        let a:letters_dict={
-            \ 'a':'å',
-            \ 'b':'∫',
-            \ 'c':'ç',
-            \ 'd':'∂',
-            \ 'e':'´',
-            \ 'f':'ƒ',
-            \ 'g':'©',
-            \ 'h':'˙',
-            \ 'i':'ˆ',
-            \ 'j':'∆',
-            \ 'k':'˚',
-            \ 'l':'¬',
-            \ 'm':'µ',
-            \ 'n':'˜',
-            \ 'o':'ø',
-            \ 'p':'π',
-            \ 'q':'œ',
-            \ 'r':'®',
-            \ 's':'ß',
-            \ 't':'†',
-            \ 'u':'¨',
-            \ 'v':'√',
-            \ 'w':'∑',
-            \ 'x':'≈',
-            \ 'y':'¥',
-            \ 'z':'Ω',
-            \ 'A':'Å',
-            \ 'B':'ı',
-            \ 'C':'Ç',
-            \ 'D':'∂',
-            \ 'E':'´',
-            \ 'F':'Ï',
-            \ 'G':'˝',
-            \ 'H':'Ó',
-            \ 'I':'ˆ',
-            \ 'J':'Ô',
-            \ 'K':'',
-            \ 'L':'Ò',
-            \ 'M':'Â',
-            \ 'N':'˜',
-            \ 'O':'Ø',
-            \ 'P':'∏',
-            \ 'Q':'Œ',
-            \ 'R':'‰',
-            \ 'S':'Í',
-            \ 'T':'ˇ',
-            \ 'U':'¨',
-            \ 'V':'◊',
-            \ 'W':'„',
-            \ 'X':'˛',
-            \ 'Y':'Á',
-            \ 'Z':'¸',
-            \ '-':'–',
-            \ ';':'…',
-            \ '/':'÷',
-            \ ',':'≤',
-            \ '.':'≥',
-            \ '_':'—',
-            \ ':':'Ú',
-            \ '?':'¿',
-            \ '0':'º',
-            \ '1':'¡',
-            \ '2':'™',
-            \ '3':'£',
-            \ '4':'¢',
-            \ '5':'∞',
-            \ '6':'§',
-            \ '7':'¶',
-            \ '8':'•',
-            \ '9':'ª'
-        \ }
-        for c in keys(a:letters_dict)
-            for m in ['nmap', 'vmap', 'smap', 'tmap']
-                exec m." ".a:letters_dict[c]." <M-".c.">"
-            endfor
-        endfor
-    endif
-endfunc
-command! -nargs=0 -bang ALTMetaMap call Alt_meta_map()
-call Alt_meta_map()
 " window move manager
 function! g:Tools_PreviousCursor(mode)
     if winnr('$') <= 1
