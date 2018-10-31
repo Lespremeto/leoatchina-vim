@@ -1492,8 +1492,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 endif
             endif
         endfunction
-        inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab(1)<cr>
-        inoremap <silent> <C-j> <C-R>=g:UltiSnips_Tab(0)<cr>
+        au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:UltiSnips_Tab(1)<cr>"
+        au BufEnter * exec "inoremap <silent> <C-j> <C-R>=g:UltiSnips_Tab(0)<cr>"
         smap <C-j> <Tab>
         smap <C-k> <S-Tab>
         " Ulti的代码片段的文件夹
@@ -1525,8 +1525,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 endif
             endif
         endfunction
-        inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab(1)<cr>
-        inoremap <silent> <C-j> <C-R>=g:NeoSnippet_Tab(0)<cr>
+        au BufEnter * exec "inoremap <silent> <Tab> <C-R>=g:NeoSnippet_Tab(1)<cr>"
+        au BufEnter * exec "inoremap <silent> <C-j> <C-R>=g:NeoSnippet_Tab(0)<cr>"
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
     endif
