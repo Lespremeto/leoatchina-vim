@@ -376,8 +376,8 @@ noremap zh zH
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
-" for help
-nnoremap <leader>th :tab help<Space>
+" for toggle highlight
+nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tg :set nopaste! nopaste?<CR>
 " toggleFold
@@ -386,6 +386,8 @@ nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " show clipboard
 nnoremap <leader>tr :reg<Cr>
+" for help
+nnoremap <leader>TT :tab help<Space>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
