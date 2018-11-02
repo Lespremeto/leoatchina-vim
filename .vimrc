@@ -299,8 +299,9 @@ inoremap <C-k>, <C-x><C-o>
 inoremap <C-k>. <C-x><C-v>
 inoremap <C-l> <Nop>
 " a,e for home/end
-nnoremap <leader>a ^
-nnoremap <leader>e $
+nnoremap gb ge
+nnoremap ga ^
+nnoremap ge $
 vnoremap <leader>a ^
 vnoremap <leader>e $<Left>
 inoremap <C-a> <Esc>I
