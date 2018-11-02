@@ -886,10 +886,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " autopairs
     if HasDirectory("auto-pairs")
         let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-        let g:AutoPairsShortcutToggle     = "<C-b>t"
-        let g:AutoPairsShortcutFastWrap   = "<C-b>f"
-        let g:AutoPairsShortcutJump       = "<C-b>j"
-        let g:AutoPairsShortcutBackInsert = "<C-b>i"
+        let g:AutoPairsShortcutToggle     = "<C-l>g"
+        let g:AutoPairsShortcutFastWrap   = "<C-l>f"
+        let g:AutoPairsShortcutJump       = "<C-l>j"
+        let g:AutoPairsShortcutBackInsert = "<C-l>i"
         inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
     endif
     " typecast
