@@ -378,16 +378,20 @@ noremap <silent>j gj
 noremap <silent>k gk
 " for toggle highlight
 nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
+nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tg :set nopaste! nopaste?<CR>
+nnoremap <F12> :set nopaste! nopaste?<CR>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " show clipboard
 nnoremap <leader>tr :reg<Cr>
+nnoremap <F3> :reg<Cr>
 " for help
 nnoremap <leader>TT :tab help<Space>
+nnoremap <F1> :tab help<Space>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
@@ -1694,7 +1698,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
-        nnoremap <C-l>r :QuickRun<Cr>
+        nnoremap <C-b>r :QuickRun<Cr>
+        nnoremap <F5> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let s:quickfix_is_open = 0
         function! ToggleQuickfix()
@@ -1710,7 +1715,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <C-l>q :ToggleQuickfix<cr>
+        nnoremap <C-b>q :ToggleQuickfix<cr>
+        nnoremap <F4> :ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
@@ -1794,14 +1800,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! AsyncRunNow call s:ASYNC_RUN()
-        nmap <C-l>a :AsyncRunNow<CR>
-        nmap <C-l>s :AsyncStop<CR>
+        nmap <C-b>a :AsyncRunNow<CR>
+        nmap <C-b>s :AsyncStop<CR>
+        nmap <C-b>g :AsyncRun
         au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
     endif
     " vim-repl
     if HasDirectory('vim-repl')
-        nnoremap <C-l>t :REPLToggle<Cr>
-        let g:sendtorepl_invoke_key = "<C-l>w"
+        nnoremap <C-b>t :REPLToggle<Cr>
+        let g:sendtorepl_invoke_key = "<C-b>w"
         let g:repl_program = {
             \	"default": "bash",
         \ }
