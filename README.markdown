@@ -1,5 +1,6 @@
 <!-- vim-markdown-toc GitLab -->
 
++ [still in modifying, some short cuts will be changed](#still-in-modifying-some-short-cuts-will-be-changed)
 + [中文介绍](#中文介绍)
 + [Introduction](#introduction)
 + [Requirements](#requirements)
@@ -73,6 +74,7 @@
     * [EasyMotion](#easymotion)
 
 <!-- vim-markdown-toc -->
+# still in modifying, some short cuts will be changed
 # 中文介绍
 原来的repo放在 [spf13-vim-leoatchina](https://github.com/leoatchina/spf13-vim-leoatchina)，因为原来一时脑抽，把中文字体放进去后导致体积较大，影响速度，所以重开一个repo并把windows下的工具分开，以增加clone速度。
 
