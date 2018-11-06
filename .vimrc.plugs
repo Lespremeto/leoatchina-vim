@@ -380,7 +380,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
 					\ 'do': 'bash install.sh',
 					\ }
                 " use ultisnps only
-                Plug 'ncm2/ncm2-ultisnips'
+                if g:complete_engine == 'ultisnipes'
+                    Plug 'ncm2/ncm2-ultisnips'
+                endif
             elseif g:complete_engine == "deoplete"
                 if has('nvim')
                     Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
