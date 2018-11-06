@@ -4,11 +4,13 @@
 " python support
 if has('python3') && executable('python3')
     let g:python_version = 3
+    let g:python3_host_prog = exepath('python3')
     if !WINDOWS()
         silent! python3 1
     endif
 elseif has('python') && executable('python')
     let g:python_version = 2
+    let g:python_host_prog = exepath('python2')
     if !WINDOWS()
         silent! python 1
     endif
