@@ -300,6 +300,7 @@ inoremap <C-k>. <C-x><C-v>
 inoremap <C-l> <Nop>
 " a,e for home/end
 nnoremap gb ge
+vnoremap gb ge
 nnoremap ga ^
 nnoremap ge $
 vnoremap <leader>a ^
