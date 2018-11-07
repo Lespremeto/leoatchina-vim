@@ -329,6 +329,7 @@ nnoremap <Leader>te         :tabe<Space>
 nnoremap <Leader>tm         :tabm<Space>
 nnoremap <Leader>ts         :tab split<CR>
 nnoremap <Leader>tS         :tabs<CR>
+nnoremap gq                 :tabclose<CR>
 if has('gui_macvim')
     nnoremap <D-1> :tabn1<CR>
     nnoremap <D-2> :tabn2<CR>
