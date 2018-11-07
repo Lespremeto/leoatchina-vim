@@ -1069,10 +1069,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
            \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
        \ }
     elseif g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
-        nnoremap <silent> <C-k>j :FZF<CR>
+        nnoremap <silent> <C-k>j :Files<CR>
         nnoremap <silent> <C-k>b :Buffers<CR>
-        nnoremap <silent> <C-k>f :FZF<Space>
-        nnoremap <silent> <C-k>t :Filetypes<CR>
+        nnoremap <silent> <C-k>f :Filetypes<CR>
         nnoremap <silent> <C-k>g :GFiles?<CR>
         nnoremap <silent> <C-k>m :Maps<CR>
         nnoremap <silent> <C-k>c :Commits<CR>
