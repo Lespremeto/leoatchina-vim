@@ -706,7 +706,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 colorscheme hybrid_material
             endif
         elseif has('gui_running')
-            colorscheme hybrid_material
+            colorscheme hybrid
         else
             set t_Co=256
             colorscheme gruvbox
