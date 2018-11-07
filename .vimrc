@@ -409,10 +409,9 @@ nnoremap <Leader>W :wq!<CR>
 nnoremap <Leader>WQ :wa<CR>:q<CR>
 " quit
 nnoremap ~ Q
-nnoremap Q :bd!<CR>
-nnoremap <leader>q :bd!
+nnoremap Q :bd!<Cr>
+nnoremap <leader>q :q!<Cr>
 nnoremap <Leader>Q :qa!
-autocmd BufDelete * if len(filter(range(1, bufnr('$')), '! empty(bufname(v:val)) && buflisted(v:val)')) == 1 | quit | endif
 " 设置分割页面
 nnoremap <leader>\ :vsplit<Space>
 nnoremap <leader>= :split<Space>
