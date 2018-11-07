@@ -303,8 +303,8 @@ nnoremap gb ge
 vnoremap gb ge
 nnoremap ga ^
 nnoremap ge $
-vnoremap <leader>a ^
-vnoremap <leader>e $<Left>
+vnoremap ga ^
+vnoremap ge $<left>
 inoremap <C-a> <Esc>I
 inoremap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 cnoremap <C-a> <Home>
