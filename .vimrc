@@ -379,17 +379,27 @@ noremap <silent>j gj
 noremap <silent>k gk
 " for toggle highlight
 nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
-nnoremap <F7> :set nohlsearch! nohlsearch?<CR>
+nnoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
+vnoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
+inoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
+snoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
+cnoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
+" show clipboard
+nnoremap <leader>tr :reg<Cr>
+nnoremap <F8> <ESC>:reg<Cr>
+vnoremap <F8> <ESC>:reg<Cr>
+snoremap <F8> <ESC>:reg<Cr>
+cnoremap <F8> <ESC>:reg<Cr>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tg :set nopaste! nopaste?<CR>
-nnoremap <F12> :set nopaste! nopaste?<CR>
+nnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
+vnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
+snoremap <F12> <ESC>:set nopaste! nopaste?<CR>
+cnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
-" show clipboard
-nnoremap <leader>tr :reg<Cr>
-nnoremap <F8> :reg<Cr>
 " for help
 nnoremap <leader>TT :tab help<Space>
 " 定义快捷键保存
