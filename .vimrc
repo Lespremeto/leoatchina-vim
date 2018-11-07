@@ -379,7 +379,7 @@ noremap <silent>j gj
 noremap <silent>k gk
 " for toggle highlight
 nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
-nnoremap <F2> :set nohlsearch! nohlsearch?<CR>
+nnoremap <F7> :set nohlsearch! nohlsearch?<CR>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tg :set nopaste! nopaste?<CR>
 nnoremap <F12> :set nopaste! nopaste?<CR>
@@ -389,10 +389,9 @@ nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " show clipboard
 nnoremap <leader>tr :reg<Cr>
-nnoremap <F3> :reg<Cr>
+nnoremap <F8> :reg<Cr>
 " for help
 nnoremap <leader>TT :tab help<Space>
-nnoremap <F1> :tab help<Space>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
@@ -1717,7 +1716,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
         nnoremap <C-b>q :ToggleQuickfix<cr>
-        nnoremap <F4> :ToggleQuickfix<cr>
+        nnoremap <F6> :ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
