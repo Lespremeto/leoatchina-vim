@@ -984,6 +984,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         cmap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
     else
         set noshowmode
+        inoremap <C-\> <Nop>
+        cnoremap <C-\> <Nop>
     endif
     " search tools
     if HasDirectory('FlyGrep.vim')
