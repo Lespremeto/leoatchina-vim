@@ -76,6 +76,7 @@ function! Alt_meta_map()
     endfor
     if has('gui_macvim')
         let a:letters_dict={
+            \ '\':'«',
             \ 'a':'å',
             \ 'b':'∫',
             \ 'c':'ç',
