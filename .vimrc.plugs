@@ -92,6 +92,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if v:version < 800
             Plug 'Shougo/vimproc.vim', {'do' : 'make'}
         endif
+        " input method
+        if HasPlug('wubi') || HasPlug('pinyin')
+            Plug 'leoatchina/ywvim'
+        endif
         " signs
         if has('signs')
             Plug 'kshenoy/vim-signature'
