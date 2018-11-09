@@ -386,18 +386,21 @@ vnoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
 inoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
 snoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
 cnoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
+inoremap <F7> <ESC>:set nohlsearch! nohlsearch?<CR>
 " show clipboard
 nnoremap <leader>tr :reg<Cr>
 nnoremap <F8> <ESC>:reg<Cr>
 vnoremap <F8> <ESC>:reg<Cr>
 snoremap <F8> <ESC>:reg<Cr>
 cnoremap <F8> <ESC>:reg<Cr>
+inoremap <F8> <ESC>:reg<Cr>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tg :set nopaste! nopaste?<CR>
 nnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
 vnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
 snoremap <F12> <ESC>:set nopaste! nopaste?<CR>
 cnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
+inoremap <F12> <ESC>:set nopaste! nopaste?<CR>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
@@ -712,7 +715,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set laststatus=2
         if has('nvim')
             if WINDOWS()
-                colorscheme onedark
+                colorscheme wombat256mod
             else
                 set t_Co=256
                 colorscheme hybrid_material
@@ -1713,6 +1716,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory("vim-quickrun")
         nnoremap <C-b>r :QuickRun<Cr>
         nnoremap <F5> :QuickRun<Cr>
+        cnoremap <F5> <Esc>:QuickRun<Cr>
+        vnoremap <F5> <Esc>:QuickRun<Cr>
+        snoremap <F5> <Esc>:QuickRun<Cr>
+        inoremap <F5> <Esc>:QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let s:quickfix_is_open = 0
         function! ToggleQuickfix()
@@ -1730,6 +1737,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         command! ToggleQuickfix call ToggleQuickfix()
         nnoremap <C-b>q :ToggleQuickfix<cr>
         nnoremap <F6> :ToggleQuickfix<cr>
+        vnoremap <F6> <Esc>:ToggleQuickfix<cr>
+        snoremap <F6> <Esc>:ToggleQuickfix<cr>
+        cnoremap <F6> <Esc>:ToggleQuickfix<cr>
+        inoremap <F6> <Esc>:ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
