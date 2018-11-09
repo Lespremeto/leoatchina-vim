@@ -1183,7 +1183,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     set completeopt-=menu
     set completeopt-=preview
     set completeopt+=menuone
-    set shortmess+=c
+    if v:version >= 800 || has('nvim')
+        set shortmess+=c
+    endif
     if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
         set completeopt+=noinsert,noselect
         if g:python_version == 2
