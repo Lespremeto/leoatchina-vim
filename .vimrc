@@ -320,8 +320,6 @@ nnoremap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<C
 set tabpagemax=10 " Only show 10 tabs
 cnoremap Tabe tabe
 " compatible with xshell
-nnoremap <Leader>tp         :tabprevious<CR>
-nnoremap <Leader>tn         :tabnext<CR>
 nnoremap <silent><Tab>      :tabnext<CR>
 nnoremap <silent>-          :tabprevious<CR>
 nnoremap <leader><Tab>      :tabm +1<CR>
@@ -394,6 +392,7 @@ inoremap <S-F6> <ESC>:reg<Cr>
 cnoremap <S-F6> <ESC>:reg<Cr>
 snoremap <S-F6> <ESC>:reg<Cr>
 " pastetoggle (sane indentation on pastes)
+nnoremap <leader>tp <ESC>:set nopaste! nopaste?<CR>
 nnoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
 vnoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
 inoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
