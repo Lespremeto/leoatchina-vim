@@ -379,22 +379,26 @@ noremap zh zH
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
-" show clipboard
-nnoremap <leader>tr :reg<Cr>
-nnoremap <F6> <ESC>:reg<Cr>
-vnoremap <F6> <ESC>:reg<Cr>
-snoremap <F6> <ESC>:reg<Cr>
-cnoremap <F6> <ESC>:reg<Cr>
-inoremap <F6> <ESC>:reg<Cr>
-" pastetoggle (sane indentation on pastes)
-nnoremap <leader>tg :set nopaste! nopaste?<CR>
-nnoremap <S-F6> <ESC>:set nopaste! nopaste?<CR>
-vnoremap <S-F6> <ESC>:set nopaste! nopaste?<CR>
-snoremap <S-F6> <ESC>:set nopaste! nopaste?<CR>
-cnoremap <S-F6> <ESC>:set nopaste! nopaste?<CR>
-inoremap <S-F6> <ESC>:set nopaste! nopaste?<CR>
 " for toggle highlight
 nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
+nnoremap <F6> :set nohlsearch! nohlsearch?<CR>
+vnoremap <F6> :set nohlsearch! nohlsearch?<CR>
+inoremap <F6> :set nohlsearch! nohlsearch?<CR>
+cnoremap <F6> :set nohlsearch! nohlsearch?<CR>
+snoremap <F6> :set nohlsearch! nohlsearch?<CR>
+" show clipboard
+nnoremap <leader>tr :reg<Cr>
+nnoremap <S-F6> <ESC>:reg<Cr>
+vnoremap <S-F6> <ESC>:reg<Cr>
+inoremap <S-F6> <ESC>:reg<Cr>
+cnoremap <S-F6> <ESC>:reg<Cr>
+snoremap <S-F6> <ESC>:reg<Cr>
+" pastetoggle (sane indentation on pastes)
+nnoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
+vnoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
+inoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
+cnoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
+snoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
