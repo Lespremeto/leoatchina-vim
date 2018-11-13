@@ -53,9 +53,9 @@ endif
 function! Alt_meta_map()
     set ttimeout
     if $TMUX != ''
-        set ttimeoutlen=50
-    elseif &ttimeoutlen > 100 || &ttimeoutlen <= 0
-        set ttimeoutlen=100
+        set ttimeoutlen=20
+    elseif &ttimeoutlen > 60 || &ttimeoutlen <= 0
+        set ttimeoutlen=60
     endif
     if has('nvim') || has('gui_running') && !OSX()
         return
