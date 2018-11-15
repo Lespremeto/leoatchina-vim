@@ -983,7 +983,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         imap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
         cmap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
     else
-        set noshowmode
         inoremap <C-\> <Nop>
         cnoremap <C-\> <Nop>
     endif
@@ -1190,9 +1189,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         else
             let g:ycm_python_binary_path = 'python3'
         endif
-        let g:ycm_key_invoke_completion = '<C-i>'
+        let g:ycm_key_invoke_completion = ['<C-Space>', '<C-k>;']
         " add_preview
-        let g:ycm_add_preview_to_completeopt = 1
+        let g:ycm_add_preview_to_completeopt = 0
         "  补全后close窗口
         let g:ycm_autoclose_preview_window_after_completion = 1
         "  插入后close窗口
