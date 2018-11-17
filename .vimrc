@@ -584,13 +584,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
                 let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
             endif
+            let g:fullscreen#enable_default_keymap = 0
+	        nmap <F11> <Plug>(fullscreen-toggle)
         else
             if has('libcall')
                 let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
                 function! ToggleFullScreen()
                     call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
                 endfunction
-                map <C-Cr> <Esc>:call ToggleFullScreen()<CR>
                 map <F11> <Esc>:call ToggleFullScreen()<CR>
                 let g:VimAlpha = 240
                 function! SetAlpha(alpha)
@@ -603,18 +604,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     endif
                     call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
                 endfunction
-                nmap <M-q> <Esc>:call SetAlpha(+3)<CR>
-                nmap <M-s> <Esc>:call SetAlpha(-3)<CR>
-                let g:VimTopMost = 0
-                function! SwitchVimTopMostMode()
-                    if g:VimTopMost == 0
-                        let g:VimTopMost = 1
-                    else
-                        let g:VimTopMost = 0
-                    endif
-                    call libcall(g:MyVimLib, 'EnableTopMost', g:VimTopMost)
-                endfunction
-                nmap <M-z> <Esc>:call SwitchVimTopMostMode()<CR>
+                nmap <silent><M-F12> <Esc>:call SetAlpha(+3)<CR>
+                nmap <silent><M-F11> <Esc>:call SetAlpha(-3)<CR>
             endif
         endif
     endif
@@ -626,8 +617,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             au FileType markdown vmap <silent> <C-q> <ESC>:Voom markdown<Cr>
             au FileType markdown imap <silent> <C-q> <ESC>:Voom markdown<Cr>
         endif
-        nmap <leader>vt :VoomToggle<CR>
-        nmap <leader>vv :VoomQuit<CR>:Voom<CR><C-w>w
+        nmap <leader>tv :VoomToggle<CR>
+        nmap <leader>tn :VoomQuit<CR>:Voom<CR><C-w>w
         let g:voom_tab_key = "<C-tab>"
         let g:voom_ft_modes = {
             \ 'markdown': 'markdown',
@@ -1236,8 +1227,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap <silent> gr <Plug>(coc-references)
         let g:coc_snippet_next = '<C-n>'
 	    let g:coc_snippet_prev = '<C-p>'
-        nnoremap <localleader>CC :CocInstall coc-pyls coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur coc-java<Cr>
-        nnoremap <localleader>CO :CocInstall coc-stylelint coc-eslint coc-tslint coc-solargraph coc-prettier coc-jest<Cr>
+        function! CocEngineInstall()
+            execute 'CocInstall coc-stylelint coc-eslint coc-tslint'
+            execute 'CocInstall coc-pyls coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur coc-java coc-rls'
+        endfunction
+        command! -nargs=0 -bang CocInit call CocEngineInstall()
         " Show signature help while editing
         autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
         " Highlight symbol under cursor on CursorHold
