@@ -461,15 +461,7 @@ set showtabline=2
 set incsearch
 " 显示行号
 set number
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set norelativenumber
-  else
-    set relativenumber
-  endif
-endfunc
-"+gP
-nnoremap <silent><leader>tn :call NumberToggle()<cr>
+nnoremap <silent><leader>tn :set invrelativenumber<CR>
 " 在help里显示行号
 au FileType help setlocal number
 " 显示光标当前位置
@@ -486,12 +478,11 @@ set showmatch                   " Show matching brackets/parenthesis
 set winminheight=0              " Windows can be 0 line high
 set wildmenu                    " Show list instead of just completing
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
-set whichwrap=b,s,h,l,<,>,[,]   " BackSpace and cursor keys wrap too
 set scrolljump=5                " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
-set shiftwidth=4                " Use indents of 4 Spaces
-set tabstop=4                   " An indentation every four columns
-set softtabstop=4               " Let backSpace delete indent
+set shiftwidth=2                " Use indents of 2 Spaces
+set tabstop=2                   " An indentation every
+set softtabstop=2               " Let backSpace delete indent
 set expandtab                   " Tabs are Spaces, not tabs
 set autoindent
 setlocal textwidth=0
@@ -513,10 +504,9 @@ au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
-au BufNewFile,BufRead *.yml,*.R,*.c,*.cpp,*.java,*.js,*.json,*.vue,*.ts setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
 " sepcial setting for different type of files
 au FileType python au BufWritePost <buffer> :%retab
-au FileType haskell,puppet,ruby setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2
+au FileType python setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
