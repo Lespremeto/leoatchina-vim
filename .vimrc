@@ -461,6 +461,15 @@ set showtabline=2
 set incsearch
 " 显示行号
 set number
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber
+  else
+    set relativenumber
+  endif
+endfunc
+"+gP
+nnoremap <silent><leader>tn :call NumberToggle()<cr>
 " 在help里显示行号
 au FileType help setlocal number
 " 显示光标当前位置
