@@ -296,7 +296,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " smart select engine
                 if HasPlug('smartcomplete') || g:smart_engine_select
-                    if (has('nvim-0.2.0') || v:version >= 800) && g:python_version == 3
+                    if g:python_version == 3 && (has('nvim-0.2.0') || v:version>=800)
                         let g:complete_engine = "deoplete"
                     elseif has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
@@ -350,10 +350,23 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         Plug 'roxma/vim-hug-neovim-rpc'
                         Plug 'roxma/nvim-yarp'
                     endif
-                    Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp']}
+                    Plug 'autozimu/LanguageClient-neovim', {
+                        \ 'branch': 'next',
+                        \ 'do': 'bash install.sh',
+                        \ }
+                    Plug 'Shougo/deoplete-clangx'
                     Plug 'zchee/deoplete-jedi', {'for': 'python'}
                     if HasPlug('javascript')
-                        Plug 'carlitux/deoplete-ternjs'
+                        Plug 'wokalski/autocomplete-flow'
+                    endif
+                    if HasPlug('go') && executable('go')
+                        Plug 'zchee/deoplete-go', {'for': 'go'}
+                    endif
+                    if HasPlug('php') && executable('composer')
+                        Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
+                    endif
+                    if HasPlug('rusr') && executable('racer')
+                        Plug 'racer-rust/vim-racer'
                     endif
                 elseif g:complete_engine == "asyncomplete"
                     Plug 'prabirshrestha/asyncomplete.vim'
@@ -381,7 +394,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         Plug 'runoshun/tscompletejob'
                         Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
                     endif
-                    if HasPlug('rust')
+                    if HasPlug('rust') && executable('racer')
                         Plug 'keremc/asyncomplete-racer.vim'
                     endif
                     if g:complete_snippet == 'ultisnips'
