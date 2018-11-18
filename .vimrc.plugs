@@ -264,21 +264,21 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('coc')
-                    if has('nvim-0.3.0') && executable('node') && executable('yarn')
+                    if has('nvim-0.3.0') && executable('node') && executable('yarn') && has('timers')
                         let g:complete_engine = "coc"
                     else
                         echoe "Cannot install coc, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('deoplete')
-                    if g:python_version == 3 && (has('nvim-0.2.0') || v:version>=800)
+                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800) && has('timers')
                        let g:complete_engine = "deoplete"
                     else
                         echoe "Cannot install deoplete, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('asyncomplete')
-                    if has('nvim') || v:version >= 800
+                    if (has('nvim') || v:version >= 800) && has('timers')
                         let g:complete_engine = "asyncomplete"
                     else
                         echoe "Cannot install asyncomplete, smart select a complete_engine."
@@ -296,9 +296,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " smart select engine
                 if HasPlug('smartcomplete') || g:smart_engine_select
-                    if g:python_version == 3 && (has('nvim-0.2.0') || v:version>=800)
+                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800) && has('timers')
                         let g:complete_engine = "deoplete"
-                    elseif has('nvim') || v:version >= 800
+                    elseif (has('nvim') || v:version >= 800) && has('timers')
                         let g:complete_engine = "asyncomplete"
                     elseif has('lua')
                         let g:complete_engine = "neocomplete"
