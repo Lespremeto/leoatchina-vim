@@ -506,7 +506,7 @@ au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
 " sepcial setting for different type of files
 au FileType python au BufWritePost <buffer> :%retab
-au FileType python setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
+au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
@@ -617,7 +617,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             au FileType markdown imap <silent> <C-q> <ESC>:Voom markdown<Cr>
         endif
         nmap <leader>tv :VoomToggle<CR>
-        nmap <leader>tn :VoomQuit<CR>:Voom<CR><C-w>w
+        nmap <leader>tg :VoomQuit<CR>:Voom<CR><C-w>w
         let g:voom_tab_key = "<C-tab>"
         let g:voom_ft_modes = {
             \ 'markdown': 'markdown',
@@ -1239,53 +1239,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         command! -nargs=0 Format :call CocAction('format')
         " Use `:Fold` for fold current buffer
         command! -nargs=? Fold :call CocAction('fold', <f-args>)
-    elseif HasDirectory("ncm2") && g:complete_engine == "ncm2"
-        set completeopt+=noinsert,noselect
-        au BufEnter * call ncm2#enable_for_buffer()
-        if HasPlug('html')
-            au User Ncm2Plugin call ncm2#register_source({
-                \ 'name' : 'css',
-                \ 'enable' : 1,
-                \ 'priority': 9,
-                \ 'subscope_enable': 1,
-                \ 'scope': ['css','scss'],
-                \ 'mark': 'css',
-                \ 'word_pattern': '[\w\-]+',
-                \ 'complete_pattern': ':\s*',
-                \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
-                \ })
-            au User Ncm2Plugin call ncm2#register_source({
-                \ 'name' : 'html',
-                \ 'enable' : 1,
-                \ 'priority': 9,
-                \ 'subscope_enable': 1,
-                \ 'scope': ['htm','html', 'markdown'],
-                \ 'mark': 'html',
-                \ 'word_pattern': '[\w\-]+',
-                \ 'complete_pattern': ':\s*',
-                \ 'on_complete': ['ncm2#on_complete#omni', 'htmlcomplete#CompleteTags']
-                \ })
-        endif
-        if HasPlug('java')
-            au User Ncm2Plugin call ncm2#register_source({
-                \ 'name' : 'java',
-                \ 'enable' : 1,
-                \ 'priority': 9,
-                \ 'subscope_enable': 1,
-                \ 'scope': ['java','class'],
-                \ 'mark': 'java',
-                \ 'word_pattern': '[\w\-]+',
-                \ 'complete_pattern': '.\s*',
-                \ 'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
-                \ })
-        endif
-        let g:LanguageClient_serverCommands = {
-                \ 'go': ['go-langserver'],
-                \ 'rust': ['rls'],
-                \ 'python': ['pyls'],
-                \ 'typescript': ['javascript-typescript-stdio'],
-                \ 'javascript': ['javascript-typescript-stdio'],
-            \ }
     elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
