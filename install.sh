@@ -112,6 +112,7 @@ variable_set "$HOME"
 program_must_exist "git"
 mkdir -p "$HOME/.vim/session"
 mkdir -p "$HOME/.cache/tags"
+mkdir -p "$HOME/.config/nvim"
 update_vim_plug='0'
 ret='0'
 if [ -f $HOME/.vimrc.clean ];then
@@ -145,10 +146,12 @@ fi
 
 if program_exists "nvim"; then
     setup_plug "nvim"
+    lnif "$source_path/.vimrc" "$HOME/.config/nvim/init.vim"
 fi
 
 if program_exists "gvim"; then
     setup_plug "gvim"
 fi
+
 msg "\nThanks for installing leoatchina's vim config forked from http://vim.spf13.com"
 msg "© `date +%Y` https://github.com/leoatchina/leoatchina-vim"
