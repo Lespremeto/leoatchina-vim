@@ -352,17 +352,25 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     endif
                     Plug 'Shougo/deoplete-clangx'
                     Plug 'zchee/deoplete-jedi', {'for': 'python'}
-                    if HasPlug('javascript')
-                        Plug 'wokalski/autocomplete-flow'
-                    endif
-                    if HasPlug('go') && executable('go')
-                        Plug 'zchee/deoplete-go', {'for': 'go'}
-                    endif
-                    if HasPlug('php') && executable('composer')
-                        Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
-                    endif
-                    if HasPlug('rusr') && executable('racer')
-                        Plug 'racer-rust/vim-racer'
+                    " use LCN for complete_engine
+                    if !WINDOWS()
+                        Plug 'autozimu/LanguageClient-neovim', {
+                            \ 'branch': 'next',
+                            \ 'do': 'bash install.sh',
+                            \ }
+                    else
+                        if HasPlug('javascript')
+                            Plug 'wokalski/autocomplete-flow'
+                        endif
+                        if HasPlug('go') && executable('go')
+                            Plug 'zchee/deoplete-go', {'for': 'go'}
+                        endif
+                        if HasPlug('php') && executable('composer')
+                            Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
+                        endif
+                        if HasPlug('rust') && executable('racer')
+                            Plug 'racer-rust/vim-racer'
+                        endif
                     endif
                 elseif g:complete_engine == "asyncomplete"
                     Plug 'prabirshrestha/asyncomplete.vim'

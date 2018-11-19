@@ -1248,6 +1248,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:deoplete#enable_yarp = 1
         endif
         let g:deoplete#enable_camel_case = 1
+        if HasDirectory("LanguageClient-neovim")
+            call deoplete#custom#source('LanguageClient',
+                \ 'min_pattern_length',
+                \ 2)
+        else
         " omni completion is vim grep
         call deoplete#custom#option('omni_patterns', {
             \ 'java' :'[^. *\t]\.\w*',
@@ -1256,13 +1261,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
             \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
             \ 'go'   :'\h\w*\.\?',
-        \})
+            \})
         " keyword_patterns is python grep
         call deoplete#custom#option('keyword_patterns', {
             \ '_'    :'[a-zA-Z_]\k*',
             \ 'tex'  :'\\?[a-zA-Z_]\w*',
             \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
-        \})
+            \})
+        endif
         if HasDirectory('ultisnips')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
