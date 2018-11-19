@@ -1220,17 +1220,17 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 跳转到定义处
         nnoremap <silent>g<C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory("coc.nvim") && g:complete_engine == "coc"
-        nmap <silent> gd <Plug>(coc-definition)
-        nmap <silent> gy <Plug>(coc-type-definition)
-        nmap <silent> gi <Plug>(coc-implementation)
-        nmap <silent> gr <Plug>(coc-references)
+        nnoremap <silent> gd <Plug>(coc-definition)
+        nnoremap <silent> gy <Plug>(coc-type-definition)
+        nnoremap <silent> gi <Plug>(coc-implementation)
+        nnoremap <silent> gr <Plug>(coc-references)
         let g:coc_snippet_next = '<C-n>'
 	    let g:coc_snippet_prev = '<C-p>'
-        function! CocEngineInstall()
-            execute 'CocInstall coc-stylelint coc-eslint coc-tslint'
+        function! CocSetup()
             execute 'CocInstall coc-pyls coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur coc-java coc-rls'
+            execute 'CocInstall coc-stylelint coc-eslint coc-tslint'
         endfunction
-        command! -nargs=0 -bang CocInit call CocEngineInstall()
+        command! -nargs=0 -bang CocSetup call CocSetup()
         " Show signature help while editing
         autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
         " Highlight symbol under cursor on CursorHold
