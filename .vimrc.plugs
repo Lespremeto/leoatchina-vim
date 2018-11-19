@@ -7,10 +7,16 @@ if has('python3') && executable('python3')
     if !WINDOWS()
         silent! python3 1
     endif
-elseif has('python') && executable('python')
+    if v:version >=704 || has('nvim')
+        let g:python3_host_prog = exepath('python3')
+    endif
+elseif has('python') && executable('python2')
     let g:python_version = 2
     if !WINDOWS()
         silent! python 1
+    endif
+    if v:version >=704 || has('nvim')
+        let g:python_host_prog = exepath('python2')
     endif
 else
     let g:python_version = 0
@@ -362,15 +368,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         if HasPlug('javascript')
                             Plug 'wokalski/autocomplete-flow'
                         endif
-                        if HasPlug('go') && executable('go')
-                            Plug 'zchee/deoplete-go', {'for': 'go'}
-                        endif
                         if HasPlug('php') && executable('composer')
                             Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
                         endif
-                        if HasPlug('rust') && executable('racer')
-                            Plug 'racer-rust/vim-racer'
-                        endif
+                        "if HasPlug('go') && executable('go')
+                            "Plug 'zchee/deoplete-go', {'for': 'go'}
+                        "endif
+                        "if HasPlug('rust') && executable('racer')
+                            "Plug 'racer-rust/vim-racer'
+                        "endif
                     endif
                 elseif g:complete_engine == "asyncomplete"
                     Plug 'prabirshrestha/asyncomplete.vim'

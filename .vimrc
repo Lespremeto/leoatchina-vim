@@ -1242,32 +1242,35 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
+        let g:deoplete#enable_camel_case = 1
         " <BS>: close popup and delete backword char.
         inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
         if !has('nvim')
             let g:deoplete#enable_yarp = 1
         endif
-        let g:deoplete#enable_camel_case = 1
+        if HasDirectory('deoplete-jedi')
+            let g:deoplete#sources#jedi#python_path = exepath('python3')
+        endif
         if HasDirectory("LanguageClient-neovim")
             call deoplete#custom#source('LanguageClient',
                 \ 'min_pattern_length',
                 \ 2)
         else
-        " omni completion is vim grep
-        call deoplete#custom#option('omni_patterns', {
-            \ 'java' :'[^. *\t]\.\w*',
-            \ 'php'  :'[^. \t]->\h\w*\|\h\w*::',
-            \ 'perl' :'\h\w*->\h\w*\|\h\w*::',
-            \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
-            \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
-            \ 'go'   :'\h\w*\.\?',
-            \})
-        " keyword_patterns is python grep
-        call deoplete#custom#option('keyword_patterns', {
-            \ '_'    :'[a-zA-Z_]\k*',
-            \ 'tex'  :'\\?[a-zA-Z_]\w*',
-            \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
-            \})
+            " omni completion is vim grep
+            call deoplete#custom#option('omni_patterns', {
+                \ 'java' :'[^. *\t]\.\w*',
+                \ 'php'  :'[^. \t]->\h\w*\|\h\w*::',
+                \ 'perl' :'\h\w*->\h\w*\|\h\w*::',
+                \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
+                \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
+                \ 'go'   :'\h\w*\.\?',
+                \})
+            " keyword_patterns is python grep
+            call deoplete#custom#option('keyword_patterns', {
+                \ '_'    :'[a-zA-Z_]\k*',
+                \ 'tex'  :'\\?[a-zA-Z_]\w*',
+                \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
+                \})
         endif
         if HasDirectory('ultisnips')
             call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
