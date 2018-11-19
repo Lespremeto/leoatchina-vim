@@ -79,6 +79,10 @@ create_symlinks() {
     lnif "$source_path/.vimrc.clean"    "$target_path/.vimrc.clean"
     lnif "$source_path/update.sh"       "$target_path/.vimrc.update"
     lnif "$source_path/README.markdown" "$target_path/.vimrc.md"
+    if program_exists "nvim"; then
+        mkdir -p "$HOME/.config/nvim"
+        lnif "$source_path/.vimrc"      "$HOME/.config/nvim/init.vim"
+    fi
     ret="$?"
     success "Setted up vim symlinks."
     debug
@@ -112,7 +116,6 @@ variable_set "$HOME"
 program_must_exist "git"
 mkdir -p "$HOME/.vim/session"
 mkdir -p "$HOME/.cache/tags"
-mkdir -p "$HOME/.config/nvim"
 update_vim_plug='0'
 ret='0'
 if [ -f $HOME/.vimrc.clean ];then
@@ -145,7 +148,6 @@ if program_exists "vim"; then
 fi
 
 if program_exists "nvim"; then
-    lnif "$source_path/.vimrc" "$HOME/.config/nvim/init.vim"
     setup_plug "nvim"
 fi
 
