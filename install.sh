@@ -145,8 +145,8 @@ if program_exists "vim"; then
 fi
 
 if program_exists "nvim"; then
-    setup_plug "nvim"
     lnif "$source_path/.vimrc" "$HOME/.config/nvim/init.vim"
+    setup_plug "nvim"
 fi
 
 if program_exists "gvim"; then
