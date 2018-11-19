@@ -350,10 +350,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         Plug 'roxma/vim-hug-neovim-rpc'
                         Plug 'roxma/nvim-yarp'
                     endif
-                    Plug 'autozimu/LanguageClient-neovim', {
-                        \ 'branch': 'next',
-                        \ 'do': 'bash install.sh',
-                        \ }
                     Plug 'Shougo/deoplete-clangx'
                     Plug 'zchee/deoplete-jedi', {'for': 'python'}
                     if HasPlug('javascript')
