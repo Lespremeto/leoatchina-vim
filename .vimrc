@@ -320,15 +320,15 @@ nnoremap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<C
 set tabpagemax=10 " Only show 10 tabs
 cnoremap Tabe tabe
 " compatible with xshell
-nnoremap <silent><Tab>      :tabnext<CR>
-nnoremap <silent>-          :tabprevious<CR>
-nnoremap <leader><Tab>      :tabm +1<CR>
-nnoremap <leader>-          :tabm -1<CR>
-nnoremap <Leader>te         :tabe<Space>
-nnoremap <Leader>tm         :tabm<Space>
-nnoremap <Leader>ts         :tab split<CR>
-nnoremap <Leader>tS         :tabs<CR>
-nnoremap gq                 :tabclose<CR>
+nnoremap <silent><Tab>   :tabnext<CR>
+nnoremap <silent><S-Tab> :tabprevious<CR>
+nnoremap <leader><Tab>   :tabm +1<CR>
+nnoremap <leader><S-Tab> :tabm -1<CR>
+nnoremap <Leader>te      :tabe<Space>
+nnoremap <Leader>tm      :tabm<Space>
+nnoremap <Leader>ts      :tab  split<CR>
+nnoremap <Leader>tS      :tabs<CR>
+nnoremap gq              :tabclose<CR>
 if has('gui_macvim')
     nnoremap <D-1> :tabn1<CR>
     nnoremap <D-2> :tabn2<CR>
