@@ -300,12 +300,10 @@ inoremap <C-k>, <C-x><C-o>
 inoremap <C-k>. <C-x><C-v>
 inoremap <C-l> <Nop>
 " a,e for home/end
-nnoremap gb ge
-vnoremap gb ge
-nnoremap ga ^
-nnoremap ge $
-vnoremap ga ^
-vnoremap ge $<left>
+nnoremap gb ^
+nnoremap gf $
+vnoremap gb ^
+vnoremap gf $<left>
 inoremap <C-a> <Esc>I
 inoremap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 cnoremap <C-a> <Home>
@@ -1720,9 +1718,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
-        nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
-        nmap <silent> <C-l>n <Plug>(ale_next_wrap)
-        nnoremap <C-l><C-l> :ALELint<CR>
+        nnoremap <silent> <C-l><C-p> <Plug>(ale_previous_wrap)
+        nnoremap <silent> <C-l><C-n> <Plug>(ale_next_wrap)
+        nnoremap <silent> <C-l><C-l> :ALELint<CR>
+        nnoremap <silent> gad :ALEGoToDefinition<CR>
+        nnoremap <silent> gat :ALEGoToDefinitionInTab<CR>
+        nnoremap <silent> gar :ALEFindReferences<CR>
     elseif HasDirectory("syntastic")
         let g:syntastic_error_symbol             = 'E'
         let g:syntastic_warning_symbol           = 'W'
@@ -1744,8 +1745,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nnoremap <silent> <C-l>n :lnext<cr>
-        nnoremap <silent> <C-l>p :lprevious<cr>
+        nnoremap <silent> <C-l><C-n> :lnext<cr>
+        nnoremap <silent> <C-l><C-p> :lprevious<cr>
     endif
     " asyncrun
     if HasDirectory("asyncrun.vim")
