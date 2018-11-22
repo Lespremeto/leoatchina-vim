@@ -498,6 +498,7 @@ set nolist
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
+au BufNewFile,BufRead *vimrc* set filetype=vim
 au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
 au BufNewFile,BufRead *.coffee set filetype=coffee
