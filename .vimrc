@@ -1718,9 +1718,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 特定后缀指定lint方式
         let g:ale_pattern_options_enabled = 1
         let b:ale_warn_about_trailing_whiteSpace = 0
-        nnoremap <silent> <C-l><C-p> <Plug>(ale_previous_wrap)
-        nnoremap <silent> <C-l><C-n> <Plug>(ale_next_wrap)
         nnoremap <silent> <C-l><C-l> :ALELint<CR>
+        nnoremap <silent> <C-l>p <Plug>(ale_previous_wrap)
+        nnoremap <silent> <C-l>n <Plug>(ale_next_wrap)
         nnoremap <silent> gad :ALEGoToDefinition<CR>
         nnoremap <silent> gat :ALEGoToDefinitionInTab<CR>
         nnoremap <silent> gar :ALEFindReferences<CR>
@@ -1745,8 +1745,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nnoremap <silent> <C-l><C-n> :lnext<cr>
-        nnoremap <silent> <C-l><C-p> :lprevious<cr>
+        nnoremap <silent> <C-l>p :lprevious<cr>
+        nnoremap <silent> <C-l>p :lnext<cr>
     endif
     " asyncrun
     if HasDirectory("asyncrun.vim")
