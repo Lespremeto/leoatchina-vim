@@ -1020,11 +1020,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             nmap <C-h>T :tab terminal
         endif
     endif
-    " neoformat
-    if HasDirectory('neoformat')
-        nnoremap gT :Neoformat<Space>
-        vnoremap gT :Neoformat!<Space>
-    endif
     " easy-align
     if HasDirectory("vim-easy-align")
         nmap <localleader><Cr> <Plug>(EasyAlign)

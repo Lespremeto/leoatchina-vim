@@ -1,4 +1,5 @@
 let g:plug_groups=['smartcomplete', 'javascript', 'html', 'snippet', 'syntax', 'bio']
+"set guifont=YaHei_Consolas_Hybrid:h11.5
 "gtags settings, according to https://zhuanlan.zhihu.com/p/36279445
 "let $GTAGSCONF = '/path/to/your/gtags.conf'
 "if HasDirectory("vim-gutentags") && universary ctags installed
