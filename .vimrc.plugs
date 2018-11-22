@@ -243,7 +243,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 let g:browser_tool = "fzf"
                 Plug 'junegunn/fzf.vim'
                 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-            elseif (has('patch330') && v:version == 704 || v:version >= 800 || has('nvim')) && g:python_version && executable('gcc')
+            elseif (has('patch330') && v:version == 704 || v:version >= 800 || has('nvim')) && g:python_version
                 let g:browser_tool = "LeaderF"
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
