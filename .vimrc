@@ -701,17 +701,22 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 总是显示状态栏
         set laststatus=2
         if has('nvim')
-            if WINDOWS()
-                colorscheme wombat256mod
-            else
+            if !WINDOWS()
                 set t_Co=256
-                colorscheme hybrid_material
-            endif
+            end
+            colorscheme wombat256mod
         elseif has('gui_running')
-            colorscheme hybrid
+            if has("termguicolors")
+                " fix bug for vim
+                set t_8f=^[[38;2;%lu;%lu;%lum
+                set t_8b=^[[48;2;%lu;%lu;%lum
+                " enable true color
+                set termguicolors
+            endif
+            colorscheme hybrid_material
         else
             set t_Co=256
-            colorscheme gruvbox
+            colorscheme deus
         endif
     endif
     " bufferline
