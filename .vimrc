@@ -709,7 +709,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             set termguicolors
             colorscheme palenight
         elseif has('nvim')
-            colorscheme hybrid
+            colorscheme tender
         else
             colorscheme deus
         endif
