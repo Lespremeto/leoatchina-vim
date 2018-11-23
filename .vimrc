@@ -707,7 +707,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             set t_8b=^[[48;2;%lu;%lu;%lum
             " enable true color
             set termguicolors
-            colorscheme quantum
+            colorscheme palenight
         elseif has('nvim')
             colorscheme hybrid
         else
@@ -756,7 +756,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     elseif has('statusline')
         if HasDirectory("lightline.vim")
             let g:lightline = {
-                \ 'colorscheme': 'onedark',
                 \ 'active': {
                 \  'left': [ [ 'mode', 'paste' ],
                 \     [ 'gitbranch', 'readonly' ],
