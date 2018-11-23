@@ -90,6 +90,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
         Plug 'leoatchina/vim-colorschemes-collections'
+        Plug 'othree/yajs.vim'
+        Plug 'othree/html5.vim'
+        Plug 'HerringtonDarkholme/yats.vim'
         Plug 'mattn/webapi-vim'
         Plug 'tpope/vim-unimpaired'
         if v:version < 800
@@ -256,7 +259,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'tacahiroy/ctrlp-funky'
             endif
             " complete_engine && snippet
-            if v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')
+            if v:version == 704 && has('patch774') || v:version >= 800 || has('nvim') && has('timers')
                 if HasPlug('youcompleteme') || HasPlug('YCM')
                     if executable('make') && executable('gcc') && g:python_version && !WINDOWS() && (has('patch1578') && v:version == 704 || v:version >= 800) && !has('nvim')
                         let g:complete_engine = "YCM"
@@ -265,21 +268,21 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('coc')
-                    if has('nvim-0.3.0') && executable('node') && executable('yarn') && has('timers')
+                    if has('nvim-0.3.0') && executable('node') && executable('yarn')
                         let g:complete_engine = "coc"
                     else
                         echoe "Cannot install coc, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('deoplete')
-                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800) && has('timers')
+                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                        let g:complete_engine = "deoplete"
                     else
                         echoe "Cannot install deoplete, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('asyncomplete')
-                    if (has('nvim') || v:version >= 800) && has('timers')
+                    if (has('nvim') || v:version >= 800)
                         let g:complete_engine = "asyncomplete"
                     else
                         echoe "Cannot install asyncomplete, smart select a complete_engine."
@@ -297,9 +300,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " smart select engine
                 if HasPlug('smartcomplete') || g:smart_engine_select
-                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800) && has('timers')
+                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                         let g:complete_engine = "deoplete"
-                    elseif (has('nvim') || v:version >= 800) && has('timers')
+                    elseif has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
                     elseif has('lua')
                         let g:complete_engine = "neocomplete"

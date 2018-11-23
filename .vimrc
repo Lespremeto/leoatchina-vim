@@ -498,7 +498,7 @@ set nolist
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 au BufNewFile,BufRead *.html.twig set filetype=html.twig
-au BufNewFile,BufRead *vimrc* set filetype=vim
+au BufNewFile,BufRead init.vim,.vimrc,.vimrc.local,.vimrc.plugs set filetype=vim
 au BufNewFile,BufRead *.md,*.markdown,README set filetype=markdown
 au BufNewFile,BufRead *.pandoc set filetype=pandoc
 au BufNewFile,BufRead *.coffee set filetype=coffee
@@ -701,22 +701,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set background=dark
         " 总是显示状态栏
         set laststatus=2
-        if has('nvim')
-            if !WINDOWS()
-                set t_Co=256
-            end
-            colorscheme wombat256mod
-        elseif has('gui_running')
-            if has("termguicolors")
-                " fix bug for vim
-                set t_8f=^[[38;2;%lu;%lu;%lum
-                set t_8b=^[[48;2;%lu;%lu;%lum
-                " enable true color
-                set termguicolors
-            endif
-            colorscheme hybrid_material
+        if has('gui_running') && has("termguicolors")
+            " fix bug for vim
+            set t_8f=^[[38;2;%lu;%lu;%lum
+            set t_8b=^[[48;2;%lu;%lu;%lum
+            " enable true color
+            set termguicolors
+            colorscheme quantum
+        elseif has('nvim')
+            colorscheme hybrid
         else
-            set t_Co=256
             colorscheme deus
         endif
     endif
@@ -1565,7 +1559,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:go_highlight_functions          = 1
         let g:go_highlight_methods            = 1
         let g:go_highlight_structs            = 1
-        let g:go_highlight_operators          = 1
+
         let g:go_highlight_build_constraints  = 1
         let g:go_gocode_propose_builtins      = 1
         let g:go_list_type                    = "quickfix"
