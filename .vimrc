@@ -702,18 +702,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 总是显示状态栏
         set laststatus=2
         if has('gui_running') && has("termguicolors")
-            " fix bug for vim
-            set t_8f=^[[38;2;%lu;%lu;%lum
-            set t_8b=^[[48;2;%lu;%lu;%lum
             " enable true color
             set termguicolors
             if OSX()
                 colorscheme ayu
             else
-                colorscheme wombat256mod
+                colorscheme hybrid
             endif
         elseif has('nvim')
-            colorscheme hybrid
+            colorscheme tender
         else
             colorscheme deus
         endif
