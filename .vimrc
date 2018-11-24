@@ -701,7 +701,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set background=dark
         " 总是显示状态栏
         set laststatus=2
-        if has('gui_running') && has("termguicolors")
+        if v:version < 800 && !has('nvim')
+            colorscheme wombat256mod
+        elseif has('gui_running') && has("termguicolors")
             " enable true color
             set termguicolors
             if OSX()
