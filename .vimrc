@@ -1792,10 +1792,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:repl_program.python = "python3"
         endif
         let g:repl_exit_commands = {
-			\	"python": "quit()",
-			\	"bash": "exit",
-			\	"zsh": "exit",
-			\	"default": "exit",
+            \	"python": "quit()",
+            \	"bash": "exit",
+            \	"zsh": "exit",
+            \	"default": "exit",
         \ }
     endif
 endif
