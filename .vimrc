@@ -708,9 +708,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             " enable true color
             set termguicolors
             if OSX()
-                colorscheme tender
+                colorscheme ayu
             else
-                colorscheme deus
+                colorscheme wombat256mod
             endif
         elseif has('nvim')
             colorscheme hybrid
