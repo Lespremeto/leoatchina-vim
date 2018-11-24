@@ -241,11 +241,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if HasPlug('fzf') && !WINDOWS()
                 let g:browser_tool = "fzf"
                 Plug 'junegunn/fzf.vim'
-                if executable("fzf")
-                    Plug exepath('fzf')[:-5]
-                else
-                    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-                endif
+                Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
             elseif (has('patch330') && v:version == 704 || v:version >= 800 || has('nvim')) && g:python_version
                 let g:browser_tool = "LeaderF"
                 if WINDOWS()
