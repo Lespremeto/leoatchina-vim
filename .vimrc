@@ -709,10 +709,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             if OSX()
                 colorscheme ayu
             else
-                colorscheme hybrid
+                colorscheme onedark
             endif
         elseif has('nvim')
-            colorscheme tender
+            colorscheme hybrid
         else
             colorscheme deus
         endif
