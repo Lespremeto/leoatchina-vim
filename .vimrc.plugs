@@ -90,9 +90,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
         Plug 'leoatchina/vim-colorschemes-collections'
-        Plug 'othree/yajs.vim'
-        Plug 'othree/html5.vim'
-        Plug 'HerringtonDarkholme/yats.vim'
         Plug 'mattn/webapi-vim'
         Plug 'tpope/vim-unimpaired'
         if v:version < 800
