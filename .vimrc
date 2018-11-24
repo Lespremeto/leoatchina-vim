@@ -707,7 +707,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             set t_8b=^[[48;2;%lu;%lu;%lum
             " enable true color
             set termguicolors
-            colorscheme tender
+            if OSX()
+                colorscheme tender
+            else
+                colorscheme deus
+            endif
         elseif has('nvim')
             colorscheme hybrid
         else
