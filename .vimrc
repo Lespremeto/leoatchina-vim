@@ -803,7 +803,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if v:version < 800
             colorscheme molokai
             if HasDirectory('lightline.vim')
-                let g:lightline.colorscheme = 'molokai'
+                let g:lightline.colorscheme = 'one'
             endif
         elseif has('gui_running') && has("termguicolors")
             " enable true color
