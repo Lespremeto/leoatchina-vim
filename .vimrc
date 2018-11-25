@@ -813,14 +813,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     let g:airline_theme='material'
                 endif
             elseif LINUX()
-                colorscheme codedark
-                if HasDirectory('vim-airline')
-                    let g:airline_theme='codedark'
-                endif
-            else
                 colorscheme ayu
                 if HasDirectory('vim-airline')
                     let g:airline_theme='ayu'
+                endif
+            else
+                colorscheme codedark
+                if HasDirectory('vim-airline')
+                    let g:airline_theme='codedark'
                 endif
             endif
         elseif has('nvim')
