@@ -918,7 +918,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " typecast
     if HasDirectory('typecast.vim')
         nmap <leader>tc <Plug>typecast
-        xmap <leader>tc <Plug>typecast
     endif
     " NerdTree
     if HasDirectory("nerdtree")
@@ -1230,10 +1229,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 跳转到定义处
         nnoremap <silent>g<C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory("coc.nvim") && g:complete_engine == "coc"
-        nnoremap <silent> gd <Plug>(coc-definition)
-        nnoremap <silent> gy <Plug>(coc-type-definition)
-        nnoremap <silent> gi <Plug>(coc-implementation)
-        nnoremap <silent> gr <Plug>(coc-references)
+        nmap <silent> gd <Plug>(coc-definition)
+        nmap <silent> gy <Plug>(coc-type-definition)
+        nmap <silent> gi <Plug>(coc-implementation)
+        nmap <silent> gr <Plug>(coc-references)
         let g:coc_snippet_next = '<C-n>'
 	    let g:coc_snippet_prev = '<C-p>'
         function! CocSetup()
