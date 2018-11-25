@@ -154,11 +154,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " statuslines
         if has('statusline')
             Plug 'bling/vim-bufferline'
-            if (v:version >= 800 || has('nvim-0.3.0')) && (HasPlug('airline') || has('gui_running'))
+            if (v:version >= 800 || has('nvim')) && (HasPlug('airline') || has('gui_running'))
                 Plug 'vim-airline/vim-airline'
             else
                 Plug 'itchyny/lightline.vim'
-                if v:version >= 800 && HasPlug('syntax')
+                if (v:version >= 800 || has('nvim')) && HasPlug('syntax')
                     Plug 'maximbaz/lightline-ale'
                 endif
             endif
