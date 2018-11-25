@@ -702,7 +702,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 总是显示状态栏
         set laststatus=2
         if v:version < 800 && !has('nvim')
-            colorscheme wombat256mod
+            colorscheme monokai
         elseif has('gui_running') && has("termguicolors")
             " enable true color
             set termguicolors

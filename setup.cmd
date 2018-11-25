@@ -12,44 +12,41 @@ REM    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 REM    See the License for the specific language governing permissions and
 REM    limitations under the License.
 
-
 @if not exist "%HOME%" @set HOME=%USERPROFILE%
 @set APP_PATH=%~dp0
 REM set nvim 
-IF NOT EXIST "%HOME%\.config\nvim" (
-    call mkdir -p "%HOME%\.config\nvim"
+IF NOT EXIST "%HOME%\AppData\local\nvim" (
+    call mkdir -p "%HOME%\AppData\local\nvim"
 )
-call del "%HOME%\.config\nvim\init.vim"
+call del "%HOME%\AppData\local\nvim\init.vim"
 call del "%HOME%\.vimrc"
 call del "%HOME%\_vimrc"
 call del "%HOME%\.vimrc.plugs"
 call del "%HOME%\.vimrc.md"
 call del "%HOME%\.vimrc.clean"
 
-
-call mklink "%HOME%\.config\nvim\init.vim" "%APP_PATH%\.vimrc"
+call mklink "%HOME%\AppData\local\nvim\init.vim" "%APP_PATH%\.vimrc"
 call mklink "%HOME%\.vimrc"       "%APP_PATH%\.vimrc"
 call mklink "%HOME%\_vimrc"       "%APP_PATH%\.vimrc"
 call mklink "%HOME%\.vimrc.plugs" "%APP_PATH%\.vimrc.plugs"
 call mklink "%HOME%\.vimrc.md"    "%APP_PATH%\README.markdown"
 call mklink "%HOME%\.vimrc.clean" "%APP_PATH%\clean.cmd"
 
+IF NOT EXIST "%HOME%\.vimrc.local" (
+    call cp  "%APP_PATH%\.vimrc.local" "%HOME%\.vimrc.local"
+)
 
 IF NOT EXIST "%HOME%\.nvim" (
     call mkdir -p "%HOME%\.nvim"
 )
-IF NOT EXIST "%HOME%\.vimrc.local" (
-    call cp  "%APP_PATH%\.vimrc.local" "%HOME%\.vimrc.local"
-)
+
 IF NOT EXIST "%HOME%\.vim" (
     call mkdir -p "%HOME%\.vim"
 )
 IF NOT EXIST "%HOME%\.gvim" (
     call mkdir -p "%HOME%\.gvim"
 )
-IF NOT EXIST "%HOME%\.nvim" (
-    call mkdir -p "%HOME%\.nvim"
-)
+
 IF NOT EXIST "%HOME%\.gnvim" (
     call mkdir -p "%HOME%\.gnvim"
 )
