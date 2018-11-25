@@ -801,10 +801,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 总是显示状态栏
         set laststatus=2
         if v:version < 800
-            if has('nvim')
-                colorscheme distinguished
-            else
-                colorscheme sinmonokai
+            colorscheme molokai
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'molokai'
             endif
         elseif has('gui_running') && has("termguicolors")
             " enable true color
