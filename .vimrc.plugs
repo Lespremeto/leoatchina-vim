@@ -65,10 +65,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if has('nvim')
                 Plug 'lambdalisue/vim-fullscreen'
             endif
-        elseif OSX()
-            Plug 'rizzatti/dash.vim'
-            if has('gui_running')
-                Plug 'lambdalisue/vim-fullscreen'
+        elseif has('gui_running')
+            Plug 'lambdalisue/vim-fullscreen'
+            if OSX()
+                Plug 'rizzatti/dash.vim'
                 nnoremap <D-Cr> <Nop>
                 snoremap <D-Cr> <Nop>
                 inoremap <D-Cr> <Nop>

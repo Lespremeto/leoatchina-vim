@@ -576,36 +576,32 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
     " full-screen
-    if WINDOWS()
+    if WINDOWS() && has('libcall')
+        let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
+        function! ToggleFullScreen()
+            call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
+        endfunction
+        map <F11> <Esc>:call ToggleFullScreen()<CR>
+        let g:VimAlpha = 240
+        function! SetAlpha(alpha)
+            let g:VimAlpha = g:VimAlpha + a:alpha
+            if g:VimAlpha < 180
+                let g:VimAlpha = 180
+            endif
+            if g:VimAlpha > 255
+                let g:VimAlpha = 255
+            endif
+            call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
+        endfunction
+        nmap <silent><M-F12> <Esc>:call SetAlpha(+3)<CR>
+        nmap <silent><M-F11> <Esc>:call SetAlpha(-3)<CR>
+    elseif HasDirectory('vim-fullscreen')
         if has('nvim')
-            if HasDirectory('vim-fullscreen')
-                let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
-                let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
-            endif
-            let g:fullscreen#enable_default_keymap = 0
-	        nmap <F11> <Plug>(fullscreen-toggle)
-        else
-            if has('libcall')
-                let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
-                function! ToggleFullScreen()
-                    call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
-                endfunction
-                map <F11> <Esc>:call ToggleFullScreen()<CR>
-                let g:VimAlpha = 240
-                function! SetAlpha(alpha)
-                    let g:VimAlpha = g:VimAlpha + a:alpha
-                    if g:VimAlpha < 180
-                        let g:VimAlpha = 180
-                    endif
-                    if g:VimAlpha > 255
-                        let g:VimAlpha = 255
-                    endif
-                    call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
-                endfunction
-                nmap <silent><M-F12> <Esc>:call SetAlpha(+3)<CR>
-                nmap <silent><M-F11> <Esc>:call SetAlpha(-3)<CR>
-            endif
+            let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
+            let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
         endif
+        let g:fullscreen#enable_default_keymap = 0
+        nmap <F11> <Plug>(fullscreen-toggle)
     endif
     " voom
     if HasDirectory('VOom')
