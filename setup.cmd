@@ -47,15 +47,9 @@ IF NOT EXIST "%HOME%\.gvim" (
     call mkdir -p "%HOME%\.gvim"
 )
 
-IF NOT EXIST "%HOME%\.gnvim" (
-    call mkdir -p "%HOME%\.gnvim"
-)
-
 IF NOT EXIST "%HOME%\.vim-plug\autoload" (
     call git clone --depth=1 https://github.com/junegunn/vim-plug.git "%HOME%\.vim-plug\autoload"
 ) ELSE (
     call cd "%HOME%\.vim-plug\autoload"
     call git pull
 )
-
-

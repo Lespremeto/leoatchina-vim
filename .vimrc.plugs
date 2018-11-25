@@ -25,11 +25,7 @@ endif
 if (has('job') || g:python_version || has('nvim') || has('lua'))
     " plug install path
     if has('nvim')
-        if has('gui_running')
-            let $PLUG_PATH = '~/.gnvim/plug'
-        else
-            let $PLUG_PATH = '~/.nvim/plug'
-        endif
+        let $PLUG_PATH = '~/.nvim/plug'
     elseif has("gui_running")
         if OSX()
             let $PLUG_PATH = '~/.mvim/plug'
@@ -48,9 +44,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " $GTAGSCONF should be set in .local file
         let $GTAGSCONF = ""
         " Use local config, some tested feature can be add to it
-        if has('nvim') && filereadable(expand("~/.gnvimrc.local")) && has("gui_running")
-            source ~/.gnvimrc.local
-        elseif has('nvim') && filereadable(expand("~/.nvimrc.local"))
+        if has('nvim') && filereadable(expand("~/.nvimrc.local"))
             source ~/.nvimrc.local
         elseif filereadable(expand("~/.mvimrc.local")) && has('gui_macvim')
             source ~/.mvimrc.local
