@@ -801,7 +801,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 总是显示状态栏
         set laststatus=2
         if v:version < 800
-            colorscheme molokai
+            colorscheme monokai
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'one'
             endif
