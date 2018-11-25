@@ -714,7 +714,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         elseif has('nvim')
             colorscheme hybrid
         else
-            colorscheme deus
+            colorscheme gruvbox
         endif
     endif
     " bufferline
