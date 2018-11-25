@@ -19,5 +19,4 @@ rm -rf $HOME/.vim
 rm -rf $HOME/.mvim
 rm -rf $HOME/.nvim
 rm -rf $HOME/.gvim
-rm -rf $HOME/.gnvim
 rm -rf $HOME/.vim-plug
