@@ -809,10 +809,19 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             set termguicolors
             if OSX()
                 colorscheme vim-material
+                if HasDirectory('vim-airline')
+                    let g:airline_theme='material'
+                endif
             elseif LINUX()
-                colorscheme ayu
+                colorscheme codedark
+                if HasDirectory('vim-airline')
+                    let g:airline_theme='codedark'
+                endif
             else
-                colorscheme onedark
+                colorscheme ayu
+                if HasDirectory('vim-airline')
+                    let g:airline_theme='ayu'
+                endif
             endif
         elseif has('nvim')
             if OSX()
@@ -821,14 +830,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     let g:lightline.colorscheme = 'Tomorrow_Night'
                 endif
             elseif LINUX()
-                colorscheme codedark
-                if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'darcula'
-                endif
-            else
                 colorscheme jellybeans
                 if HasDirectory('lightline.vim')
                     let g:lightline.colorscheme = 'jellybeans'
+                endif
+            else
+                colorscheme onedark
+                if HasDirectory('vim-airline')
+                    let g:lightline.colorscheme = 'onedark'
                 endif
             endif
         else
