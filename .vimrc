@@ -691,40 +691,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ {'v': ['版本', 'version']}
             \ ]
     endif
-    " themes
-    if HasDirectory("/vim-colorschemes-collections")
-        " dark theme
-        set background=dark
-        " 总是显示状态栏
-        set laststatus=2
-        if v:version < 800
-            if has('nvim')
-                colorscheme distinguished
-            else
-                colorscheme sinmonokai
-            endif
-        elseif has('gui_running') && has("termguicolors")
-            " enable true color
-            set termguicolors
-            if OSX()
-                colorscheme onedark
-            elseif LINUX()
-                colorscheme vim-material
-            else
-                colorscheme ayu
-            endif
-        elseif has('nvim')
-            if OSX()
-                colorscheme hybrid
-            elseif LINUX()
-                colorscheme codedark
-            else
-                colorscheme wombat256mod
-            endif
-        else
-            colorscheme gruvbox
-        endif
-    endif
     " bufferline
     if HasDirectory("vim-bufferline")
         let g:bufferline_show_bufnr = 0
@@ -826,6 +792,49 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             hi User3 cterm=None ctermfg=208 ctermbg=238
             hi User4 cterm=None ctermfg=246 ctermbg=237
             hi User5 cterm=None ctermfg=250 ctermbg=238
+        endif
+    endif
+    " themes
+    if HasDirectory("/vim-colorschemes-collections")
+        " dark theme
+        set background=dark
+        " 总是显示状态栏
+        set laststatus=2
+        if v:version < 800
+            if has('nvim')
+                colorscheme distinguished
+            else
+                colorscheme sinmonokai
+            endif
+        elseif has('gui_running') && has("termguicolors")
+            " enable true color
+            set termguicolors
+            if OSX()
+                colorscheme onedark
+            elseif LINUX()
+                colorscheme vim-material
+            else
+                colorscheme ayu
+            endif
+        elseif has('nvim')
+            if OSX()
+                colorscheme hybrid
+                if HasDirectory('lightline.vim')
+                    let g:lightline.colorscheme = 'Tomorrow_Night'
+                endif
+            elseif LINUX()
+                colorscheme codedark
+                if HasDirectory('lightline.vim')
+                    let g:lightline.colorscheme = 'darcula'
+                endif
+            else
+                colorscheme wombat256mod
+                if HasDirectory('lightline.vim')
+                    let g:lightline.colorscheme = 'wombat'
+                endif
+            endif
+        else
+            colorscheme gruvbox
         endif
     endif
     " ctags
