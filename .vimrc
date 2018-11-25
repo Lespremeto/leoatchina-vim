@@ -801,12 +801,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 总是显示状态栏
         set laststatus=2
         if v:version < 800
-            colorscheme monokai
+            colorscheme wombat256mod
             if HasDirectory('lightline.vim')
-                let g:lightline.colorscheme = 'molokai'
+                let g:lightline.colorscheme = 'wombat'
             endif
         elseif has('gui_running') && has("termguicolors")
-            " enable true color
             set termguicolors
             if OSX()
                 colorscheme onedark
@@ -827,9 +826,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     let g:lightline.colorscheme = 'darcula'
                 endif
             else
-                colorscheme wombat256mod
+                colorscheme jellybeans
                 if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'wombat'
+                    let g:lightline.colorscheme = 'jellybeans'
                 endif
             endif
         else
