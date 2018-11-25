@@ -808,11 +808,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         elseif has('gui_running') && has("termguicolors")
             set termguicolors
             if OSX()
-                colorscheme onedark
-            elseif LINUX()
                 colorscheme vim-material
-            else
+            elseif LINUX()
                 colorscheme ayu
+            else
+                colorscheme onedark
             endif
         elseif has('nvim')
             if OSX()
