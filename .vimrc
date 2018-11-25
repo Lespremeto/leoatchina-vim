@@ -697,7 +697,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set background=dark
         " 总是显示状态栏
         set laststatus=2
-        if v:version < 800 && !has('nvim')
+        if v:version < 800
             if has('nvim')
                 colorscheme wombat256mod
             else
