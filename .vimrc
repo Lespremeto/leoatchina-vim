@@ -833,6 +833,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         else
             colorscheme gruvbox
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'gruvbox'
+            endif
         endif
     endif
     " ctags
