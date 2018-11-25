@@ -699,7 +699,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set laststatus=2
         if v:version < 800
             if has('nvim')
-                colorscheme wombat256mod
+                colorscheme distinguished
             else
                 colorscheme sinmonokai
             endif
@@ -719,7 +719,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             elseif LINUX()
                 colorscheme codedark
             else
-                colorscheme distinguished
+                colorscheme wombat256mod
             endif
         else
             colorscheme gruvbox
