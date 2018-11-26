@@ -836,7 +836,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             elseif LINUX()
                 colorscheme hybrid
                 if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'gruvbox'
+                    let g:lightline.colorscheme = 'seoul256'
                 elseif HasDirectory('vim-airline')
                     let g:airline_theme='gruvbox'
                 endif
