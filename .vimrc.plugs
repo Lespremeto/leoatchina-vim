@@ -411,6 +411,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     endif
                 elseif g:complete_engine == "neocomplcache"
                     Plug 'Shougo/neocomplcache.vim'
+                    Plug 'davidhalter/jedi-vim'
+                    Plug 'Rip-Rip/clang_complete'
                 endif
                 if g:complete_engine == 'neocomplete' || g:complete_engine == 'deoplete' || g:complete_engine == 'asyncomplete'
                     Plug 'Shougo/neoinclude.vim'
