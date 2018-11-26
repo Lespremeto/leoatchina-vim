@@ -578,7 +578,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         return isdirectory(expand($PLUG_PATH."/".a:dir))
     endfunction
     " full-screen
-    if WINDOWS() && has('libcall')
+    if WINDOWS() && has('libcall') && !has('nvim')
         let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
         function! ToggleFullScreen()
             call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
