@@ -1778,8 +1778,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nnoremap <silent> <C-l><C-l> :lprevious<cr>
-        nnoremap <silent> <C-l><C-l> :lnext<cr>
+        nnoremap <silent> <C-l><C-p> :lprevious<cr>
+        nnoremap <silent> <C-l><C-n> :lnext<cr>
     endif
     " asyncrun
     if HasDirectory("asyncrun.vim")

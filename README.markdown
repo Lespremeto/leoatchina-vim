@@ -356,15 +356,21 @@ Works if without python support.
 ## Syntax Check
 ### [ale](https://github.com/w0rp/ale.git)
 ```
-    nnoremap <C-l><C-l> :ALELint<CR>
-    nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
-    nmap <silent> <C-l>n <Plug>(ale_next_wrap)
-    nnoremap gat :ALEGoToDefinitionInTab<CR>
-    nnoremap gad :ALEGoToDefinition<CR>
+    nnoremap <silent> <C-l><C-l> :ALELint<CR>
+    nmap     <silent> <C-l><C-p> <Plug>(ale_previous_wrap)
+    nmap     <silent> <C-l><C-n> <Plug>(ale_next_wrap)
+    nnoremap <silent> gad        :ALEGoToDefinition<CR>
+    nnoremap <silent> gat        :ALEGoToDefinitionInTab<CR>
+    nnoremap <silent> gar        :ALEFindReferences<CR>
 ```
 
 ### [syntastic](https://github.com/vim-syntastic/syntastic.git)
 Works is not fits the need of `ale`
+```
+    nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
+    nnoremap <silent> <C-l><C-p> :lprevious<cr>
+    nnoremap <silent> <C-l><C-n> :lnext<cr>
+```
 
 ## Search/Replace tools
 The main leader key is `C-f`
