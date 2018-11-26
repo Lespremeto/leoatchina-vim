@@ -76,9 +76,7 @@
 <!-- vim-markdown-toc -->
 # This vim config is stiling in modifying
 # 中文介绍
-原来的repo放在 [spf13-vim-leoatchina](https://github.com/leoatchina/spf13-vim-leoatchina)，因为原来一时脑抽，把中文字体放进去后导致体积较大，影响速度，所以重开一个repo并把windows下的工具分开，以增加clone速度。
-
-这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的作品，原配置已经不大适合这个vim8/neovim当道的时代。因此在近两年的使用时间里, 我不断调整，从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。
+这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的作品，原配置已经不大适合这个vim8/neovim当道的时代。因此在近两年的使用时间里, 我不断调整，从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。在`OSX` `windows` `linx`下都可以安装使用
 
 长期以来，这个README一直处于远远落后于配置改变的进度，细碎调整特别是快捷键的改动，实在是提不劲来修改。近日来随着最后几个补全插件的加入和配置调整，这个配置文件已经比较完整，因此可以好好坐下来，对使用方法和注意点作一介绍。(其实,在这写这个文档的时候还在不停地改快捷键)
 
@@ -122,7 +120,7 @@ And I wish you have a basic understanding of vim, know how to read the config fi
 ```bash
   cd leoatchina-vim
   git pull
-  open vim, do :PlugReinstall
+  open vim, do :PlugRe
 ```
 
 # Upgrade plugins
@@ -159,11 +157,11 @@ OR
 After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` in Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
 The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugReinstall`, the plugins will change. The default contents of `.vimrc.local` is:
-> let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet']
+> let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet', 'syntax', 'bio']
 
-And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `nvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
+And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `neovim` , `~/.mvimrc.local` for `macvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
 
-The typical variables that could be add to `g:plug_groups` are `go`,`airline`, `youcompleteme`, etc.
+The typical variables that could be add to `g:plug_groups` are `go`,`airline`, `youcompleteme`, `fzf`, `coc`, etc.
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
@@ -275,7 +273,8 @@ You can open `.vimrc.plugs` for these features
 
 ## [vim-plug](https://github.com/junegunn/vim-plug)
 A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use.
-You can check how it is installed via `install.sh` or `setup.cmd`
+It willed installed to `~/.vim-plug` after installation.
+You can check how it is installed via `install.sh` or `setup.cmd`.
 
 ## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
 这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过`CTRL+\ `开启,`CTRL+^`进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
@@ -318,17 +317,17 @@ Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), ke
 There is variable `"smartcomplete"` in `"g:plug_groups"` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no python`, `windows` or `linux` or `mac`.
 I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-By default, with '+python3' support and not windows, `deoplete` for 'vim8', `coc` for 'neovim',  otherwise `asyncomplete`.
+By default, with '+python3' support, `deoplete` will be installed,  otherwise `asyncomplete`.
 
 These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`.
 
-If you are install older vim7.4- (default installed by ubuntu , centos), `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has barely semantic completion funtions, their finishments are completed with snippets support.
+If you are install older vim7.4 (default installed by ubuntu , centos), `has("lua")` will yank `neocomplete`, and `not` will be `neocomplcache`. The two `neo` engines has barely semantic completion funtions, their finishments are completed with snippets support.
 
 You can also force to install the completion engine in `g:plug_groups`, just replace `smartcomplete` with it, but if the vim feature and enviroment not support the plug you choose, the engine will fall to `neocomplcache` which is the one with the least requires.
 
 `youcompleteme` is the only complete engine that you must sepecially write into `g:plug_groups`,  which not be installed with `smartcomplete`, and is the one with the best performance. Since it is hard to install, I advice you not to write it in `.vimrc.local` untill you have a deep understanding to you system.
 
-It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
+It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-j` for trigger, if not triggered , switch to the next. `CR` for end completion(`C-e`, `C-y` still work). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 Needs `vim` with `+python` or `+python3`
@@ -348,8 +347,7 @@ Needs `vim/neovim` with `+lua`
 ### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
 
 ## Complete Snippets, vim 7.4+ is also required
-If complete_engine is `neocomplete` or `neocomplcache`,  snippets `ultisnips` or  `neosnippet` will be intalled. Otherwise need `snippet` in `~/.vimrc.local`
-`C-l` will list the snips when use `ultisnips`, `C-f` for snips jump forward in snippets, and only `ultisnips` use `c-b` for jump back
+If complete_engine is `neocomplete` or `neocomplcache`, snippets `ultisnips` or  `neosnippet` will be intalled automatically. Otherwise need `snippet` in `~/.vimrc.local`. `C-f` for snips jump forward in snippets, and only `ultisnips` use `c-b` for jump back
 
 ### [ultisnips](https://github.com/SirVer/ultisnips)
 Works if with python support.
@@ -360,31 +358,30 @@ Works if without python support.
 ## Syntax Check
 ### [ale](https://github.com/w0rp/ale.git)
 ```
-    nmap <C-l><C-l> :ALELint<CR>
+    nnoremap <C-l><C-l> :ALELint<CR>
     nmap <silent> <C-l>p <Plug>(ale_previous_wrap)
     nmap <silent> <C-l>n <Plug>(ale_next_wrap)
-    nnoremap gt :ALEGoToDefinitionInTab<CR>
-    nnoremap gd :ALEGoToDefinition<CR>
+    nnoremap gat :ALEGoToDefinitionInTab<CR>
+    nnoremap gad :ALEGoToDefinition<CR>
 ```
 
 ### [syntastic](https://github.com/vim-syntastic/syntastic.git)
 Works is not fits the need of `ale`
 
 ## Search/Replace tools
-The main leader key is `C-f`,
+The main leader key is `C-f`
+
 ### [FlyGrep](https://github.com/wsdjeg/FlyGrep.vim)
-`<C-f><C-f>` to call the window
+`<C-f>g` to call the window
 
 ### [Ctrlsf](#)
 ```
-    nmap <C-F>s <Plug>CtrlSFPrompt
-    nmap <C-F>c <Plug>CtrlSFCwordPath
-    nmap <C-F>p <Plug>CtrlSFPwordPath
-    nmap <C-F>o :CtrlSFOpen<CR>
-    nmap <C-F>t :CtrlSFToggle<CR>
-    " vmap
-    vmap <C-F>s <Plug>CtrlSFVwordExec
-    vmap <C-F>f <Plug>CtrlSFVwordPath
+    nmap     <C-F>f <Plug>CtrlSFPrompt
+    vmap     <C-F>f <Plug>CtrlSFVwordPath
+    vmap     <C-F>F <Plug>CtrlSFVwordExec
+    nmap     <C-F>n <Plug>CtrlSFCwordPath
+    nmap     <C-F>N <Plug>CtrlSFCCwordPath
+    nmap     <C-F>p <Plug>CtrlSFPwordPath
 ```
 ### [vim-multiple-cursors](#)
 ```
@@ -401,7 +398,7 @@ The main leader key is `C-f`,
 
 ## RunTools
 ### [vim-quickrun](https://github.com/thinca/vim-quickrun)
-Use `F5` to run scripts. `F4` to toggle quickrun window
+Use `F5` to run scripts. `S-F5` to toggle quickrun window
 
 ### [asyncrun](https://github.com/skywind3000/asyncrun.vim)
 A async run plugin for vim8/nvim
