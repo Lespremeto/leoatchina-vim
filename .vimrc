@@ -1258,8 +1258,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:coc_snippet_next = '<C-n>'
 	    let g:coc_snippet_prev = '<C-p>'
         function! CocSetup()
-            execute 'CocInstall coc-pyls coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur coc-java coc-rls'
-            execute 'CocInstall coc-stylelint coc-eslint coc-tslint'
+            execute 'CocInstall coc-pyls coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur coc-java coc-rls coc-neco'
+            "execute 'CocInstall coc-stylelint coc-eslint coc-tslint'
         endfunction
         command! -nargs=0 -bang CocSetup call CocSetup()
         " Show signature help while editing

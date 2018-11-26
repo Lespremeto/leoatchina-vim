@@ -411,11 +411,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'davidhalter/jedi-vim'
                     Plug 'Rip-Rip/clang_complete'
                 endif
-                if g:complete_engine == 'neocomplete' || g:complete_engine == 'deoplete' || g:complete_engine == 'asyncomplete'
-                    Plug 'Shougo/neoinclude.vim'
-                    Plug 'Shougo/neco-vim'
-                    Plug 'Shougo/neco-syntax'
-                endif
+                Plug 'Shougo/neoinclude.vim'
+                Plug 'Shougo/neco-vim'
+                Plug 'Shougo/neco-syntax'
                 " java language
                 if HasPlug('java')
                     if executable('java') && executable('gcc') && executable('make')
