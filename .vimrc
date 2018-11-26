@@ -608,13 +608,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " voom
     if HasDirectory('VOom')
         let g:voom_python_versions = [3,2]
-        if has('gui_running')
-            au FileType markdown nmap <silent> <C-q> :Voom markdown<Cr>
-            au FileType markdown vmap <silent> <C-q> <ESC>:Voom markdown<Cr>
-            au FileType markdown imap <silent> <C-q> <ESC>:Voom markdown<Cr>
-        endif
-        nmap <leader>tv :VoomToggle<CR>
-        nmap <leader>tg :VoomQuit<CR>:Voom<CR><C-w>w
+        nnoremap <leader>tv :VoomToggle<CR>
+        nnoremap <leader>tg :VoomQuit<CR>:Voom<CR><C-w>w
         let g:voom_tab_key = "<C-tab>"
         let g:voom_ft_modes = {
             \ 'markdown': 'markdown',

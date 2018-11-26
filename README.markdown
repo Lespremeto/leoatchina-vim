@@ -382,6 +382,7 @@ The main leader key is `C-f`
 `<C-f>g` to call the window
 
 ### [Ctrlsf](https://github.com/dyng/ctrlsf.vim)
+Needs `ag` or `rg` or `ack` or
 ```
     nmap     <C-F>f <Plug>CtrlSFPrompt
     vmap     <C-F>f <Plug>CtrlSFVwordPath
@@ -390,6 +391,8 @@ The main leader key is `C-f`
     nmap     <C-F>N <Plug>CtrlSFCCwordPath
     nmap     <C-F>p <Plug>CtrlSFPwordPath
 ```
+
+
 ### [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 ```
     let g:multi_cursor_use_default_mapping=0

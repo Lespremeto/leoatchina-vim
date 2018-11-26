@@ -136,11 +136,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " search/replace/finder
         Plug 'google/vim-searchindex'
         Plug 'easymotion/vim-easymotion'
-        if executable('ag') || executable('ack') || executable('rg') || executable('pt')
-            Plug 'dyng/ctrlsf.vim'
-        else
-            Plug 'brooth/far.vim'
-        endif
         " biosyntax
         if HasPlug('bio')
             Plug 'bioSyntax/bioSyntax-vim'
@@ -193,19 +188,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'majutsushi/tagbar'
             endif
         endif
-        " gtags
-        if v:version >= 800
-            if executable('gtags') && HasPlug('gtags')
-                if $GTAGSCONF == ""
-                    echom("Please set $GTAGSCONF in your .local file, and pip install pygments!")
-                else
-                    Plug 'ludovicchabant/vim-gutentags'
-                    Plug 'skywind3000/gutentags_plus'
-                    Plug 'skywind3000/vim-preview'
-                    Plug 'jsfaint/gen_tags.vim'
-                endif
-            endif
-        endif
         " quickrun
         if v:version >= 702
             Plug 'thinca/vim-quickrun'
@@ -216,18 +198,31 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'terryma/vim-multiple-cursors'
             if v:version >= 800 || has('nvim')
                 Plug 'wsdjeg/FlyGrep.vim'
+                Plug 'skywind3000/asyncrun.vim'
+                " Ctrlsf
                 if (executable('ag') || executable('ack') || executable('rg') || executable('pt'))
                     Plug 'dyng/ctrlsf.vim'
+                else
+                    Plug 'brooth/far.vim'
                 endif
-                Plug 'skywind3000/asyncrun.vim'
+                " gtags
+                if executable('gtags') && HasPlug('gtags')
+                    if $GTAGSCONF == ""
+                        echom("Please set $GTAGSCONF in your .local file, and pip install pygments!")
+                    else
+                        Plug 'ludovicchabant/vim-gutentags'
+                        Plug 'skywind3000/gutentags_plus'
+                        Plug 'skywind3000/vim-preview'
+                        Plug 'jsfaint/gen_tags.vim'
+                    endif
+                endif
+                " syntax
+                if HasPlug('syntax')
+                    Plug 'w0rp/ale'
+                endif
             else
                 Plug 'brooth/far.vim'
-            endif
-            " syntax
-            if HasPlug('syntax')
-                if v:version >= 800 || has('nvim')
-                    Plug 'w0rp/ale'
-                else
+                if HasPlug('syntax')
                     Plug 'vim-syntastic/syntastic'
                 endif
             endif
@@ -236,7 +231,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 let g:browser_tool = "fzf"
                 Plug 'junegunn/fzf.vim'
                 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-            elseif (has('patch330') && v:version == 704 || v:version >= 800 || has('nvim')) && g:python_version
+            elseif (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
                 let g:browser_tool = "LeaderF"
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -250,7 +245,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'tacahiroy/ctrlp-funky'
             endif
             " complete_engine && snippet
-            if v:version == 704 && has('patch774') || v:version >= 800 || has('nvim') && has('timers')
+            if (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
                 if HasPlug('youcompleteme') || HasPlug('YCM')
                     if executable('make') && executable('gcc') && g:python_version && !WINDOWS() && (has('patch1578') && v:version == 704 || v:version >= 800) && !has('nvim')
                         let g:complete_engine = "YCM"
@@ -273,7 +268,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('asyncomplete')
-                    if (has('nvim') || v:version >= 800)
+                    if has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
                     else
                         echoe "Cannot install asyncomplete, smart select a complete_engine."
@@ -291,6 +286,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " smart select engine
                 if HasPlug('smartcomplete') || g:smart_engine_select
+                    " use coc for neovim in windows if yarn installed
                     if WINDOWS() && has('nvim-0.3.0') && executable('node') && executable('yarn')
                         let g:complete_engine = "coc"
                     elseif g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
@@ -306,7 +302,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 " install snippets plugins
                 if HasPlug('snippet')
                     Plug 'leoatchina/leoatchina-snippets'
-                    if g:python_version && g:use_ultisnips == 1 && g:complete_engine != "neocomplcache"
+                    if g:python_version && g:use_ultisnips == 1
                         let g:complete_snippet = "ultisnips"
                         Plug 'SirVer/ultisnips'
                         Plug 'honza/vim-snippets'
@@ -412,6 +408,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'Shougo/neocomplcache.vim'
                     Plug 'davidhalter/jedi-vim'
                     Plug 'Rip-Rip/clang_complete'
+                    if g:complete_snippet == 'ultisnips'
+                        Plug 'JazzCore/neocomplcache-ultisnips'
+                    endif
                 endif
                 Plug 'Shougo/neoinclude.vim'
                 Plug 'Shougo/neco-vim'
