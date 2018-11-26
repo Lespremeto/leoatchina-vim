@@ -49,14 +49,15 @@
     - [vim-quickrun](#vim-quickrun)
     - [asyncrun](#asyncrun)
   * [language support](#language-support)
-    - [vim-go for go](#vim-go-for-go)
-    - [vim-perl](#vim-perl)
-    - [java](#java)
+    - [java: vim-eclim & javacomplete2](#java-vim-eclim-javacomplete2)
+    - [go](#go)
+    - [perl](#perl)
     - [php](#php)
     - [html](#html)
     - [javascript](#javascript)
     - [rust](#rust)
     - [julia](#julia)
+    - [erlang](#erlang)
   * [nerdtree](#nerdtree)
   * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
   * [undotree](#undotree)
@@ -83,7 +84,7 @@
 **PLEASE FORGIVE ME FOR MY POOR ENGLISH!!**
 
 # Introduction
-This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But in order to meet my furthers needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/max/windows
+This is **leoatchina** vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim). I sincerely thank him for great job. But in order to meet my furthers needs,I have changed lots of settings. And now it is suitable for vim/gvim/nvim for linux/mac/windows
 
 You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim.
 
@@ -214,19 +215,21 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `tab/buffer control`
     - set tabpagemax=10
     - cmap Tabe tabe
-    - nnoremap <silent><Tab>:            tabnext<CR>
-    - nnoremap <silent><S-Tab>:          tabprevious<CR>
-    - nnoremap <Leader><Tab>:            tabm +1<CR>
-    - nnoremap <Leader><S-Tab>:          tabm -1<CR>
-    - nnoremap <Leader>te:               tabe<Space>
-    - nnoremap <Leader>ts:               tab  split<CR>
-    - nnoremap <Leader>tw:               tabs<CR>
-    - nnoremap <Leader>tm:               tabm<Space>
-    - nnoremap <LocalLeader><Backspace>: buffers<CR>
-    - nnoremap <LocalLeader>]:           bn<CR>
-    - nnoremap <LocalLeader>[:           bp<CR>
-    - nnoremap gq:                       tabclose<CR>
-    - and alt/cmd + 1,2,3,4.....0 for tabquickswith
+    - nnoremap `<silent><Tab>`:            tabnext<CR>
+    - nnoremap `<silent><S-Tab>`:          tabprevious<CR>
+    - nnoremap `<silent>-`:                tabprevious<CR>
+    - nnoremap `<Leader><Tab>`:            tabm +1<CR>
+    - nnoremap `<Leader><S-Tab>`:          tabm -1<CR>
+    - nnoremap `<Leader>-`:                tabm -1<CR>
+    - nnoremap `<Leader>te`:               tabe<Space>
+    - nnoremap `<Leader>ts`:               tab  split<CR>
+    - nnoremap `<Leader>tw`:               tabs<CR>
+    - nnoremap `<Leader>tm`:               tabm<Space>
+    - nnoremap `<LocalLeader><Backspace>`: buffers<CR>
+    - nnoremap `<LocalLeader>]`:           bn<CR>
+    - nnoremap `<LocalLeader>[`:           bp<CR>
+    - nnoremap gq:                         tabclose<CR>
+    - and alt/cmd + 1,2,3,4.....0 for tabquickswitch
 * `copy & paste`
     - vnoremap <Leader>y  "+y
     - nnoremap <Leader>y  "+y
@@ -284,14 +287,14 @@ This `README` is written mostly with macvim, and Atom.
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
 Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  these themes.
-- [wombat256](https://github.com/vim-scripts/wombat256.vim)
-- [gruvbox](https://github.com/morhetz/gruvbox)
-- [jellybeans](https://github.com/nanotech/jellybeans.vim)
-- [hybrid](https://github.com/w0ng/vim-hybrid)
-- [codedark](https://github.com/tomasiser/vim-code-dark)
-- [material](https://github.com/hzchirs/vim-material)
-- [ayu](https://github.com/ayu-theme/ayu-vim)
-- [onedark](https://github.com/joshdick/onedark.vim)
+- [wombat256](https://github.com/vim-scripts/wombat256.vim) for vim out of date
+- [gruvbox](https://github.com/morhetz/gruvbox) default vim8 theme
+- [jellybeans](https://github.com/nanotech/jellybeans.vim) default neovim theme in OSX
+- [hybrid](https://github.com/w0ng/vim-hybrid) default neovim theme in linux
+- [onedark](https://github.com/joshdick/onedark.vim) default neovim theme in windows
+- [material](https://github.com/hzchirs/vim-material) default macivm theme
+- [ayu](https://github.com/ayu-theme/ayu-vim) default linux gvim theme
+- [codedark](https://github.com/tomasiser/vim-code-dark) default windows gvim theme
 
 ## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
 ```
@@ -302,10 +305,10 @@ Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), ke
 ## [auto-pairs](https://github.com/jiangmiao/auto-pairs)
 ```
     let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-    let g:AutoPairsShortcutFastWrap   = "<C-b>f"
-    let g:AutoPairsShortcutJump       = "<C-b>j"
-    let g:AutoPairsShortcutBackInsert = "<C-b>i"
-    inoremap <buffer> <silent> <C-h> <C-R>=AutoPairsDelete()<CR>
+    let g:AutoPairsShortcutToggle     = "<C-l>g"
+    let g:AutoPairsShortcutFastWrap   = "<C-l>f"
+    let g:AutoPairsShortcutJump       = "<C-l>j"
+    let g:AutoPairsShortcutBackInsert = "<C-l>i"
 ```
 
 ## Complete Engines, vim 7.4+ is required
@@ -337,7 +340,7 @@ Needs `vim8/neovim` with `node` and `yarn` installed in system
 Needs `neovim` with `+python3`
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
-Needs `vim8/neovim`
+Needs `vim8/neovim`, no `python support` is needed
 
 ### [neocomplete](https://github.com/Shougo/neocomplete.vim)
 Needs `vim/neovim` with `+lua`
@@ -378,7 +381,7 @@ The main leader key is `C-f`
 ### [FlyGrep](https://github.com/wsdjeg/FlyGrep.vim)
 `<C-f>g` to call the window
 
-### [Ctrlsf](#)
+### [Ctrlsf](https://github.com/dyng/ctrlsf.vim)
 ```
     nmap     <C-F>f <Plug>CtrlSFPrompt
     vmap     <C-F>f <Plug>CtrlSFVwordPath
@@ -387,7 +390,7 @@ The main leader key is `C-f`
     nmap     <C-F>N <Plug>CtrlSFCCwordPath
     nmap     <C-F>p <Plug>CtrlSFPwordPath
 ```
-### [vim-multiple-cursors](#)
+### [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 ```
     let g:multi_cursor_use_default_mapping=0
     let g:multi_cursor_start_word_key      = '<C-n>'
@@ -407,46 +410,32 @@ Use `F5` to run scripts. `S-F5` to toggle quickrun window
 ### [asyncrun](https://github.com/skywind3000/asyncrun.vim)
 A async run plugin for vim8/nvim
 ```
-    function! s:RUN_ASYNC()
-        exec "w"
-        call asyncrun#quickfix_toggle(8,1)
-        if &filetype == 'c'
-            exec ":AsyncRun g++ % -o %<"
-            exec ":AsyncRun ./%<"
-        elseif &filetype == 'cpp'
-            exec ":AsyncRun g++ % -o %<"
-            exec ":AsyncRun ./%<"
-        elseif &filetype == 'java'
-            exec ":AsyncRun javac %"
-            exec ":AsyncRun java %<"
-        elseif &filetype == 'sh'
-            exec ":AsyncRun bash %"
-        elseif &filetype == 'python'
-            exec ":AsyncRun python %"
-        elseif &filetype == 'perl'
-            exec ":AsyncRun perl %"
-        elseif &filetype == 'go'
-            exec ":AsyncRun go run %"
-        endif
-    endfunction
-    command! RunAsync call s:RUN_ASYNC()
-    nmap <C-b>r        :RunAsync<CR>
-    nmap <C-b>s        :AsyncStop<CR>
-    nmap <localleade>R :AsyncRun<Space>
+    command! AsyncRunNow call s:ASYNC_RUN()
+    nmap <C-b>a :AsyncRunNow<CR>
+    nmap <C-b>s :AsyncStop<CR>
+    nmap <C-b>g :AsyncRun
+    au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
 ```
 
 ## language support
 
-### [vim-go for go](https://github.com/fatih/vim-go)
+### java: [vim-eclim](https://github.com/dansomething/vim-eclim) & [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2)
+You have to install eclipse, and [eclim](https://github.com/ervandew/eclim) according to its instruction.
+Please check .vimrc for shortcuts
+
+### [go](https://github.com/fatih/vim-go)
 vim-go requires at least Vim 7.4.1689 or Neovim 0.2.2. need `go` in `g:plug_groups`
 
-### [vim-perl](https://github.com/vim-perl/vim-perl)
-### java
+### [perl](https://github.com/vim-perl/vim-perl)
+perl snippets and syntax
+
+
 ### php
 ### html
 ### javascript
 ### rust
 ### julia
+### erlang
 
 ## [nerdtree](https://github.com/scrooloose/nerdtree)
 Togglekey:`<Leader>nn`, and key `<Leader>nt`
