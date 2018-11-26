@@ -286,8 +286,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " smart select engine
                 if HasPlug('smartcomplete') || g:smart_engine_select
-                    " use coc for neovim in windows if yarn installed
-                    if WINDOWS() && has('nvim-0.3.0') && executable('node') && executable('yarn')
+                    " use coc for neovim if yarn installed
+                    if has('nvim-0.3.0') && executable('node') && executable('yarn')
                         let g:complete_engine = "coc"
                     elseif g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                         let g:complete_engine = "deoplete"
