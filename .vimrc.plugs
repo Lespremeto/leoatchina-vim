@@ -291,7 +291,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " smart select engine
                 if HasPlug('smartcomplete') || g:smart_engine_select
-                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
+                    if WINDOWS() && has('nvim-0.3.0') && executable('node') && executable('yarn')
+                        let g:complete_engine = "coc"
+                    elseif g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                         let g:complete_engine = "deoplete"
                     elseif has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
