@@ -1,80 +1,80 @@
 <!-- vim-markdown-toc GitLab -->
 
-+ [still in modifying, some short cuts will be changed](#still-in-modifying-some-short-cuts-will-be-changed)
++ [This vim config is stiling in modifying](#this-vim-config-is-stiling-in-modifying)
 + [中文介绍](#中文介绍)
 + [Introduction](#introduction)
 + [Requirements](#requirements)
 + [Install](#install)
-    * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx)
-    * [windows](#windows)
+  * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx)
+  * [windows](#windows)
 + [Update](#update)
-    * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-1)
-    * [windows](#windows-1)
+  * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-1)
+  * [windows](#windows-1)
 + [Upgrade plugins](#upgrade-plugins)
-    * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-2)
-    * [windows](#windows-2)
+  * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-2)
+  * [windows](#windows-2)
 + [Delete](#delete)
-    * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-3)
-    * [Windows](#windows-3)
+  * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-3)
+  * [Windows](#windows-3)
 + [How it works](#how-it-works)
 + [Main changes from spf13](#main-changes-from-spf13)
 + [Some features](#some-features)
 + [Main shortcuts](#main-shortcuts)
 + [Plugins and their shortcuts](#plugins-and-their-shortcuts)
-    * [vim-plug](#vim-plug)
-    * [ywvim中文输入法](#ywvim中文输入法)
-    * [Markdown](#markdown)
-    * [Themes Collentions](#themes-collentions)
-    * [vim-easy-align](#vim-easy-align)
-    * [auto-pairs](#auto-pairs)
-    * [Complete Engines, vim 7.4+ is required](#complete-engines-vim-74-is-required)
-        - [Smart Engines Selection](#smart-engines-selection)
-        - [YouCompleteMe](#youcompleteme)
-        - [deoplete](#deoplete)
-        - [ncm2](#ncm2)
-        - [asyncomplete](#asyncomplete)
-        - [neocomplete](#neocomplete)
-        - [neocomplcache](#neocomplcache)
-    * [Complete Snippets, vim 7.4+ is also required](#complete-snippets-vim-74-is-also-required)
-        - [ultisnips](#ultisnips)
-        - [neosnippet](#neosnippet)
-    * [Syntax Check](#syntax-check)
-        - [ale](#ale)
-        - [syntastic](#syntastic)
-    * [Search/Replace tools](#searchreplace-tools)
-        - [FlyGrep](#flygrep)
-        - [Ctrlsf](#ctrlsf)
-        - [vim-multiple-cursors](#vim-multiple-cursors)
-    * [RunTools](#runtools)
-        - [vim-quickrun](#vim-quickrun)
-        - [asyncrun](#asyncrun)
-    * [language support](#language-support)
-        - [vim-go for go](#vim-go-for-go)
-        - [vim-perl](#vim-perl)
-        - [java](#java)
-        - [php](#php)
-        - [html](#html)
-        - [javascript](#javascript)
-        - [rust](#rust)
-        - [julia](#julia)
-    * [nerdtree](#nerdtree)
-    * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
-    * [undotree](#undotree)
-    * [airline and lightline](#airline-and-lightline)
-    * [fugitive](#fugitive)
-    * [bioSyntax-vim](#biosyntax-vim)
-    * [nerdcommenter](#nerdcommenter)
-    * [Browser tools](#browser-tools)
-        - [fzf.vim](#fzfvim)
-        - [LeaderF](#leaderf)
-        - [ctrlp](#ctrlp)
-    * [surround](#surround)
-    * [repeat](#repeat)
-    * [vim-easy-align](#vim-easy-align-1)
-    * [EasyMotion](#easymotion)
+  * [vim-plug](#vim-plug)
+  * [ywvim中文输入法](#ywvim中文输入法)
+  * [Markdown](#markdown)
+  * [Themes Collentions](#themes-collentions)
+  * [vim-easy-align](#vim-easy-align)
+  * [auto-pairs](#auto-pairs)
+  * [Complete Engines, vim 7.4+ is required](#complete-engines-vim-74-is-required)
+    - [Smart Engines Selection](#smart-engines-selection)
+    - [YouCompleteMe](#youcompleteme)
+    - [coc](#coc)
+    - [deoplete](#deoplete)
+    - [asyncomplete](#asyncomplete)
+    - [neocomplete](#neocomplete)
+    - [neocomplcache](#neocomplcache)
+  * [Complete Snippets, vim 7.4+ is also required](#complete-snippets-vim-74-is-also-required)
+    - [ultisnips](#ultisnips)
+    - [neosnippet](#neosnippet)
+  * [Syntax Check](#syntax-check)
+    - [ale](#ale)
+    - [syntastic](#syntastic)
+  * [Search/Replace tools](#searchreplace-tools)
+    - [FlyGrep](#flygrep)
+    - [Ctrlsf](#ctrlsf)
+    - [vim-multiple-cursors](#vim-multiple-cursors)
+  * [RunTools](#runtools)
+    - [vim-quickrun](#vim-quickrun)
+    - [asyncrun](#asyncrun)
+  * [language support](#language-support)
+    - [vim-go for go](#vim-go-for-go)
+    - [vim-perl](#vim-perl)
+    - [java](#java)
+    - [php](#php)
+    - [html](#html)
+    - [javascript](#javascript)
+    - [rust](#rust)
+    - [julia](#julia)
+  * [nerdtree](#nerdtree)
+  * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
+  * [undotree](#undotree)
+  * [airline and lightline](#airline-and-lightline)
+  * [fugitive](#fugitive)
+  * [bioSyntax-vim](#biosyntax-vim)
+  * [nerdcommenter](#nerdcommenter)
+  * [Browser tools](#browser-tools)
+    - [fzf.vim](#fzfvim)
+    - [LeaderF](#leaderf)
+    - [ctrlp](#ctrlp)
+  * [surround](#surround)
+  * [repeat](#repeat)
+  * [vim-easy-align](#vim-easy-align-1)
+  * [EasyMotion](#easymotion)
 
 <!-- vim-markdown-toc -->
-# still in modifying, some short cuts will be changed
+# This vim config is stiling in modifying
 # 中文介绍
 原来的repo放在 [spf13-vim-leoatchina](https://github.com/leoatchina/spf13-vim-leoatchina)，因为原来一时脑抽，把中文字体放进去后导致体积较大，影响速度，所以重开一个repo并把windows下的工具分开，以增加clone速度。
 
@@ -190,44 +190,47 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 # Main shortcuts
 * `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
 * `<LocalLeader>` to **`\`**
-* `<Leader>.` for number + 1, `<Leader>,` for number -1
-* `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug myself
-* `<LocalLeader><LocalLeader` for bracket jump
+* `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug
+* `<Cr>` for bracket jump
 * `c-a` to the head of a line, `c-e` to end in visual/insert mode, compatible with linux.
 * `c-f`, `c-b`, `c-h`, `c-l`, `g` work like `Leader` key in normal mode
 * `c-f` to right `c-b` to left in insert mode
-* 'c-j' to end of sentence, 'c-k' to the beginning
-* `c-p` invoke browser tools `fzf` or `LeaderF` or `Ctrlp`
-* `gc` for gcommit, `+` for `:Git`
+* `gf` to end of sentence, `gb` to the beginning in normal/visual mode
+* `c-e` to end of sentence, `c-a` to the beginning in insert/command mode
+* `c-k j` invoke browser tools `fzf` or `LeaderF` or `Ctrlp`
+* `gc` for gcommit, `gs` for git diff,  `g+Cr` for `:Git `
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode
 * `!` for `:!`
-* `F1`:  tab help
-* `F2`:  toggle search results highlight
-* `F3`:  show register strings
-* `F4`:  paste toggle (F12 is for `tmux`)
-* `F5`:  run script (with plugin [vim-quickrun](https: //github.com/thinca/vim-quickrun))
-* `F6`:  toggle quickrun windows
-* `F11`: full screen toggle
-* 'F12': is for tmux, I have to mention it here
+* `<leader>TT`: tab help
+* `<leader>tw`: toggle wrap
+* `<leader>tf`: toggle folder
+* `<leader>tn`: number type toggle
+* `F5`:         run script (with plugin [vim-quickrun](https: //github.com/thinca/vim-quickrun))
+* `S-F5`:       toggle quickrun windows
+* `F6`:         toggle search results highlight
+* `<leader>th`: toggle search results highlight
+* `S-F6`:       show register strings
+* `<leader>tr`: show register strings
+* `F11`:        full screen toggle
+* `S-F12`:      pastetoggle
+* `<leader>tp`: pastetoggle
 * `tab/buffer control`
     - set tabpagemax=10
     - cmap Tabe tabe
-    - nnoremap <silent>-          :tabprevious<CR>
-    - nnoremap <silent><Tab>      :tabnext<CR>
-    - nnoremap <Leader>tp         :tabprevious<CR>
-    - nnoremap <Leader>tn         :tabnext<CR>
-    - nnoremap <Leader>-          :tabm -1<CR>
-    - nnoremap <Leader><Tab>      :tabm +1<CR>
-    - nnoremap <LocalLeader>-     :tabfirst<CR>
-    - nnoremap <LocalLeader><Tab> :tablast<CR>
-    - nnoremap <Leader>te         :tabe<Space>
-    - nnoremap <Leader>ts         :tab  split<CR>
-    - nnoremap <Leader>tw         :tabs<CR>
-    - nnoremap <Leader>tm         :tabm<Space>
-    - nnoremap <LocalLeader><Backspace> :buffers<CR>
-    - nnoremap <LocalLeader>]           :bn<CR>
-    - nnoremap <LocalLeader>[           :bp<CR>
+    - nnoremap <silent><Tab>:            tabnext<CR>
+    - nnoremap <silent><S-Tab>:          tabprevious<CR>
+    - nnoremap <Leader><Tab>:            tabm +1<CR>
+    - nnoremap <Leader><S-Tab>:          tabm -1<CR>
+    - nnoremap <Leader>te:               tabe<Space>
+    - nnoremap <Leader>ts:               tab  split<CR>
+    - nnoremap <Leader>tw:               tabs<CR>
+    - nnoremap <Leader>tm:               tabm<Space>
+    - nnoremap <LocalLeader><Backspace>: buffers<CR>
+    - nnoremap <LocalLeader>]:           bn<CR>
+    - nnoremap <LocalLeader>[:           bp<CR>
+    - nnoremap gq:                       tabclose<CR>
+    - and alt/cmd + 1,2,3,4.....0 for tabquickswith
 * `copy & paste`
     - vnoremap <Leader>y  "+y
     - nnoremap <Leader>y  "+y
@@ -241,26 +244,28 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
     - vnoremap <Leader>p "+p
     - vnoremap <Leader>P "*P
 * `Some other shortcuts`
-    - nmap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+    - nnoremap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
     - nnoremap <Leader>fd :set nofoldenable! nofoldenable?<CR>
     - nnoremap <Leader>fw :set nowrap! nowrap?<CR>
-    - nmap <Leader>w :w<CR>
-    - nmap <Leader>W :wq!<CR>
-    - nmap <Leader>WQ :wa<CR>:q<CR>
-    - nmap <Leader>q :q!
-    - nmap <Leader>Q :qa!
-    - nmap <Leader>\ :vsplit<Space>
-    - nmap <Leader><Leader>\ :split<Space>
-    - nmap <Leader>= <C-W>=
-    - nmap <Leader><Down> :resize -3<CR>
-    - nmap <Leader><Up>   :resize +3<CR>
-    - nmap <Leader><Left> :vertical resize -3<CR>
-    - nmap <Leader><Right>:vertical resize +3<CR>
+    - nnoremap <Leader>w :w<CR>
+    - nnoremap <Leader>W :wq!<CR>
+    - nnoremap <Leader>WQ :wa<CR>:q<CR>
+    - nnoremap ~ Q
+    - nnoremap Q :bd!<Cr>
+    - nnoremap <Leader>q :q!
+    - nnoremap <Leader>Q :qa!
+    - nnoremap <Leader>\ :vsplit<Space>
+    - nnoremap <Leader><Leader>\ :split<Space>
+    - nnoremap <Leader>= <C-W>=
+    - nnoremap <Leader><Down> :resize -3<CR>
+    - nnoremap <Leader><Up>   :resize +3<CR>
+    - nnoremap <Leader><Left> :vertical resize -3<CR>
+    - nnoremap <Leader><Right>:vertical resize +3<CR>
     - vnoremap << <gv
     - vnoremap >> >gv
 
 # Plugins and their shortcuts
-Hereafter are the plugins that I collected, theirs links looks blue, if you want details for them, click it.
+Hereafter are the plugins that I collected, if you want details for them, click it.
 
 At first I planned to detailly introduce every plugins, but actually it is easy for users to find the original repos of the plugins, and find the detail introduces for plugsin via search engines. So , I simplly write something about the plugins, sometime only list the shortcut
 
@@ -273,7 +278,7 @@ A smart and parallel plug manage plugin, instead of [vundle](https://github.com/
 You can check how it is installed via `install.sh` or `setup.cmd`
 
 ## [ywvim中文输入法](https://github.com/leoatchina/ywvim)
-这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过**CTRL+\ **开启,**CTRL+^ **进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
+这个介绍我用中文写因为老外用不到。`ywvim`中文输入法,在`insert`模式下通过`CTRL+\ `开启,`CTRL+^`进行配置。`;`临时英文输入法;注意,默认只输入**英文状态**的标点;`z`临时拼音;`,.-=`上下翻页。开启办法: 要在 `~/.vimrc.local`里的`g:plug_groups`加入`wubi`(五笔)或者`pinyin`(拼音).
 
 ## Markdown
 Markdown syntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for `:Voom markdown`(with [voom](https://github.com/vim-voom/VOoM))
@@ -282,11 +287,14 @@ This `README` is written mostly with macvim, and Atom.
 
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
 Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  these themes.
-Default themes:
-- [gruvbox](https://github.com/morhetz/gruvbox) for vim
-- [hybrid_material](https://github.com/kristijanhusak/vim-hybrid-material) for gvim
-- [wombat256](https://github.com/vim-scripts/wombat256.vim) for neovim
-- [onedark](https://github.com/joshdick/onedark.vim) for neovim with gui
+- [wombat256](https://github.com/vim-scripts/wombat256.vim)
+- [gruvbox](https://github.com/morhetz/gruvbox)
+- [jellybeans](https://github.com/nanotech/jellybeans.vim)
+- [hybrid](https://github.com/w0ng/vim-hybrid)
+- [codedark](https://github.com/tomasiser/vim-code-dark)
+- [material](https://github.com/hzchirs/vim-material)
+- [ayu](https://github.com/ayu-theme/ayu-vim)
+- [onedark](https://github.com/joshdick/onedark.vim)
 
 ## [vim-easy-align](https://github.com/junegunn/vim-easy-align)
 ```
@@ -304,13 +312,13 @@ Default themes:
 ```
 
 ## Complete Engines, vim 7.4+ is required
-**6** code-completion engines:`deoplete`, `ncm2`, `asyncomplete`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
+**6** code-completion engines:`deoplete`, `coc`, `asyncomplete`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
 ### Smart Engines Selection
 There is variable `"smartcomplete"` in `"g:plug_groups"` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no python`, `windows` or `linux` or `mac`.
 I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-By default, with '+python3' support and not windows, `deoplete` for 'vim8', `ncm2` for 'neovim',  otherwise `asyncomplete`.
+By default, with '+python3' support and not windows, `deoplete` for 'vim8', `coc` for 'neovim',  otherwise `asyncomplete`.
 
 These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`.
 
@@ -323,27 +331,21 @@ You can also force to install the completion engine in `g:plug_groups`, just rep
 It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-k` for trigger, if not triggered , switch to the next. `CR` or `C-j` for end completion(`C-e`, `C-y` still work). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
-YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for Vim. It has several completion engines
+Needs `vim` with `+python` or `+python3`
 
-Needs `python` or `python3`
-> `nnoremap go :YcmCompleter GoToDefinitionElseDeclaration`
+### [coc](https://github.com/neoclide/coc.nvim)
+Needs `vim8/neovim` with `node` and `yarn` installed in system
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
-Deoplete is the abbreviation of "dark powered neo-completion". It provides an extensible and asynchronous completion framework for neovim/Vim8.Need `+python3`
-
-### [ncm2](https://github.com/ncm2/ncm2)
-NCM2, formerly known as nvim-completion-manager, is a slim, fast and hackable completion framework for neovim. Require `+python3`
+Needs `neovim` with `+python3`
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
-Provide async autocompletion for vim8 and neovim with timers. This repository is fork of https://github.com/roxma/nvim-complete-manager in pure vim script with python dependency removed. But if you want `python` support(actrually python3), you should `pip3 install python-language-server`
+Needs `vim8/neovim`
 
 ### [neocomplete](https://github.com/Shougo/neocomplete.vim)
-neocomplete is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer.Use snippets for completion, faster than `neocomplcache`
+Needs `vim/neovim` with `+lua`
 
 ### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
-neocomplcache is the abbreviation of "neo-completion with cache". It provides keyword completion system by maintaining a cache of keywords in the current buffer. neocomplcache could be customized easily and has a lot more features than the Vim's standard completion feature.
-**It is the last complete engine in this config , since it has the newst requirements choose**
-
 
 ## Complete Snippets, vim 7.4+ is also required
 If complete_engine is `neocomplete` or `neocomplcache`,  snippets `ultisnips` or  `neosnippet` will be intalled. Otherwise need `snippet` in `~/.vimrc.local`

@@ -320,8 +320,10 @@ cnoremap Tabe tabe
 " compatible with xshell
 nnoremap <silent><Tab>   :tabnext<CR>
 nnoremap <silent><S-Tab> :tabprevious<CR>
+nnoremap <silent>-       :tabprevious<CR>
 nnoremap <leader><Tab>   :tabm +1<CR>
 nnoremap <leader><S-Tab> :tabm -1<CR>
+nnoremap <leader>-       :tabm -1<CR>
 nnoremap <Leader>te      :tabe<Space>
 nnoremap <Leader>tm      :tabm<Space>
 nnoremap <Leader>ts      :tab  split<CR>
