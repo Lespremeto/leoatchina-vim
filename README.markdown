@@ -168,14 +168,12 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 `.vimrc.clean` it is an bash file which is set to delete `~/.vimswap` & `~/.vimviews` folders. Also be linked as `~/.vimrc.clean`
 
 # Main changes from spf13
-* use `vim-plug` instead of `vundle`, taster and smarter
-* totally simplified, delete `fork`,`before` files , which are redundent for most users
-* delete lots of variables for feature settings
+* use `vim-plug` instead of `vundle`, faster and smarter
+* totally simplified, delete `fork`,`before` files ,delete lots of variables for feature settings
 * just as I have mentioned before, the link is from the cloned folder
 * not support **XP** any more
 
 # Some features
-* no backup file
 * no backup
 * no sound
 * no scroll bars
@@ -467,7 +465,7 @@ Hackable plugin, the most import key is ** `<Leader>c<Space>` **|NERDComToggleCo
 You can get other shortcuts via the link.
 
 ## Browser tools
-`C-p` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
+`C-k j` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
 You can install only one of them , by write the plugins name in `~/.vimrc.local`. `CtrlP` is the default one.
 
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
