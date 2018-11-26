@@ -354,9 +354,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     if HasPlug('rust') && executable('racer')
                         Plug 'racer-rust/vim-racer'
                     endif
-                    if HasPlug('php') && executable('composer')
-                        Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
-                    endif
                     " use LCN for complete_engine
                     if !WINDOWS()
                         Plug 'autozimu/LanguageClient-neovim', {
