@@ -5,7 +5,7 @@ if has('python3') && executable('python3')
         silent! python3 1
     endif
     if v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')
-        let g:python3_host_prog = exepath('python3')
+        let g:python3_host_prog = expand(exepath('python3'))
     endif
 elseif has('python') && executable('python2')
     let g:python_version = 2
@@ -13,7 +13,7 @@ elseif has('python') && executable('python2')
         silent! python 1
     endif
     if v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')
-        let g:python_host_prog = exepath('python2')
+        let g:python_host_prog = expand(exepath('python2'))
     endif
 else
     let g:python_version = 0

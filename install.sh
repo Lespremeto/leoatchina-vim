@@ -119,16 +119,17 @@ else
 fi
 
 if [ -f $HOME/.vimrc.local ];then
-    success "$HOME/.vimrc.local exists."
+    success "$HOME/.vimrc.local exists. You can modify it."
 else
     cp $APP_PATH/.vimrc.local $HOME/
-    success "$HOME/.vimrc.local does not exist, copy to it."
+    success "$HOME/.vimrc.local does not exist, copy  it."
 fi
 
 create_symlinks "$APP_PATH" "$HOME"
 if [ "$update_vim_plug" -eq '1' ];then
     install_vim_plug "$PLUG_URL" "$HOME/.vim-plug/autoload" "$APP_PATH"
 fi
+
 if program_exists "vim"; then
     setup_plug "vim"
 fi

@@ -1268,7 +1268,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:deoplete#enable_yarp = 1
         endif
         if HasDirectory('deoplete-jedi')
-            let g:deoplete#sources#jedi#python_path = exepath('python3')
+            let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
         endif
         if HasDirectory("LanguageClient-neovim")
             call deoplete#custom#source('LanguageClient',
