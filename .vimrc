@@ -1,7 +1,6 @@
 " This is leoatchina's vim config forked from https://github.com/spf13/spf13-vim
 " Sincerely thank him for his great job, and I have made some change according to own requires.
 " You can find spf13's origin config at http://spf13.com
-" Basics
 set nocompatible
 if v:version < 700
     echoe 'This vimrc requires Vim 7.0 or later.'
