@@ -338,7 +338,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     if WINDOWS()
                         Plug 'neoclide/coc.nvim', {'do': '.\install.cmd', 'do': ':CocSetup'}
                     else
-                        Plug 'neoclide/coc.nvim', {'do': './install.sh'}
+                        Plug 'neoclide/coc.nvim', {'do': './install.sh', 'do': ':CocSetup'}
                     endif
                 elseif g:complete_engine == "deoplete"
                     if has('nvim')
