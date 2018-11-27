@@ -330,8 +330,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
                     endif
                 elseif g:complete_engine == "coc"
+                    function! CocSetup()
+                        execute 'CocInstall coc-pyls coc-java coc-rls coc-neco'
+                        execute 'CocInstall coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur'
+                    endfunction
+                    command! -nargs=0 -bang CocSetup call CocSetup()
                     if WINDOWS()
-                        Plug 'neoclide/coc.nvim', {'do': '.\install.cmd'}
+                        Plug 'neoclide/coc.nvim', {'do': '.\install.cmd', 'do': ':CocSetup'}
                     else
                         Plug 'neoclide/coc.nvim', {'do': './install.sh'}
                     endif

@@ -802,7 +802,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'wombat'
             endif
-        elseif has('gui_running') && has("termguicolors")
+        elseif has('gui_running')
             set termguicolors
             if OSX()
                 colorscheme vim-material
@@ -1252,11 +1252,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nmap <silent> gr <Plug>(coc-references)
         let g:coc_snippet_next = '<C-n>'
 	    let g:coc_snippet_prev = '<C-p>'
-        function! CocSetup()
-            execute 'CocInstall coc-pyls coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur coc-java coc-rls coc-neco'
-            "execute 'CocInstall coc-stylelint coc-eslint coc-tslint'
-        endfunction
-        command! -nargs=0 -bang CocSetup call CocSetup()
         " Show signature help while editing
         autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
         " Highlight symbol under cursor on CursorHold
