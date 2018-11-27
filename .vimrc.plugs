@@ -73,6 +73,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if !exists('g:plug_groups')
             let g:plug_groups=['smartcomplete', 'snippet', 'syntax', 'bio']
         endif
+        function! HasDirectory(dir)
+            return isdirectory(expand($PLUG_PATH."/".a:dir))
+        endfunction
         function! HasPlug(plug)
             return count(g:plug_groups, a:plug)
         endfunction
@@ -331,15 +334,31 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     endif
                 elseif g:complete_engine == "coc"
                     function! CocSetup()
-                        execute 'CocInstall coc-pyls coc-java coc-rls coc-neco'
-                        execute 'CocInstall coc-tsserver coc-html coc-json coc-css coc-wxml coc-vetur'
+                        if WINDOWS()
+                            !.\install.cmd
+                        else
+                            !./install.sh
+                        end
+                        execute 'CocInstall coc-pyls'
+                        execute 'CocInstall coc-java'
+                        execute 'CocInstall coc-rls'
+                        execute 'CocInstall coc-tsserver'
+                        execute 'CocInstall coc-html'
+                        execute 'CocInstall coc-json'
+                        execute 'CocInstall coc-css'
+                        execute 'CocInstall coc-wxml'
+                        execute 'CocInstall coc-vetur'
+                        execute 'CocInstall coc-dictionary'
+                        execute 'CocInstall coc-omni'
+                        if g:complete_snippet == 'ultisnips'
+                            execute 'CocInstall coc-ultisnips'
+                        elseif g:complete_snippet == 'neosnippet'
+                            execute 'CocInstall coc-neosnippet'
+                        endif
                     endfunction
                     command! -nargs=0 -bang CocSetup call CocSetup()
-                    if WINDOWS()
-                        Plug 'neoclide/coc.nvim', {'do': '.\install.cmd', 'do': ':CocSetup'}
-                    else
-                        Plug 'neoclide/coc.nvim', {'do': './install.sh', 'do': ':CocSetup'}
-                    endif
+                    Plug 'neoclide/coc-neco'
+                    Plug 'neoclide/coc.nvim', {'do': ':CocSetup'}
                 elseif g:complete_engine == "deoplete"
                     if has('nvim')
                         Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
