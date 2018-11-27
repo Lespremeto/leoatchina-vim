@@ -426,7 +426,9 @@ nnoremap <Leader><Right> :vertical resize +3<CR>
 vnoremap << <gv
 vnoremap >> >gv
 "离开插入模式后关闭预览窗口
-au InsertLeave * if pumvisible() == 0|pclose|endif
+au! InsertLeave * if pumvisible() == 0|pclose|endif
+"补全完成后关闭预览窗口
+au! CompleteDone * if pumvisible() == 0 | pclose | endif
 " auto close windows when leave vim
 aug WINDOWClose
     au!
