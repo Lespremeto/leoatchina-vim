@@ -574,9 +574,6 @@ if has("user_commands")
 endif
 " Plugins, if vim-plug works
 if has('job') || g:python_version || has('nvim') || has('lua')
-    function! HasDirectory(dir)
-        return isdirectory(expand($PLUG_PATH."/".a:dir))
-    endfunction
     " full-screen
     if WINDOWS() && has('libcall') && !has('nvim')
         let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
