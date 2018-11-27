@@ -176,10 +176,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('javascript')
             Plug 'pangloss/vim-javascript', {'for': 'javascript'}
             Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
-        endif
-        " typescripts
-        if HasPlug('typescript')
-           Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
+            Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
         endif
         " perl
         if HasPlug('perl')
@@ -404,8 +401,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     endif
                     if HasPlug('javascript')
                         Plug 'prabirshrestha/asyncomplete-flow.vim'
-                    endif
-                    if HasPlug('typescript')
                         Plug 'runoshun/tscompletejob'
                         Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
                     endif
