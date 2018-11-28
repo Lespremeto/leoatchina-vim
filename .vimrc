@@ -6,6 +6,7 @@ if v:version < 700
     echoe 'This vimrc requires Vim 7.0 or later.'
     quit
 endif
+noremap <F1> <ESC>
 set re=1
 set ttyfast
 set lazyredraw
@@ -924,7 +925,181 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
     elseif HasDirectory("vim-visual-multi")
+        let g:VM_no_meta_mappings = 0
+        let g:VM_default_mappings = 1
+        let g:VM_extended_mappings = 1
 
+        let g:VM_maps["Erase Regions"]               = ''
+        let g:VM_maps["Add Cursor At Pos"]           = 'g<space>'
+        let g:VM_maps["Add Cursor At Word"]          = 'gw'
+        let g:VM_maps["Start Regex Search"]          = 'g/'
+        let g:VM_maps["Select All"]                  = '<M-A>'
+        let g:VM_maps["Add Cursor Down"]             = '<M-j>'
+        let g:VM_maps["Add Cursor Up"]               = '<M-k>'
+
+        let g:VM_maps["Visual Regex"]                = 'g/'
+        let g:VM_maps["Visual All"]                  = '<M-A>'
+        let g:VM_maps["Visual Add"]                  = '<M-a>'
+        let g:VM_maps["Visual Find"]                 = '<C-f>'
+        let g:VM_maps["Visual Cursors"]              = '<C-c>'
+        let g:VM_maps["Visual Star"]                 = '*'
+        let g:VM_maps["Visual Hash"]                 = '#'
+        let g:VM_maps["Visual Subtract"]             = '<M-s>'
+
+        let g:VM_maps["Select Cursor Down"]          = '<M-C-Down>'
+        let g:VM_maps["Select Cursor Up"]            = '<M-C-Up>'
+        let g:VM_maps["Select j"]                    = '<S-Down>'
+        let g:VM_maps["Select k"]                    = '<S-Up>'
+        let g:VM_maps["Select l"]                    = '<S-Right>'
+        let g:VM_maps["Select h"]                    = '<S-Left>'
+        let g:VM_maps["Select w"]                    = '<C-S-Right>'
+        let g:VM_maps["Select b"]                    = '<C-S-Left>'
+        let g:VM_maps["Select Line Down"]            = '<C-S-Down>'
+        let g:VM_maps["Select Line Up"]              = '<C-S-Up>'
+        let g:VM_maps["Select E"]                    = '<M-C-Right>'
+        let g:VM_maps["Select BBW"]                  = '<M-C-Left>'
+        let g:VM_maps["Find Under"]                  = '<C-d>'
+        let g:VM_maps["Find Subword Under"]          = '<C-d>'
+        let g:VM_maps["Skip Region"]                 = '<C-s>'
+
+        let g:VM_maps["Mouse Cursor"]                = '<C-LeftMouse>'
+        let g:VM_maps["Mouse Word"]                  = '<C-RightMouse>'
+        let g:VM_maps["Mouse Column"]                = '<M-C-RightMouse>'
+
+        let g:VM_maps["Find I Word"]                 = 's]'
+        let g:VM_maps["Find A Word"]                 = 's['
+        let g:VM_maps["Find I Whole Word"]           = 's}'
+        let g:VM_maps["Find A Subword"]              = 's]'
+        let g:VM_maps["Find A Whole Subword"]        = 's['
+
+        let g:VM_maps["Switch Mode"]                 = '<Tab>'
+        let g:VM_maps["Toggle Block"]                = '<BS>'
+        let g:VM_maps["Toggle Only This Region"]     = '<CR>'
+
+        let g:VM_maps["Find Next"]                   = ']'
+        let g:VM_maps["Find Prev"]                   = '['
+        let g:VM_maps["Goto Next"]                   = '}'
+        let g:VM_maps["Goto Prev"]                   = '{'
+        let g:VM_maps["F2 Prev"]                     = '' 			"same as Goto Next
+        let g:VM_maps["F3 Next"]                     = '' 			"same as Goto Prev
+        let g:VM_maps["Seek Next"]                   = '<C-f>'
+        let g:VM_maps["Seek Prev"]                   = '<C-b>'
+        let g:VM_maps["Invert Direction"]            = 'o'
+        let g:VM_maps["q Skip"]                      = 'q'			"same as Skip Region
+        let g:VM_maps["Remove Region"]               = 'Q'
+        let g:VM_maps["Remove Last Region"]          = '<M-q>'
+        let g:VM_maps["Star"]                        = '*'
+        let g:VM_maps["Hash"]                        = '#'
+        let g:VM_maps["Merge To Eol"]                = '<S-End>'
+        let g:VM_maps["Merge To Bol"]                = '<S-Home>'
+        let g:VM_maps["Find Operator"]               = "m"
+        let g:VM_maps["This Motion h"]               = '<C-h>'
+        let g:VM_maps["This Motion l"]               = '<C-l>'
+        let g:VM_maps["Add Cursor Down"]             = '<M-j>'
+        let g:VM_maps["Add Cursor Up"]               = '<M-k>'
+
+        let g:VM_maps["Tools Menu"]                  = '<leader>x'
+        let g:VM_maps["Show Help"]                   = '<F1>'
+        let g:VM_maps["Show Registers"]              = '<leader>"'
+        let g:VM_maps["Toggle Debug"]                = '<C-x><F12>'
+        let g:VM_maps["Case Setting"]                = '<c-c>'
+        let g:VM_maps["Toggle Whole Word"]           = '<c-w>'
+        let g:VM_maps["Case Conversion Menu"]        = '<leader>c'
+        let g:VM_maps["Search Menu"]                 = '<leader>S'
+        let g:VM_maps["Rewrite Last Search"]         = '<leader>r'
+        let g:VM_maps["Toggle Multiline"]            = 'M'
+
+        let g:VM_maps["Surround"]                    = 'S'
+        let g:VM_maps["Merge Regions"]               = '<leader>m'
+        let g:VM_maps["Transpose"]                   = '<leader>t'
+        let g:VM_maps["Duplicate"]                   = '<leader>d'
+        let g:VM_maps["Align"]                       = '<leader>a'
+        let g:VM_maps["Split Regions"]               = '<leader>s'
+
+        let g:VM_maps["Run Normal"]                  = 'zz'
+        let g:VM_maps["Run Last Normal"]             = 'Z'
+        let g:VM_maps["Run Visual"]                  = 'zv'
+        let g:VM_maps["Run Last Visual"]             = '<M-z>'
+        let g:VM_maps["Run Ex"]                      = 'zx'
+        let g:VM_maps["Run Last Ex"]                 = '<C-z>'
+        let g:VM_maps["Run Macro"]                   = 'z@'
+        let g:VM_maps["Align Char"]                  = 'z<'
+        let g:VM_maps["Align Regex"]                 = 'z>'
+        let g:VM_maps["Numbers"]                     = 'zn'
+        let g:VM_maps["Numbers Append"]              = 'zN'
+        let g:VM_maps["Zero Numbers"]                = 'z0n'
+        let g:VM_maps["Zero Numbers Append"]         = 'z0N'
+        let g:VM_maps["Shrink"]                      = "z-"
+        let g:VM_maps["Enlarge"]                     = "z+"
+
+        let g:VM_maps["Select Cursor Down"]          = '<M-C-Down>'
+        let g:VM_maps["Select Cursor Up"]            = '<M-C-Up>'
+        let g:VM_maps["Select Line Down"]            = '<C-S-Down>'
+        let g:VM_maps["Select Line Up"]              = '<C-S-Up>'
+        let g:VM_maps["Select j"]                    = '<S-Down>'
+        let g:VM_maps["Select k"]                    = '<S-Up>'
+        let g:VM_maps["Select l"]                    = '<S-Right>'
+        let g:VM_maps["Select h"]                    = '<S-Left>'
+        let g:VM_maps["This Select l"]               = '<M-Right>'
+        let g:VM_maps["This Select h"]               = '<M-Left>'
+        let g:VM_maps["Select e"]                    = '<C-Right>'
+        let g:VM_maps["Select ge"]                   = '<C-Left>'
+        let g:VM_maps["Select w"]                    = '<C-S-Right>'
+        let g:VM_maps["Select b"]                    = '<C-S-Left>'
+        let g:VM_maps["Select E"]                    = '<M-C-Right>'
+        let g:VM_maps["Select BBW"]                  = '<M-C-Left>'
+        let g:VM_maps["Shift Right"]                 = '<M-S-Right>'
+        let g:VM_maps["Shift Left"]                  = '<M-S-Left>'
+
+        let g:VM_maps["D"]                           = 'D'
+        let g:VM_maps["Y"]                           = 'Y'
+        let g:VM_maps["x"]                           = 'x'
+        let g:VM_maps["X"]                           = 'X'
+        let g:VM_maps["J"]                           = 'J'
+        let g:VM_maps["~"]                           = '~'
+        let g:VM_maps["Del"]                         = '<del>'
+        let g:VM_maps["Dot"]                         = '.'
+        let g:VM_maps["Increase"]                    = '+'
+        let g:VM_maps["Decrease"]                    = '-'
+        let g:VM_maps["a"]                           = 'a'
+        let g:VM_maps["A"]                           = 'A'
+        let g:VM_maps["i"]                           = 'i'
+        let g:VM_maps["I"]                           = 'I'
+        let g:VM_maps["o"]                           = '<leader>o'
+        let g:VM_maps["O"]                           = '<leader>O'
+        let g:VM_maps["c"]                           = 'c'
+        let g:VM_maps["C"]                           = 'C'
+        let g:VM_maps["Yank"]                        = 'y'
+        let g:VM_maps["Delete"]                      = 'd'
+        let g:VM_maps["Replace"]                     = 'r'
+        let g:VM_maps["Replace Pattern"]             = 'R'
+        let g:VM_maps["p Paste Regions"]             = 'p'
+        let g:VM_maps["P Paste Regions"]             = 'P'
+        let g:VM_maps["p Paste Normal"]              = '<leader>p'
+        let g:VM_maps["P Paste Normal"]              = '<leader>P'
+
+        let g:VM_maps["I Arrow w"]                   = '<M-Right>'
+        let g:VM_maps["I Arrow b"]                   = '<M-Left>'
+        let g:VM_maps["I Arrow W"]                   = '<M-S-Right>'
+        let g:VM_maps["I Arrow B"]                   = '<M-S-Left>'
+        let g:VM_maps["I Arrow ge"]                  = '<M-Up>'
+        let g:VM_maps["I Arrow e"]                   = '<M-Down>'
+        let g:VM_maps["I Arrow gE"]                  = '<M-S-Up>'
+        let g:VM_maps["I Arrow E"]                   = '<M-S-Down>'
+        let g:VM_maps["I Left Arrow"]                = '<Left>'
+        let g:VM_maps["I Right Arrow"]               = '<Right>'
+        let g:VM_maps["I Up Arrow"]                  = '<Up>'
+        let g:VM_maps["I Down Arrow"]                = '<Down>'
+        let g:VM_maps["I Return"]                    = '<CR>'
+        let g:VM_maps["I BS"]                        = '<BS>'
+        let g:VM_maps["I Paste"]                     = '<C-v>'
+        let g:VM_maps["I CtrlW"]                     = '<C-w>'
+        let g:VM_maps["I CtrlD"]                     = '<C-d>'
+        let g:VM_maps["I Del"]                       = '<Del>'
+        let g:VM_maps["I CtrlA"]                     = '<C-a>'
+        let g:VM_maps["I CtrlE"]                     = '<C-e>'
+        let g:VM_maps["I CtrlB"]                     = '<C-b>'
+        let g:VM_maps["I CtrlF"]                     = '<C-f>'
     endif
     " autopairs
     if HasDirectory("auto-pairs")
@@ -1251,7 +1426,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     elseif HasDirectory("coc.nvim") && g:complete_engine == "coc"
         nmap <silent> gd <Plug>(coc-definition)
         nmap <silent> gy <Plug>(coc-type-definition)
-        nmap <silent> gi <Plug>(coc-implementation)
+        nmap <silent> gm <Plug>(coc-implementation)
         nmap <silent> gr <Plug>(coc-references)
         let g:coc_snippet_next = '<C-n>'
 	    let g:coc_snippet_prev = '<C-p>'
