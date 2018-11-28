@@ -861,9 +861,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         nnoremap <silent><leader>tt :TagbarToggle<CR>
         nnoremap <silent><leader>tj :TagbarOpen j<CR>
+        " show in vsplit
         nnoremap <C-]> <C-w><C-]>
+        " go to define
         nnoremap <C-w><C-]> <C-]>
-        nnoremap <C-\> <C-w><C-]><C-w>T
+        " show in tab
+        nnoremap <C-p> <C-w><C-]><C-w>T
     endif
     " gtags
     if HasDirectory("vim-gutentags")
@@ -899,7 +902,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " multiple-cursors
     if HasDirectory("vim-multiple-cursors")
-        let g:multi_cursor_use_default_mapping=0
+        let g:multi_cursor_use_default_mapping = 0
         let g:multi_cursor_start_word_key      = '<C-n>'
         let g:multi_cursor_select_all_word_key = '<leader><C-n>'
         let g:multi_cursor_start_key           = 'g<C-n>'
@@ -921,7 +924,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
     elseif HasDirectory("vim-visual-multi")
-
 
     endif
     " autopairs
@@ -1677,17 +1679,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
-        nnoremap <C-p> :PreviewTag<Cr>
+        nnoremap <M-t> :PreviewTag<Cr>
         nnoremap <M-p> :PreviewScroll -1<cr>
         nnoremap <M-n> :PreviewScroll +1<cr>
         nnoremap <M-s> :PreviewSignature!<Cr>
         nnoremap <M-q> :PreviewQuickfix<Space>
-        nnoremap <M-G> :PreviewGoto<Space>
-        nnoremap <M-F> :PreviewFile<Space>
+        nnoremap <M-g> :PreviewGoto<Space>
+        nnoremap <M-f> :PreviewFile<Space>
         autocmd FileType qf nnoremap <silent><buffer> q :PreviewQuickfix<cr>
         autocmd FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
-    else
-        nnoremap <C-p> :echo "<C-p> is mapped for vim-preview with gtags"<Cr>
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
