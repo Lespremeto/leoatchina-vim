@@ -81,12 +81,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'jistr/vim-nerdtree-tabs'
         Plug 'mhinz/vim-startify'
         Plug 'scrooloose/nerdcommenter'
-        Plug 'tpope/vim-commentary'
         Plug 'mbbill/undotree'
-        Plug 'leoatchina/vim-colorschemes-collections'
         Plug 'mattn/webapi-vim'
         Plug 'tpope/vim-unimpaired'
-        if v:version < 800
+        if (v:version < 800 && !has('nvim')) && !WINDOWS()
             Plug 'Shougo/vimproc.vim', {'do' : 'make'}
         endif
         " input method
@@ -140,6 +138,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('bio')
             Plug 'bioSyntax/bioSyntax-vim'
         endif
+        " themes
+        Plug 'leoatchina/vim-colorschemes-collections'
         " statuslines
         if has('statusline')
             Plug 'bling/vim-bufferline'
@@ -155,11 +155,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " search/replace/finder
         Plug 'google/vim-searchindex'
         Plug 'easymotion/vim-easymotion'
-        " debug tools for python c java ternjs .....
-        if HasPlug('debug')
-            Plug 'sillybun/vim-repl'
-            Plug 'idanarye/vim-vebugger'
-        endif
         " HTML
         if HasPlug('html')
             Plug 'mattn/emmet-vim', {'for':['css','htm', 'html', 'xml', 'css3']}
@@ -179,15 +174,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('perl')
             Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
-        " ctags
-        if  has('patch1058') && v:version == 703 || v:version >= 704
-            if executable('ctags')
-                Plug 'majutsushi/tagbar'
-            endif
-        endif
         " quickrun
         if v:version >= 702
             Plug 'thinca/vim-quickrun'
+        endif
+        " ctags
+        if  has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')
+            if executable('ctags')
+                Plug 'majutsushi/tagbar'
+            endif
         endif
         " plugins for vim7.4 or later
         if v:version >= 704
@@ -197,7 +192,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'wsdjeg/FlyGrep.vim'
                 Plug 'skywind3000/asyncrun.vim'
                 " Ctrlsf
-                if (executable('ag') || executable('ack') || executable('rg') || executable('pt'))
+                if executable('ag') || executable('ack') || executable('rg') || executable('pt')
                     Plug 'dyng/ctrlsf.vim'
                 else
                     Plug 'brooth/far.vim'
@@ -455,6 +450,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 " erlang language
                 if HasPlug('erlang')
                     Plug 'johnzeng/vim-erlang-omnicomplete', {'for': 'erlang'}
+                endif
+                " debug tools for python c java ternjs .....
+                if HasPlug('debug')
+                    Plug 'sillybun/vim-repl'
+                    Plug 'idanarye/vim-vebugger'
                 endif
             endif
         endif
