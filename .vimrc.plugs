@@ -187,8 +187,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " plugins for vim7.4 or later
         if v:version >= 704
             " syntax check/change and run method
-            Plug 'terryma/vim-multiple-cursors'
             if v:version >= 800 || has('nvim')
+                Plug 'mg979/vim-visual-multi'
                 Plug 'wsdjeg/FlyGrep.vim'
                 Plug 'skywind3000/asyncrun.vim'
                 " Ctrlsf
@@ -213,6 +213,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'w0rp/ale'
                 endif
             else
+                Plug 'terryma/vim-multiple-cursors'
                 Plug 'brooth/far.vim'
                 if HasPlug('syntax')
                     Plug 'vim-syntastic/syntastic'
@@ -322,12 +323,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
                     endif
                 elseif g:complete_engine == "coc"
-                    function! CocSetup()
-                        if WINDOWS()
-                            !.\install.cmd
-                        else
-                            !./install.sh
-                        end
+                    function! CocInit()
                         execute 'CocInstall coc-pyls'
                         execute 'CocInstall coc-java'
                         execute 'CocInstall coc-rls'
@@ -345,9 +341,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                             execute 'CocInstall coc-neosnippet'
                         endif
                     endfunction
-                    command! -nargs=0 -bang CocSetup call CocSetup()
+                    command! -nargs=0 -bang CocInit call CocInit()
+                    function! CocSetup()
+                        if WINDOWS()
+                            !.\install.cmd
+                        else
+                            !./install.sh
+                        end
+                        call CocInit()
+                    endfunction
                     Plug 'neoclide/coc-neco'
-                    Plug 'neoclide/coc.nvim', {'do': ':CocSetup'}
+                    Plug 'neoclide/coc.nvim', {'do': ':call CocSetup()'}
                 elseif g:complete_engine == "deoplete"
                     if has('nvim')
                         Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}

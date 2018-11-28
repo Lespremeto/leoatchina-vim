@@ -920,6 +920,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 exe 'NeoCompleteUnlock'
             endif
         endfunction
+    elseif HasDirectory("vim-visual-multi")
+
+
     endif
     " autopairs
     if HasDirectory("auto-pairs")
