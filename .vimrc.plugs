@@ -310,7 +310,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 let g:complete_snippet = "None"
             endif
             unlet g:use_ultisnips
-            " install complete plugins
+            " enginge plus
             if g:complete_engine != "None"
                 Plug 'Shougo/vimshell.vim'
                 Plug 'Shougo/neoinclude.vim'
@@ -330,16 +330,24 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             elseif g:complete_engine == "coc"
                 function! CocInit()
                     execute 'CocInstall coc-pyls'
-                    execute 'CocInstall coc-java'
-                    execute 'CocInstall coc-rls'
                     execute 'CocInstall coc-tsserver'
                     execute 'CocInstall coc-html'
                     execute 'CocInstall coc-json'
                     execute 'CocInstall coc-css'
                     execute 'CocInstall coc-wxml'
                     execute 'CocInstall coc-vetur'
-                    execute 'CocInstall coc-dictionary'
                     execute 'CocInstall coc-omni'
+                    execute 'CocInstall coc-tag'
+                    execute 'CocInstall coc-dictionary'
+                    if HasPlug('go') && executable('gocode')
+                        execute 'CocInstall coc-gocode'
+                    endif
+                    if HasPlug('java') && executable('java')
+                        execute 'CocInstall coc-java'
+                    endif
+                    if HasPlug('rust') && executable('racer')
+                        execute 'CocInstall coc-rls'
+                    endif
                     if g:complete_snippet == 'ultisnips'
                         execute 'CocInstall coc-ultisnips'
                     elseif g:complete_snippet == 'neosnippet'
@@ -356,6 +364,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     call CocInit()
                 endfunction
                 Plug 'neoclide/coc-neco'
+                Plug 'neoclide/coc-sources'
                 Plug 'neoclide/coc.nvim', {'do': ':call CocSetup()'}
             elseif g:complete_engine == "deoplete"
                 if has('nvim')
