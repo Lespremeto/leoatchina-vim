@@ -204,11 +204,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " syntax check/change and run method
         if v:version >= 800 || has('nvim')
-            if HasPlug('visual-multi') || HasPlug('VM')
-                Plug 'mg979/vim-visual-multi'
-            else
-                Plug 'terryma/vim-multiple-cursors'
-            endif
+            Plug 'terryma/vim-multiple-cursors'
             Plug 'wsdjeg/FlyGrep.vim'
             Plug 'skywind3000/asyncrun.vim'
             " Ctrlsf
