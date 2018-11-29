@@ -928,10 +928,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:VM_no_meta_mappings = 0
         let g:VM_default_mappings = 1
         let g:VM_extended_mappings = 1
-
         let g:VM_maps["Erase Regions"]               = ''
         let g:VM_maps["Add Cursor At Pos"]           = 'g<space>'
-        let g:VM_maps["Add Cursor At Word"]          = 'gw'
+        let g:VM_maps["Add Cursor At Word"]          = ''
         let g:VM_maps["Start Regex Search"]          = 'g/'
         let g:VM_maps["Select All"]                  = '<M-A>'
         let g:VM_maps["Add Cursor Down"]             = '<M-j>'
@@ -980,8 +979,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:VM_maps["Find Prev"]                   = '['
         let g:VM_maps["Goto Next"]                   = '}'
         let g:VM_maps["Goto Prev"]                   = '{'
-        let g:VM_maps["F2 Prev"]                     = '' 			"same as Goto Next
-        let g:VM_maps["F3 Next"]                     = '' 			"same as Goto Prev
+        let g:VM_maps["F2 Prev"]                     = '<F2>' 			"same as Goto Next
+        let g:VM_maps["F3 Next"]                     = '<F3>' 			"same as Goto Prev
         let g:VM_maps["Seek Next"]                   = '<C-f>'
         let g:VM_maps["Seek Prev"]                   = '<C-b>'
         let g:VM_maps["Invert Direction"]            = 'o'
@@ -1078,14 +1077,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:VM_maps["p Paste Normal"]              = '<leader>p'
         let g:VM_maps["P Paste Normal"]              = '<leader>P'
 
-        let g:VM_maps["I Arrow w"]                   = '<M-Right>'
-        let g:VM_maps["I Arrow b"]                   = '<M-Left>'
-        let g:VM_maps["I Arrow W"]                   = '<M-S-Right>'
-        let g:VM_maps["I Arrow B"]                   = '<M-S-Left>'
-        let g:VM_maps["I Arrow ge"]                  = '<M-Up>'
-        let g:VM_maps["I Arrow e"]                   = '<M-Down>'
-        let g:VM_maps["I Arrow gE"]                  = '<M-S-Up>'
-        let g:VM_maps["I Arrow E"]                   = '<M-S-Down>'
+        let g:VM_maps["I Arrow w"]                   = '<C-Right>'
+        let g:VM_maps["I Arrow b"]                   = '<C-Left>'
+        let g:VM_maps["I Arrow W"]                   = '<C-S-Right>'
+        let g:VM_maps["I Arrow B"]                   = '<C-S-Left>'
+        let g:VM_maps["I Arrow ge"]                  = '<C-Up>'
+        let g:VM_maps["I Arrow e"]                   = '<C-Down>'
+        let g:VM_maps["I Arrow gE"]                  = '<C-S-Up>'
+        let g:VM_maps["I Arrow E"]                   = '<C-S-Down>'
         let g:VM_maps["I Left Arrow"]                = '<Left>'
         let g:VM_maps["I Right Arrow"]               = '<Right>'
         let g:VM_maps["I Up Arrow"]                  = '<Up>'
@@ -1100,6 +1099,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:VM_maps["I CtrlE"]                     = '<C-e>'
         let g:VM_maps["I CtrlB"]                     = '<C-b>'
         let g:VM_maps["I CtrlF"]                     = '<C-f>'
+
     endif
     " autopairs
     if HasDirectory("auto-pairs")
