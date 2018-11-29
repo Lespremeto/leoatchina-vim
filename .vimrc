@@ -948,8 +948,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:VM_maps["Visual Hash"]             = '#'
         let g:VM_maps["Visual Subtract"]         = '<M-s>'
 
-        let g:VM_maps["Select Cursor Down"]      = '<M-C-Down>'
-        let g:VM_maps["Select Cursor Up"]        = '<M-C-Up>'
+        let g:VM_maps["Select Cursor Down"]      = ''
+        let g:VM_maps["Select Cursor Up"]        = ''
         let g:VM_maps["Select j"]                = '<S-Down>'
         let g:VM_maps["Select k"]                = '<S-Up>'
         let g:VM_maps["Select l"]                = '<S-Right>'
@@ -958,12 +958,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:VM_maps["Select b"]                = '<C-S-Left>'
         let g:VM_maps["Select Line Down"]        = '<C-S-Down>'
         let g:VM_maps["Select Line Up"]          = '<C-S-Up>'
-        let g:VM_maps["Select E"]                = '<M-C-Right>'
-        let g:VM_maps["Select BBW"]              = '<M-C-Left>'
+        let g:VM_maps["Select E"]                = ''
+        let g:VM_maps["Select BBW"]              = ''
 
-        let g:VM_maps["Mouse Cursor"]            = '<C-LeftMouse>'
-        let g:VM_maps["Mouse Word"]              = '<C-RightMouse>'
-        let g:VM_maps["Mouse Column"]            = '<M-C-RightMouse>'
+        let g:VM_maps["Mouse Cursor"]            = ''
+        let g:VM_maps["Mouse Word"]              = ''
+        let g:VM_maps["Mouse Column"]            = ''
 
         let g:VM_maps["Find I Word"]             = 's]'
         let g:VM_maps["Find A Word"]             = 's['
