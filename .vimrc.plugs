@@ -168,7 +168,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('javascript')
             Plug 'pangloss/vim-javascript', {'for': 'javascript'}
             Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
-            Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
         endif
         " perl
         if HasPlug('perl')
@@ -318,10 +317,23 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             endif
             if g:complete_engine == "YCM"
+                let b:ycm_install = " ./install.py --clang-completer"
+                if HasPlug('go') && executable('go')
+                    let b:ycm_install = b:ycm_install . " --go-completer"
+                endif
+                if HasPlug('rust') && executable('rust')
+                    let b:ycm_install = b:ycm_install . " --rust-completer"
+                endif
+                if HasPlug('java') && executable('java')
+                    let b:ycm_install = b:ycm_install . " --java-completer"
+                endif
+                if HasPlug('javascript') && executable('node')
+                    let b:ycm_install = b:ycm_install . " --ts-completer"
+                endif
                 if g:python_version == 2
-                    Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2 ./install.py --clang-completer' }
+                    Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2'.b:ycm_install}
                 elseif g:python_version == 3
-                    Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3 ./install.py --clang-completer' }
+                    Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3'.b:ycm_install}
                 endif
             elseif g:complete_engine == "coc"
                 function! CocInit()
@@ -445,14 +457,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 else
                     echoe "In order to install java plugins, you shoud update you system"
                 endif
-            endif
-            " Go language
-            if HasPlug('go')
-                Plug 'fatih/vim-go', {'for': 'go', 'do':':GoUpdateBinaries'}
-            endif
-            " rust language
-            if HasPlug('rust')
-                Plug 'rust-lang/rust.vim', {'for': 'rust'}
             endif
             " julia language
             if HasPlug('julia')

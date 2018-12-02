@@ -863,11 +863,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <silent><leader>tt :TagbarToggle<CR>
         nnoremap <silent><leader>tj :TagbarOpen j<CR>
         " show in vsplit
-        nnoremap <C-]> <C-w><C-]>
-        " go to define
-        nnoremap <C-w><C-]> <C-]>
+        nnoremap <C-p> <C-w><C-]>
         " show in tab
-        nnoremap <C-p> <C-w><C-]><C-w>T
+        nnoremap <C-w><C-p> <C-w><C-]><C-w>T
     endif
     " gtags
     if HasDirectory("vim-gutentags")
@@ -1584,66 +1582,33 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory('emmet-vim')
         let g:user_emmet_leader_key='<C-g>'
     endif
-    " Go language
-    if HasDirectory("vim-go")
-        let g:go_highlight_functions          = 1
-        let g:go_highlight_methods            = 1
-        let g:go_highlight_structs            = 1
-
-        let g:go_highlight_build_constraints  = 1
-        let g:go_gocode_propose_builtins      = 1
-        let g:go_list_type                    = "quickfix"
-        let g:go_fmt_command                  = "gofmt"
-        let g:syntastic_go_checkers           = ['golint', 'govet']
-        let g:syntastic_mode_map              = { 'mode': 'active', 'passive_filetypes': ['go'] }
-        " Enable neosnippets when using go
-        if g:complete_snippet == "neosnippet"
-            let g:go_snippet_engine = "neosnippet"
-        endif
-        au FileType go nmap <C-g>i <Plug>(go-implements)
-        au FileType go nmap <C-g>I <Plug>(go-info)
-        au FileType go nmap <C-g>u <Plug>(go-rename)
-        au FileType go nmap <C-g>r <Plug>(go-run)
-        au FileType go nmap <C-g>b <Plug>(go-build)
-        au FileType go nmap <C-g>t <Plug>(go-test)
-        au FileType go nmap <C-g>d <Plug>(go-doc)
-        au FileType go nmap <C-g>D <Plug>(go-doc-vertical)
-        au FileType go nmap <C-g>c <Plug>(go-coverage)
-    endif
     " java
     if HasDirectory("vim-javacomplete2")
         au FileType java setlocal omnifunc=javacomplete#Complete
-
         au FileType java nmap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
         au FileType java nmap <C-g>I <Plug>(JavaComplete-Imports-Add)
         au FileType java nmap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
         au FileType java nmap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
-
         au FileType java imap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
         au FileType java imap <C-g>I <Plug>(JavaComplete-Imports-Add)
         au FileType java imap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
         au FileType java imap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
-
         au FileType java nmap <C-g>m <Plug>(JavaComplete-Generate-Accessors)
         au FileType java nmap <C-g>c <Plug>(JavaComplete-Generate-Constructor)
         au FileType java nmap <C-g>t <Plug>(JavaComplete-Generate-ToString)
         au FileType java nmap <C-g>e <Plug>(JavaComplete-Generate-EqualsAndHashCode)
         au FileType java nmap <C-g>d <Plug>(JavaComplete-Generate-DefaultConstructor)
-
         au FileType java nmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
         au FileType java nmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
         au FileType java nmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
         au FileType java nmap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
-
         au FileType java imap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
         au FileType java imap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
         au FileType java imap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
         au FileType java imap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
-
         au FileType java vmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
         au FileType java vmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
         au FileType java vmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-
         au FileType java nmap <silent> <buffer> <C-g>n <Plug>(JavaComplete-Generate-NewClass)
         au FileType java nmap <silent> <buffer> <C-g>N <Plug>(JavaComplete-Generate-ClassInFile)
     endif
