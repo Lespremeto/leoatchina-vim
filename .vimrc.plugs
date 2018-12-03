@@ -237,7 +237,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " complete_engine && snippet
         if (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
             if HasPlug('youcompleteme') || HasPlug('YCM')
-                if executable('make') && executable('gcc') && g:python_version && !WINDOWS() && (has('patch1578') && v:version == 704 || v:version >= 800) && !has('nvim')
+                if executable('cmake') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800) && !has('nvim')
                     let g:complete_engine = "YCM"
                 else
                     echoe "Cannot install YouCompleteMe, smart select a complete_engine."
@@ -338,22 +338,25 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             elseif g:complete_engine == "coc"
                 function! CocInit()
                     execute 'CocInstall coc-pyls'
-                    execute 'CocInstall coc-tsserver'
-                    execute 'CocInstall coc-html'
-                    execute 'CocInstall coc-json'
-                    execute 'CocInstall coc-css'
-                    execute 'CocInstall coc-wxml'
-                    execute 'CocInstall coc-vetur'
                     execute 'CocInstall coc-omni'
                     execute 'CocInstall coc-tag'
-                    execute 'CocInstall coc-dictionary'
-                    if HasPlug('go') && executable('gocode')
+                    if HasPlug('html')
+                        execute 'CocInstall coc-html'
+                        execute 'CocInstall coc-json'
+                        execute 'CocInstall coc-css'
+                        execute 'CocInstall coc-wxml'
+                    endif
+                    if HasPlug('javascript')
+                        execute 'CocInstall coc-tsserver'
+                        execute 'CocInstall coc-vetur'
+                    endif
+                    if HasPlug('go')
                         execute 'CocInstall coc-gocode'
                     endif
-                    if HasPlug('java') && executable('java')
+                    if HasPlug('java')
                         execute 'CocInstall coc-java'
                     endif
-                    if HasPlug('rust') && executable('racer')
+                    if HasPlug('rust')
                         execute 'CocInstall coc-rls'
                     endif
                     if g:complete_snippet == 'ultisnips'

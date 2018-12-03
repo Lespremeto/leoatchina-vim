@@ -393,11 +393,11 @@ cnoremap <S-F6> <ESC>:reg<Cr>
 snoremap <S-F6> <ESC>:reg<Cr>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tp <ESC>:set nopaste! nopaste?<CR>
-nnoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
-vnoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
-inoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
-cnoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
-snoremap <S-F12> <ESC>:set nopaste! nopaste?<CR>
+nnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
+vnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
+inoremap <F12> <ESC>:set nopaste! nopaste?<CR>
+cnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
+snoremap <F12> <ESC>:set nopaste! nopaste?<CR>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
