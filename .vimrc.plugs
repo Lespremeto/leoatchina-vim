@@ -130,10 +130,22 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         else
             Plug 'tpope/vim-markdown', {'for':'markdown'}
         endif
-        Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown'}
         " search/replace/finder
         Plug 'google/vim-searchindex'
         Plug 'easymotion/vim-easymotion'
+        if v:version >= 800 || has('nvim')
+            Plug 'terryma/vim-multiple-cursors'
+            Plug 'wsdjeg/FlyGrep.vim'
+            " Ctrlsf
+            if executable('ag') || executable('ack') || executable('rg') || executable('pt')
+                Plug 'dyng/ctrlsf.vim'
+            else
+                Plug 'brooth/far.vim'
+            endif
+        elseif v:version >= 704
+            Plug 'terryma/vim-multiple-cursors'
+            Plug 'brooth/far.vim'
+        endif
         " biosyntax
         if HasPlug('bio')
             Plug 'bioSyntax/bioSyntax-vim'
@@ -152,9 +164,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             endif
         endif
-        " search/replace/finder
-        Plug 'google/vim-searchindex'
-        Plug 'easymotion/vim-easymotion'
+        " debug tools for python c java ternjs .....
+        if HasPlug('debug')
+            Plug 'sillybun/vim-repl'
+            Plug 'idanarye/vim-vebugger'
+        endif
+        " quickrun
+        if v:version >= 702
+            Plug 'thinca/vim-quickrun'
+        endif
         " HTML
         if HasPlug('html')
             Plug 'mattn/emmet-vim', {'for':['css','htm', 'html', 'xml', 'css3']}
@@ -164,7 +182,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('php')
             Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
         endif
-        " Javascript
+        " javascript
         if HasPlug('javascript')
             Plug 'pangloss/vim-javascript', {'for': 'javascript'}
             Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
@@ -173,21 +191,63 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('perl')
             Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
-        " quickrun
-        if v:version >= 702
-            Plug 'thinca/vim-quickrun'
+        " erlang language
+        if HasPlug('erlang')
+            Plug 'johnzeng/vim-erlang-omnicomplete', {'for': 'erlang'}
         endif
-        " ctags
+        " java language
+        if HasPlug('java')
+            if executable('java') && executable('gcc') && executable('make')
+                Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+                Plug 'dansomething/vim-eclim'
+            else
+                echoe "In order to install java plugins, you shoud update you system"
+            endif
+        endif
+        " julia language
+        if HasPlug('julia')
+            Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
+        endif
+        " tags
         if  has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')
             if executable('ctags')
                 Plug 'majutsushi/tagbar'
+            endif
+            " gtags
+            if v:version >= 800 || has('nvim')
+                if executable('gtags') && HasPlug('gtags')
+                    if $GTAGSCONF == ""
+                        echom("Please set $GTAGSCONF in your .local file, and pip install pygments!")
+                    else
+                        Plug 'ludovicchabant/vim-gutentags'
+                        Plug 'skywind3000/gutentags_plus'
+                        Plug 'skywind3000/vim-preview'
+                        Plug 'jsfaint/gen_tags.vim'
+                    endif
+                endif
+            endif
+        endif
+        " TODO: split here for shougo's plugin and others
+        " syntax
+        if v:version >= 800 || has('nvim')
+            Plug 'skywind3000/asyncrun.vim'
+            if HasPlug('syntax')
+                Plug 'w0rp/ale'
+            endif
+        elseif v:version == 704 && has('patch1486')
+            if HasPlug('syntax')
+                Plug 'vim-syntastic/syntastic'
             endif
         endif
         " browser tools & complete tools
         if HasPlug('fzf') && !WINDOWS()
             let g:browser_tool = "fzf"
             Plug 'junegunn/fzf.vim'
-            Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+            if executable('fzf')
+                Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+            else
+                Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+            endif
         elseif (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
             let g:browser_tool = "LeaderF"
             if WINDOWS()
@@ -200,39 +260,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:browser_tool = "ctrlp"
             Plug 'ctrlpvim/ctrlp.vim'
             Plug 'tacahiroy/ctrlp-funky'
-        endif
-        " syntax check/change and run method
-        if v:version >= 800 || has('nvim')
-            Plug 'terryma/vim-multiple-cursors'
-            Plug 'wsdjeg/FlyGrep.vim'
-            Plug 'skywind3000/asyncrun.vim'
-            " Ctrlsf
-            if executable('ag') || executable('ack') || executable('rg') || executable('pt')
-                Plug 'dyng/ctrlsf.vim'
-            else
-                Plug 'brooth/far.vim'
-            endif
-            " gtags
-            if executable('gtags') && HasPlug('gtags')
-                if $GTAGSCONF == ""
-                    echom("Please set $GTAGSCONF in your .local file, and pip install pygments!")
-                else
-                    Plug 'ludovicchabant/vim-gutentags'
-                    Plug 'skywind3000/gutentags_plus'
-                    Plug 'skywind3000/vim-preview'
-                    Plug 'jsfaint/gen_tags.vim'
-                endif
-            endif
-            " syntax
-            if HasPlug('syntax')
-                Plug 'w0rp/ale'
-            endif
-        elseif v:version >= 704
-            Plug 'terryma/vim-multiple-cursors'
-            Plug 'brooth/far.vim'
-            if HasPlug('syntax')
-                Plug 'vim-syntastic/syntastic'
-            endif
         endif
         " complete_engine && snippet
         if (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
@@ -452,36 +479,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'JazzCore/neocomplcache-ultisnips'
                 endif
             endif
-            " java language
-            if HasPlug('java')
-                if executable('java') && executable('gcc') && executable('make')
-                    Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
-                    Plug 'dansomething/vim-eclim'
-                else
-                    echoe "In order to install java plugins, you shoud update you system"
-                endif
-            endif
-            " julia language
-            if HasPlug('julia')
-                Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
-            endif
-            " erlang language
-            if HasPlug('erlang')
-                Plug 'johnzeng/vim-erlang-omnicomplete', {'for': 'erlang'}
-            endif
-            " debug tools for python c java ternjs .....
-            if HasPlug('debug')
-                Plug 'sillybun/vim-repl'
-                Plug 'idanarye/vim-vebugger'
-            endif
-        endif
-        " after file
-        if filereadable(expand("~/.nvimrc.after")) && has('nvim')
-            source ~/.nvimrc.after
-        elseif filereadable(expand("~/.gvimrc.after")) && has('gui_running')
-            source ~/.gvimrc.after
-        elseif filereadable(expand("~/.vimrc.after"))
-            source ~/.vimrc.after
         endif
     call plug#end()
     command! PlugRe PlugClean! | PlugInstall --sync
