@@ -331,7 +331,7 @@ You can also force to install the completion engine in `g:plug_groups`, just rep
 It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-j` for trigger, if not triggered , switch to the next. `CR` for end completion(`C-e`, `C-y` still work). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
-Needs `vim` with `+python` or `+python3`
+Needs `vim` with `+python` or `+python3`, and `g++` installed
 
 ### [coc](https://github.com/neoclide/coc.nvim)
 Needs `vim8/neovim` with `node` and `yarn` installed in system
