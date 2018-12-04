@@ -666,9 +666,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ '+---------------------------------------------------------+',
             \ ]
         let g:startify_session_dir = expand("$HOME/.cache/session")
-        if !isdirectory(g:startify_session_dir)
-            silent! call mkdir(g:startify_session_dir, 'p')
-        endif
         let g:startify_files_number = 8
         let g:startify_session_number = 8
         let g:startify_list_order = [
@@ -796,7 +793,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set background=dark
         " 总是显示状态栏
         set laststatus=2
-        if v:version < 800
+        if v:version < 800 && !has('nvim')
             colorscheme wombat256mod
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'wombat'

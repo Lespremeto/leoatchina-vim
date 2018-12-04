@@ -100,7 +100,7 @@ install_vim_plug() {
 ############################ MAIN()
 variable_set "$HOME"
 program_must_exist "git"
-mkdir -p "$HOME/.vim/session"
+mkdir -p "$HOME/.cache/session"
 mkdir -p "$HOME/.cache/tags"
 update_vim_plug='0'
 ret='0'
