@@ -406,9 +406,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'neoclide/coc.nvim', {'do': ':call CocSetup()'}
         elseif g:complete_engine == "deoplete"
             if has('nvim')
-                Plug 'Shougo/deoplete.nvim',  { 'do': ':UpdateRemotePlugins'}
+                Plug 'Shougo/deoplete.nvim', {'branch': 'master', 'do': ':UpdateRemotePlugins'}
             else
-                Plug 'Shougo/deoplete.nvim'
+                Plug 'Shougo/deoplete.nvim', {'branch': 'master'}
                 Plug 'roxma/vim-hug-neovim-rpc'
                 Plug 'roxma/nvim-yarp'
             endif
@@ -423,13 +423,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             if HasPlug('rust') && executable('racer')
                 Plug 'sebastianmarkow/deoplete-rust'
-            endif
-            " use LCN for complete_engine
-            if !WINDOWS()
-                Plug 'autozimu/LanguageClient-neovim', {
-                    \ 'branch': 'next',
-                    \ 'do': 'bash install.sh',
-                    \ }
             endif
         elseif g:complete_engine == "asyncomplete"
             Plug 'prabirshrestha/asyncomplete.vim'
