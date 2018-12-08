@@ -2,10 +2,13 @@ let g:plug_groups=['smartcomplete', 'snippet', 'syntax', 'bio']
 "set guifont=YaHei_Consolas_Hybrid:h11.5
 "gtags settings, according to https://zhuanlan.zhihu.com/p/36279445
 "let $GTAGSCONF = '/path/to/your/gtags.conf'
-"if HasDirectory("vim-gutentags") && universary ctags installed
-    "let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-"endif
-
+"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+"let g:LanguageClient_serverCommands = {
+    "\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    "\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    "\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    "\ 'python': ['/usr/local/bin/pyls'],
+    "\ }
 " if you use gvim in windows, and need python support, please check python in
 " your $PATH, and unmask the corresponse line
 "set pythonthreedll=python36.dll

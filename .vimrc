@@ -1266,14 +1266,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if !has('nvim')
             let g:deoplete#enable_yarp = 1
         endif
-        if HasDirectory('deoplete-jedi')
-            let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
-        endif
+        " When use shougo confing, then only use lcn as complete source
         if HasDirectory("LanguageClient-neovim")
             call deoplete#custom#source('LanguageClient',
                 \ 'min_pattern_length',
                 \ 2)
         else
+            if HasDirectory('deoplete-jedi')
+                let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
+            endif
             " omni completion is vim grep
             call deoplete#custom#option('omni_patterns', {
                 \ 'java' :'[^. *\t]\.\w*',

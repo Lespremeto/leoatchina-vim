@@ -38,10 +38,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:complete_engine  = "None"
         let g:use_ultisnips = 1
         let g:smart_engine_select = 0
-        " $GTAGSCONF should be set in .local file
-        let $GTAGSCONF = ""
         " Use local config, some tested feature can be add to it
-        if has('nvim') && filereadable(expand("~/.nvimrc.local"))
+        if filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
         elseif filereadable(expand("~/.mvimrc.local")) && has('gui_macvim')
             source ~/.mvimrc.local
@@ -56,6 +54,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if has('nvim')
                 Plug 'lambdalisue/vim-fullscreen'
             endif
+            Plug 'pprovost/vim-ps1', { 'for': 'ps1' }
         elseif has('gui_running')
             Plug 'lambdalisue/vim-fullscreen'
             if OSX()
@@ -209,32 +208,41 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
         endif
         " tags
-        if  has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')
-            if executable('ctags')
-                Plug 'majutsushi/tagbar'
-            endif
-            " gtags
-            if v:version >= 800 || has('nvim')
-                if executable('gtags') && HasPlug('gtags')
-                    if $GTAGSCONF == ""
-                        echom("Please set $GTAGSCONF in your .local file, and pip install pygments!")
-                    else
-                        Plug 'ludovicchabant/vim-gutentags'
-                        Plug 'skywind3000/gutentags_plus'
-                        Plug 'skywind3000/vim-preview'
-                        Plug 'jsfaint/gen_tags.vim'
-                    endif
-                endif
+        if  (has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')) && executable('ctags')
+            Plug 'majutsushi/tagbar'
+        endif
+        " gtags
+        if executable('gtags') && HasPlug('gtags') && (v:version >= 800 || has('nvim'))
+            if exists('$GTAGSCONF')
+                Plug 'ludovicchabant/vim-gutentags'
+                Plug 'skywind3000/gutentags_plus'
+                Plug 'skywind3000/vim-preview'
+                Plug 'jsfaint/gen_tags.vim'
+            else
+                echom("Please set $GTAGSCONF in your coresponding .local file, and pip install pygments.")
             endif
         endif
-        " TODO: split here for shougo's plugin and others
+        " use shougo's plugins, syntax check is automately actived
         if HasPlug('shougo') && (v:version >= 800 || has('nvim-0.3.0')) && has('timers')
-            Plug 'shougo/denite.nvim'
-            let g:browser_tool = "denite"
-            let g:complete_engine = 'deoplete'
-            let g:use_ultisnips = 0
-            if HasPlug('syntax')
+            if exists('g:LanguageClient_serverCommands')
+                Plug 'shougo/denite.nvim'
                 Plug 'neomake/neomake'
+                if WINDOWS()
+                    Plug 'autozimu/LanguageClient-neovim'
+                        \ 'branch': 'next',
+                        \ 'do': '!\install.ps1',
+                        \ }
+                else
+                    Plug 'autozimu/LanguageClient-neovim'
+                        \ 'branch': 'next',
+                        \ 'do': 'bash install.sh',
+                        \ }
+                endif
+                let g:browser_tool    = 'denite'
+                let g:use_ultisnips   = 0
+                let g:complete_engine = 'deoplete'
+            else
+                echom("Please set g:LanguageClient_serverCommands in your coresponding .local file.")
             endif
         else
             " syntax
