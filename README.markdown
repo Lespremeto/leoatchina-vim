@@ -5,74 +5,74 @@
 + [Introduction](#introduction)
 + [Requirements](#requirements)
 + [Install](#install)
-  * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx)
-  * [windows](#windows)
+    * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx)
+    * [windows](#windows)
 + [Update](#update)
-  * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-1)
-  * [windows](#windows-1)
+    * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-1)
+    * [windows](#windows-1)
 + [Upgrade plugins](#upgrade-plugins)
-  * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-2)
-  * [windows](#windows-2)
+    * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-2)
+    * [windows](#windows-2)
 + [Delete](#delete)
-  * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-3)
-  * [Windows](#windows-3)
+    * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-3)
+    * [Windows](#windows-3)
 + [How it works](#how-it-works)
 + [Main changes from spf13](#main-changes-from-spf13)
 + [Some features](#some-features)
 + [Main shortcuts](#main-shortcuts)
 + [Plugins and their shortcuts](#plugins-and-their-shortcuts)
-  * [vim-plug](#vim-plug)
-  * [ywvim中文输入法](#ywvim中文输入法)
-  * [Markdown](#markdown)
-  * [Themes Collentions](#themes-collentions)
-  * [vim-easy-align](#vim-easy-align)
-  * [auto-pairs](#auto-pairs)
-  * [Complete Engines, vim 7.4+ is required](#complete-engines-vim-74-is-required)
-    - [Smart Engines Selection](#smart-engines-selection)
-    - [YouCompleteMe](#youcompleteme)
-    - [coc](#coc)
-    - [deoplete](#deoplete)
-    - [asyncomplete](#asyncomplete)
-    - [neocomplete](#neocomplete)
-    - [neocomplcache](#neocomplcache)
-  * [Complete Snippets, vim 7.4+ is also required](#complete-snippets-vim-74-is-also-required)
-    - [ultisnips](#ultisnips)
-    - [neosnippet](#neosnippet)
-  * [Syntax Check](#syntax-check)
-    - [ale](#ale)
-    - [syntastic](#syntastic)
-  * [Search/Replace tools](#searchreplace-tools)
-    - [FlyGrep](#flygrep)
-    - [Ctrlsf](#ctrlsf)
-    - [vim-multiple-cursors](#vim-multiple-cursors)
-  * [RunTools](#runtools)
-    - [vim-quickrun](#vim-quickrun)
-    - [asyncrun](#asyncrun)
-  * [language support](#language-support)
-    - [java: vim-eclim & javacomplete2](#java-vim-eclim-javacomplete2)
-    - [go](#go)
-    - [perl](#perl)
-    - [php](#php)
-    - [html](#html)
-    - [javascript](#javascript)
-    - [rust](#rust)
-    - [julia](#julia)
-    - [erlang](#erlang)
-  * [nerdtree](#nerdtree)
-  * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
-  * [undotree](#undotree)
-  * [airline and lightline](#airline-and-lightline)
-  * [fugitive](#fugitive)
-  * [bioSyntax-vim](#biosyntax-vim)
-  * [nerdcommenter](#nerdcommenter)
-  * [Browser tools](#browser-tools)
-    - [fzf.vim](#fzfvim)
-    - [LeaderF](#leaderf)
-    - [ctrlp](#ctrlp)
-  * [surround](#surround)
-  * [repeat](#repeat)
-  * [vim-easy-align](#vim-easy-align-1)
-  * [EasyMotion](#easymotion)
+    * [vim-plug](#vim-plug)
+    * [ywvim中文输入法](#ywvim中文输入法)
+    * [Markdown](#markdown)
+    * [Themes Collentions](#themes-collentions)
+    * [vim-easy-align](#vim-easy-align)
+    * [auto-pairs](#auto-pairs)
+    * [Complete Engines, vim 7.4+ is required](#complete-engines-vim-74-is-required)
+        - [Smart Engines Selection](#smart-engines-selection)
+        - [YouCompleteMe](#youcompleteme)
+        - [coc](#coc)
+        - [deoplete](#deoplete)
+        - [asyncomplete](#asyncomplete)
+        - [neocomplete](#neocomplete)
+        - [neocomplcache](#neocomplcache)
+    * [Complete Snippets, vim 7.4+ is also required](#complete-snippets-vim-74-is-also-required)
+        - [ultisnips](#ultisnips)
+        - [neosnippet](#neosnippet)
+    * [Syntax Check](#syntax-check)
+        - [ale](#ale)
+        - [syntastic](#syntastic)
+    * [Search/Replace tools](#searchreplace-tools)
+        - [FlyGrep](#flygrep)
+        - [Ctrlsf](#ctrlsf)
+        - [vim-multiple-cursors](#vim-multiple-cursors)
+    * [RunTools](#runtools)
+        - [vim-quickrun](#vim-quickrun)
+        - [asyncrun](#asyncrun)
+    * [language support](#language-support)
+        - [java: vim-eclim & javacomplete2](#java-vim-eclim-javacomplete2)
+        - [go](#go)
+        - [perl](#perl)
+        - [php](#php)
+        - [html](#html)
+        - [javascript](#javascript)
+        - [rust](#rust)
+        - [julia](#julia)
+        - [erlang](#erlang)
+    * [nerdtree](#nerdtree)
+    * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
+    * [undotree](#undotree)
+    * [airline and lightline](#airline-and-lightline)
+    * [fugitive](#fugitive)
+    * [bioSyntax-vim](#biosyntax-vim)
+    * [nerdcommenter](#nerdcommenter)
+    * [Browser tools](#browser-tools)
+        - [fzf.vim](#fzfvim)
+        - [LeaderF](#leaderf)
+        - [ctrlp](#ctrlp)
+    * [surround](#surround)
+    * [repeat](#repeat)
+    * [vim-easy-align](#vim-easy-align-1)
+    * [EasyMotion](#easymotion)
 
 <!-- vim-markdown-toc -->
 # This vim config is stiling in modifying
@@ -185,6 +185,7 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * In Visual, keep selection after indention change with `>`,`<`
 
 # Main shortcuts
+* `F1`: to `ESC`
 * `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
 * `<LocalLeader>` to **`\`**
 * `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug
@@ -199,6 +200,8 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `~` instead of `Q`, and `Q` for quit current buffer at once
 * `.` for exit visual mode
 * `!` for `:!`
+* `/` sent visual select part to command line
+* `;` sent visual select part aftter `%s/` to command line
 * `<leader>TT`: tab help
 * `<leader>tw`: toggle wrap
 * `<leader>tf`: toggle folder
@@ -210,8 +213,9 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
 * `S-F6`:       show register strings
 * `<leader>tr`: show register strings
 * `F11`:        full screen toggle
-* `S-F12`:      pastetoggle
+* `F12`:        pastetoggle
 * `<leader>tp`: pastetoggle
+* `<leader>tn`: toggle number/relativenumber
 * `tab/buffer control`
     - set tabpagemax=10
     - cmap Tabe tabe
@@ -283,11 +287,9 @@ You can check how it is installed via `install.sh` or `setup.cmd`.
 ## Markdown
 Markdown syntastic hightlight by default, and if has gui with python support, [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) and relative plugins will be installed, then `C-z` for preview in browser, `C-s` for stop preview, `C-q` for `:Voom markdown`(with [voom](https://github.com/vim-voom/VOoM))
 
-This `README` is written mostly with macvim, and Atom.
-
 ## [Themes Collentions](https://github.com/leoatchina/vim-colorschemes-collections)
-Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped xterm-256 compatible themes which I prefer. Run `:colorschemes` followed by `Tab` will show  these themes.
-- [wombat256](https://github.com/vim-scripts/wombat256.vim) for vim out of date
+Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), keeped **8** themes I prefer.
+- [wombat256](https://github.com/vim-scripts/wombat256.vim) for vim befor 8.0
 - [gruvbox](https://github.com/morhetz/gruvbox) default vim8 theme
 - [jellybeans](https://github.com/nanotech/jellybeans.vim) default neovim theme in OSX
 - [hybrid](https://github.com/w0ng/vim-hybrid) default neovim theme in linux
@@ -305,7 +307,7 @@ Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), ke
 ## [auto-pairs](https://github.com/jiangmiao/auto-pairs)
 ```
     let g:AutoPairs = {'(':')', '[':']', '{':'}','`':'`'}
-    let g:AutoPairsShortcutToggle     = "<C-l>g"
+    let g:AutoPairsShortcutToggle     = "<C-l>o"
     let g:AutoPairsShortcutFastWrap   = "<C-l>f"
     let g:AutoPairsShortcutJump       = "<C-l>j"
     let g:AutoPairsShortcutBackInsert = "<C-l>i"
@@ -330,14 +332,16 @@ You can also force to install the completion engine in `g:plug_groups`, just rep
 
 It is such a complex to make all the completion shortcuts compatible, finally I used a series of unroute shortcuts when completion menu popup: `Tab` or `C-j` for trigger, if not triggered , switch to the next. `CR` for end completion(`C-e`, `C-y` still work). `C-p`/`C-n` or `Up`/`Down` for previous/next selection.
 
+I have tried `ncm2`, `completor`, `mucompletor`, `supertab` but not keep them for some different reasons.
+
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 Needs `vim` with `+python` or `+python3`, and `g++` installed
 
 ### [coc](https://github.com/neoclide/coc.nvim)
-Needs `vim8/neovim` with `node` and `yarn` installed in system
+Needs `neovim` with `node` and `yarn` installed in system
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
-Needs `neovim` with `+python3`
+Needs `vim8/neovim` with `+python3`
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Needs `vim8/neovim`, no `python support` is needed
@@ -346,6 +350,7 @@ Needs `vim8/neovim`, no `python support` is needed
 Needs `vim/neovim` with `+lua`
 
 ### [neocomplcache](https://github.com/Shougo/neocomplcache.vim)
+The last complete enginge
 
 ## Complete Snippets, vim 7.4+ is also required
 If complete_engine is `neocomplete` or `neocomplcache`, snippets `ultisnips` or  `neosnippet` will be intalled automatically. Otherwise need `snippet` in `~/.vimrc.local`. `C-f` for snips jump forward in snippets, and only `ultisnips` use `c-b` for jump back
