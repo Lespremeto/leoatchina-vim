@@ -228,12 +228,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'shougo/denite.nvim'
                 Plug 'neomake/neomake'
                 if WINDOWS()
-                    Plug 'autozimu/LanguageClient-neovim'
+                    Plug 'autozimu/LanguageClient-neovim', {
                         \ 'branch': 'next',
                         \ 'do': '!\install.ps1',
                         \ }
                 else
-                    Plug 'autozimu/LanguageClient-neovim'
+                    Plug 'autozimu/LanguageClient-neovim', {
                         \ 'branch': 'next',
                         \ 'do': 'bash install.sh',
                         \ }
