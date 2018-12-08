@@ -194,18 +194,18 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('erlang')
             Plug 'johnzeng/vim-erlang-omnicomplete', {'for': 'erlang'}
         endif
+        " julia language
+        if HasPlug('julia') && (v:version >= 704 || has('nvim'))
+            Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
+        endif
         " java language
-        if HasPlug('java')
+        if HasPlug('java') && (v:version >= 704 || has('nvim'))
             if executable('java') && executable('gcc') && executable('make')
                 Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
                 Plug 'dansomething/vim-eclim'
             else
                 echoe "In order to install java plugins, you shoud update you system"
             endif
-        endif
-        " julia language
-        if HasPlug('julia')
-            Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
         endif
         " tags
         if  (has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')) && executable('ctags')
