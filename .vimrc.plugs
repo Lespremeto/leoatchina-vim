@@ -306,10 +306,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 " smart select engine
                 if HasPlug('smartcomplete') || g:smart_engine_select
-                    " use coc for neovim if yarn installed
-                    if has('nvim-0.3.0') && executable('node') && executable('yarn')
-                        let g:complete_engine = "coc"
-                    elseif g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
+                    " YCM and coc will not be automately installed for they
+                    " are hard to config
+                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                         let g:complete_engine = "deoplete"
                     elseif has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
@@ -358,7 +357,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         elseif g:complete_engine == "coc"
             function! CocInit()
-                execute 'CocInstall coc-pyls'
                 execute 'CocInstall coc-omni'
                 execute 'CocInstall coc-tag'
                 if HasPlug('html')
@@ -393,7 +391,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 else
                     !./install.sh
                 end
-                call CocInit()
             endfunction
             Plug 'neoclide/coc-neco'
             Plug 'neoclide/coc-sources'

@@ -510,11 +510,11 @@ set guioptions-=e
 set nolist
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-au BufNewFile,BufRead *.html.twig set Filetype=html.twig
-au BufNewFile,BufRead *.md, *.markdown, README set Filetype=markdown
+au BufNewFile,BufRead *.md set Filetype=markdown
+au BufNewFile,BufRead *.markdown set Filetype=markdown
+au BufNewFile,BufRead README set Filetype=markdown
 au BufNewFile,BufRead *.pandoc set Filetype=pandoc
 au BufNewFile,BufRead *.coffee set Filetype=coffee
-au BufNewFile,BufRead *.ts, *.vue set Filetype=typescript
 au BufNewFile,BufRead *vimrc* setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " sepcial setting for different type of files
 au FileType python au BufWritePost <buffer> :%retab
