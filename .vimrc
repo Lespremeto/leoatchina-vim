@@ -165,7 +165,6 @@ function! Alt_meta_map()
         endfor
     endif
 endfunc
-command! -nargs=0 -bang ALTMetaMap call Alt_meta_map()
 call Alt_meta_map()
 " Initialize directories
 function! InitializeDirectories()
@@ -273,7 +272,7 @@ if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
 endif
 " leader key
-let g:mapleader=' '
+let g:mapleader = ' '
 let g:maplocalleader = '\'
 " 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
@@ -1187,7 +1186,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         let g:ctrlp_user_command = {
                 \ 'types': {
-                    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                    \ 1: ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'],
                     \ 2: ['.hg', 'hg --cwd %s locate -I .'],
                 \ },
                 \ 'fallback': s:ctrlp_fallback
@@ -1197,6 +1196,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:ctrlp_extensions = ['funky']
             " funky
             nnoremap <C-k>f :CtrlPFunky<Cr>
+        endif
+        if HasDirectory('ctrlp-py-matcher')
+            let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
         endif
         nnoremap <C-k>m :CtrlPMRU<CR>
     endif

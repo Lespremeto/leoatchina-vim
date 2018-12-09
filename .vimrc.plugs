@@ -227,7 +227,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if exists('g:LanguageClient_serverCommands')
                 Plug 'shougo/denite.nvim'
                 Plug 'neomake/neomake'
-                let g:browser_tool    = 'denite'
                 let g:use_ultisnips   = 0
                 let g:complete_engine = 'deoplete'
             else
@@ -247,7 +246,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " browser tools & complete tools
             if HasPlug('fzf') && !WINDOWS()
-                let g:browser_tool = "fzf"
                 Plug 'junegunn/fzf.vim'
                 if executable('fzf')
                     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
@@ -255,7 +253,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
                 endif
             elseif (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
-                let g:browser_tool = "LeaderF"
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
                 else
@@ -263,9 +260,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 Plug 'Yggdroot/LeaderF-marks'
             else
-                let g:browser_tool = "ctrlp"
                 Plug 'ctrlpvim/ctrlp.vim'
                 Plug 'tacahiroy/ctrlp-funky'
+                Plug 'FelikZ/ctrlp-py-matcher'
             endif
             " complete_engine && snippet
             if (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
