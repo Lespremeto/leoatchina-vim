@@ -1084,7 +1084,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
     endif
     " browser tools
-    if g:browser_tool == "LeaderF" && HasDirectory("LeaderF")
+    if HasDirectory("LeaderF")
         let g:Lf_ShortcutF = '<C-k>j'
         let g:Lf_ReverseOrder = 1
         let g:Lf_PythonVersion = g:python_version
@@ -1105,7 +1105,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
            \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
            \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
        \ }
-    elseif g:browser_tool == 'fzf' && HasDirectory("fzf.vim")
+    elseif HasDirectory("fzf.vim")
         nnoremap <silent> <C-k>j :Files<CR>
         nnoremap <silent> <C-k>b :Buffers<CR>
         nnoremap <silent> <C-k>f :Filetypes<CR>
@@ -1201,6 +1201,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
         endif
         nnoremap <C-k>m :CtrlPMRU<CR>
+    elseif HasDirectory('denite.nvim')
+        " TODO:config it here
     endif
     " complete_engine
     set completeopt-=menu
@@ -1745,6 +1747,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
         nnoremap <silent> <C-l><C-p> :lprevious<cr>
         nnoremap <silent> <C-l><C-n> :lnext<cr>
+    elseif HasDirectory('neomake')
+        " TODO:config
     endif
     " asyncrun
     if HasDirectory("asyncrun.vim")
