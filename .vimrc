@@ -811,49 +811,50 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             set termguicolors
             if OSX()
                 colorscheme vim-material
-                if HasDirectory('vim-airline')
+                if g:status_line == 'airline'
                     let g:airline_theme='material'
                 endif
             elseif LINUX()
                 colorscheme ayu
-                if HasDirectory('vim-airline')
+                if g:status_line = 'airline'
                     let g:airline_theme='ayu'
                 endif
             else
                 colorscheme codedark
-                if HasDirectory('vim-airline')
+                if g:status_line == 'airline'
                     let g:airline_theme='codedark'
                 endif
             endif
         elseif has('nvim')
             if OSX()
                 colorscheme jellybeans
-                if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'jellybeans'
-                elseif HasDirectory('vim-airline')
+                if g:status_line == 'airline'
                     let g:airline_theme='gruvbox'
+                elseif g:status_line == 'lightline'
+                    let g:lightline.colorscheme = 'jellybeans'
                 endif
             elseif LINUX()
                 colorscheme hybrid
-                if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'seoul256'
-                elseif HasDirectory('vim-airline')
+                if g:status_line == 'airline'
                     let g:airline_theme='gruvbox'
+                elseif g:status_line == 'lightline'
+                    let g:lightline.colorscheme = 'seoul256'
                 endif
             else
                 colorscheme onedark
-                if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'onedark'
-                elseif HasDirectory('vim-airline')
+                if g:status_line == 'airline'
                     let g:airline_theme='onedark'
+                elseif g:status_line == 'lightline'
+                    let g:lightline.colorscheme = 'onedark'
                 endif
             endif
         else
             colorscheme gruvbox
-            if HasDirectory('lightline.vim')
-                let g:lightline.colorscheme = 'gruvbox'
-            elseif HasDirectory('vim-airline')
+
+            if g:status_line == 'airline'
                 let g:airline_theme='gruvbox'
+            elseif g:status_line == 'lightline'
+                let g:lightline.colorscheme = 'gruvbox'
             endif
         endif
     endif

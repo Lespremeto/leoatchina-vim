@@ -156,11 +156,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'bling/vim-bufferline'
             if (v:version >= 800 || has('nvim')) && (HasPlug('airline') || has('gui_running'))
                 Plug 'vim-airline/vim-airline'
+                let g:status_line = 'airline'
             else
                 Plug 'itchyny/lightline.vim'
                 if (v:version >= 800 || has('nvim')) && HasPlug('syntax')
                     Plug 'maximbaz/lightline-ale'
                 endif
+                let g:status_line = 'lightline'
             endif
         endif
         " debug tools for python c java ternjs .....
@@ -223,9 +225,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endif
         " use shougo's plugins, syntax check is automately actived
-        if HasPlug('shougo') && (v:version >= 800 || has('nvim-0.3.0')) && has('timers') && !has('gui_running')
+        if HasPlug('shougo') && (v:version >= 800 || has('nvim-0.3.0')) && has('timers') && !has('gui_running') && g:python_version == 3
             Plug 'shougo/denite.nvim'
             Plug 'neomake/neomake'
+            Plug 'mhartington/denite-neomake'
+            Plug 'Shougo/neomru.vim'
+            Plug 'Shougo/neoyank.vim'
+            Plug 'neoclide/denite-extra'
+            Plug 'neoclide/denite-git'
+            if g:status_line == 'lightline'
+                Plug 'mkalinski/vim-lightline_neomake'
+            endif
             let g:complete_engine = 'deoplete'
         else
             " syntax
