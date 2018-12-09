@@ -223,15 +223,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endif
         " use shougo's plugins, syntax check is automately actived
-        if HasPlug('shougo') && (v:version >= 800 || has('nvim-0.3.0')) && has('timers')
-            if exists('g:LanguageClient_serverCommands')
-                Plug 'shougo/denite.nvim'
-                Plug 'neomake/neomake'
-                let g:use_ultisnips   = 0
-                let g:complete_engine = 'deoplete'
-            else
-                echom("Please set g:LanguageClient_serverCommands in your coresponding .local file.")
-            endif
+        if HasPlug('shougo') && (v:version >= 800 || has('nvim-0.3.0')) && has('timers') && !has('gui_running')
+            Plug 'shougo/denite.nvim'
+            Plug 'neomake/neomake'
+            let g:complete_engine = 'deoplete'
         else
             " syntax
             if v:version >= 800 || has('nvim')
@@ -403,7 +398,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'roxma/vim-hug-neovim-rpc'
                 Plug 'roxma/nvim-yarp'
             endif
-            if HasPlug('deoplete_lcn')
+            if HasPlug('deoplete_lcn') && exists('g:LanguageClient_serverCommands')
                 if WINDOWS()
                     Plug 'autozimu/LanguageClient-neovim', {
                         \ 'branch': 'next',
@@ -416,6 +411,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         \ }
                 endif
             else
+                if HasPlug('deoplete_lcn') && !exists('g:LanguageClient_serverCommands')
+                    echom('you chose to use lcn but not set up g:LanguageClient_serverCommands in your .local file')
+                endif
                 Plug 'zchee/deoplete-clang'
                 Plug 'zchee/deoplete-jedi', {'for': 'python'}
                 if HasPlug('go') && executable('gocode')
