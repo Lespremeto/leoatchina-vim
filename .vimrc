@@ -1,5 +1,3 @@
-" This is leoatchina's vim config forked from https://github.com/spf13/spf13-vim
-" Sincerely thank him for his great job, and I have made some change according to own requires.
 " You can find spf13's origin config at http://spf13.com
 set nocompatible
 if v:version < 700
@@ -7,6 +5,18 @@ if v:version < 700
     quit
 endif
 noremap <F1> <ESC>
+nnoremap go <Nop>
+vnoremap go <Nop>
+snoremap go <Nop>
+nnoremap gn <Nop>
+vnoremap gn <Nop>
+snoremap gn <Nop>
+nnoremap gy <Nop>
+vnoremap gy <Nop>
+snoremap gy <Nop>
+nnoremap ga <Nop>
+vnoremap ga <Nop>
+snoremap ga <Nop>
 set re=1
 set ttyfast
 set lazyredraw
@@ -904,7 +914,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:multi_cursor_start_key           = 'g<C-n>'
         let g:multi_cursor_select_all_key      = 'g<M-n>'
         let g:multi_cursor_next_key            = '<C-n>'
-        let g:multi_cursor_prev_key            = '<C-_>'
+        let g:multi_cursor_prev_key            = '<C-p>'
         let g:multi_cursor_skip_key            = '<C-h>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
@@ -944,7 +954,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:nerdtree_tabs_smart_startup_focus     = 2
         let g:nerdtree_tabs_focus_on_files          = 1
         let g:NERDTreeWinSize                       = 30
-        let g:NERDTreeShowBookmarks                 =1
+        let g:NERDTreeShowBookmarks                 = 1
         let g:nerdtree_tabs_smart_startup_focus     = 0
         let g:NERDTreeIgnore = ['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
         let g:NERDTreeChDirMode                 =0
@@ -1241,14 +1251,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap <silent>g<C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap <silent>gyd :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory("coc.nvim") && g:complete_engine == "coc"
-        nmap <silent> gd <Plug>(coc-definition)
-        nmap <silent> gy <Plug>(coc-type-definition)
-        nmap <silent> gm <Plug>(coc-implementation)
-        nmap <silent> gr <Plug>(coc-references)
-        let g:coc_snippet_next = '<C-n>'
-	    let g:coc_snippet_prev = '<C-p>'
+        nmap <silent>god <Plug>(coc-definition)
+        nmap <silent>goy <Plug>(coc-type-definition)
+        nmap <silent>gom <Plug>(coc-implementation)
+        nmap <silent>gor <Plug>(coc-references)
+        let g:coc_snippetknext = '<C-n>'
+        let g:coc_snippet_prev = '<C-p>'
         " Show signature help while editing
         autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
         " Highlight symbol under cursor on CursorHold
