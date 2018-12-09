@@ -225,7 +225,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endif
         " use shougo's plugins, syntax check is automately actived
-        if HasPlug('shougo') && (v:version >= 800 || has('nvim-0.3.0')) && has('timers') && !has('gui_running') && g:python_version == 3
+        if HasPlug('shougo') && has('nvim-0.3.0') && has('timers') && g:python_version == 3
             Plug 'shougo/denite.nvim'
             Plug 'neomake/neomake'
             Plug 'mhartington/denite-neomake'
