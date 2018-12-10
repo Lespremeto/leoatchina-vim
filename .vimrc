@@ -806,31 +806,19 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         elseif has('gui_running')
             set termguicolors
-            if OSX()
-                colorscheme vim-material
-                if g:status_line == 'airline'
-                    let g:airline_theme='material'
-                endif
-            elseif LINUX()
-                colorscheme ayu
-                if g:status_line = 'airline'
-                    let g:airline_theme='ayu'
-                endif
-            else
+            if WINDOWS()
                 colorscheme codedark
                 if g:status_line == 'airline'
                     let g:airline_theme='codedark'
                 endif
+            else
+                colorscheme vim-material
+                if g:status_line == 'airline'
+                    let g:airline_theme='material'
+                endif
             endif
         elseif has('nvim')
-            if OSX()
-                colorscheme jellybeans
-                if g:status_line == 'airline'
-                    let g:airline_theme='gruvbox'
-                elseif g:status_line == 'lightline'
-                    let g:lightline.colorscheme = 'jellybeans'
-                endif
-            elseif LINUX()
+            if WINDOWS()
                 colorscheme hybrid
                 if g:status_line == 'airline'
                     let g:airline_theme='gruvbox'
@@ -838,16 +826,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     let g:lightline.colorscheme = 'seoul256'
                 endif
             else
-                colorscheme onedark
+                colorscheme jellybeans
                 if g:status_line == 'airline'
-                    let g:airline_theme='onedark'
+                    let g:airline_theme='gruvbox'
                 elseif g:status_line == 'lightline'
-                    let g:lightline.colorscheme = 'onedark'
+                    let g:lightline.colorscheme = 'jellybeans'
                 endif
             endif
         else
             colorscheme gruvbox
-
             if g:status_line == 'airline'
                 let g:airline_theme='gruvbox'
             elseif g:status_line == 'lightline'
