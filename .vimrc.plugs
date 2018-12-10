@@ -285,7 +285,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         echoe "Cannot install coc, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif HasPlug('deoplete') || HasPlug('deoplete-lcn')
+                elseif HasPlug('deoplete') || HasPlug('deoplete-lcn') || HasPlug('deoplete-tabnine')
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                        let g:complete_engine = "deoplete"
                     else
@@ -412,13 +412,19 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if WINDOWS()
                     Plug 'autozimu/LanguageClient-neovim', {
                         \ 'branch': 'next',
-                        \ 'do': '!\install.ps1',
+                        \ 'do': 'powershell.exe .\install.ps1',
                         \ }
                 else
                     Plug 'autozimu/LanguageClient-neovim', {
                         \ 'branch': 'next',
-                        \ 'do': 'bash install.sh',
+                        \ 'do': 'bash ./install.sh',
                         \ }
+                endif
+            elseif HasPlug('deoplete-tabnine')
+                if WINDOWS()
+                    Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
+                else
+                    Plug 'tbodt/deoplete-tabnine', { 'do': 'bash ./install.sh' }
                 endif
             else
                 if HasPlug('deoplete-lcn') && !exists('g:LanguageClient_serverCommands')
