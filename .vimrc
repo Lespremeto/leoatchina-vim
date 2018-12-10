@@ -510,12 +510,10 @@ set guioptions-=e
 set nolist
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-au BufNewFile,BufRead *.md set Filetype=markdown
-au BufNewFile,BufRead *.markdown set Filetype=markdown
-au BufNewFile,BufRead README set Filetype=markdown
+au BufNewFile,BufRead *.md,*.markdown,*README* set Filetype=markdown
 au BufNewFile,BufRead *.pandoc set Filetype=pandoc
 au BufNewFile,BufRead *.coffee set Filetype=coffee
-au BufNewFile,BufRead *vimrc* setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
+au BufNewFile,BufRead,BufWritePost .vimrc,.vimrc.local,vimr.plugs,init.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " sepcial setting for different type of files
 au FileType python au BufWritePost <buffer> :%retab
 au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
@@ -688,7 +686,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'bookmarks',
             \ ]
         let g:startify_commands = [
-                \ {'r': ['说明', '!vim -p ~/.vimrc.md']},
                 \ {'h': ['帮助', 'help howto']},
                 \ {'v': ['版本', 'version']}
             \ ]
