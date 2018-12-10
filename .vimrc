@@ -510,7 +510,7 @@ set guioptions-=e
 set nolist
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-au BufNewFile,BufRead *.md,*.markdown,*README* set Filetype=markdown
+au BufNewFile,BufRead *.md,*.markdown,README set Filetype=markdown
 au BufNewFile,BufRead *.pandoc set Filetype=pandoc
 au BufNewFile,BufRead *.coffee set Filetype=coffee
 au BufNewFile,BufRead,BufWritePost .vimrc,.vimrc.local,vimr.plugs,init.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
