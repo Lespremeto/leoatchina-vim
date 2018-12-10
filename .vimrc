@@ -1599,42 +1599,42 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " java
     if HasDirectory("vim-javacomplete2") && HasDirectory("vim-eclim")
         " javacomplete2
-				function! IsProjectFile()
-						let projectName = eclim#project#util#GetCurrentProjectName()
-						if projectName == ''
-								au FileType java setlocal omnifunc=javacomplete#Complete
-								au FileType java nmap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
-								au FileType java nmap <C-g>I <Plug>(JavaComplete-Imports-Add)
-								au FileType java nmap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
-								au FileType java nmap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
-								au FileType java imap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
-								au FileType java imap <C-g>I <Plug>(JavaComplete-Imports-Add)
-								au FileType java imap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
-								au FileType java imap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
-								au FileType java nmap <C-g>m <Plug>(JavaComplete-Generate-Accessors)
-								au FileType java nmap <C-g>c <Plug>(JavaComplete-Generate-Constructor)
-								au FileType java nmap <C-g>t <Plug>(JavaComplete-Generate-ToString)
-								au FileType java nmap <C-g>e <Plug>(JavaComplete-Generate-EqualsAndHashCode)
-								au FileType java nmap <C-g>d <Plug>(JavaComplete-Generate-DefaultConstructor)
-								au FileType java nmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
-								au FileType java nmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
-								au FileType java nmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-								au FileType java nmap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
-								au FileType java imap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
-								au FileType java imap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
-								au FileType java imap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-								au FileType java imap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
-								au FileType java vmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
-								au FileType java vmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
-								au FileType java vmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-								au FileType java nmap <silent> <buffer> <C-g>n <Plug>(JavaComplete-Generate-NewClass)
-								au FileType java nmap <silent> <buffer> <C-g>N <Plug>(JavaComplete-Generate-ClassInFile)
+        function! IsProjectFile()
+            let projectName = eclim#project#util#GetCurrentProjectName()
+            if projectName == ''
+                au FileType java setlocal omnifunc=javacomplete#Complete
+                au FileType java nmap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
+                au FileType java nmap <C-g>I <Plug>(JavaComplete-Imports-Add)
+                au FileType java nmap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
+                au FileType java nmap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
+                au FileType java imap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
+                au FileType java imap <C-g>I <Plug>(JavaComplete-Imports-Add)
+                au FileType java imap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
+                au FileType java imap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
+                au FileType java nmap <C-g>m <Plug>(JavaComplete-Generate-Accessors)
+                au FileType java nmap <C-g>c <Plug>(JavaComplete-Generate-Constructor)
+                au FileType java nmap <C-g>t <Plug>(JavaComplete-Generate-ToString)
+                au FileType java nmap <C-g>e <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+                au FileType java nmap <C-g>d <Plug>(JavaComplete-Generate-DefaultConstructor)
+                au FileType java nmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
+                au FileType java nmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
+                au FileType java nmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+                au FileType java nmap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
+                au FileType java imap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
+                au FileType java imap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
+                au FileType java imap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+                au FileType java imap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
+                au FileType java vmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
+                au FileType java vmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
+                au FileType java vmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+                au FileType java nmap <silent> <buffer> <C-g>n <Plug>(JavaComplete-Generate-NewClass)
+                au FileType java nmap <silent> <buffer> <C-g>N <Plug>(JavaComplete-Generate-ClassInFile)
             else
                 " eclim
                 let g:EclimCompletionMethod = 'omnifunc'
-						endif
-				endfunction
-				autocmd FileType java call IsProjectFile()
+            endif
+        endfunction
+        autocmd FileType java call IsProjectFile()
         let s:project_tree_is_open = 0
         function! ProjectTreeToggle()
             if s:project_tree_is_open
@@ -1646,7 +1646,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 let s:project_tree_is_open = 1
                 execute s:winpos . "wincmd w"
             endif
-        endfunctio
+        endfunction
         command! ProjectTreeToggle call ProjectTreeToggle()
         nnoremap <C-g>pp :ProjectTreeToggle<Cr>
         nnoremap <C-g>pl :ProjectList<Cr>

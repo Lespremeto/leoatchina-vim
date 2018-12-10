@@ -285,7 +285,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         echoe "Cannot install coc, smart select a complete_engine."
                         let g:smart_engine_select = 1
                     endif
-                elseif HasPlug('deoplete') || HasPlug('deoplete_lcn')
+                elseif HasPlug('deoplete') || HasPlug('deoplete-lcn')
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                        let g:complete_engine = "deoplete"
                     else
@@ -408,7 +408,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'roxma/vim-hug-neovim-rpc'
                 Plug 'roxma/nvim-yarp'
             endif
-            if HasPlug('deoplete_lcn') && exists('g:LanguageClient_serverCommands')
+            if HasPlug('deoplete-lcn') && exists('g:LanguageClient_serverCommands')
                 if WINDOWS()
                     Plug 'autozimu/LanguageClient-neovim', {
                         \ 'branch': 'next',
@@ -421,7 +421,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         \ }
                 endif
             else
-                if HasPlug('deoplete_lcn') && !exists('g:LanguageClient_serverCommands')
+                if HasPlug('deoplete-lcn') && !exists('g:LanguageClient_serverCommands')
                     echom('you chose to use lcn but not set up g:LanguageClient_serverCommands in your .local file')
                 endif
                 Plug 'zchee/deoplete-clang'
