@@ -420,7 +420,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         \ 'do': 'bash ./install.sh',
                         \ }
                 endif
-            elseif HasPlug('deoplete-tabnine')
+            elseif HasPlug('deoplete-tabnine') && (WINDOWS() && has('nvim') || !WINDOWS())
                 if WINDOWS()
                     Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
                 else
@@ -428,7 +428,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             else
                 if HasPlug('deoplete-lcn') && !exists('g:LanguageClient_serverCommands')
-                    echom('you chose to use lcn but not set up g:LanguageClient_serverCommands in your .local file')
+                    echom('You chose to use LanguageClint-neovim, but not set up g:LanguageClient_serverCommands in your .local file')
+                endif
+                if HasPlug('deoplete-tabnine') && !has('nvim') && WINDOWS()
+                    echom('You chose to use deoplete-tabline, but neovim is required in windows') 
                 endif
                 Plug 'zchee/deoplete-clang'
                 Plug 'zchee/deoplete-jedi', {'for': 'python'}
