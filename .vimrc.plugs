@@ -343,23 +343,23 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         unlet g:use_ultisnips
         if g:complete_engine == "YCM"
-            let s:ycm_instal = " ./install.py --clang-completer"
+            let b:ycm_install = " ./install.py --clang-completer"
             if HasPlug('go') && executable('go')
-                let s:ycm_install = s:ycm_install . " --go-completer"
+                let b:ycm_install = b:ycm_install . " --go-completer"
             endif
             if HasPlug('rust') && executable('rust')
-                let s:ycm_install = s:ycm_install . " --rust-completer"
+                let b:ycm_install = b:ycm_install . " --rust-completer"
             endif
             if HasPlug('java') && executable('java')
-                let s:ycm_install = s:ycm_install . " --java-completer"
+                let b:ycm_install = b:ycm_install . " --java-completer"
             endif
             if HasPlug('javascript') && executable('node')
-                let s:ycm_install = s:ycm_install . " --ts-completer"
+                let b:ycm_install = b:ycm_install . " --ts-completer"
             endif
             if g:python_version == 2
-                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2' . s:ycm_install}
+                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2' . b:ycm_install}
             elseif g:python_version == 3
-                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3' . s:ycm_install}
+                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3' . b:ycm_install}
             endif
         elseif g:complete_engine == "coc"
             function! CocInit()

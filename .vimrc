@@ -649,6 +649,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " markdown preview
     if HasDirectory('markdown-preview.vim') || HasDirectory('markdown-preview.nvim')
+        au FileType markdown nmap <leader>mk <Plug>MarkdownPreview
+        au FileType markdown nmap <leader>ms <Plug>StopMarkdownPreview
         if has('gui_running')
             au FileType markdown nmap <silent> <C-z> <Plug>MarkdownPreview
             au FileType markdown vmap <silent> <C-z> <Plug>MarkdownPreview
@@ -657,17 +659,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             au FileType markdown vmap <silent> <C-s> <Plug>StopMarkdownPreview
             au FileType markdown imap <silent> <C-s> <Plug>StopMarkdownPreview
         endif
-        let g:markdown_preview_started = 0
-        function! g:MarkdownPreviewToggle()
-            if g:markdown_preview_started == 0
-                execute "normal \<Plug>MarkdownPreview"
-                let g:markdown_preview_started = 1
-            else
-                execute "normal \<Plug>StopMarkdownPreview"
-                let g:markdown_preview_started = 0
-            endif
-        endfunction
-        nnoremap <leader>mm :call MarkdownPreviewToggle()<CR>
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
