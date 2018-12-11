@@ -1211,7 +1211,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if v:version == 704  && has('patch774') || v:version >= 800 || has('nvim')
         set shortmess+=c
     endif
-    if HasDirectory("YouCompleteMe") && g:complete_engine == "YCM"
+    if HasDirectory("YouCompleteMe")
         set completeopt+=noinsert,noselect
         if g:python_version == 2
             let g:ycm_python_binary_path = 'python'
@@ -1256,7 +1256,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <silent>gyd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif HasDirectory("coc.nvim") && g:complete_engine == "coc"
+    elseif HasDirectory("coc.nvim")
         nmap <silent>god <Plug>(coc-definition)
         nmap <silent>goy <Plug>(coc-type-definition)
         nmap <silent>gom <Plug>(coc-implementation)
@@ -1271,7 +1271,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         command! -nargs=0 Format :call CocAction('format')
         " Use `:Fold` for fold current buffer
         command! -nargs=? Fold :call CocAction('fold', <f-args>)
-    elseif HasDirectory("deoplete.nvim") && g:complete_engine == "deoplete"
+    elseif HasDirectory("deoplete.nvim")
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
         let g:deoplete#enable_camel_case = 1
@@ -1280,12 +1280,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if !has('nvim')
             let g:deoplete#enable_yarp = 1
         endif
-        " When use shougo confing, then only use lcn as complete source
-        if HasDirectory("LanguageClient-neovim")
+        if g:complete_engine == "deoplete-lcn"
             call deoplete#custom#source('LanguageClient',
                 \ 'min_pattern_length',
                 \ 2)
-        else
+        elseif g:complete_engine == "deoplete"
+            if HasDirectory('ultisnips')
+                call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
+            endif
             if HasDirectory('deoplete-jedi')
                 let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
             endif
@@ -1305,10 +1307,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
                 \})
         endif
-        if HasDirectory('ultisnips')
-            call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
-        endif
-    elseif HasDirectory("asyncomplete.vim") && g:complete_engine == "asyncomplete"
+    elseif HasDirectory("asyncomplete.vim")
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
         if v:version >= 800
@@ -1362,10 +1361,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \  },
             \ }))
         endif
-        if HasPlug('typejavascript')
+        if HasPlug('javascript')
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tscompletejob#get_source_options({
                 \ 'name': 'tscompletejob',
-                \ 'whitelist': ['typescript'],
+                \ 'whitelist': ['javascript', 'typescript'],
                 \ 'completor': function('asyncomplete#sources#tscompletejob#completor'),
             \ }))
         endif
@@ -1377,8 +1376,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ }))
         endif
         if HasPlug('rust')
-            au User asyncomplete_setup call asyncomplete#register_source(
-                \ asyncomplete#sources#racer#get_source_options())
+          au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#racer#get_source_options({
+                \ 'name': 'racer',
+                \ 'whitelist': ['rust'],
+                \ 'completor': function('asyncomplete#sources#racer#completor'),
+            \ }))
         endif
         if HasDirectory("asyncomplete-ultisnips.vim")
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
@@ -1393,7 +1395,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
             \ }))
         endif
-    elseif HasDirectory("neocomplete.vim") && g:complete_engine == "neocomplete"
+    elseif HasDirectory("neocomplete.vim")
         " ominifuc
         if g:python_version == 2
             au FileType python setlocal omnifunc=pythoncomplete#Complete
@@ -1423,7 +1425,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:neocomplete#force_omni_input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         let g:neocomplete#force_omni_input_patterns.go   = '\h\w*\.\?'
-    elseif HasDirectory("neocomplcache.vim") && g:complete_engine == "neocomplcache"
+    elseif HasDirectory("neocomplcache.vim")
         let g:neocomplcache_enable_at_startup = 1
         " ominifuc
         if g:python_version == 2
