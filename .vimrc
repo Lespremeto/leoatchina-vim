@@ -510,19 +510,20 @@ set guioptions-=e
 set nolist
 " General
 au BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-au BufNewFile,BufRead *.md,*.markdown,README set Filetype=markdown
-au BufNewFile,BufRead *.pandoc set Filetype=pandoc
-au BufNewFile,BufRead *.coffee set Filetype=coffee
-au BufNewFile,BufRead,BufWritePost .vimrc,.vimrc.local,vimr.plugs,init.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
+au BufNewFile,BufRead *.md,*.markdown,*README* set filetype=markdown
+au BufNewFile,BufRead *.pandoc set filetype=pandoc
+au BufNewFile,BufRead *.coffee set filetype=coffee
+au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
+au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
 " sepcial setting for different type of files
-au FileType python au BufWritePost <buffer> :%retab
+au FileType python au BufWritePre <buffer> :%retab
 au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
 au FileType haskell,rust setlocal nospell
 " Remove trailing whiteSpaces and ^M chars
-au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,eperl,sql au BufWritePre <buffer>  call StripTrailingWhiteSpace()
+au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,eperl,sql au BufWritePre <buffer> call StripTrailingWhiteSpace()
 " Map g* keys in Normal, Operator-pending, and Visual+select
 noremap $ :call WrapRelativeMotion("$")<CR>
 noremap 0 :call WrapRelativeMotion("0")<CR>
