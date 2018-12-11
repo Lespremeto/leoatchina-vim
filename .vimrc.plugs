@@ -67,7 +67,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')
-            let g:plug_groups=['smartcomplete', 'snippet', 'syntax', 'bio']
+            let g:plug_groups=['deoplete-tabline', 'snippet', 'syntax', 'bio']
         endif
         function! HasDirectory(dir)
             return isdirectory(expand($PLUG_PATH."/".a:dir))
@@ -251,7 +251,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'vim-syntastic/syntastic'
                 endif
             endif
-            " browser tools & complete tools
+            " browser tools
             if HasPlug('fzf') && !WINDOWS()
                 Plug 'junegunn/fzf.vim'
                 if executable('fzf')
@@ -312,7 +312,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     let g:complete_engine = "neocomplcache"
                 endif
                 " smart select engine
-                if HasPlug('smartcomplete') || g:smart_engine_select
+                if HasPlug('complete') || g:smart_engine_select
                     " YCM and coc will not be automately installed for they
                     " are hard to config
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
@@ -403,16 +403,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             endfunction
             command! -nargs=0 -bang CocInit call CocInit()
-            function! CocSetup()
-                if WINDOWS()
-                    !.\install.cmd
-                else
-                    !./install.sh
-                end
-            endfunction
             Plug 'neoclide/coc-neco'
             Plug 'neoclide/coc-sources'
-            Plug 'neoclide/coc.nvim', {'do': ':call CocSetup()'}
+            Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
         elseif g:complete_engine == "deoplete"
             if has('nvim')
                 Plug 'Shougo/deoplete.nvim', {'branch': 'master', 'do': ':UpdateRemotePlugins'}
