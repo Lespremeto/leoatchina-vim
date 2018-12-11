@@ -1264,9 +1264,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:coc_snippetknext = '<C-n>'
         let g:coc_snippet_prev = '<C-p>'
         " Show signature help while editing
-        autocmd CursorHoldI * silent! call CocAction('showSignatureHelp')
+        au CursorHoldI * silent! call CocAction('showSignatureHelp')
         " Highlight symbol under cursor on CursorHold
-        autocmd CursorHold * silent call CocActionAsync('highlight')
+        au CursorHold * silent call CocActionAsync('highlight')
         " Use `:Format` for format current buffer
         command! -nargs=0 Format :call CocAction('format')
         " Use `:Fold` for fold current buffer
@@ -1315,6 +1315,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 let g:asyncomplete_smart_completion = 1
             endif
         endif
+        " python first
+        if executable('pyls')
+            au User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'whitelist': 'python',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
+            \ })
+        endif
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
             \ 'name': 'buffer',
             \ 'whitelist': ['*'],
@@ -1332,7 +1342,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'whitelist': ['*'],
             \ 'blacklist': ['c', 'cpp', 'html'],
             \ 'completor': function('asyncomplete#sources#omni#completor')
-        \  }))
+        \ }))
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
             \ 'name': 'necosyntax',
             \ 'whitelist': ['*'],
@@ -1343,18 +1353,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'whitelist': ['vim'],
             \ 'completor': function('asyncomplete#sources#necovim#completor'),
         \ }))
-        if executable('pyls')
-            au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
-            \ })
-        endif
         if HasDirectory('asyncomplete-tags.vim')
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
                 \ 'name': 'tags',
-                \ 'whitelist': ['c'],
+                \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#tags#completor'),
                 \ 'config': {
                 \    'max_file_size': 50000000,
@@ -1369,18 +1371,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ }))
         endif
         if HasPlug('go')
-            au User asyncomplete_setup  call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
+            au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
                 \ 'name': 'gocode',
                 \ 'whitelist': ['go'],
                 \ 'completor': function('asyncomplete#sources#gocode#completor'),
             \ }))
         endif
-        if HasPlug('rust')
-          au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#racer#get_source_options({
-                \ 'name': 'racer',
-                \ 'whitelist': ['rust'],
-                \ 'completor': function('asyncomplete#sources#racer#completor'),
-            \ }))
+        if HasDirectory('asyncomplete-racer.vim')
+            au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#racer#get_source_options())
         endif
         if HasDirectory("asyncomplete-ultisnips.vim")
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
@@ -1634,7 +1632,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 let g:EclimCompletionMethod = 'omnifunc'
             endif
         endfunction
-        autocmd FileType java call IsProjectFile()
+        au FileType java call IsProjectFile()
         let s:project_tree_is_open = 0
         function! ProjectTreeToggle()
             if s:project_tree_is_open
@@ -1671,8 +1669,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <M-q> :PreviewQuickfix<Space>
         nnoremap <M-g> :PreviewGoto<Space>
         nnoremap <M-f> :PreviewFile<Space>
-        autocmd FileType qf nnoremap <silent><buffer> q :PreviewQuickfix<cr>
-        autocmd FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
+        au FileType qf nnoremap <silent><buffer> q :PreviewQuickfix<cr>
+        au FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
     endif
     " run_tools
     if HasDirectory("vim-quickrun")

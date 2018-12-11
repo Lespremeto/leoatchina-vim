@@ -507,7 +507,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'Shougo/neoinclude.vim'
             Plug 'Shougo/neco-vim'
             Plug 'Shougo/neco-syntax'
-            let s:engines = ['YCM', 'deoplete', 'neocomplete']
+            let s:engines = ['YCM', 'deoplete', 'deoplete-lcn', 'deoplete-tabnine', 'neocomplete']
             if index(s:engines, g:complete_engine) >= 0
                 Plug 'tenfyzhong/CompleteParameter.vim'
             endif
