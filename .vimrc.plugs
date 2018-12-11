@@ -67,7 +67,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')
-            let g:plug_groups=['deoplete-tabline', 'snippet', 'syntax', 'bio']
+            let g:plug_groups=[]
         endif
         function! HasDirectory(dir)
             return isdirectory(expand($PLUG_PATH."/".a:dir))
@@ -226,7 +226,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 echom("Please set $GTAGSCONF in your coresponding .local file, and pip install pygments.")
             endif
         endif
-        " use shougo's plugins, syntax check is automately actived
+        " use shougo's plugins
         if HasPlug('shougo') && has('nvim-0.3.0') && has('timers') && g:python_version == 3
             Plug 'shougo/denite.nvim'
             Plug 'neomake/neomake'
@@ -243,13 +243,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " syntax
             if v:version >= 800 || has('nvim')
                 Plug 'skywind3000/asyncrun.vim'
-                if HasPlug('syntax')
-                    Plug 'w0rp/ale'
-                endif
+                Plug 'w0rp/ale'
             elseif v:version == 704 && has('patch1486')
-                if HasPlug('syntax')
-                    Plug 'vim-syntastic/syntastic'
-                endif
+                Plug 'vim-syntastic/syntastic'
             endif
             " browser tools
             if HasPlug('fzf') && !WINDOWS()
@@ -312,9 +308,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     let g:complete_engine = "neocomplcache"
                 endif
                 " smart select engine
-                if HasPlug('complete') || g:smart_engine_select
-                    " YCM and coc will not be automately installed for they
-                    " are hard to config
+                if g:smart_engine_select
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                         let g:complete_engine = "deoplete"
                     elseif has('nvim') || v:version >= 800
@@ -328,50 +322,44 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endif
         " enginge plus
-        if g:complete_engine != "None"
-            Plug 'Shougo/vimshell.vim'
-            Plug 'Shougo/neoinclude.vim'
-            Plug 'Shougo/neco-vim'
-            Plug 'Shougo/neco-syntax'
-            let s:engines = ['YCM', 'deoplete', 'neocomplete']
-            if index(s:engines, g:complete_engine) >= 0
-                Plug 'tenfyzhong/CompleteParameter.vim'
-            endif
+        Plug 'Shougo/vimshell.vim'
+        Plug 'Shougo/neoinclude.vim'
+        Plug 'Shougo/neco-vim'
+        Plug 'Shougo/neco-syntax'
+        let s:engines = ['YCM', 'deoplete', 'neocomplete']
+        if index(s:engines, g:complete_engine) >= 0
+            Plug 'tenfyzhong/CompleteParameter.vim'
         endif
-        " install snippets plugins
-        if HasPlug('snippet')
-            Plug 'leoatchina/leoatchina-snippets'
-            if g:python_version && g:use_ultisnips == 1
-                let g:complete_snippet = "ultisnips"
-                Plug 'SirVer/ultisnips'
-                Plug 'honza/vim-snippets'
-            else
-                let g:complete_snippet = "neosnippet"
-                Plug 'Shougo/neosnippet'
-                Plug 'Shougo/neosnippet-snippets'
-            endif
+        " install snippets pluginstall
+        Plug 'leoatchina/leoatchina-snippets'
+        if g:python_version && g:use_ultisnips == 1
+            let g:complete_snippet = "ultisnips"
+            Plug 'SirVer/ultisnips'
+            Plug 'honza/vim-snippets'
         else
-            let g:complete_snippet = "None"
+            let g:complete_snippet = "neosnippet"
+            Plug 'Shougo/neosnippet'
+            Plug 'Shougo/neosnippet-snippets'
         endif
         unlet g:use_ultisnips
         if g:complete_engine == "YCM"
-            let b:ycm_install = " ./install.py --clang-completer"
+            let s:ycm_instal = " ./install.py --clang-completer"
             if HasPlug('go') && executable('go')
-                let b:ycm_install = b:ycm_install . " --go-completer"
+                let s:ycm_install = s:ycm_install . " --go-completer"
             endif
             if HasPlug('rust') && executable('rust')
-                let b:ycm_install = b:ycm_install . " --rust-completer"
+                let s:ycm_install = s:ycm_install . " --rust-completer"
             endif
             if HasPlug('java') && executable('java')
-                let b:ycm_install = b:ycm_install . " --java-completer"
+                let s:ycm_install = s:ycm_install . " --java-completer"
             endif
             if HasPlug('javascript') && executable('node')
-                let b:ycm_install = b:ycm_install . " --ts-completer"
+                let s:ycm_install = s:ycm_install . " --ts-completer"
             endif
             if g:python_version == 2
-                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2'.b:ycm_install}
+                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2' . s:ycm_install}
             elseif g:python_version == 3
-                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3'.b:ycm_install}
+                Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3' . s:ycm_install}
             endif
         elseif g:complete_engine == "coc"
             function! CocInit()
