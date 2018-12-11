@@ -327,6 +327,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             endif
         endif
+        " enginge plus
+        if g:complete_engine != "None"
+            Plug 'Shougo/vimshell.vim'
+            Plug 'Shougo/neoinclude.vim'
+            Plug 'Shougo/neco-vim'
+            Plug 'Shougo/neco-syntax'
+            let s:engines = ['YCM', 'deoplete', 'neocomplete']
+            if index(s:engines, g:complete_engine) >= 0
+                Plug 'tenfyzhong/CompleteParameter.vim'
+            endif
+        endif
         " install snippets plugins
         if HasPlug('snippet')
             Plug 'leoatchina/leoatchina-snippets'
@@ -499,17 +510,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'Rip-Rip/clang_complete'
             if g:complete_snippet == 'ultisnips'
                 Plug 'JazzCore/neocomplcache-ultisnips'
-            endif
-        endif
-        " enginge plus
-        if g:complete_engine != "None"
-            Plug 'Shougo/vimshell.vim'
-            Plug 'Shougo/neoinclude.vim'
-            Plug 'Shougo/neco-vim'
-            Plug 'Shougo/neco-syntax'
-            let s:engines = ['YCM', 'deoplete', 'deoplete-lcn', 'deoplete-tabnine', 'neocomplete']
-            if index(s:engines, g:complete_engine) >= 0
-                Plug 'tenfyzhong/CompleteParameter.vim'
             endif
         endif
     call plug#end()
