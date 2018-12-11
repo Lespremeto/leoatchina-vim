@@ -116,16 +116,18 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " markdown
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown'}
         if g:python_version
-            " voom
-            Plug 'vim-voom/VOoM'
-            Plug 'iamcco/markdown-preview.vim', {'for':'markdown'}
-            Plug 'iamcco/mathjax-support-for-mkdp', {'for':'markdown'}
             Plug 'plasticboy/vim-markdown', {'for':'markdown'}
+            if has('nvim')
+                Plug 'iamcco/markdown-preview.nvim', {'for':'markdown'}
+            else
+                Plug 'iamcco/markdown-preview.vim', {'for':'markdown'}
+            endif
+            Plug 'iamcco/mathjax-support-for-mkdp', {'for':'markdown'}
             if v:version >= 704 || has('nvim')
                 Plug 'mzlogin/vim-markdown-toc', {'for':'markdown'}
-            else
-                Plug 'ajorgensen/vim-markdown-toc', {'for':'markdown'}
             endif
+            " voom
+            Plug 'vim-voom/VOoM'
         else
             Plug 'tpope/vim-markdown', {'for':'markdown'}
         endif
@@ -431,7 +433,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     echom('You chose to use LanguageClint-neovim, but not set up g:LanguageClient_serverCommands in your .local file')
                 endif
                 if HasPlug('deoplete-tabnine') && !has('nvim') && WINDOWS()
-                    echom('You chose to use deoplete-tabline, but neovim is required in windows') 
+                    echom('You chose to use deoplete-tabline, but neovim is required in windows')
                 endif
                 Plug 'zchee/deoplete-clang'
                 Plug 'zchee/deoplete-jedi', {'for': 'python'}

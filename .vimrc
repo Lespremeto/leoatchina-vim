@@ -630,8 +630,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'tex': 'latex'
         \ }
     endif
-    " markdown preview
-    if  HasDirectory('markdown-preview.vim')
+    " markdown enhanced
+    if g:python_version && HasDirectory('vim-markdown')
         let g:vim_markdown_folding_disabled = 1
         let g:vim_markdown_no_default_key_mappings = 1
         let g:vim_markdown_preview_started = 0
@@ -641,23 +641,24 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         au FileType markdown nmap [] <Plug>Markdown_MoveToPreviousSiblingHeader
         au FileType markdown nmap ]c <Plug>Markdown_MoveToCurHeader
         au FileType markdown nmap ]u <Plug>Markdown_MoveToParentHeader
-        let g:vim_markdown_folding_style_pythonic = 1
-        let g:vim_markdown_override_foldtext = 0
-        let g:vim_markdown_toc_autofit = 1
-        let g:vim_markdown_emphasis_multiline = 0
-        let g:vim_markdown_conceal = 0
-        let g:vim_markdown_math = 1
-        let g:vim_markdown_frontmatter = 1
-        let g:vim_markdown_auto_insert_bullets = 0
-        let g:vim_markdown_new_list_item_indent = 0
+    endif
+    " markdown toc
+    if HasDirectory('vim-markdown-toc')
+        let g:vmt_auto_update_on_save = 0
+        let g:vmt_cycle_list_item_markers = 0
+    endif
+    " markdown preview
+    if HasDirectory('markdown-preview.vim') || HasDirectory('markdown-preview.nvim')
         if has('gui_running')
             au FileType markdown nmap <silent> <C-z> <Plug>MarkdownPreview
             au FileType markdown vmap <silent> <C-z> <Plug>MarkdownPreview
+            au FileType markdown imap <silent> <C-z> <Plug>MarkdownPreview
             au FileType markdown nmap <silent> <C-s> <Plug>StopMarkdownPreview
             au FileType markdown vmap <silent> <C-s> <Plug>StopMarkdownPreview
+            au FileType markdown imap <silent> <C-s> <Plug>StopMarkdownPreview
         endif
         let g:markdown_preview_started = 0
-        function! MarkdownPreviewToggle()
+        function! g:MarkdownPreviewToggle()
             if g:markdown_preview_started == 0
                 execute "normal \<Plug>MarkdownPreview"
                 let g:markdown_preview_started = 1
@@ -667,10 +668,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         nnoremap <leader>mm :call MarkdownPreviewToggle()<CR>
-    endif
-    if (v:version >= 703 || has('nvim')) && HasDirectory('vim-markdown-toc')
-        let g:vmt_auto_update_on_save = 0
-        let g:vmt_cycle_list_item_markers = 0
     endif
     " fugitive
     if HasDirectory("vim-fugitive")
