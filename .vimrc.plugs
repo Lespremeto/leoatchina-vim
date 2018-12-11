@@ -393,7 +393,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             command! -nargs=0 -bang CocInit call CocInit()
             Plug 'neoclide/coc-neco'
             Plug 'neoclide/coc-sources'
-            Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+            Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
         elseif g:complete_engine == "deoplete"
             if has('nvim')
                 Plug 'Shougo/deoplete.nvim', {'branch': 'master', 'do': ':UpdateRemotePlugins'}
@@ -415,7 +415,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         \ }
                 endif
                 let g:complete_engine = 'deoplete-lcn'
-            elseif HasPlug('deoplete-tabnine') && (WINDOWS() && has('nvim') || !WINDOWS())
+            elseif HasPlug('deoplete-tabnine')
                 if WINDOWS()
                     Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
                 else
@@ -425,9 +425,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 if HasPlug('deoplete-lcn') && !exists('g:LanguageClient_serverCommands')
                     echom('You chose to use LanguageClint-neovim, but not set up g:LanguageClient_serverCommands in your .local file')
-                endif
-                if HasPlug('deoplete-tabnine') && !has('nvim') && WINDOWS()
-                    echom('You chose to use deoplete-tabline, but neovim is required in windows')
                 endif
                 Plug 'zchee/deoplete-clang'
                 Plug 'zchee/deoplete-jedi', {'for': 'python'}
