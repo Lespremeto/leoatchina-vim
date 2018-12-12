@@ -1587,7 +1587,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:user_emmet_leader_key='<C-p>'
     endif
     " java
-    if HasDirectory("vim-eclim") && HasPlug('java')
+    if HasDirectory("vim-eclim")
         let g:EclimCompletionMethod = 'omnifunc'
         let s:project_tree_is_open = 0
         function! ProjectTreeToggle()
@@ -1624,6 +1624,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             au filetype java nmap <C-p> <Nop>
             au filetype java echom("please start eclimd for java")
         endif
+    else
+        au filetype java nmap <C-p> <Nop>
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
