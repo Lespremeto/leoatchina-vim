@@ -368,12 +368,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 execute 'CocInstall coc-omni'
                 execute 'CocInstall coc-tag'
                 execute 'CocInstall coc-pyls'
-                execute 'CocInstall coc-html'
-                execute 'CocInstall coc-json'
-                execute 'CocInstall coc-css'
-                execute 'CocInstall coc-wxml'
-                execute 'CocInstall coc-yaml'
-                if HasPlug('php')
+                execute 'CocInstall coc-neoco'
+                if HasPlug('php') || HasPlug('html')
+                    execute 'CocInstall coc-html'
+                    execute 'CocInstall coc-json'
+                    execute 'CocInstall coc-css'
+                    execute 'CocInstall coc-wxml'
+                    execute 'CocInstall coc-yaml'
                     execute 'CocInstall coc-emmet'
                 endif
                 if HasPlug('javascript')
