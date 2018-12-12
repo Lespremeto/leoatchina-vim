@@ -363,6 +363,16 @@ else
     nnoremap <M-9> :tabn9<CR>
     nnoremap <M-0> :tablast<CR>
 endif
+nnoremap <leader>tg1 :tabn1<CR>
+nnoremap <leader>tg2 :tabn2<CR>
+nnoremap <leader>tg3 :tabn3<CR>
+nnoremap <leader>tg4 :tabn4<CR>
+nnoremap <leader>tg5 :tabn5<CR>
+nnoremap <leader>tg6 :tabn6<CR>
+nnoremap <leader>tg7 :tabn7<CR>
+nnoremap <leader>tg8 :tabn8<CR>
+nnoremap <leader>tg9 :tabn9<CR>
+nnoremap <leader>tg0 :tablast<CR>
 " buffer switch
 nnoremap <localleader><BS> :buffers<CR>
 nnoremap <localleader>[ :bp<CR>
@@ -618,7 +628,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory('VOom')
         let g:voom_python_versions = [3,2]
         nnoremap <leader>tv :VoomToggle<CR>
-        nnoremap <leader>tg :VoomQuit<CR>:Voom<CR><C-w>w
+        nnoremap <leader>TV :VoomQuit<CR>:Voom<CR><C-w>w
         if has('gui_running')
             nnoremap <C-q> :VoomToggle<CR>
         endif
