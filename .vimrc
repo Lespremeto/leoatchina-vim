@@ -293,6 +293,7 @@ vnoremap gT <Nop>
 snoremap gt <Nop>
 snoremap gT <Nop>
 " some ctrl+ key remap
+nnoremap <C-p> <Nop>
 nnoremap <C-s> <Nop>
 nnoremap <C-q> <Nop>
 nnoremap <C-z> <Nop>
@@ -859,9 +860,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <silent><leader>tt :TagbarToggle<CR>
         nnoremap <silent><leader>tj :TagbarOpen j<CR>
         " show in vsplit
-        nnoremap <C-p> <C-w><C-]>
+        nnoremap <leader><C-]> <C-w><C-]>
         " show in tab
-        nnoremap <C-w><C-p> <C-w><C-]><C-w>T
+        nnoremap <localleader><C-]> <C-w><C-]><C-w>T
     endif
     " gtags
     if HasDirectory("vim-gutentags")
@@ -903,7 +904,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:multi_cursor_start_key           = 'g<C-n>'
         let g:multi_cursor_select_all_key      = 'g<M-n>'
         let g:multi_cursor_next_key            = '<C-n>'
-        let g:multi_cursor_prev_key            = '<C-p>'
+        let g:multi_cursor_prev_key            = '<C-_>'
         let g:multi_cursor_skip_key            = '<C-h>'
         let g:multi_cursor_quit_key            = '<ESC>'
         highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
@@ -1570,7 +1571,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:javascript_conceal_underscore_arrow_function = "🞅"
     endif
     if HasDirectory('vim-jsdoc')
-        au FileType javascript nmap <C-g>j <Plug>(jsdoc)
+        au FileType javascript nmap <C-p>j <Plug>(jsdoc)
     endif
     " php language
     if HasDirectory('phpcomplete.vim')
@@ -1583,7 +1584,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " html language
     if HasDirectory('emmet-vim')
-        let g:user_emmet_leader_key='<C-g>'
+        let g:user_emmet_leader_key='<C-p>'
     endif
     " java
     if HasDirectory("vim-javacomplete2") && HasDirectory("vim-eclim")
@@ -1592,64 +1593,66 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let projectName = eclim#project#util#GetCurrentProjectName()
             if projectName == ''
                 au FileType java setlocal omnifunc=javacomplete#Complete
-                au FileType java nmap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
-                au FileType java nmap <C-g>I <Plug>(JavaComplete-Imports-Add)
-                au FileType java nmap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
-                au FileType java nmap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
-                au FileType java imap <C-g>i <Plug>(JavaComplete-Imports-AddSmart)
-                au FileType java imap <C-g>I <Plug>(JavaComplete-Imports-Add)
-                au FileType java imap <C-g>M <Plug>(JavaComplete-Imports-AddMissing)
-                au FileType java imap <C-g>U <Plug>(JavaComplete-Imports-RemoveUnused)
-                au FileType java nmap <C-g>m <Plug>(JavaComplete-Generate-Accessors)
-                au FileType java nmap <C-g>c <Plug>(JavaComplete-Generate-Constructor)
-                au FileType java nmap <C-g>t <Plug>(JavaComplete-Generate-ToString)
-                au FileType java nmap <C-g>e <Plug>(JavaComplete-Generate-EqualsAndHashCode)
-                au FileType java nmap <C-g>d <Plug>(JavaComplete-Generate-DefaultConstructor)
-                au FileType java nmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
-                au FileType java nmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
-                au FileType java nmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-                au FileType java nmap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
-                au FileType java imap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
-                au FileType java imap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
-                au FileType java imap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-                au FileType java imap <C-g>A <Plug>(JavaComplete-Generate-AbstractMethods)
-                au FileType java vmap <C-g>s <Plug>(JavaComplete-Generate-AccessorSetter)
-                au FileType java vmap <C-g>g <Plug>(JavaComplete-Generate-AccessorGetter)
-                au FileType java vmap <C-g>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-                au FileType java nmap <silent> <buffer> <C-g>n <Plug>(JavaComplete-Generate-NewClass)
-                au FileType java nmap <silent> <buffer> <C-g>N <Plug>(JavaComplete-Generate-ClassInFile)
+                au FileType java nmap <C-p>i <Plug>(JavaComplete-Imports-AddSmart)
+                au FileType java nmap <C-p>I <Plug>(JavaComplete-Imports-Add)
+                au FileType java nmap <C-p>M <Plug>(JavaComplete-Imports-AddMissing)
+                au FileType java nmap <C-p>U <Plug>(JavaComplete-Imports-RemoveUnused)
+                au FileType java imap <C-p>i <Plug>(JavaComplete-Imports-AddSmart)
+                au FileType java imap <C-p>I <Plug>(JavaComplete-Imports-Add)
+                au FileType java imap <C-p>M <Plug>(JavaComplete-Imports-AddMissing)
+                au FileType java imap <C-p>U <Plug>(JavaComplete-Imports-RemoveUnused)
+                au FileType java nmap <C-p>m <Plug>(JavaComplete-Generate-Accessors)
+                au FileType java nmap <C-p>c <Plug>(JavaComplete-Generate-Constructor)
+                au FileType java nmap <C-p>t <Plug>(JavaComplete-Generate-ToString)
+                au FileType java nmap <C-p>e <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+                au FileType java nmap <C-p>d <Plug>(JavaComplete-Generate-DefaultConstructor)
+                au FileType java nmap <C-p>s <Plug>(JavaComplete-Generate-AccessorSetter)
+                au FileType java nmap <C-p>g <Plug>(JavaComplete-Generate-AccessorGetter)
+                au FileType java nmap <C-p>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+                au FileType java nmap <C-p>A <Plug>(JavaComplete-Generate-AbstractMethods)
+                au FileType java imap <C-p>s <Plug>(JavaComplete-Generate-AccessorSetter)
+                au FileType java imap <C-p>g <Plug>(JavaComplete-Generate-AccessorGetter)
+                au FileType java imap <C-p>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+                au FileType java imap <C-p>A <Plug>(JavaComplete-Generate-AbstractMethods)
+                au FileType java vmap <C-p>s <Plug>(JavaComplete-Generate-AccessorSetter)
+                au FileType java vmap <C-p>g <Plug>(JavaComplete-Generate-AccessorGetter)
+                au FileType java vmap <C-p>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+                au FileType java nmap <silent> <buffer> <C-p>n <Plug>(JavaComplete-Generate-NewClass)
+                au FileType java nmap <silent> <buffer> <C-p>N <Plug>(JavaComplete-Generate-ClassInFile)
             else
                 " eclim
                 let g:EclimCompletionMethod = 'omnifunc'
+                let s:project_tree_is_open = 0
+                function! ProjectTreeToggle()
+                    if s:project_tree_is_open
+                        call eclim#project#tree#ProjectTreeClose()
+                        let s:project_tree_is_open = 0
+                    else
+                        let s:winpos = winnr() + 1
+                        call eclim#project#tree#ProjectTree()
+                        let s:project_tree_is_open = 1
+                        execute s:winpos . "wincmd w"
+                    endif
+                endfunction
+                command! ProjectTreeToggle call ProjectTreeToggle()
+                if eclim#EclimAvailable()
+                    nnoremap <C-p>t :ProjectTreeToggle<Cr>
+                    nnoremap <C-p>l :ProjectList<Cr>
+                    nnoremap <C-p>b :ProjectBuild<Cr>
+                    nnoremap <C-p>f :ProjectRefresh<Cr>
+                    nnoremap <C-p>c :ProjectCD<Space>
+                    nnoremap <C-p>d :ProjectLCD<Space>
+                    nnoremap <C-p>n :ProjectCreate<Space>
+                    nnoremap <C-p>m :ProjectMove<Space>
+                    nnoremap <C-p>i :ProjectImport<Space>
+                    nnoremap <C-p>o :ProjectOpen<Space>
+                    nnoremap <C-p>r :ProjectRun
+                    nnoremap <C-p>j :Project
+                    nnoremap <C-p>I :ProjectInfo<Cr>
+                endif
             endif
         endfunction
         au FileType java call IsProjectFile()
-        let s:project_tree_is_open = 0
-        function! ProjectTreeToggle()
-            if s:project_tree_is_open
-                call eclim#project#tree#ProjectTreeClose()
-                let s:project_tree_is_open = 0
-            else
-                let s:winpos = winnr() + 1
-                call eclim#project#tree#ProjectTree()
-                let s:project_tree_is_open = 1
-                execute s:winpos . "wincmd w"
-            endif
-        endfunction
-        command! ProjectTreeToggle call ProjectTreeToggle()
-        nnoremap <C-g>pp :ProjectTreeToggle<Cr>
-        nnoremap <C-g>pl :ProjectList<Cr>
-        nnoremap <C-g>pt :ProjectsTree<Cr>
-        nnoremap <C-g>pb :ProjectBuild<Cr>
-        nnoremap <C-g>pr :ProjectRefresh<Cr>
-        nnoremap <C-g>pc :ProjectCD<Cr>
-        nnoremap <C-g>pd :ProjectLCD<Cr>
-        nnoremap <C-g>pn :ProjectCreate<Space>
-        nnoremap <C-g>pm :ProjectMove<Space>
-        nnoremap <C-g>pi :ProjectImport<Space>
-        nnoremap <C-g>po :ProjectOpen<Space>
-        nnoremap <C-g>PP :Project
-        nnoremap <C-g>PI :ProjectInfo<Cr>
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
