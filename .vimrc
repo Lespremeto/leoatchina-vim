@@ -954,7 +954,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " NerdTree
     if HasDirectory("nerdtree")
         nmap <leader>nn :NERDTreeTabsToggle<CR>
-        nmap <leader>nf :NERDTreeFind<CR>
+        nmap <leader>nt :NERDTreeFind<CR>
         let g:NERDShutUp                            = 1
         let s:has_nerdtree                          = 1
         let g:nerdtree_tabs_open_on_gui_startup     = 0
