@@ -225,7 +225,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:browser_tool     = "None"
         let g:syntax_tool      = "None"
         " use shougo's plugins
-        if HasPlug('shougo') && has('nvim-0.3.0') && has('timers') && g:python_version == 3 && g:program_tools == 1
+        if HasPlug('shougo') && has('nvim-0.3.0') && has('timers') && g:python_version == 3 && g:program_tools
             Plug 'Shougo/denite.nvim'
             Plug 'neomake/neomake'
             Plug 'mhartington/denite-neomake'
@@ -239,7 +239,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:complete_engine = 'deoplete'
             let g:browser_tool = 'denite'
             let g:syntax_tool = 'neomake'
-        elseif g:program_tools == 1
+        elseif g:program_tools
             " syntax
             if v:version >= 800 || has('nvim')
                 Plug 'skywind3000/asyncrun.vim'
@@ -364,10 +364,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3' . b:ycm_install}
             endif
         elseif g:complete_engine == "coc"
+            " coc not complete python
             function! CocInit()
                 execute 'CocInstall coc-omni'
                 execute 'CocInstall coc-tag'
-                execute 'CocInstall coc-pyls'
                 execute 'CocInstall coc-neco'
                 if HasPlug('php') || HasPlug('html')
                     execute 'CocInstall coc-html'
