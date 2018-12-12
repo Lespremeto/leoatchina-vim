@@ -949,7 +949,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " neoformat
     if HasDirectory('neoformat')
-        nnoremap <silent><leader>nf :Neoformat!<Space>
+        nnoremap <leader>nf :Neoformat!<Space>
     endif
     " NerdTree
     if HasDirectory("nerdtree")
