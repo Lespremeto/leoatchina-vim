@@ -34,9 +34,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     set rtp+=$PLUG_PATH
     call plug#begin($PLUG_PATH)
-        " complete_engine && complete_snippet
-        let g:complete_engine  = "None"
         let g:use_ultisnips = 1
+        let g:program_tools = 1
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
@@ -226,7 +225,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:browser_tool     = "None"
         let g:syntax_tool      = "None"
         " use shougo's plugins
-        if HasPlug('shougo') && has('nvim-0.3.0') && has('timers') && g:python_version == 3
+        if HasPlug('shougo') && has('nvim-0.3.0') && has('timers') && g:python_version == 3 && g:program_tools == 1
             Plug 'Shougo/denite.nvim'
             Plug 'neomake/neomake'
             Plug 'mhartington/denite-neomake'
@@ -240,7 +239,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:complete_engine = 'deoplete'
             let g:browser_tool = 'denite'
             let g:syntax_tool = 'neomake'
-        else
+        elseif g:program_tools == 1
             " syntax
             if v:version >= 800 || has('nvim')
                 Plug 'skywind3000/asyncrun.vim'
