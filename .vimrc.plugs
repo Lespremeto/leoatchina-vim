@@ -132,6 +132,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " search/replace/finder
         Plug 'google/vim-searchindex'
         Plug 'easymotion/vim-easymotion'
+        Plug 'sbdchd/neoformat'
         if v:version >= 800 || has('nvim')
             Plug 'terryma/vim-multiple-cursors'
             Plug 'wsdjeg/FlyGrep.vim'

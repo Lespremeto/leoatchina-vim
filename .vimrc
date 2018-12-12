@@ -363,16 +363,16 @@ else
     nnoremap <M-9> :tabn9<CR>
     nnoremap <M-0> :tablast<CR>
 endif
-nnoremap <leader>tg1 :tabn1<CR>
-nnoremap <leader>tg2 :tabn2<CR>
-nnoremap <leader>tg3 :tabn3<CR>
-nnoremap <leader>tg4 :tabn4<CR>
-nnoremap <leader>tg5 :tabn5<CR>
-nnoremap <leader>tg6 :tabn6<CR>
-nnoremap <leader>tg7 :tabn7<CR>
-nnoremap <leader>tg8 :tabn8<CR>
-nnoremap <leader>tg9 :tabn9<CR>
-nnoremap <leader>tg0 :tablast<CR>
+nnoremap <leader>t1 :tabn1<CR>
+nnoremap <leader>t2 :tabn2<CR>
+nnoremap <leader>t3 :tabn3<CR>
+nnoremap <leader>t4 :tabn4<CR>
+nnoremap <leader>t5 :tabn5<CR>
+nnoremap <leader>t6 :tabn6<CR>
+nnoremap <leader>t7 :tabn7<CR>
+nnoremap <leader>t8 :tabn8<CR>
+nnoremap <leader>t9 :tabn9<CR>
+nnoremap <leader>t0 :tablast<CR>
 " buffer switch
 nnoremap <localleader><BS> :buffers<CR>
 nnoremap <localleader>[ :bp<CR>
@@ -946,6 +946,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " typecast
     if HasDirectory('typecast.vim')
         nmap <leader>tc <Plug>typecast
+    endif
+    " neoformat
+    if HasDirectory('neoformat')
+        nnoremap <silent><leader>nf :Neoformat!<Space>
     endif
     " NerdTree
     if HasDirectory("nerdtree")
