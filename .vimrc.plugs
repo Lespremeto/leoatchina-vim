@@ -37,7 +37,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " complete_engine && complete_snippet
         let g:complete_engine  = "None"
         let g:use_ultisnips = 1
-        let g:smart_engine_select = 0
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
@@ -67,7 +66,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')
-            let g:plug_groups=['leaderf']
+            let g:plug_groups=['leaderf', 'bio']
         endif
         function! HasDirectory(dir)
             return isdirectory(expand($PLUG_PATH."/".a:dir))
@@ -256,7 +255,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'vim-syntastic/syntastic'
                 let g:syntax_tool = 'syntastic'
             endif
-            " browser tools
+            " browser tool
             if HasPlug('fzf') && !WINDOWS()
                 let g:browser_tool = 'fzf'
                 Plug 'junegunn/fzf.vim'
@@ -286,42 +285,37 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         let g:complete_engine = "YCM"
                     else
                         echoe "Cannot install YouCompleteMe, smart select a complete_engine."
-                        let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('coc')
                     if has('nvim-0.3.0') && executable('node') && executable('yarn')
                         let g:complete_engine = "coc"
                     else
                         echoe "Cannot install coc, smart select a complete_engine."
-                        let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('deoplete') || HasPlug('deoplete-lcn') || HasPlug('deoplete-tabnine')
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                        let g:complete_engine = "deoplete"
                     else
                         echoe "Cannot install deoplete, smart select a complete_engine."
-                        let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('asyncomplete')
                     if has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
                     else
                         echoe "Cannot install asyncomplete, smart select a complete_engine."
-                        let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('neocomplete')
                     if has('lua')
                         let g:complete_engine = "neocomplete"
                     else
                         echoe "Cannot install neocomplete, smart select a complete_engine."
-                        let g:smart_engine_select = 1
                     endif
                 elseif HasPlug('neocomplcache')
                     let g:complete_engine = "neocomplcache"
                 endif
                 " smart select engine
-                if g:smart_engine_select
-                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
+                if g:complete_engine == "None"
+                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version >= 800)
                         let g:complete_engine = "deoplete"
                     elseif has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
@@ -506,8 +500,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
        echo join([join(['python', g:python_version], ''), g:complete_engine, g:complete_snippet, g:browser_tool, g:syntax_tool, g:status_line], ' ')
      endfunction
     command! ShowParam call ShowParam()
+    nnoremap <S-F11> :call ShowParam()<Cr>
     command! PlugRe PlugClean! | PlugInstall --sync
     command! PlugNew PlugClean! | PlugUpdate --sync
 else
-    echom "In order to install plugins with vim-plug, your vim should be with any of `+job`, `+python`, `+python3`, `+ruby`, or use Neovim"
+    echom "In order to install plugins with vim-plug, your vim should be with any of `+job`, `+python`, `+python3`, `+ruby`, '+lua', or use Neovim"
 endif
