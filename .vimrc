@@ -5,18 +5,6 @@ if v:version < 700
     quit
 endif
 noremap <F1> <ESC>
-nnoremap go <Nop>
-vnoremap go <Nop>
-snoremap go <Nop>
-nnoremap gn <Nop>
-vnoremap gn <Nop>
-snoremap gn <Nop>
-nnoremap gy <Nop>
-vnoremap gy <Nop>
-snoremap gy <Nop>
-nnoremap ga <Nop>
-vnoremap ga <Nop>
-snoremap ga <Nop>
 set re=1
 set ttyfast
 set lazyredraw
@@ -285,7 +273,19 @@ nnoremap ! :!
 vnoremap / y/<C-r>0
 vnoremap ; y:%s/<C-r>0
 vnoremap . :normal .<CR>
-" gt to nop
+" to nop
+nnoremap go <Nop>
+vnoremap go <Nop>
+snoremap go <Nop>
+nnoremap gn <Nop>
+vnoremap gn <Nop>
+snoremap gn <Nop>
+nnoremap gy <Nop>
+vnoremap gy <Nop>
+snoremap gy <Nop>
+nnoremap ga <Nop>
+vnoremap ga <Nop>
+snoremap ga <Nop>
 nnoremap gt <Nop>
 nnoremap gT <Nop>
 vnoremap gt <Nop>
@@ -304,11 +304,12 @@ inoremap <C-f> <right>
 cnoremap <C-f> <right>
 inoremap <C-b> <Left>
 cnoremap <C-b> <Left>
-inoremap <C-k>; <C-x><C-u>
-inoremap <C-k>, <C-x><C-o>
-inoremap <C-k>. <C-x><C-v>
+inoremap <C-k><C-u> <C-x><C-u>
+inoremap <C-k><C-o> <C-x><C-o>
+inoremap <C-k><C-v> <C-x><C-v>
+inoremap <C-k><C-l> <C-x><C-l>
 inoremap <C-l> <Nop>
-" a,e for home/end
+" b/f for back/forword
 nnoremap gb ^
 nnoremap gf $
 vnoremap gb ^
@@ -665,7 +666,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap gc    :Gcommit -a -v<CR>
         nnoremap g<Cr> :Git<Space>
         if HasDirectory("vim-signify")
-            nnoremap gs :SignifyDiff<CR>
         endif
     endif
     " startify

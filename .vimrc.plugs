@@ -67,7 +67,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')
-            let g:plug_groups=[]
+            let g:plug_groups=['leaderf']
         endif
         function! HasDirectory(dir)
             return isdirectory(expand($PLUG_PATH."/".a:dir))
@@ -226,36 +226,47 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 echom("Please set $GTAGSCONF in your coresponding .local file, and pip install pygments.")
             endif
         endif
+        " complete param
+        let g:complete_engine  = "None"
+        let g:complete_snippet = "None"
+        let g:browser_tool     = "None"
+        let g:syntax_tool      = "None"
         " use shougo's plugins
         if HasPlug('shougo') && has('nvim-0.3.0') && has('timers') && g:python_version == 3
-            Plug 'shougo/denite.nvim'
+            Plug 'Shougo/denite.nvim'
             Plug 'neomake/neomake'
             Plug 'mhartington/denite-neomake'
-            Plug 'Shougo/neomru.vim'
-            Plug 'Shougo/neoyank.vim'
             Plug 'neoclide/denite-extra'
             Plug 'neoclide/denite-git'
+            Plug 'Shougo/neomru.vim'
+            Plug 'Shougo/neoyank.vim'
             if g:status_line == 'lightline'
                 Plug 'mkalinski/vim-lightline_neomake'
             endif
             let g:complete_engine = 'deoplete'
+            let g:browser_tool = 'denite'
+            let g:syntax_tool = 'neomake'
         else
             " syntax
             if v:version >= 800 || has('nvim')
                 Plug 'skywind3000/asyncrun.vim'
                 Plug 'w0rp/ale'
+                let g:syntax_tool = 'ale'
             elseif v:version == 704 && has('patch1486')
                 Plug 'vim-syntastic/syntastic'
+                let g:syntax_tool = 'syntastic'
             endif
             " browser tools
             if HasPlug('fzf') && !WINDOWS()
+                let g:browser_tool = 'fzf'
                 Plug 'junegunn/fzf.vim'
                 if executable('fzf')
                     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
                 else
                     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
                 endif
-            elseif (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
+            elseif HasPlug('leaderf') && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
+                let g:browser_tool = 'LeaderF'
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
                 else
@@ -263,6 +274,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 Plug 'Yggdroot/LeaderF-marks'
             else
+                let g:browser_tool = 'ctrlp'
                 Plug 'ctrlpvim/ctrlp.vim'
                 Plug 'tacahiroy/ctrlp-funky'
                 Plug 'FelikZ/ctrlp-py-matcher'
@@ -322,24 +334,26 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endif
         " enginge plus
-        Plug 'Shougo/vimshell.vim'
-        Plug 'Shougo/neoinclude.vim'
-        Plug 'Shougo/neco-vim'
-        Plug 'Shougo/neco-syntax'
-        let s:engines = ['YCM', 'deoplete', 'neocomplete']
-        if index(s:engines, g:complete_engine) >= 0
-            Plug 'tenfyzhong/CompleteParameter.vim'
-        endif
-        " install snippets pluginstall
-        Plug 'leoatchina/leoatchina-snippets'
-        if g:python_version && g:use_ultisnips == 1
-            let g:complete_snippet = "ultisnips"
-            Plug 'SirVer/ultisnips'
-            Plug 'honza/vim-snippets'
-        else
-            let g:complete_snippet = "neosnippet"
-            Plug 'Shougo/neosnippet'
-            Plug 'Shougo/neosnippet-snippets'
+        if g:complete_engine != "None"
+            Plug 'Shougo/vimshell.vim'
+            Plug 'Shougo/neoinclude.vim'
+            Plug 'Shougo/neco-vim'
+            Plug 'Shougo/neco-syntax'
+            let s:engines = ['YCM', 'deoplete', 'neocomplete']
+            if index(s:engines, g:complete_engine) >= 0
+                Plug 'tenfyzhong/CompleteParameter.vim'
+            endif
+            " install snippets pluginstall
+            Plug 'leoatchina/leoatchina-snippets'
+            if g:python_version && g:use_ultisnips == 1
+                let g:complete_snippet = "ultisnips"
+                Plug 'SirVer/ultisnips'
+                Plug 'honza/vim-snippets'
+            else
+                let g:complete_snippet = "neosnippet"
+                Plug 'Shougo/neosnippet'
+                Plug 'Shougo/neosnippet-snippets'
+            endif
         endif
         unlet g:use_ultisnips
         if g:complete_engine == "YCM"
@@ -486,11 +500,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'Shougo/neocomplcache.vim'
             Plug 'davidhalter/jedi-vim'
             Plug 'Rip-Rip/clang_complete'
-            if g:complete_snippet == 'ultisnips'
-                Plug 'JazzCore/neocomplcache-ultisnips'
-            endif
         endif
     call plug#end()
+    function! ShowParam()
+       echo join([join(['python', g:python_version], ''), g:complete_engine, g:complete_snippet, g:browser_tool, g:syntax_tool, g:status_line], ' ')
+     endfunction
+    command! ShowParam call ShowParam()
     command! PlugRe PlugClean! | PlugInstall --sync
     command! PlugNew PlugClean! | PlugUpdate --sync
 else
