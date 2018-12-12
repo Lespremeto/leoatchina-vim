@@ -494,10 +494,41 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'Rip-Rip/clang_complete'
         endif
     call plug#end()
-    function! ShowParam()
-       echo join([join(['python', g:python_version], ''), g:complete_engine, g:complete_snippet, g:browser_tool, g:syntax_tool, g:status_line], ' ')
-     endfunction
-    command! ShowParam call ShowParam()
+    function! GetVersion()
+        let l:result=[]
+        if has('nvim')
+            let v = api_info().version
+            call add(l:result,'nvim-')
+            call add(l:result,printf('%d.%d.%d', v.major, v.minor, v.patch))
+        else
+            redir => l:msg
+            silent! execute ':version'
+            redir END
+            if has('gui_macvim')
+                call add(l:result, 'mvim-')
+            elseif has('gui_running')
+                call add(l:result, 'gvim-')
+            else
+                call add(l:result, 'vim-')
+            endif
+            call add(l:result,matchstr(l:msg,'VIM - Vi IMproved\s\zs\d.\d\ze'))
+            call add(l:result,matchstr(l:msg, ':\s\d-\zs\d\{1,4\}\ze'))
+        endif
+        return join(l:result, "")
+    endfunction
+    function! ShowParams()
+        let s:params_dict = {
+            \ 'python':g:python_version,
+            \ 'engine': g:complete_engine,
+            \ 'snippet': g:complete_snippet,
+            \ 'browser': g:browser_tool,
+            \ 'syntax': g:syntax_tool,
+            \ 'statusline': g:status_line,
+            \ 'version' : GetVersion(),
+        \ }
+        echo string(s:params_dict)
+    endfunction
+    command! ShowParams call ShowParams()
     nnoremap <S-F11> :call ShowParam()<Cr>
     command! PlugRe PlugClean! | PlugInstall --sync
     command! PlugNew PlugClean! | PlugUpdate --sync
