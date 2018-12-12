@@ -368,7 +368,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 execute 'CocInstall coc-omni'
                 execute 'CocInstall coc-tag'
                 execute 'CocInstall coc-pyls'
-                execute 'CocInstall coc-neoco'
+                execute 'CocInstall coc-neco'
                 if HasPlug('php') || HasPlug('html')
                     execute 'CocInstall coc-html'
                     execute 'CocInstall coc-json'
