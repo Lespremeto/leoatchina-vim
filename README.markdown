@@ -340,6 +340,7 @@ Needs `neovim` with `node` and `yarn` installed in system
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
 Needs `vim8/neovim` with `+python3`
+And, if you add `deoplete-tabnine` in g:plug_groups, [deoplete-tabnine](https://github.com/tbodt/deoplete-tabnine) will be installed, it is a small complete tools for vim, only 10m+, and it is saied as all complete tools.  if add `deoplete-lcn`,  deoplete will use  [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim), you should config `g:LanguageClient_serverCommands` in your .local file.
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Needs `vim8/neovim`, no `python support` is needed
