@@ -1626,6 +1626,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
     else
         au filetype java nmap <C-p> <Nop>
+        au filetype java echom("please please install eclim and config it for eclipse")
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
