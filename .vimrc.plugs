@@ -281,7 +281,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         echoe "Cannot install YouCompleteMe, smart select a complete_engine."
                     endif
                 elseif HasPlug('coc')
-                    if has('nvim-0.3.0') && executable('node') && executable('yarn')
+                    if executable('node') && executable('yarn') && (has('nvim-0.3.0') || v:version >= 801)
                         let g:complete_engine = "coc"
                     else
                         echoe "Cannot install coc, smart select a complete_engine."
@@ -367,6 +367,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             function! CocInit()
                 execute 'CocInstall coc-omni'
                 execute 'CocInstall coc-tag'
+                execute 'CocInstall coc-pyls'
                 if HasPlug('html')
                     execute 'CocInstall coc-html'
                     execute 'CocInstall coc-json'
