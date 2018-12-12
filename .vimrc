@@ -1587,72 +1587,37 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:user_emmet_leader_key='<C-p>'
     endif
     " java
-    if HasDirectory("vim-javacomplete2") && HasDirectory("vim-eclim")
-        " javacomplete2
-        function! IsProjectFile()
-            let projectName = eclim#project#util#GetCurrentProjectName()
-            if projectName == ''
-                au FileType java setlocal omnifunc=javacomplete#Complete
-                au FileType java nmap <C-p>i <Plug>(JavaComplete-Imports-AddSmart)
-                au FileType java nmap <C-p>I <Plug>(JavaComplete-Imports-Add)
-                au FileType java nmap <C-p>M <Plug>(JavaComplete-Imports-AddMissing)
-                au FileType java nmap <C-p>U <Plug>(JavaComplete-Imports-RemoveUnused)
-                au FileType java imap <C-p>i <Plug>(JavaComplete-Imports-AddSmart)
-                au FileType java imap <C-p>I <Plug>(JavaComplete-Imports-Add)
-                au FileType java imap <C-p>M <Plug>(JavaComplete-Imports-AddMissing)
-                au FileType java imap <C-p>U <Plug>(JavaComplete-Imports-RemoveUnused)
-                au FileType java nmap <C-p>m <Plug>(JavaComplete-Generate-Accessors)
-                au FileType java nmap <C-p>c <Plug>(JavaComplete-Generate-Constructor)
-                au FileType java nmap <C-p>t <Plug>(JavaComplete-Generate-ToString)
-                au FileType java nmap <C-p>e <Plug>(JavaComplete-Generate-EqualsAndHashCode)
-                au FileType java nmap <C-p>d <Plug>(JavaComplete-Generate-DefaultConstructor)
-                au FileType java nmap <C-p>s <Plug>(JavaComplete-Generate-AccessorSetter)
-                au FileType java nmap <C-p>g <Plug>(JavaComplete-Generate-AccessorGetter)
-                au FileType java nmap <C-p>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-                au FileType java nmap <C-p>A <Plug>(JavaComplete-Generate-AbstractMethods)
-                au FileType java imap <C-p>s <Plug>(JavaComplete-Generate-AccessorSetter)
-                au FileType java imap <C-p>g <Plug>(JavaComplete-Generate-AccessorGetter)
-                au FileType java imap <C-p>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-                au FileType java imap <C-p>A <Plug>(JavaComplete-Generate-AbstractMethods)
-                au FileType java vmap <C-p>s <Plug>(JavaComplete-Generate-AccessorSetter)
-                au FileType java vmap <C-p>g <Plug>(JavaComplete-Generate-AccessorGetter)
-                au FileType java vmap <C-p>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-                au FileType java nmap <silent> <buffer> <C-p>n <Plug>(JavaComplete-Generate-NewClass)
-                au FileType java nmap <silent> <buffer> <C-p>N <Plug>(JavaComplete-Generate-ClassInFile)
-            else
-                " eclim
-                let g:EclimCompletionMethod = 'omnifunc'
+    if HasDirectory("vim-eclim") && HasPlug('java')
+        let g:EclimCompletionMethod = 'omnifunc'
+        let s:project_tree_is_open = 0
+        function! ProjectTreeToggle()
+            if s:project_tree_is_open
+                call eclim#project#tree#ProjectTreeClose()
                 let s:project_tree_is_open = 0
-                function! ProjectTreeToggle()
-                    if s:project_tree_is_open
-                        call eclim#project#tree#ProjectTreeClose()
-                        let s:project_tree_is_open = 0
-                    else
-                        let s:winpos = winnr() + 1
-                        call eclim#project#tree#ProjectTree()
-                        let s:project_tree_is_open = 1
-                        execute s:winpos . "wincmd w"
-                    endif
-                endfunction
-                command! ProjectTreeToggle call ProjectTreeToggle()
-                if eclim#EclimAvailable()
-                    nnoremap <C-p>t :ProjectTreeToggle<Cr>
-                    nnoremap <C-p>l :ProjectList<Cr>
-                    nnoremap <C-p>b :ProjectBuild<Cr>
-                    nnoremap <C-p>f :ProjectRefresh<Cr>
-                    nnoremap <C-p>c :ProjectCD<Space>
-                    nnoremap <C-p>d :ProjectLCD<Space>
-                    nnoremap <C-p>n :ProjectCreate<Space>
-                    nnoremap <C-p>m :ProjectMove<Space>
-                    nnoremap <C-p>i :ProjectImport<Space>
-                    nnoremap <C-p>o :ProjectOpen<Space>
-                    nnoremap <C-p>r :ProjectRun
-                    nnoremap <C-p>j :Project
-                    nnoremap <C-p>I :ProjectInfo<Cr>
-                endif
+            else
+                let s:winpos = winnr() + 1
+                call eclim#project#tree#ProjectTree()
+                let s:project_tree_is_open = 1
+                execute s:winpos . "wincmd w"
             endif
         endfunction
-        au FileType java call IsProjectFile()
+        command! ProjectTreeToggle call ProjectTreeToggle()
+        let b:eclim_available = eclim#EclimAvailable()
+        if b:eclim_available
+            nnoremap <C-p>t :ProjectTreeToggle<Cr>
+            nnoremap <C-p>l :ProjectList<Cr>
+            nnoremap <C-p>b :ProjectBuild<Cr>
+            nnoremap <C-p>f :ProjectRefresh<Cr>
+            nnoremap <C-p>c :ProjectCD<Space>
+            nnoremap <C-p>d :ProjectLCD<Space>
+            nnoremap <C-p>n :ProjectCreate<Space>
+            nnoremap <C-p>m :ProjectMove<Space>
+            nnoremap <C-p>i :ProjectImport<Space>
+            nnoremap <C-p>o :ProjectOpen<Space>
+            nnoremap <C-p>r :ProjectRun
+            nnoremap <C-p>j :Project
+            nnoremap <C-p>I :ProjectInfo<Cr>
+        endif
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
