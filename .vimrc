@@ -1601,22 +1601,28 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 execute s:winpos . "wincmd w"
             endif
         endfunction
-        command! ProjectTreeToggle call ProjectTreeToggle()
-        let b:eclim_available = eclim#EclimAvailable()
+        command! Pjt call ProjectTreeToggle()
+        let b:eclim_available = filereadable(WINDOWS() ?
+            \ '$HOME/.eclim/.eclimd_instances' :
+            \ expand('~/.eclim/.eclimd_instances')
+        \)
         if b:eclim_available
-            nnoremap <C-p>t :ProjectTreeToggle<Cr>
-            nnoremap <C-p>l :ProjectList<Cr>
-            nnoremap <C-p>b :ProjectBuild<Cr>
-            nnoremap <C-p>f :ProjectRefresh<Cr>
-            nnoremap <C-p>c :ProjectCD<Space>
-            nnoremap <C-p>d :ProjectLCD<Space>
-            nnoremap <C-p>n :ProjectCreate<Space>
-            nnoremap <C-p>m :ProjectMove<Space>
-            nnoremap <C-p>i :ProjectImport<Space>
-            nnoremap <C-p>o :ProjectOpen<Space>
-            nnoremap <C-p>r :ProjectRun
-            nnoremap <C-p>j :Project
-            nnoremap <C-p>I :ProjectInfo<Cr>
+            au filetype java nnoremap <C-p>t :Pjt<Cr>
+            au filetype java nnoremap <C-p>l :ProjectList<Cr>
+            au filetype java nnoremap <C-p>b :ProjectBuild<Cr>
+            au filetype java nnoremap <C-p>f :ProjectRefresh<Cr>
+            au filetype java nnoremap <C-p>c :ProjectCD<Space>
+            au filetype java nnoremap <C-p>d :ProjectLCD<Space>
+            au filetype java nnoremap <C-p>n :ProjectCreate<Space>
+            au filetype java nnoremap <C-p>m :ProjectMove<Space>
+            au filetype java nnoremap <C-p>i :ProjectImport<Space>
+            au filetype java nnoremap <C-p>o :ProjectOpen<Space>
+            au filetype java nnoremap <C-p>r :ProjectRun
+            au filetype java nnoremap <C-p>j :Project
+            au filetype java nnoremap <C-p>I :ProjectInfo<Cr>
+        else
+            au filetype java nmap <C-p> <Nop>
+            au filetype java echom("please start eclimd for java")
         endif
     endif
     " preview tools, you have to map meta key in term
