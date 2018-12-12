@@ -869,10 +869,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         nnoremap <silent><leader>tt :TagbarToggle<CR>
         nnoremap <silent><leader>tj :TagbarOpen j<CR>
+        " show in split
+        nnoremap <C-]> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
         " show in vsplit
-        nnoremap <leader><C-]> <C-w><C-]>
+        nnoremap <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+        " jump to defineOrDeclare
+        nnoremap <C-w><C-]> <C-]>
         " show in tab
-        nnoremap <localleader><C-]> <C-w><C-]><C-w>T
+        nnoremap <C-w><C-\> <C-w><C-]><C-w>T
     endif
     " gtags
     if HasDirectory("vim-gutentags")
@@ -1586,13 +1590,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " php language
     if HasDirectory('phpcomplete.vim')
         let g:phpcomplete_mappings = {
-           \ 'jump_to_def':        '<C-\><C-]>',
            \ 'jump_to_def_split':  '<C-]>',
-           \ 'jump_to_def_vsplit': '<C-W><C-\>',
-           \ 'jump_to_def_tabnew': '<C-\>',
+           \ 'jump_to_def_vsplit': '<C-\>',
+           \ 'jump_to_def':        '<C-w><C-]>',
+           \ 'jump_to_def_tabnew': '<C-w><C-\>',
            \}
     endif
-    " html language
+    " html/css language
     if HasDirectory('emmet-vim')
         let g:user_emmet_leader_key='<C-p>'
     endif
