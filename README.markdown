@@ -266,7 +266,7 @@ At first I planned to detailly introduce every plugins, however, first it is eas
 So , I simplly write something about the plugins, sometime only list the shortcut.
 
 # .local file
-The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugRe`, the plugins will change. The default contents of `.vimrc.local` is:
+The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugRe`l, the plugins will change. The default contents of `.vimrc.local` is:
 > let g:plug_groups=['leaderf', 'bio']
 
 And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `neovim` , `~/.mvimrc.local` for `macvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
@@ -400,16 +400,14 @@ Needs `ag` or `rg` or `ack` or
     nmap     <C-F>p <Plug>CtrlSFPwordPath
 ```
 
-
 ### [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 ```
-    let g:multi_cursor_use_default_mapping=0
     let g:multi_cursor_start_word_key      = '<C-n>'
-    let g:multi_cursor_select_all_word_key = '<leader><C-n>'
+    let g:multi_cursor_select_all_word_key = '<M-n>'
     let g:multi_cursor_start_key           = 'g<C-n>'
-    let g:multi_cursor_select_all_key      = '<localleader><C-n>'
+    let g:multi_cursor_select_all_key      = 'g<M-n>'
     let g:multi_cursor_next_key            = '<C-n>'
-    let g:multi_cursor_prev_key            = '<C-\>'
+    let g:multi_cursor_prev_key            = '<C-_>'
     let g:multi_cursor_skip_key            = '<C-h>'
     let g:multi_cursor_quit_key            = '<ESC>'
 ```
@@ -430,17 +428,39 @@ A async run plugin for vim8/nvim
 
 ## language support
 
-### java: [vim-eclim](https://github.com/dansomething/vim-eclim) & [javacomplete2](https://github.com/artur-shaik/vim-javacomplete2)
+### java: [vim-eclim](https://github.com/dansomething/vim-eclim)
 You have to install eclipse, and [eclim](https://github.com/ervandew/eclim) according to its instruction.
-Please check .vimrc for shortcuts
-
-### [go](https://github.com/fatih/vim-go)
-vim-go requires at least Vim 7.4.1689 or Neovim 0.2.2. need `go` in `g:plug_groups`
+```
+  if b:eclim_available
+      au filetype java nnoremap <C-p>t :Pjt<Cr>
+      au filetype java nnoremap <C-p>l :ProjectList<Cr>
+      au filetype java nnoremap <C-p>b :ProjectBuild<Cr>
+      au filetype java nnoremap <C-p>f :ProjectRefresh<Cr>
+      au filetype java nnoremap <C-p>c :ProjectCD<Space>
+      au filetype java nnoremap <C-p>d :ProjectLCD<Space>
+      au filetype java nnoremap <C-p>n :ProjectCreate<Space>
+      au filetype java nnoremap <C-p>m :ProjectMove<Space>
+      au filetype java nnoremap <C-p>i :ProjectImport<Space>
+      au filetype java nnoremap <C-p>o :ProjectOpen<Space>
+      au filetype java nnoremap <C-p>r :ProjectRun
+      au filetype java nnoremap <C-p>j :Project
+      au filetype java nnoremap <C-p>I :ProjectInfo<Cr>
+  end
+```
 
 ### [perl](https://github.com/vim-perl/vim-perl)
 perl snippets and syntax
 
-### php
+### [php](https://github.com/shawncplus/phpcomplete.vim)
+```
+    let g:phpcomplete_mappings = {
+       \ 'jump_to_def_split':  '<C-]>',
+       \ 'jump_to_def_vsplit': '<C-\>',
+       \ 'jump_to_def':        '<C-w><C-]>',
+       \ 'jump_to_def_tabnew': '<C-w><C-\>',
+       \}
+```
+
 ### html
 ### javascript
 ### rust
