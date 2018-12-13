@@ -75,7 +75,10 @@
   * [EasyMotion](#easymotion)
 
 <!-- vim-markdown-toc -->
-# This vim config is stiling in modifying
+----------
+ **This vim config is stiling in modifying**
+----------
+
 # 中文介绍
 这里是我本人的vim配置，从spf13的[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim) fork面来，作为几年前的作品，原配置已经不大适合这个vim8/neovim当道的时代。因此在近两年的使用时间里, 我不断调整，从其他人的配置中吸取经验，对参数进行微调，以适应在不同的系统环境条件下达到较好的使用体验。在`OSX` `windows` `linx`下都可以安装使用
 
@@ -90,7 +93,6 @@ You can find spf13's origin config at http://vim.spf13.com or https://github.com
 
 Hereafter is spf13's introduction to his vim config
 > spf13-vim is a distribution of vim plugins and resources for Vim, Gvim and MacVim.It is a good starting point for anyone intending to use VIM for development running equally well on Windows, Linux, \*nix and Mac.
-
 
 # Requirements
 `Git 1.7` and `Vim7.0` with any of `+job`,`+python`,`+python3`,`+lua` is at least required， `Vim8` or `neovim` and `Git 2.0+` is prefered for advanced features
@@ -157,16 +159,6 @@ OR
 # How it works
 After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` in Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
-The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugReinstall`, the plugins will change. The default contents of `.vimrc.local` is:
-> let g:plug_groups=['smartcomplete', 'php', 'javascript', 'html', 'snippet', 'syntax', 'bio']
-
-And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `neovim` , `~/.mvimrc.local` for `macvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
-
-The typical variables that could be add to `g:plug_groups` are `go`,`airline`, `youcompleteme`, `fzf`, `coc`, etc.
-
-Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
-
-`.vimrc.clean` it is an bash file which is set to delete `~/.vimswap` & `~/.vimviews` folders. Also be linked as `~/.vimrc.clean`
 
 # Main changes from spf13
 * use `vim-plug` instead of `vundle`, faster and smarter
@@ -264,17 +256,28 @@ Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/p
     - nnoremap <Leader><Up>   :resize +3<CR>
     - nnoremap <Leader><Left> :vertical resize -3<CR>
     - nnoremap <Leader><Right>:vertical resize +3<CR>
-    - vnoremap << <gv
-    - vnoremap >> >gv
+    - vnoremap < <gv
+    - vnoremap > >gv
 
 # Plugins and their shortcuts
 Hereafter are the plugins that I collected, if you want details for them, click it.
 
-At first I planned to detailly introduce every plugins, but actually it is easy for users to find the original repos of the plugins, and find the detail introduces for plugsin via search engines. So , I simplly write something about the plugins, sometime only list the shortcut
+At first I planned to detailly introduce every plugins, however, first it is easy for users to find the original repos of these plugins for details, second it is real a hard work to write work for each plugin.
+So , I simplly write something about the plugins, sometime only list the shortcut.
 
+# .local file
+The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugRe`, the plugins will change. The default contents of `.vimrc.local` is:
+> let g:plug_groups=['leaderf', 'bio']
+
+And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `neovim` , `~/.mvimrc.local` for `macvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
+
+The typical variables that could be add to `g:plug_groups` are `go`,`airline`, `youcompleteme`, `fzf`, `coc`, etc.
+
+Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
+
+`.vimrc.clean` it is an bash file which is set to delete `~/.vimswap` & `~/.vimviews` folders. Also be linked as `~/.vimrc.clean`
 Just as I have mentioned, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugins `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
 
-You can open `.vimrc.plugs` for these features
 
 ## [vim-plug](https://github.com/junegunn/vim-plug)
 A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use.
@@ -340,7 +343,8 @@ Needs `neovim` with `node` and `yarn` installed in system
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
 Needs `vim8/neovim` with `+python3`
-And, if you add `deoplete-tabnine` in g:plug_groups, [deoplete-tabnine](https://github.com/tbodt/deoplete-tabnine) will be installed, it is a small complete tools for vim, only 10m+, and it is saied as all complete tools.  if add `deoplete-lcn`,  deoplete will use  [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim), you should config `g:LanguageClient_serverCommands` in your .local file.
+And, if you add `deoplete-tabnine` in g:plug_groups, [deoplete-tabnine](https://github.com/tbodt/deoplete-tabnine) will be installed, it is a small complete tools for vim, only 10m+, and it is saied as all complete tools.
+If add `deoplete-lcn`,  deoplete will use  [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim), you should config `g:LanguageClient_serverCommands` in your .local file.
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Needs `vim8/neovim`, no `python support` is needed

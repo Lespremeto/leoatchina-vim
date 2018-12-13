@@ -444,8 +444,10 @@ nnoremap <Leader><Up>    :resize +3<CR>
 nnoremap <Leader><Left>  :vertical resize -3<CR>
 nnoremap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
-vnoremap << <gv
-vnoremap >> >gv
+vnoremap < <gv
+vnoremap > >gv
+nnoremap < <<
+nnoremap > >>
 "离开插入模式后关闭预览窗口
 au! InsertLeave * if pumvisible() == 0|pclose|endif
 "补全完成后关闭预览窗口
