@@ -1742,8 +1742,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
         nnoremap <silent> <C-l><C-p> :lprevious<cr>
         nnoremap <silent> <C-l><C-n> :lnext<cr>
-    elseif HasDirectory('neomake')
-        " TODO:config
     endif
     " asyncrun
     if HasDirectory("asyncrun.vim")

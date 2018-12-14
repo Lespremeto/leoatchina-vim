@@ -225,22 +225,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:complete_snippet = "None"
         let g:browser_tool     = "None"
         let g:syntax_tool      = "None"
-        " use shougo's plugins
-        if HasPlug('shougo') && has('nvim-0.3.0') && has('timers') && g:python_version == 3 && g:program_tools
-            Plug 'Shougo/denite.nvim'
-            Plug 'neomake/neomake'
-            Plug 'mhartington/denite-neomake'
-            Plug 'neoclide/denite-extra'
-            Plug 'neoclide/denite-git'
-            Plug 'Shougo/neomru.vim'
-            Plug 'Shougo/neoyank.vim'
-            if g:status_line == 'lightline'
-                Plug 'mkalinski/vim-lightline_neomake'
-            endif
-            let g:complete_engine = 'deoplete'
-            let g:browser_tool = 'denite'
-            let g:syntax_tool = 'neomake'
-        elseif g:program_tools
+        if g:program_tools
             " syntax
             if v:version >= 800 || has('nvim')
                 Plug 'skywind3000/asyncrun.vim'
@@ -259,7 +244,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 else
                     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
                 endif
-            elseif HasPlug('leaderf') && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
+            elseif HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
+                let g:browser_tool = 'denite'
+                Plug 'Shougo/denite.nvim'
+                Plug 'neoclide/denite-extra'
+                Plug 'neoclide/denite-git'
+                Plug 'Shougo/neomru.vim'
+                Plug 'Shougo/neoyank.vim'
+            elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
                 let g:browser_tool = 'LeaderF'
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
