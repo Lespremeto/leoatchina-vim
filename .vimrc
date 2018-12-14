@@ -444,10 +444,8 @@ nnoremap <Leader><Up>    :resize +3<CR>
 nnoremap <Leader><Left>  :vertical resize -3<CR>
 nnoremap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-nnoremap < <<
-nnoremap > >>
+vnoremap << <gv
+vnoremap >> >gv
 "离开插入模式后关闭预览窗口
 au! InsertLeave * if pumvisible() == 0|pclose|endif
 "补全完成后关闭预览窗口
@@ -1295,33 +1293,27 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if !has('nvim')
             let g:deoplete#enable_yarp = 1
         endif
-        if g:complete_engine == "deoplete-lcn"
-            call deoplete#custom#source('LanguageClient',
-                \ 'min_pattern_length',
-                \ 2)
-        elseif g:complete_engine == "deoplete"
-            if HasDirectory('ultisnips')
-                call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
-            endif
-            if HasDirectory('deoplete-jedi')
-                let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
-            endif
-            " omni completion is vim grep
-            call deoplete#custom#option('omni_patterns', {
-                \ 'java' :'[^. *\t]\.\w*',
-                \ 'php'  :'[^. \t]->\h\w*\|\h\w*::',
-                \ 'perl' :'\h\w*->\h\w*\|\h\w*::',
-                \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
-                \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
-                \ 'go'   :'\h\w*\.\?',
-                \})
-            " keyword_patterns is python grep
-            call deoplete#custom#option('keyword_patterns', {
-                \ '_'    :'[a-zA-Z_]\k*',
-                \ 'tex'  :'\\?[a-zA-Z_]\w*',
-                \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
-                \})
+        if HasDirectory('ultisnips')
+            call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
         endif
+        if HasDirectory('deoplete-jedi')
+            let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
+        endif
+        " omni completion is vim grep
+        call deoplete#custom#option('omni_patterns', {
+            \ 'java' :'[^. *\t]\.\w*',
+            \ 'php'  :'[^. \t]->\h\w*\|\h\w*::',
+            \ 'perl' :'\h\w*->\h\w*\|\h\w*::',
+            \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
+            \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
+            \ 'go'   :'\h\w*\.\?',
+        \})
+        " keyword_patterns is python grep
+        call deoplete#custom#option('keyword_patterns', {
+            \ '_'    :'[a-zA-Z_]\k*',
+            \ 'tex'  :'\\?[a-zA-Z_]\w*',
+            \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
+        \})
     elseif HasDirectory("asyncomplete.vim")
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
