@@ -367,23 +367,29 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         elseif g:complete_engine == "coc"
             " coc not complete python
             function! CocInit()
-                execute 'CocInstall coc-omni'
-                execute 'CocInstall coc-tag'
-                execute 'CocInstall coc-neco'
-                execute 'CocInstall coc-json'
-                execute 'CocInstall coc-tslint'
-                execute 'CocInstall coc-stylelint'
-                execute 'CocInstall coc-eslint'
+                let b:coc_install_plugins = [
+                    \ 'coc-omni',
+                    \ 'coc-tag',
+                    \ 'coc-neco',
+                    \ 'coc-json',
+                    \ 'coc-tslint',
+                    \ 'coc-stylelint',
+                    \ 'coc-eslint'
+                \ ]
                 if HasPlug('php') || HasPlug('html')
-                    execute 'CocInstall coc-html'
-                    execute 'CocInstall coc-css'
-                    execute 'CocInstall coc-wxml'
-                    execute 'CocInstall coc-yaml'
-                    execute 'CocInstall coc-emmet'
+                    let b:coc_install_plugins = b:coc_install_plugins + [
+                        \ 'coc-html',
+                        \ 'coc-css',
+                        \ 'coc-wxml',
+                        \ 'coc-yaml',
+                        \ 'coc-emmet'
+                \ ]
                 endif
                 if HasPlug('javascript')
-                    execute 'CocInstall coc-tsserver'
-                    execute 'CocInstall coc-vetur'
+                    let b:coc_install_plugins = b:coc_install_plugins + [
+                        \ 'coc-tsserver',
+                        \ 'coc-vetur'
+                    \ ]
                 endif
                 if HasPlug('go')
                     execute 'CocInstall coc-gocode'
@@ -399,6 +405,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 elseif g:complete_snippet == 'neosnippet'
                     execute 'CocInstall coc-neosnippet'
                 endif
+                execute 'CocInstall '. join(b:coc_install_plugins, " ")
             endfunction
             command! -nargs=0 -bang CocInit call CocInit()
             Plug 'neoclide/coc-neco'
@@ -434,6 +441,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " LCN
             if exists('g:LanguageClient_serverCommands')
+
                 Plug 'autozimu/LanguageClient-neovim'
             endif
         elseif g:complete_engine == "deoplete"
