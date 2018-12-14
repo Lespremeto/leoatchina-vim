@@ -1284,6 +1284,52 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         command! -nargs=0 Format :call CocAction('format')
         " Use `:Fold` for fold current buffer
         command! -nargs=? Fold :call CocAction('fold', <f-args>)
+    elseif HasPlug('ncm2')
+        set completeopt+=noinsert,noselect
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+        let g:ncm2#match_highlight = 'bold'
+        let g:ncm2#match_highlight = 'sans-serif'
+        let g:ncm2#match_highlight = 'sans-serif-bold'
+        let g:ncm2#match_highlight = 'mono-space'
+        let g:ncm2#match_highlight = 'double-struck'
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+        if HasPlug('html')
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'css',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['css','scss'],
+                \ 'mark': 'css',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': ':\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
+            \ })
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'html',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['htm','html', 'markdown'],
+                \ 'mark': 'html',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': ':\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'htmlcomplete#CompleteTags']
+            \ })
+        endif
+        if HasPlug('java')
+            au User Ncm2Plugin call ncm2#register_source({
+                \ 'name' : 'java',
+                \ 'enable' : 1,
+                \ 'priority': 9,
+                \ 'subscope_enable': 1,
+                \ 'scope': ['java','class'],
+                \ 'mark': 'java',
+                \ 'word_pattern': '[\w\-]+',
+                \ 'complete_pattern': '.\s*',
+                \ 'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
+            \ })
+        endif
     elseif HasDirectory("deoplete.nvim")
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1

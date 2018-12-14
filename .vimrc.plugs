@@ -280,6 +280,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     else
                         echoe "Cannot install coc, smart select a complete_engine."
                     endif
+                elseif HasPlug('ncm2')
+                    if g:python_version == 3 && has('nvim-0.2.2')
+                       let g:complete_engine = "ncm2"
+                    else
+                        echoe "Cannot install ncm2, smart select a complete_engine."
+                    endif
                 " TODO: add ncm2 back
                 elseif HasPlug('deoplete')
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
@@ -398,6 +404,38 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'neoclide/coc-neco'
             Plug 'neoclide/coc-sources'
             Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
+        elseif g:complete_engine == "ncm2"
+            Plug 'ncm2/ncm2'
+            Plug 'roxma/nvim-yarp'
+            " main complete
+            Plug 'ncm2/ncm2-bufword'
+            Plug 'ncm2/ncm2-path'
+            Plug 'ncm2/ncm2-github'
+            Plug 'ncm2/ncm2-tmux'
+            Plug 'ncm2/ncm2-tagprefix'
+            Plug 'filipekiss/ncm2-look.vim'
+            Plug 'ncm2/ncm2-match-highlight'
+            " only use ultisnips
+            Plug 'ncm2/ncm2-ultisnips'
+            " language
+            Plug 'ncm2/ncm2-jedi', {'for':'python'}
+            Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
+            if HasPlug('html')
+                Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
+            endif
+            if HasPlug('javascript') && executable('racer')
+                Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
+            endif
+            if HasPlug('rust') &&executable('racer')
+                Plug 'ncm2/ncm2-racer', {'for':'rust'}
+            endif
+            if HasPlug('go') && executable('gocode')
+                Plug 'ncm2/ncm2-go', {'for':'go'}
+            endif
+            " LCN
+            if exists('g:LanguageClient_serverCommands')
+                Plug 'autozimu/LanguageClient-neovim'
+            endif
         elseif g:complete_engine == "deoplete"
             if has('nvim')
                 Plug 'Shougo/deoplete.nvim', {'branch': 'master', 'do': ':UpdateRemotePlugins'}
