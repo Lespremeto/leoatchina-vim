@@ -1092,41 +1092,17 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
     endif
     " browser tools
-    if HasDirectory("LeaderF")
-        let g:Lf_ShortcutF = '<C-k>j'
-        let g:Lf_ReverseOrder = 1
-        let g:Lf_PythonVersion = g:python_version
-        let g:Lf_CacheDirectory = expand('$HOME/.cache/leaderf')
-        if !isdirectory(g:Lf_CacheDirectory)
-            silent! call mkdir(g:Lf_CacheDirectory, 'p')
-        endif
-        let g:Lf_ShortcutB = '<C-k>s'
-        nnoremap <C-k>l :LeaderfSelf<cr>
-        nnoremap <C-k>b :LeaderfBufTag<cr>
-        nnoremap <C-k>m :LeaderfMru<cr>
-        nnoremap <C-k>f :LeaderfFunction!<cr>
-        nnoremap <C-k>L :Leaderf
-        nnoremap <C-k>F :LeaderfF
-        nnoremap <C-k>M :LeaderfM
-        nnoremap <C-k>B :LeaderfB
-        let g:Lf_NormalMap = {
-           \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
-           \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
-           \ "Mru":         [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
-           \ "Tag":         [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
-           \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
-           \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
-       \ }
-    elseif HasDirectory("fzf.vim")
-        nnoremap <silent> <C-k>j :Files<CR>
-        nnoremap <silent> <C-k>k :FZF
-        nnoremap <silent> <C-k>b :Buffers<CR>
-        nnoremap <silent> <C-k>f :Filetypes<CR>
-        nnoremap <silent> <C-k>g :GFiles?<CR>
-        nnoremap <silent> <C-k>m :Maps<CR>
-        nnoremap <silent> <C-k>c :Commits<CR>
-        nnoremap <silent> <C-k>s :Colors<CR>
-        nnoremap <silent> <C-k>h :History/<CR>
+    if HasDirectory("fzf.vim")
+        nnoremap <C-k>j :Files<CR>
+        nnoremap <C-k>k :FZF
+        nnoremap <C-k>b :Buffers<CR>
+        nnoremap <C-k>f :Filetypes<CR>
+        nnoremap <C-k>g :GFiles?<CR>
+        nnoremap <C-k>m :Marks<CR>
+        nnoremap <C-k>M :Maps<CR>
+        nnoremap <C-k>c :Commits<CR>
+        nnoremap <C-k>s :Colors<CR>
+        nnoremap <C-k>h :History/<CR>
         " Mapping selecting mkppings
         nmap <C-k><tab> <plug>(fzf-maps-n)
         xmap <C-k><tab> <plug>(fzf-maps-x)
@@ -1172,6 +1148,33 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
+    elseif HasDirectory('denite.nvim')
+        " TODO:config it here
+    elseif HasDirectory("LeaderF")
+        let g:Lf_ShortcutF = '<C-k>j'
+        let g:Lf_ReverseOrder = 1
+        let g:Lf_PythonVersion = g:python_version
+        let g:Lf_CacheDirectory = expand('$HOME/.cache/leaderf')
+        if !isdirectory(g:Lf_CacheDirectory)
+            silent! call mkdir(g:Lf_CacheDirectory, 'p')
+        endif
+        let g:Lf_ShortcutB = '<C-k>k'
+        nnoremap <C-k>l :LeaderfSelf<cr>
+        nnoremap <C-k>b :LeaderfBufTag<cr>
+        nnoremap <C-k>m :LeaderfMru<cr>
+        nnoremap <C-k>f :LeaderfFunction!<cr>
+        nnoremap <C-k>L :Leaderf
+        nnoremap <C-k>F :LeaderfF
+        nnoremap <C-k>M :LeaderfM
+        nnoremap <C-k>B :LeaderfB
+        let g:Lf_NormalMap = {
+           \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+           \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+           \ "Mru":         [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+           \ "Tag":         [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+           \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+           \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+       \ }
     elseif HasDirectory("ctrlp.vim")
         let g:ctrlp_map = '<C-k>j'
         let g:ctrlp_cmd = 'CtrlP'
@@ -1214,8 +1217,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
         endif
         nnoremap <C-k>m :CtrlPMRU<CR>
-    elseif HasDirectory('denite.nvim')
-        " TODO:config it here
     endif
     " complete_engine
     set completeopt-=menu
