@@ -1102,11 +1102,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if !isdirectory(g:Lf_CacheDirectory)
             silent! call mkdir(g:Lf_CacheDirectory, 'p')
         endif
-        let g:Lf_ShortcutB = '<C-k>b'
-        nnoremap <C-k>l :Leaderf
-        nnoremap <C-k>f :LeaderfF
-        nnoremap <C-k>b :LeaderfB
-        nnoremap <C-k>m :LeaderfM
+        let g:Lf_ShortcutB = '<C-k>s'
+        nnoremap <C-k>l :LeaderfSelf<cr>
+        nnoremap <C-k>b :LeaderfBufTag<cr>
+        nnoremap <C-k>m :LeaderfMru<cr>
+        nnoremap <C-k>f :LeaderfFunction!<cr>
+        nnoremap <C-k>L :Leaderf
+        nnoremap <C-k>F :LeaderfF
+        nnoremap <C-k>M :LeaderfM
+        nnoremap <C-k>B :LeaderfB
         let g:Lf_NormalMap = {
            \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
            \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
