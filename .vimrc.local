@@ -2,7 +2,9 @@ let g:plug_groups=['bio', 'leaderf']
 "set guifont=YaHei_Consolas_Hybrid:h12.5
 "gtags settings, according to https://zhuanlan.zhihu.com/p/36279445
 "let $GTAGSCONF = '/path/to/your/gtags.conf'
-"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+"if HasDirectory("vim-gutentags") && universary ctags installed
+    "let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+"endif
 "let g:LanguageClient_serverCommands = {
     "\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     "\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
