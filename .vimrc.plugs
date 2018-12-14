@@ -363,6 +363,47 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             elseif g:python_version == 3
                 Plug 'Valloric/YouCompleteMe',{ 'do' : 'python3' . b:ycm_install}
             endif
+        elseif g:complete_engine == "ncm2"
+            Plug 'ncm2/ncm2'
+            Plug 'roxma/nvim-yarp'
+            " main complete
+            Plug 'ncm2/ncm2-bufword'
+            Plug 'ncm2/ncm2-path'
+            Plug 'ncm2/ncm2-tmux'
+            Plug 'ncm2/ncm2-tagprefix'
+            Plug 'filipekiss/ncm2-look.vim'
+            Plug 'ncm2/ncm2-neoinclude'
+            " only use ultisnips
+            Plug 'ncm2/ncm2-ultisnips'
+            " language
+            Plug 'ncm2/ncm2-jedi', {'for':'python'}
+            Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
+            Plug 'ncm2/ncm2-vim', {'for':'vim'}
+            if HasPlug('gtags')
+                Plug 'ncm2/gtags'
+            endif
+            if HasPlug('html')
+                Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
+            endif
+            if HasPlug('php') && executable('composer')
+                Plug 'ncm2/ncm2-phpactor', {'do': 'composer install', 'for': 'php'}
+            endif
+            if HasPlug('javascript') && executable('tern')
+                Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
+            endif
+            if HasPlug('rust') && executable('racer')
+                Plug 'ncm2/ncm2-racer', {'for':'rust'}
+            endif
+            if HasPlug('go') && executable('gocode')
+                Plug 'ncm2/ncm2-go', {'for':'go'}
+            endif
+            if HasPlug('java')
+                Plug 'ObserverOfTime/ncm2-jc2/', {'for': 'java'}
+            endif
+            " LCN
+            if exists('g:LanguageClient_serverCommands')
+                Plug 'autozimu/LanguageClient-neovim'
+            endif
         elseif g:complete_engine == "coc"
             " coc not complete python
             function! CocInit()
@@ -410,47 +451,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'neoclide/coc-neco'
             Plug 'neoclide/coc-sources'
             Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
-        elseif g:complete_engine == "ncm2"
-            Plug 'ncm2/ncm2'
-            Plug 'roxma/nvim-yarp'
-            " main complete
-            Plug 'ncm2/ncm2-bufword'
-            Plug 'ncm2/ncm2-path'
-            Plug 'ncm2/ncm2-tmux'
-            Plug 'ncm2/ncm2-tagprefix'
-            Plug 'filipekiss/ncm2-look.vim'
-            Plug 'ncm2/ncm2-neoinclude'
-            " only use ultisnips
-            Plug 'ncm2/ncm2-ultisnips'
-            " language
-            Plug 'ncm2/ncm2-jedi', {'for':'python'}
-            Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
-            Plug 'ncm2/ncm2-vim', {'for':'vim'}
-            if HasPlug('gtags')
-                Plug 'ncm2/gtags'
-            endif
-            if HasPlug('html')
-                Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
-            endif
-            if HasPlug('php') && executable('composer')
-                Plug 'ncm2/ncm2-phpactor', {'do': 'composer install', 'for': 'php'}
-            endif
-            if HasPlug('javascript') && executable('tern')
-                Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
-            endif
-            if HasPlug('rust') && executable('racer')
-                Plug 'ncm2/ncm2-racer', {'for':'rust'}
-            endif
-            if HasPlug('go') && executable('gocode')
-                Plug 'ncm2/ncm2-go', {'for':'go'}
-            endif
-            if HasPlug('java')
-                Plug 'ObserverOfTime/ncm2-jc2/', {'for': 'java'}
-            endif
-            " LCN
-            if exists('g:LanguageClient_serverCommands')
-                Plug 'autozimu/LanguageClient-neovim'
-            endif
         elseif g:complete_engine == "deoplete"
             if has('nvim')
                 Plug 'Shougo/deoplete.nvim', {'branch': 'master', 'do': ':UpdateRemotePlugins'}

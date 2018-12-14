@@ -1269,22 +1269,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <silent>gyd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif HasDirectory("coc.nvim")
-        set completeopt+=noinsert,noselect
-        nmap <silent>god <Plug>(coc-definition)
-        nmap <silent>goy <Plug>(coc-type-definition)
-        nmap <silent>gom <Plug>(coc-implementation)
-        nmap <silent>gor <Plug>(coc-references)
-        let g:coc_snippetknext = '<C-n>'
-        let g:coc_snippet_prev = '<C-p>'
-        " Show signature help while editing
-        au CursorHoldI * silent! call CocAction('showSignatureHelp')
-        " Highlight symbol under cursor on CursorHold
-        au CursorHold * silent call CocActionAsync('highlight')
-        " Use `:Format` for format current buffer
-        command! -nargs=0 Format :call CocAction('format')
-        " Use `:Fold` for fold current buffer
-        command! -nargs=? Fold :call CocAction('fold', <f-args>)
     elseif HasPlug('ncm2')
         set completeopt+=noinsert,noselect
         autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -1325,6 +1309,22 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
             \ })
         endif
+    elseif HasDirectory("coc.nvim")
+        set completeopt+=noinsert,noselect
+        nmap <silent>god <Plug>(coc-definition)
+        nmap <silent>goy <Plug>(coc-type-definition)
+        nmap <silent>gom <Plug>(coc-implementation)
+        nmap <silent>gor <Plug>(coc-references)
+        let g:coc_snippetknext = '<C-n>'
+        let g:coc_snippet_prev = '<C-p>'
+        " Show signature help while editing
+        au CursorHoldI * silent! call CocAction('showSignatureHelp')
+        " Highlight symbol under cursor on CursorHold
+        au CursorHold * silent call CocActionAsync('highlight')
+        " Use `:Format` for format current buffer
+        command! -nargs=0 Format :call CocAction('format')
+        " Use `:Fold` for fold current buffer
+        command! -nargs=? Fold :call CocAction('fold', <f-args>)
     elseif HasDirectory("deoplete.nvim")
         set completeopt+=noinsert,noselect
         let g:deoplete#enable_at_startup = 1
@@ -1340,6 +1340,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if HasDirectory('deoplete-jedi')
             let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
         endif
+        if HasDirectory('deoplete-go')
+            let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+        endif
+        if HasDirectory('deoplete-rust')
+            let g:deoplete#sources#rust#show_duplicates=0
+        endif
+
         " omni completion is vim grep
         call deoplete#custom#option('omni_patterns', {
             \ 'java' :'[^. *\t]\.\w*',
@@ -1347,7 +1354,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'perl' :'\h\w*->\h\w*\|\h\w*::',
             \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
             \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
-            \ 'go'   :'\h\w*\.\?',
         \})
         " keyword_patterns is python grep
         call deoplete#custom#option('keyword_patterns', {
