@@ -1270,6 +1270,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 跳转到定义处
         nnoremap <silent>gyd :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory("coc.nvim")
+        set completeopt+=noinsert,noselect
         nmap <silent>god <Plug>(coc-definition)
         nmap <silent>goy <Plug>(coc-type-definition)
         nmap <silent>gom <Plug>(coc-implementation)
@@ -1286,12 +1287,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         command! -nargs=? Fold :call CocAction('fold', <f-args>)
     elseif HasPlug('ncm2')
         set completeopt+=noinsert,noselect
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-        let g:ncm2#match_highlight = 'bold'
-        let g:ncm2#match_highlight = 'sans-serif'
-        let g:ncm2#match_highlight = 'sans-serif-bold'
-        let g:ncm2#match_highlight = 'mono-space'
-        let g:ncm2#match_highlight = 'double-struck'
         autocmd BufEnter * call ncm2#enable_for_buffer()
         if HasPlug('html')
             au User Ncm2Plugin call ncm2#register_source({

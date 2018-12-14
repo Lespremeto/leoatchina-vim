@@ -286,7 +286,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     else
                         echoe "Cannot install ncm2, smart select a complete_engine."
                     endif
-                " TODO: add ncm2 back
                 elseif HasPlug('deoplete')
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                        let g:complete_engine = "deoplete"
@@ -417,31 +416,39 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " main complete
             Plug 'ncm2/ncm2-bufword'
             Plug 'ncm2/ncm2-path'
-            Plug 'ncm2/ncm2-github'
             Plug 'ncm2/ncm2-tmux'
             Plug 'ncm2/ncm2-tagprefix'
             Plug 'filipekiss/ncm2-look.vim'
-            Plug 'ncm2/ncm2-match-highlight'
+            Plug 'ncm2/ncm2-neoinclude'
             " only use ultisnips
             Plug 'ncm2/ncm2-ultisnips'
             " language
             Plug 'ncm2/ncm2-jedi', {'for':'python'}
             Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
+            Plug 'ncm2/ncm2-vim', {'for':'vim'}
+            if HasPlug('gtags')
+                Plug 'ncm2/gtags'
+            endif
             if HasPlug('html')
                 Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
             endif
-            if HasPlug('javascript') && executable('racer')
+            if HasPlug('php') && executable('composer')
+                Plug 'ncm2/ncm2-phpactor', {'do': 'composer install', 'for': 'php'}
+            endif
+            if HasPlug('javascript') && executable('tern')
                 Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
             endif
-            if HasPlug('rust') &&executable('racer')
+            if HasPlug('rust') && executable('racer')
                 Plug 'ncm2/ncm2-racer', {'for':'rust'}
             endif
             if HasPlug('go') && executable('gocode')
                 Plug 'ncm2/ncm2-go', {'for':'go'}
             endif
+            if HasPlug('java')
+                Plug 'ObserverOfTime/ncm2-jc2/', {'for': 'java'}
+            endif
             " LCN
             if exists('g:LanguageClient_serverCommands')
-
                 Plug 'autozimu/LanguageClient-neovim'
             endif
         elseif g:complete_engine == "deoplete"
