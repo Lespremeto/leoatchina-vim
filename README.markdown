@@ -218,7 +218,7 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
     - nnoremap `<Leader><S-Tab>`:          tabm -1<CR>
     - nnoremap `<Leader>-`:                tabm -1<CR>
     - nnoremap `<Leader>te`:               tabe<Space>
-    - nnoremap `<Leader>ts`:               tab  split<CR>
+    - nnoremap `<Leader>ts`:               tab split<CR>
     - nnoremap `<Leader>tw`:               tabs<CR>
     - nnoremap `<Leader>tm`:               tabm<Space>
     - nnoremap `<LocalLeader><Backspace>`: buffers<CR>
@@ -495,6 +495,8 @@ You can install only one of them , by write the plugins name in `~/.vimrc.local`
 
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
 fzf runs asynchronously and can be orders of magnitude faster than similar Vim plugins.
+### [denite](https://github.com/Shougo/denite.nvim)
+denite is are dark, complex but powerfully browser_tool
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
 This plugin is mainly used for locating files, buffers, mrus, tags in large project.
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
