@@ -223,7 +223,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " complete param
         let g:complete_engine  = "None"
         let g:complete_snippet = "None"
-        let g:browser_tool     = "None"
+        let g:fuzzy_finder     = "None"
         let g:syntax_tool      = "None"
         if g:program_tools
             " syntax
@@ -237,7 +237,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " browser tool
             if HasPlug('fzf') && !WINDOWS()
-                let g:browser_tool = 'fzf'
+                let g:fuzzy_finder = 'fzf'
                 Plug 'junegunn/fzf.vim'
                 if executable('fzf')
                     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
@@ -245,14 +245,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
                 endif
             elseif HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
-                let g:browser_tool = 'denite'
+                let g:fuzzy_finder = 'denite'
                 Plug 'Shougo/denite.nvim'
                 Plug 'neoclide/denite-extra'
                 Plug 'neoclide/denite-git'
                 Plug 'Shougo/neomru.vim'
                 Plug 'Shougo/neoyank.vim'
             elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
-                let g:browser_tool = 'LeaderF'
+                let g:fuzzy_finder = 'LeaderF'
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
                 else
@@ -260,7 +260,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 Plug 'Yggdroot/LeaderF-marks'
             else
-                let g:browser_tool = 'ctrlp'
+                let g:fuzzy_finder = 'ctrlp'
                 Plug 'ctrlpvim/ctrlp.vim'
                 Plug 'tacahiroy/ctrlp-funky'
                 Plug 'FelikZ/ctrlp-py-matcher'
@@ -517,7 +517,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'python':g:python_version,
             \ 'engine': g:complete_engine,
             \ 'snippet': g:complete_snippet,
-            \ 'browser': g:browser_tool,
+            \ 'fuzzyfinder': g:fuzzy_finder,
             \ 'syntax': g:syntax_tool,
             \ 'statusline': g:status_line,
             \ 'version' : GetVersion(),
