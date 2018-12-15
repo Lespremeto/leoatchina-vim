@@ -5,6 +5,7 @@ let g:plug_groups=['bio', 'leaderf']
 "if HasDirectory("vim-gutentags") && universary ctags installed
     "let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 "endif
+" LCN sample
 "let g:LanguageClient_serverCommands = {
     "\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     "\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
@@ -16,6 +17,10 @@ let g:plug_groups=['bio', 'leaderf']
 "set pythonthreedll=python36.dll
 "set pythonthreedll=python27.dll
 " if you donot want to use complete features
-" let g:program_tools = 0
+"let g:use_complete  = 0
+" if you donot want to do syntax check
+" let g:use_syntax    = 0
+" if you donot want to have snippet support
+" let g:use_snippet   = 0
 " if you donot want to use ultisnips
 " let g:use_ultisnips = 0

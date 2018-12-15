@@ -34,8 +34,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
     endif
     set rtp+=$PLUG_PATH
     call plug#begin($PLUG_PATH)
+        let g:use_complete  = 1
+        let g:use_snippet   = 1
+        let g:use_syntax    = 1
         let g:use_ultisnips = 1
-        let g:program_tools = 1
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
@@ -172,9 +174,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'sillybun/vim-repl'
             Plug 'idanarye/vim-vebugger'
         endif
-        " quickrun
+        " run tools
         if v:version >= 702
             Plug 'thinca/vim-quickrun'
+        endif
+        if v:version >= 800 || has('nvim')
+            Plug 'skywind3000/asyncrun.vim'
         endif
         " HTML
         if HasPlug('html')
@@ -221,110 +226,107 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 echom("Please set $GTAGSCONF in your coresponding .local file, and pip install pygments.")
             endif
         endif
-        " complete param
-        let g:complete_engine  = "None"
-        let g:complete_snippet = "None"
-        let g:fuzzy_finder     = "None"
-        let g:syntax_tool      = "None"
-        if g:program_tools
+        " fuzzy_finder
+        if HasPlug('fzf') && !WINDOWS()
+            let g:fuzzy_finder = 'fzf'
+            Plug 'junegunn/fzf.vim'
+            if executable('fzf')
+                Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+            else
+                Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+            endif
+        elseif HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
+            let g:fuzzy_finder = 'denite'
+            Plug 'Shougo/denite.nvim'
+            Plug 'neoclide/denite-extra'
+            Plug 'neoclide/denite-git'
+            Plug 'Shougo/neomru.vim'
+            Plug 'Shougo/neoyank.vim'
+        elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
+            let g:fuzzy_finder = 'LeaderF'
+            if WINDOWS()
+                Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+            else
+                Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+            endif
+            Plug 'Yggdroot/LeaderF-marks'
+        else
+            let g:fuzzy_finder = 'ctrlp'
+            Plug 'ctrlpvim/ctrlp.vim'
+            Plug 'tacahiroy/ctrlp-funky'
+        endif
+        " syntax_tools
+        let g:syntax_tool = "None"
+        if g:use_syntax
             " syntax
             if v:version >= 800 || has('nvim')
-                Plug 'skywind3000/asyncrun.vim'
                 Plug 'w0rp/ale'
                 let g:syntax_tool = 'ale'
             elseif v:version == 704 && has('patch1486')
                 Plug 'vim-syntastic/syntastic'
                 let g:syntax_tool = 'syntastic'
             endif
-            " browser tool
-            if HasPlug('fzf') && !WINDOWS()
-                let g:fuzzy_finder = 'fzf'
-                Plug 'junegunn/fzf.vim'
-                if executable('fzf')
-                    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+        endif
+        " complete engine
+        let g:complete_engine  = "None"
+        if g:use_complete && (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
+            if HasPlug('youcompleteme') || HasPlug('YCM')
+                if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 || has('nvim'))
+                    let g:complete_engine = "YCM"
                 else
-                    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+                    echoe "Cannot install YouCompleteMe, smart select a complete_engine."
                 endif
-            elseif HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
-                let g:fuzzy_finder = 'denite'
-                Plug 'Shougo/denite.nvim'
-                Plug 'neoclide/denite-extra'
-                Plug 'neoclide/denite-git'
-                Plug 'Shougo/neomru.vim'
-                Plug 'Shougo/neoyank.vim'
-            elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
-                let g:fuzzy_finder = 'LeaderF'
-                if WINDOWS()
-                    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+            elseif HasPlug('ncm2')
+                if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800)
+                   let g:complete_engine = "ncm2"
                 else
-                    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+                    echoe "Cannot install ncm2, smart select a complete_engine."
                 endif
-                Plug 'Yggdroot/LeaderF-marks'
-            else
-                let g:fuzzy_finder = 'ctrlp'
-                Plug 'ctrlpvim/ctrlp.vim'
-                Plug 'tacahiroy/ctrlp-funky'
-                Plug 'FelikZ/ctrlp-py-matcher'
+            elseif HasPlug('coc')
+                if executable('node') && executable('yarn') && (has('nvim-0.3.0') || v:version >= 801)
+                    let g:complete_engine = "coc"
+                else
+                    echoe "Cannot install coc, smart select a complete_engine."
+                endif
+            elseif HasPlug('deoplete')
+                if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
+                   let g:complete_engine = "deoplete"
+                else
+                    echoe "Cannot install deoplete, smart select a complete_engine."
+                endif
+            elseif HasPlug('asyncomplete')
+                if has('nvim') || v:version >= 800
+                    let g:complete_engine = "asyncomplete"
+                else
+                    echoe "Cannot install asyncomplete, smart select a complete_engine."
+                endif
+            elseif HasPlug('neocomplete')
+                if has('lua')
+                    let g:complete_engine = "neocomplete"
+                else
+                    echoe "Cannot install neocomplete, smart select a complete_engine."
+                endif
+            elseif HasPlug('neocomplcache')
+                let g:complete_engine = "neocomplcache"
             endif
-            " complete_engine && snippet
-            if (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
-                if HasPlug('youcompleteme') || HasPlug('YCM')
-                    if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 || has('nvim'))
-                        let g:complete_engine = "YCM"
-                    else
-                        echoe "Cannot install YouCompleteMe, smart select a complete_engine."
-                    endif
-                elseif HasPlug('ncm2')
-                    if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800)
-                       let g:complete_engine = "ncm2"
-                    else
-                        echoe "Cannot install ncm2, smart select a complete_engine."
-                    endif
-                elseif HasPlug('coc')
-                    if executable('node') && executable('yarn') && (has('nvim-0.3.0') || v:version >= 801)
-                        let g:complete_engine = "coc"
-                    else
-                        echoe "Cannot install coc, smart select a complete_engine."
-                    endif
-                elseif HasPlug('deoplete')
-                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
-                       let g:complete_engine = "deoplete"
-                    else
-                        echoe "Cannot install deoplete, smart select a complete_engine."
-                    endif
-                elseif HasPlug('asyncomplete')
-                    if has('nvim') || v:version >= 800
-                        let g:complete_engine = "asyncomplete"
-                    else
-                        echoe "Cannot install asyncomplete, smart select a complete_engine."
-                    endif
-                elseif HasPlug('neocomplete')
-                    if has('lua')
-                        let g:complete_engine = "neocomplete"
-                    else
-                        echoe "Cannot install neocomplete, smart select a complete_engine."
-                    endif
-                elseif HasPlug('neocomplcache')
+            " smart select engine
+            if g:complete_engine == "None"
+                if g:python_version == 3 && (has('nvim-0.3.0') || v:version >= 800)
+                    let g:complete_engine = "deoplete"
+                elseif g:python_version == 3 && has('nvim-0.2.2')
+                    let g:complete_engine = 'ncm2'
+                elseif has('nvim') || v:version >= 800
+                    let g:complete_engine = "asyncomplete"
+                elseif has('lua')
+                    let g:complete_engine = "neocomplete"
+                else
                     let g:complete_engine = "neocomplcache"
-                endif
-                " smart select engine
-                if g:complete_engine == "None"
-                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version >= 800)
-                        let g:complete_engine = "deoplete"
-                    elseif g:python_version == 3 && has('nvim-0.2.2')
-                        let g:complete_engine = 'ncm2'
-                    elseif has('nvim') || v:version >= 800
-                        let g:complete_engine = "asyncomplete"
-                    elseif has('lua')
-                        let g:complete_engine = "neocomplete"
-                    else
-                        let g:complete_engine = "neocomplcache"
-                    endif
                 endif
             endif
         endif
         " enginge plus
-        if g:complete_engine != "None"
+        let g:complete_snippet = "None"
+        if g:complete_engine != "None" && g:use_snippet
             Plug 'Shougo/vimshell.vim'
             Plug 'Shougo/neoinclude.vim'
             Plug 'Shougo/neco-vim'
@@ -345,7 +347,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neosnippet-snippets'
             endif
         endif
-        unlet g:use_ultisnips
         if g:complete_engine == "YCM"
             let b:ycm_install = " ./install.py --clang-completer"
             if HasPlug('go') && executable('go')
@@ -529,6 +530,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'davidhalter/jedi-vim'
             Plug 'Rip-Rip/clang_complete'
         endif
+        unlet g:use_ultisnips
+        unlet g:use_snippet
+        unlet g:use_complete
+        unlet g:use_syntax
     call plug#end()
     function! GetVersion()
         let l:result=[]
