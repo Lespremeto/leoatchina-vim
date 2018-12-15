@@ -312,7 +312,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version >= 800)
                         let g:complete_engine = "deoplete"
                     elseif g:python_version == 3 && has('nvim-0.2.2')
-                        let g:g:complete_engine = 'ncm2'
+                        let g:complete_engine = 'ncm2'
                     elseif has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
                     elseif has('lua')
