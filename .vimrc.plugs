@@ -269,22 +269,22 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " complete_engine && snippet
             if (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
                 if HasPlug('youcompleteme') || HasPlug('YCM')
-                    if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800) && !has('nvim')
+                    if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 || has('nvim'))
                         let g:complete_engine = "YCM"
                     else
                         echoe "Cannot install YouCompleteMe, smart select a complete_engine."
+                    endif
+                elseif HasPlug('ncm2')
+                    if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800)
+                       let g:complete_engine = "ncm2"
+                    else
+                        echoe "Cannot install ncm2, smart select a complete_engine."
                     endif
                 elseif HasPlug('coc')
                     if executable('node') && executable('yarn') && (has('nvim-0.3.0') || v:version >= 801)
                         let g:complete_engine = "coc"
                     else
                         echoe "Cannot install coc, smart select a complete_engine."
-                    endif
-                elseif HasPlug('ncm2')
-                    if g:python_version == 3 && has('nvim-0.2.2')
-                       let g:complete_engine = "ncm2"
-                    else
-                        echoe "Cannot install ncm2, smart select a complete_engine."
                     endif
                 elseif HasPlug('deoplete')
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
@@ -311,6 +311,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 if g:complete_engine == "None"
                     if g:python_version == 3 && (has('nvim-0.3.0') || v:version >= 800)
                         let g:complete_engine = "deoplete"
+                    elseif g:python_version == 3 && has('nvim-0.2.2')
+                        let g:g:complete_engine = 'ncm2'
                     elseif has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
                     elseif has('lua')
@@ -366,6 +368,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         elseif g:complete_engine == "ncm2"
             Plug 'ncm2/ncm2'
             Plug 'roxma/nvim-yarp'
+            if !has('nvim')
+                Plug 'roxma/vim-hug-neovim-rpc'
+            endif
             " main complete
             Plug 'ncm2/ncm2-bufword'
             Plug 'ncm2/ncm2-path'
