@@ -49,21 +49,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             source ~/.vimrc.local
         endif
         if WINDOWS()
+            Plug 'pprovost/vim-ps1', { 'for': 'ps1' }
             Plug 'leoatchina/vim-windows-tools', {'dir':'$HOME\.vim-windows-tools'}
             let $PATH.=";".$HOME."\\.vim-windows-tools"
             if has('nvim')
                 Plug 'lambdalisue/vim-fullscreen'
             endif
-            Plug 'pprovost/vim-ps1', { 'for': 'ps1' }
-        elseif has('gui_running')
-            Plug 'lambdalisue/vim-fullscreen'
-            if OSX()
-                Plug 'rizzatti/dash.vim'
-                nnoremap <D-Cr> <Nop>
-                snoremap <D-Cr> <Nop>
-                inoremap <D-Cr> <Nop>
-                vnoremap <D-Cr> <Nop>
-            endif
+        elseif OSX()
+            Plug 'rizzatti/dash.vim'
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')

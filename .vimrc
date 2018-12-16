@@ -4,7 +4,6 @@ if v:version < 700
     echoe 'This vimrc requires Vim 7.0 or later.'
     quit
 endif
-noremap <F1> <ESC>
 set re=1
 set ttyfast
 set lazyredraw
@@ -340,39 +339,16 @@ nnoremap <Leader>tm      :tabm<Space>
 nnoremap <Leader>ts      :tab  split<CR>
 nnoremap <Leader>tS      :tabs<CR>
 nnoremap gq              :tabclose<CR>
-if has('gui_macvim')
-    nnoremap <D-1> :tabn1<CR>
-    nnoremap <D-2> :tabn2<CR>
-    nnoremap <D-3> :tabn3<CR>
-    nnoremap <D-4> :tabn4<CR>
-    nnoremap <D-5> :tabn5<CR>
-    nnoremap <D-6> :tabn6<CR>
-    nnoremap <D-7> :tabn7<CR>
-    nnoremap <D-8> :tabn8<CR>
-    nnoremap <D-9> :tabn9<CR>
-    nnoremap <D-0> :tablast<CR>
-else
-    nnoremap <M-1> :tabn1<CR>
-    nnoremap <M-2> :tabn2<CR>
-    nnoremap <M-3> :tabn3<CR>
-    nnoremap <M-4> :tabn4<CR>
-    nnoremap <M-5> :tabn5<CR>
-    nnoremap <M-6> :tabn6<CR>
-    nnoremap <M-7> :tabn7<CR>
-    nnoremap <M-8> :tabn8<CR>
-    nnoremap <M-9> :tabn9<CR>
-    nnoremap <M-0> :tablast<CR>
-endif
-nnoremap <leader>t1 :tabn1<CR>
-nnoremap <leader>t2 :tabn2<CR>
-nnoremap <leader>t3 :tabn3<CR>
-nnoremap <leader>t4 :tabn4<CR>
-nnoremap <leader>t5 :tabn5<CR>
-nnoremap <leader>t6 :tabn6<CR>
-nnoremap <leader>t7 :tabn7<CR>
-nnoremap <leader>t8 :tabn8<CR>
-nnoremap <leader>t9 :tabn9<CR>
-nnoremap <leader>t0 :tablast<CR>
+nnoremap <M-1>           :tabn1<CR>
+nnoremap <M-2>           :tabn2<CR>
+nnoremap <M-3>           :tabn3<CR>
+nnoremap <M-4>           :tabn4<CR>
+nnoremap <M-5>           :tabn5<CR>
+nnoremap <M-6>           :tabn6<CR>
+nnoremap <M-7>           :tabn7<CR>
+nnoremap <M-8>           :tabn8<CR>
+nnoremap <M-9>           :tabn9<CR>
+nnoremap <M-0>           :tablast<CR>
 " buffer switch
 nnoremap <localleader><BS> :buffers<CR>
 nnoremap <localleader>[ :bp<CR>
@@ -400,11 +376,6 @@ noremap <silent>j gj
 noremap <silent>k gk
 " for toggle highlight
 nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
-nnoremap <F6> :set nohlsearch! nohlsearch?<CR>
-vnoremap <F6> :set nohlsearch! nohlsearch?<CR>
-inoremap <F6> :set nohlsearch! nohlsearch?<CR>
-cnoremap <F6> :set nohlsearch! nohlsearch?<CR>
-snoremap <F6> :set nohlsearch! nohlsearch?<CR>
 " show clipboard
 nnoremap <leader>tr :reg<Cr>
 nnoremap <S-F6> <ESC>:reg<Cr>
@@ -414,11 +385,6 @@ cnoremap <S-F6> <ESC>:reg<Cr>
 snoremap <S-F6> <ESC>:reg<Cr>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tp <ESC>:set nopaste! nopaste?<CR>
-nnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
-vnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
-inoremap <F12> <ESC>:set nopaste! nopaste?<CR>
-cnoremap <F12> <ESC>:set nopaste! nopaste?<CR>
-snoremap <F12> <ESC>:set nopaste! nopaste?<CR>
 " toggleFold
 nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
@@ -597,32 +563,30 @@ endif
 " Plugins, if vim-plug works
 if has('job') || g:python_version || has('nvim') || has('lua')
     " full-screen
-    if WINDOWS() && has('libcall') && !has('nvim')
-        let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
-        function! ToggleFullScreen()
-            call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
-        endfunction
-        map <F11> <Esc>:call ToggleFullScreen()<CR>
-        let g:VimAlpha = 240
-        function! SetAlpha(alpha)
-            let g:VimAlpha = g:VimAlpha + a:alpha
-            if g:VimAlpha < 180
-                let g:VimAlpha = 180
-            endif
-            if g:VimAlpha > 255
-                let g:VimAlpha = 255
-            endif
-            call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
-        endfunction
-        nmap <silent><M-F12> <Esc>:call SetAlpha(+3)<CR>
-        nmap <silent><M-F11> <Esc>:call SetAlpha(-3)<CR>
-    elseif HasDirectory('vim-fullscreen')
-        if has('nvim')
+    if WINDOWS()
+        if has('libcall') && !has('nvim')
+            let g:MyVimLib = $HOME."\\.vim-windows-tools\\gvimfullscreen.dll"
+            function! ToggleFullScreen()
+                call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
+            endfunction
+            map <M-cr> <Esc>:call ToggleFullScreen()<CR>
+            let g:VimAlpha = 240
+            function! SetAlpha(alpha)
+                let g:VimAlpha = g:VimAlpha + a:alpha
+                if g:VimAlpha < 180
+                    let g:VimAlpha = 180
+                endif
+                if g:VimAlpha > 255
+                    let g:VimAlpha = 255
+                endif
+                call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
+            endfunction
+            nmap <silent><M-x>+ <Esc>:call SetAlpha(+3)<CR>
+            nmap <silent><M-x>- <Esc>:call SetAlpha(-3)<CR>
+        elseif HasDirectory('vim-fullscreen') && has('nvim')
             let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
             let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
         endif
-        let g:fullscreen#enable_default_keymap = 0
-        nmap <F11> <Plug>(fullscreen-toggle)
     endif
     " voom
     if HasDirectory('VOom')
@@ -1705,12 +1669,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
-        nnoremap <C-b>r :QuickRun<Cr>
-        nnoremap <F5> :QuickRun<Cr>
-        cnoremap <F5> <Esc>:QuickRun<Cr>
-        vnoremap <F5> <Esc>:QuickRun<Cr>
-        snoremap <F5> <Esc>:QuickRun<Cr>
-        inoremap <F5> <Esc>:QuickRun<Cr>
+        nnoremap <M-R> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let s:quickfix_is_open = 0
         function! ToggleQuickfix()
@@ -1726,12 +1685,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <C-b>q :ToggleQuickfix<cr>
-        nnoremap <S-F5> :ToggleQuickfix<cr>
-        vnoremap <S-F5> <Esc>:ToggleQuickfix<cr>
-        snoremap <S-F5> <Esc>:ToggleQuickfix<cr>
-        cnoremap <S-F5> <Esc>:ToggleQuickfix<cr>
-        inoremap <S-F5> <Esc>:ToggleQuickfix<cr>
+        nnoremap <M-Q> :ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
@@ -1818,15 +1772,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! AsyncRunNow call s:ASYNC_RUN()
-        nmap <C-b>a :AsyncRunNow<CR>
-        nmap <C-b>s :AsyncStop<CR>
-        nmap <C-b>g :AsyncRun
+        nmap <C-g>r :AsyncRunNow<CR>
+        nmap <C-g>s :AsyncStop<CR>
+        nmap <C-g>a :AsyncRun
         au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
     endif
     " vim-repl
     if HasDirectory('vim-repl')
-        nnoremap <C-b>t :REPLToggle<Cr>
-        let g:sendtorepl_invoke_key = "<C-b>w"
+        nnoremap <C-g>t :REPLToggle<Cr>
+        let g:sendtorepl_invoke_key = "<C-g>w"
         let g:repl_program = {
             \	"default": "bash",
         \ }
