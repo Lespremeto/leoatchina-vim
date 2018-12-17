@@ -146,7 +146,7 @@ function! Alt_meta_map()
             \ '9':'ª'
         \ }
         for c in keys(a:letters_dict)
-            for m in ['nmap', 'vmap', 'smap', 'tmap']
+            for m in ['nmap', 'xmap', 'smap', 'tmap']
                 exec m." ".a:letters_dict[c]." <M-".c.">"
             endfor
         endfor
@@ -269,26 +269,26 @@ cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 nnoremap <Cr> %
 nnoremap * *``
 nnoremap ! :!
-vnoremap / y/<C-r>0
-vnoremap ; y:%s/<C-r>0
-vnoremap . :normal .<CR>
+xnoremap / y/<C-r>0
+xnoremap ; y:%s/<C-r>0
+xnoremap . :normal .<CR>
 " to nop
 nnoremap go <Nop>
-vnoremap go <Nop>
+xnoremap go <Nop>
 snoremap go <Nop>
 nnoremap gn <Nop>
-vnoremap gn <Nop>
+xnoremap gn <Nop>
 snoremap gn <Nop>
 nnoremap gy <Nop>
-vnoremap gy <Nop>
+xnoremap gy <Nop>
 snoremap gy <Nop>
 nnoremap ga <Nop>
-vnoremap ga <Nop>
+xnoremap ga <Nop>
 snoremap ga <Nop>
 nnoremap gt <Nop>
 nnoremap gT <Nop>
-vnoremap gt <Nop>
-vnoremap gT <Nop>
+xnoremap gt <Nop>
+xnoremap gT <Nop>
 snoremap gt <Nop>
 snoremap gT <Nop>
 " some ctrl+ key remap
@@ -298,7 +298,7 @@ nnoremap <C-q> <Nop>
 nnoremap <C-z> <Nop>
 nnoremap <C-g> <Nop>
 nnoremap <C-f> <Nop>
-vnoremap <C-f> <Nop>
+xnoremap <C-f> <Nop>
 snoremap <C-f> <Nop>
 inoremap <C-f> <right>
 cnoremap <C-f> <right>
@@ -312,8 +312,8 @@ inoremap <C-l> <Nop>
 " b/f for back/forword
 nnoremap gb ^
 nnoremap gf $
-vnoremap gb ^
-vnoremap gf $<left>
+xnoremap gb ^
+xnoremap gf $<left>
 inoremap <C-a> <Esc>I
 inoremap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 cnoremap <C-a> <Home>
@@ -354,18 +354,18 @@ nnoremap <localleader><BS> :buffers<CR>
 nnoremap <localleader>[ :bp<CR>
 nnoremap <localleader>] :bn<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
-vnoremap <leader>y  "+y
+xnoremap <leader>y  "+y
 nnoremap <leader>y  "+y
 nnoremap <leader>yy "+yy
 nnoremap <leader>Y  "*y
-vnoremap <leader>Y  "*y
+xnoremap <leader>Y  "*y
 nnoremap Y y$
-vnoremap Y *y$
+xnoremap Y *y$
 " p and P for paste
 nnoremap <leader>p "+p
 nnoremap <leader>P "*P
-vnoremap <leader>p "+p
-vnoremap <leader>P "*P
+xnoremap <leader>p "+p
+xnoremap <leader>P "*P
 inoremap <S-Insert> <C-R>*
 cnoremap <S-Insert> <C-R>*
 " Easier horizontal scrolling
@@ -379,7 +379,7 @@ nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
 " show clipboard
 nnoremap <leader>tr :reg<Cr>
 nnoremap <S-F6> <ESC>:reg<Cr>
-vnoremap <S-F6> <ESC>:reg<Cr>
+xnoremap <S-F6> <ESC>:reg<Cr>
 inoremap <S-F6> <ESC>:reg<Cr>
 cnoremap <S-F6> <ESC>:reg<Cr>
 snoremap <S-F6> <ESC>:reg<Cr>
@@ -410,8 +410,8 @@ nnoremap <Leader><Up>    :resize +3<CR>
 nnoremap <Leader><Left>  :vertical resize -3<CR>
 nnoremap <Leader><Right> :vertical resize +3<CR>
 " Visual shifting (does not exit Visual mode)
-vnoremap << <gv
-vnoremap >> >gv
+xnoremap << <gv
+xnoremap >> >gv
 "离开插入模式后关闭预览窗口
 au! InsertLeave * if pumvisible() == 0|pclose|endif
 "补全完成后关闭预览窗口
@@ -512,11 +512,11 @@ onoremap $ v:call WrapRelativeMotion("$")<CR>
 onoremap <End> v:call WrapRelativeMotion("$")<CR>
 " Overwrite the Visual+select mode mappings from above
 " to ensuwe the correct vis_sel flag is passed to function
-vnoremap $ :<C-U>call WrapRelativeMotion("$", 1)<CR>
-vnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
-vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
-vnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
-vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
+xnoremap $ :<C-U>call WrapRelativeMotion("$", 1)<CR>
+xnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
+xnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
+xnoremap <Home> :<C-U>call WrapRelativeMotion("^", 1)<CR>
+xnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
 " window move manager
 function! g:Tools_PreviousCursor(mode)
     if winnr('$') <= 1
@@ -629,10 +629,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         au FileType markdown nmap <leader>ee <Plug>StopMarkdownPreview
         if has('gui_running')
             au FileType markdown nmap <silent> <C-z> <Plug>MarkdownPreview
-            au FileType markdown vmap <silent> <C-z> <Plug>MarkdownPreview
+            au FileType markdown xmap <silent> <C-z> <Plug>MarkdownPreview
             au FileType markdown imap <silent> <C-z> <Plug>MarkdownPreview
             au FileType markdown nmap <silent> <C-s> <Plug>StopMarkdownPreview
-            au FileType markdown vmap <silent> <C-s> <Plug>StopMarkdownPreview
+            au FileType markdown xmap <silent> <C-s> <Plug>StopMarkdownPreview
             au FileType markdown imap <silent> <C-s> <Plug>StopMarkdownPreview
         endif
     endif
@@ -994,8 +994,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory('ctrlsf.vim')
         let g:ctrlsf_position='right'
         nmap     <C-F>f <Plug>CtrlSFPrompt
-        vmap     <C-F>f <Plug>CtrlSFVwordPath
-        vmap     <C-F>F <Plug>CtrlSFVwordExec
+        xmap     <C-F>f <Plug>CtrlSFVwordPath
+        xmap     <C-F>F <Plug>CtrlSFVwordExec
         nmap     <C-F>n <Plug>CtrlSFCwordPath
         nmap     <C-F>N <Plug>CtrlSFCCwordPath
         nmap     <C-F>p <Plug>CtrlSFPwordPath
@@ -1034,7 +1034,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " easy-align
     if HasDirectory("vim-easy-align")
         nmap <localleader><Cr> <Plug>(EasyAlign)
-        vmap <Cr> <Plug>(EasyAlign)
+        xmap <Cr> <Plug>(EasyAlign)
         if !exists('g:easy_align_delimiters')
             let g:easy_align_delimiters = {}
         endif
