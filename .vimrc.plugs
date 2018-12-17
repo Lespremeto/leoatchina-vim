@@ -563,7 +563,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         echo string(s:params_dict)
     endfunction
     command! ShowParams call ShowParams()
-    nnoremap <S-F11> :call ShowParams()<Cr>
     command! PlugRe PlugClean! | PlugInstall --sync
     command! PlugNew PlugClean! | PlugUpdate --sync
 else

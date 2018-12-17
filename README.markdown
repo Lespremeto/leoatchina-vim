@@ -177,7 +177,6 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
 * In Visual, keep selection after indention change with `>`,`<`
 
 # Main shortcuts
-* `F1`: to `ESC`
 * `<Leader>` to `<Space>`, so the biggest key on keyboard is more usefull
 * `<LocalLeader>` to **`\`**
 * `<Leader><cr>`: source `~/.vimrc`. It is for config develop & debug
@@ -198,14 +197,10 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
 * `<leader>tw`: toggle wrap
 * `<leader>tf`: toggle folder
 * `<leader>tn`: number type toggle
-* `F5`:         run script (with plugin [vim-quickrun](https: //github.com/thinca/vim-quickrun))
-* `S-F5`:       toggle quickrun windows
-* `F6`:         toggle search results highlight
+* `<M-R>`:      run script (with plugin [vim-quickrun](https: //github.com/thinca/vim-quickrun))
+* `<M-Q>`:      toggle quickrun windows
 * `<leader>th`: toggle search results highlight
-* `S-F6`:       show register strings
 * `<leader>tr`: show register strings
-* `F11`:        full screen toggle
-* `F12`:        pastetoggle
 * `<leader>tp`: pastetoggle
 * `<leader>tn`: toggle number/relativenumber
 * `tab/buffer control`
