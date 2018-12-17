@@ -573,16 +573,16 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:VimAlpha = 240
             function! SetAlpha(alpha)
                 let g:VimAlpha = g:VimAlpha + a:alpha
-                if g:VimAlpha < 180
-                    let g:VimAlpha = 180
+                if g:VimAlpha < 95
+                    let g:VimAlpha = 95
                 endif
                 if g:VimAlpha > 255
                     let g:VimAlpha = 255
                 endif
                 call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
             endfunction
-            nmap <silent><M-.> <Esc>:call SetAlpha(+3)<CR>
-            nmap <silent><M-,> <Esc>:call SetAlpha(-3)<CR>
+            nmap <silent><M-.> <Esc>:call SetAlpha(+10)<CR>
+            nmap <silent><M-,> <Esc>:call SetAlpha(-10)<CR>
         elseif HasDirectory('vim-fullscreen') && has('nvim')
             let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
             let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
