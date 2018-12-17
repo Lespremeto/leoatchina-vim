@@ -67,7 +67,7 @@ function! Alt_meta_map()
     for i in range(10)
         call s:metacode(nr2char(char2nr('0') + i))
     endfor
-    let s:list = ['-', ';', '/', ',', '.', '_', ':', '?']
+    let s:list = [',', '.', '-', '_', ';', ':', '/', '?']
     for c in s:list
         call s:metacode(c)
     endfor
@@ -126,13 +126,13 @@ function! Alt_meta_map()
             \ 'X':'˛',
             \ 'Y':'Á',
             \ 'Z':'¸',
-            \ '-':'–',
-            \ ';':'…',
-            \ '/':'÷',
             \ ',':'≤',
             \ '.':'≥',
+            \ '-':'–',
             \ '_':'—',
+            \ ';':'…',
             \ ':':'Ú',
+            \ '/':'÷',
             \ '?':'¿',
             \ '0':'º',
             \ '1':'¡',
@@ -581,8 +581,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 endif
                 call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
             endfunction
-            nmap <silent><M-x>+ <Esc>:call SetAlpha(+3)<CR>
-            nmap <silent><M-x>- <Esc>:call SetAlpha(-3)<CR>
+            nmap <silent><M-.> <Esc>:call SetAlpha(+3)<CR>
+            nmap <silent><M-,> <Esc>:call SetAlpha(-3)<CR>
         elseif HasDirectory('vim-fullscreen') && has('nvim')
             let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
             let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
