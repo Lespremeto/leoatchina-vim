@@ -569,7 +569,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             function! ToggleFullScreen()
                 call libcallnr(g:MyVimLib, "ToggleFullScreen", 0)
             endfunction
-            map <M-cr> <Esc>:call ToggleFullScreen()<CR>
+            map <C-cr> <Esc>:call ToggleFullScreen()<CR>
             let g:VimAlpha = 240
             function! SetAlpha(alpha)
                 let g:VimAlpha = g:VimAlpha + a:alpha
