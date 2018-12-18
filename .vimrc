@@ -223,6 +223,8 @@ function! Alt_meta_map()
     endif
 endfunc
 call Alt_meta_map()
+" Swap
+xnoremap <M-x> <ESC>`.``gvp``P
 " Initialize directories
 function! InitializeDirectories()
     let parent = $HOME
@@ -420,7 +422,7 @@ nnoremap <M-8>           :tabn8<CR>
 nnoremap <M-9>           :tabn9<CR>
 nnoremap <M-0>           :tablast<CR>
 " buffer switch
-nnoremap <localleader><BS> :buffers<CR>
+nnoremap <localleader><BS> :ball<CR>
 nnoremap <localleader>[ :bp<CR>
 nnoremap <localleader>] :bn<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
@@ -441,6 +443,7 @@ cnoremap <S-Insert> <C-R>*
 " Easier horizontal scrolling
 noremap zl zL
 noremap zh zH
+nnoremap zpr :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>:set foldmethod=manual<CR><CR>
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
@@ -1128,15 +1131,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " browser tools
     if HasDirectory("fzf.vim")
         nnoremap <C-k>j :Files<CR>
-        nnoremap <C-k>k :FZF
         nnoremap <C-k>b :Buffers<CR>
-        nnoremap <C-k>f :Filetypes<CR>
+        nnoremap <C-k>f :BTags<CR>
+        nnoremap <C-k>F :Filetypes<CR>
         nnoremap <C-k>g :GFiles?<CR>
         nnoremap <C-k>m :Marks<CR>
-        nnoremap <C-k>M :Maps<CR>
         nnoremap <C-k>c :Commits<CR>
         nnoremap <C-k>s :Colors<CR>
         nnoremap <C-k>h :History/<CR>
+        nnoremap <C-k>M :Maps<CR>
         " Mapping selecting mkppings
         nmap <C-k><tab> <plug>(fzf-maps-n)
         xmap <C-k><tab> <plug>(fzf-maps-x)

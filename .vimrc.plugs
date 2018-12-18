@@ -109,6 +109,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'junegunn/vim-easy-align'
         " markdown
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown'}
+        Plug 'hotoo/pangu.vim', {'for':'markdown'}
         if g:python_version
             Plug 'plasticboy/vim-markdown', {'for':'markdown'}
             if has('nvim')
