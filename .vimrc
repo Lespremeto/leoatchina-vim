@@ -1299,7 +1299,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <silent>gyd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif HasPlug('ncm2')
+    elseif HasDirectory('ncm2')
         set completeopt+=noinsert,noselect
         autocmd BufEnter * call ncm2#enable_for_buffer()
         if HasPlug('html')

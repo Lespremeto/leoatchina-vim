@@ -156,7 +156,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " statuslines
         if has('statusline')
             Plug 'bling/vim-bufferline'
-            if (v:version >= 800 || has('nvim')) && (HasPlug('airline') || has('gui_running'))
+            if (v:version >= 800 || has('nvim')) && has('gui_running')
                 Plug 'vim-airline/vim-airline'
                 let g:status_line = 'airline'
             else
@@ -398,9 +398,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             if HasPlug('html')
                 Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
-            endif
-            if HasPlug('php') && executable('composer')
-                Plug 'ncm2/ncm2-phpactor', {'do': 'composer install', 'for': 'php'}
             endif
             if HasPlug('javascript') && executable('tern')
                 Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
