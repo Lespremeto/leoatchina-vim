@@ -244,7 +244,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'neoclide/denite-git'
                 Plug 'Shougo/neomru.vim'
                 Plug 'Shougo/neoyank.vim'
-            elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && executable('gcc')
+            elseif HasPlug('leaderf') && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
                 let g:fuzzy_finder .= 'LeaderF'
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
