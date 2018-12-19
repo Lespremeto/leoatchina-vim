@@ -444,6 +444,7 @@ cnoremap <S-Insert> <C-R>*
 noremap zl zL
 noremap zh zH
 nnoremap zpr :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>:set foldmethod=manual<CR><CR>
+nnoremap ZR zR
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
@@ -451,11 +452,6 @@ noremap <silent>k gk
 nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
 " show clipboard
 nnoremap <leader>tr :reg<Cr>
-nnoremap <S-F6> <ESC>:reg<Cr>
-xnoremap <S-F6> <ESC>:reg<Cr>
-inoremap <S-F6> <ESC>:reg<Cr>
-cnoremap <S-F6> <ESC>:reg<Cr>
-snoremap <S-F6> <ESC>:reg<Cr>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tp <ESC>:set nopaste! nopaste?<CR>
 " toggleFold
@@ -566,6 +562,7 @@ au BufNewFile,BufRead *.pandoc set filetype=pandoc
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
 au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
+au BufEnter *vimrc*,*.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " sepcial setting for different type of files
 au FileType python au BufWritePre <buffer> :%retab
 au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
