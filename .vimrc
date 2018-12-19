@@ -224,7 +224,7 @@ function! Alt_meta_map()
 endfunc
 call Alt_meta_map()
 " Swap
-xnoremap <M-x> <ESC>`.``gvp``P
+xnoremap <M-z> <ESC>`.``gvp``P
 " Initialize directories
 function! InitializeDirectories()
     let parent = $HOME
@@ -1125,8 +1125,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-g>c :Commits<CR>
         nnoremap <C-g>f :Filetypes<CR>
         nnoremap <C-g>h :History/<CR>
-        nnoremap <C-g>t :Tags<CR>
-        nnoremap <C-g>T :BTags<CR>
+        nnoremap <C-g>t :BTags<CR>
+        nnoremap <C-g>C :Colors<CR>
         nnoremap <C-g>M :Maps<CR>
         " Mapping selecting mkppings
         nmap <C-g><tab> <plug>(fzf-maps-n)
@@ -1184,12 +1184,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if !isdirectory(g:Lf_CacheDirectory)
             silent! call mkdir(g:Lf_CacheDirectory, 'p')
         endif
-        let g:Lf_ShortcutB = '<C-k>k'
-        nnoremap <C-k>l :LeaderfSelf<cr>
-        nnoremap <C-k>b :LeaderfBufTag<cr>
+        nnoremap <C-k>l :LeaderfLine<cr>
+        nnoremap <C-k>t :LeaderfBufTag<cr>
         nnoremap <C-k>m :LeaderfMru<cr>
         nnoremap <C-k>f :LeaderfFunction!<cr>
-        nnoremap <C-k>L :Leaderf
+        nnoremap <C-k>k :Leaderf
         nnoremap <C-k>F :LeaderfF
         nnoremap <C-k>M :LeaderfM
         nnoremap <C-k>B :LeaderfB
