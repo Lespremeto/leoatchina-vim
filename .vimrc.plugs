@@ -237,14 +237,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 let g:fuzzy_finder = ''
             endif
-            if HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
-                let g:fuzzy_finder .= 'denite'
-                Plug 'Shougo/denite.nvim'
-                Plug 'neoclide/denite-extra'
-                Plug 'neoclide/denite-git'
-                Plug 'Shougo/neomru.vim'
-                Plug 'Shougo/neoyank.vim'
-            elseif HasPlug('leaderf') && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
+            if HasPlug('leaderf') && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && executable('gcc')
                 let g:fuzzy_finder .= 'LeaderF'
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -252,6 +245,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
                 endif
                 Plug 'Yggdroot/LeaderF-marks'
+            elseif HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
+                let g:fuzzy_finder .= 'denite'
+                Plug 'Shougo/denite.nvim'
+                Plug 'neoclide/denite-extra'
+                Plug 'neoclide/denite-git'
+                Plug 'Shougo/neomru.vim'
+                Plug 'Shougo/neoyank.vim'
             else
                 let g:fuzzy_finder .= 'ctrlp'
                 Plug 'ctrlpvim/ctrlp.vim'
@@ -294,7 +294,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 else
                     echoe "Cannot install coc, smart select a complete_engine."
                 endif
-            elseif HasPlug('deoplete') || HasPlug('tabnine')
+            elseif HasPlug('deoplete') || HasPlug('deoplete-tabnine')
                 if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
                    let g:complete_engine = "deoplete"
                 else
@@ -482,7 +482,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if HasPlug('go') && executable('gocode')
                 Plug 'zchee/deoplete-go', { 'do': 'make'}
             endif
-            if HasPlug('tabnine')
+            if HasPlug('deoplete-tabnine')
                 if WINDOWS()
                     Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
                 else
