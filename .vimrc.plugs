@@ -38,6 +38,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:use_snippet   = 1
         let g:use_syntax    = 1
         let g:use_ultisnips = 1
+        let g:use_fuzzyfinder = 1
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
@@ -47,6 +48,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             source ~/.gvimrc.local
         elseif filereadable(expand("~/.vimrc.local"))
             source ~/.vimrc.local
+        endif
+        if g:use_complete == 0
+            let g:use_syntax = 0
         endif
         if WINDOWS()
             Plug 'pprovost/vim-ps1', { 'for': 'ps1' }
@@ -221,39 +225,42 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endif
         " fuzzy_finder
-        if !WINDOWS() && HasPlug('fzf')
-            let g:fuzzy_finder = 'fzf '
-            Plug 'junegunn/fzf.vim'
-            if executable('fzf')
-                Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
+        if g:use_fuzzyfinder
+            if !WINDOWS() && HasPlug('fzf')
+                let g:fuzzy_finder = 'fzf '
+                Plug 'junegunn/fzf.vim'
+                if executable('fzf')
+                    Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
+                else
+                    Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+                endif
             else
-                Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+                let g:fuzzy_finder = ''
+            endif
+            if HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
+                let g:fuzzy_finder .= 'denite'
+                Plug 'Shougo/denite.nvim'
+                Plug 'neoclide/denite-extra'
+                Plug 'neoclide/denite-git'
+                Plug 'Shougo/neomru.vim'
+                Plug 'Shougo/neoyank.vim'
+            elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
+                let g:fuzzy_finder .= 'LeaderF'
+                if WINDOWS()
+                    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+                else
+                    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+                endif
+                Plug 'Yggdroot/LeaderF-marks'
+            else
+                let g:fuzzy_finder .= 'ctrlp'
+                Plug 'ctrlpvim/ctrlp.vim'
+                Plug 'tacahiroy/ctrlp-funky'
             endif
         else
-            let g:fuzzy_finder = ''
-        endif
-        if HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
-            let g:fuzzy_finder .= 'denite'
-            Plug 'Shougo/denite.nvim'
-            Plug 'neoclide/denite-extra'
-            Plug 'neoclide/denite-git'
-            Plug 'Shougo/neomru.vim'
-            Plug 'Shougo/neoyank.vim'
-        elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
-            let g:fuzzy_finder .= 'LeaderF'
-            if WINDOWS()
-                Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-            else
-                Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-            endif
-            Plug 'Yggdroot/LeaderF-marks'
-        else
-            let g:fuzzy_finder .= 'ctrlp'
-            Plug 'ctrlpvim/ctrlp.vim'
-            Plug 'tacahiroy/ctrlp-funky'
+            let g:fuzzy_finder = "None"
         endif
         " syntax_tools
-        let g:syntax_tool = "None"
         if g:use_syntax
             " syntax
             if v:version >= 800 || has('nvim')
@@ -263,9 +270,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'vim-syntastic/syntastic'
                 let g:syntax_tool = 'syntastic'
             endif
+        else
+            let g:syntax_tool = "None"
         endif
         " complete engine
-        let g:complete_engine  = "None"
         if g:use_complete && (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
             if HasPlug('youcompleteme') || HasPlug('YCM')
                 if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 || has('nvim'))
@@ -320,6 +328,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     let g:complete_engine = "neocomplcache"
                 endif
             endif
+        else
+            let g:complete_engine  = "None"
         endif
         " enginge plus
         let g:complete_snippet = "None"
@@ -334,7 +344,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " install snippets pluginstall
             Plug 'leoatchina/leoatchina-snippets'
-            if g:python_version && g:use_ultisnips == 1
+            if g:python_version && g:use_ultisnips && g:complete_engine != "neocomplcache"
                 let g:complete_snippet = "ultisnips"
                 Plug 'SirVer/ultisnips'
                 Plug 'honza/vim-snippets'
@@ -531,6 +541,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         unlet g:use_snippet
         unlet g:use_complete
         unlet g:use_syntax
+        unlet g:use_fuzzyfinder
     call plug#end()
     function! GetVersion()
         let l:result=[]
