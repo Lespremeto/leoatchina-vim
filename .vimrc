@@ -1119,12 +1119,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if HasDirectory("fzf.vim")
-        nnoremap <C-g>f :Files<CR>
         nnoremap <C-g>b :Buffers<CR>
         nnoremap <C-g>g :GFiles?<CR>
         nnoremap <C-g>m :Marks<CR>
         nnoremap <C-g>c :Commits<CR>
+        nnoremap <C-g>f :Filetypes<CR>
         nnoremap <C-g>h :History/<CR>
+        nnoremap <C-g>t :Tags<CR>
+        nnoremap <C-g>T :BTags<CR>
+        nnoremap <C-g>M :Maps<CR>
         " Mapping selecting mkppings
         nmap <C-g><tab> <plug>(fzf-maps-n)
         xmap <C-g><tab> <plug>(fzf-maps-x)
