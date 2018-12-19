@@ -220,15 +220,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         endif
         " fuzzy_finder
-        if HasPlug('fzf') && !WINDOWS()
-            let g:fuzzy_finder = 'fzf'
+        if HasPlug('fzf') && (!WINDOWS() || WINDOWS() && executable('fzf'))
             Plug 'junegunn/fzf.vim'
             if executable('fzf')
-                Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+                if !WINDOWS()
+                    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+                endif
             else
                 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
             endif
-        elseif HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
+        endif
+        if HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
             let g:fuzzy_finder = 'denite'
             Plug 'Shougo/denite.nvim'
             Plug 'neoclide/denite-extra'
