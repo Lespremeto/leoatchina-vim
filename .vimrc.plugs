@@ -244,7 +244,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'neoclide/denite-git'
                 Plug 'Shougo/neomru.vim'
                 Plug 'Shougo/neoyank.vim'
-            elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version
+            elseif (HasPlug('leaderf') || HasPlug('LeaderF')) && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && executable('gcc')
                 let g:fuzzy_finder .= 'LeaderF'
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -274,6 +274,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:syntax_tool = "None"
         endif
         " complete engine
+        let g:complete_engine = "None"
         if g:use_complete && (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')) && has('timers')
             if HasPlug('youcompleteme') || HasPlug('YCM')
                 if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 || has('nvim'))
