@@ -849,22 +849,18 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set laststatus=2
         if v:version < 800 && !has('nvim')
             colorscheme wombat256mod
-            if g:status_line == 'lightline'
+            if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'wombat'
             endif
         elseif has('nvim')
             if WINDOWS()
                 colorscheme hybrid
-                if g:status_line == 'airline'
-                    let g:airline_theme='gruvbox'
-                elseif g:status_line == 'lightline'
+                if HasDirectory('lightline.vim')
                     let g:lightline.colorscheme = 'seoul256'
                 endif
             else
                 colorscheme jellybeans
-                if g:status_line == 'airline'
-                    let g:airline_theme='gruvbox'
-                elseif g:status_line == 'lightline'
+                if HasDirectory('lightline.vim')
                     let g:lightline.colorscheme = 'jellybeans'
                 endif
             endif
@@ -872,20 +868,18 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             set termguicolors
             if WINDOWS()
                 colorscheme vim-material
-                if g:status_line == 'airline'
+                if HasDirectory('vim-airline')
                     let g:airline_theme='material'
                 endif
             else
                 colorscheme codedark
-                if g:status_line == 'airline'
+                if HasDirectory('vim-airline')
                     let g:airline_theme='codedark'
                 endif
             endif
         else
             colorscheme gruvbox
-            if g:status_line == 'airline'
-                let g:airline_theme='gruvbox'
-            elseif g:status_line == 'lightline'
+            if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'gruvbox'
             endif
         endif
