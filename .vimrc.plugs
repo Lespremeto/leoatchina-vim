@@ -247,8 +247,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Yggdroot/LeaderF-marks'
             elseif HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
                 let g:fuzzy_finder .= 'denite'
-                Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
                 Plug 'Shougo/denite.nvim'
+                if g:fuzzy_finder == 'fzf'
+                    Plug 'denite_fzf_matcher'
+                else
+                    Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
+                endif
                 Plug 'neoclide/denite-extra'
                 Plug 'neoclide/denite-git'
                 Plug 'Shougo/neomru.vim'
