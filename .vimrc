@@ -223,6 +223,8 @@ function! Alt_meta_map()
     endif
 endfunc
 call Alt_meta_map()
+" Swap
+xnoremap <M-x> <ESC>`.``gvp``P
 " Initialize directories
 function! InitializeDirectories()
     let parent = $HOME
@@ -388,8 +390,6 @@ inoremap <C-a> <Esc>I
 inoremap <expr><silent><C-e> pumvisible()? "\<C-e>":"\<ESC>A"
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-" use full double ctrl+ click
-nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
 " Find merge conflict markers
 nnoremap <C-f>c /\v^[<\|=>]{7}( .*\|$)<CR>
 " and ask which one to jump to
@@ -420,7 +420,7 @@ nnoremap <M-8>           :tabn8<CR>
 nnoremap <M-9>           :tabn9<CR>
 nnoremap <M-0>           :tablast<CR>
 " buffer switch
-nnoremap <localleader><BS> :buffers<CR>
+nnoremap <localleader><BS> :ball<CR>
 nnoremap <localleader>[ :bp<CR>
 nnoremap <localleader>] :bn<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
@@ -441,18 +441,15 @@ cnoremap <S-Insert> <C-R>*
 " Easier horizontal scrolling
 noremap zl zL
 noremap zh zH
+nnoremap zpr :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>:set foldmethod=manual<CR><CR>
+nnoremap ZR zR
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
 noremap <silent>k gk
 " for toggle highlight
-nnoremap <leader>th :set nohlsearch! nohlsearch?<CR>
+nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
 " show clipboard
 nnoremap <leader>tr :reg<Cr>
-nnoremap <S-F6> <ESC>:reg<Cr>
-xnoremap <S-F6> <ESC>:reg<Cr>
-inoremap <S-F6> <ESC>:reg<Cr>
-cnoremap <S-F6> <ESC>:reg<Cr>
-snoremap <S-F6> <ESC>:reg<Cr>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tp <ESC>:set nopaste! nopaste?<CR>
 " toggleFold
@@ -563,6 +560,7 @@ au BufNewFile,BufRead *.pandoc set filetype=pandoc
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
 au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
+au BufEnter *vimrc*,*.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " sepcial setting for different type of files
 au FileType python au BufWritePre <buffer> :%retab
 au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
