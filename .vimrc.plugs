@@ -237,7 +237,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 let g:fuzzy_finder = ''
             endif
-            if (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && executable('gcc') && !HasPlug('ctrlp')
+            if (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && !HasPlug('ctrlp')
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
                 else
