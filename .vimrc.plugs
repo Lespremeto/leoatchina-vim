@@ -283,17 +283,17 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 else
                     echoe "Cannot install coc, smart select a complete_engine."
                 endif
-            elseif HasPlug('deoplete')
-                if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
-                   let g:complete_engine = "deoplete"
-                else
-                    echoe "Cannot install deoplete, smart select a complete_engine."
-                endif
             elseif HasPlug('ncm2')
                 if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800)
                    let g:complete_engine = "ncm2"
                 else
                     echoe "Cannot install ncm2, smart select a complete_engine."
+                endif
+            elseif HasPlug('deoplete')
+                if g:python_version == 3 && (has('nvim-0.3.0') || v:version>=800)
+                   let g:complete_engine = "deoplete"
+                else
+                    echoe "Cannot install deoplete, smart select a complete_engine."
                 endif
             elseif HasPlug('asyncomplete')
                 if has('nvim') || v:version >= 800
@@ -338,7 +338,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if index(s:engines, g:complete_engine) >= 0
                 Plug 'tenfyzhong/CompleteParameter.vim'
             endif
-            " install snippets pluginstall
+            " install snippets
             Plug 'leoatchina/leoatchina-snippets'
             if g:python_version && g:use_ultisnips && g:complete_engine != "neocomplcache"
                 let g:complete_snippet = "ultisnips"
