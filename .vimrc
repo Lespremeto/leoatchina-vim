@@ -1806,8 +1806,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " vim-repl
     if HasDirectory('vim-repl')
-        nnoremap <C-g>t :REPLToggle<Cr>
-        let g:sendtorepl_invoke_key = "<C-g>w"
+        nnoremap <C-b>o :REPLToggle<Cr>
+        let g:sendtorepl_invoke_key = "<C-b>w"
         let g:repl_program = {
             \	"default": "bash",
         \ }
