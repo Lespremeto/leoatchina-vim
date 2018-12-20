@@ -248,6 +248,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 Plug 'ctrlpvim/ctrlp.vim'
                 Plug 'tacahiroy/ctrlp-funky'
+                Plug 'fisadev/vim-ctrlp-cmdpalette'.
+                if g:python_version
+                    Plug 'FelikZ/ctrlp-py-matcher'
+                else
+                    Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
+                endif
                 let g:fuzzy_finder .= 'ctrlp'
             endif
         else

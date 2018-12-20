@@ -1205,6 +1205,22 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+        if HasDirectory("ctrlp-funky")
+            " CtrlP extensions
+            let g:ctrlp_extensions = ['funky']
+            " funky
+            nnoremap <C-k>f :CtrlPFunky<Cr>
+        endif
+        nnoremap <C-k>m :CtrlPMRU<CR>
+        nnoremap <C-k>c :CtrlPCmdPalette<CR>
+        if HasDirectory('ctrlp-py-matcher')
+            let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
+        elseif HasDirectory('fruzzy')
+            let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
+            let g:fruzzy#usenative = 1
+            let g:fruzzy#sortonempty = 1 " default value
+            let g:ctrlp_match_current_file = 1 " to include current file in matches
+        endif
         if executable('ag')
             let s:ctrlp_fallback = 'ag %s --follow --nocolor -nogroup -g ""'
         elseif executable('rg')
@@ -1214,7 +1230,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let s:ctrlp_fallback = 'pt %s --nocolor --nogroup '
         elseif executable('ack')
             let s:ctrlp_fallback = 'ack %s --nocolor -f'
-        " On Windows use "dir" as fallback command.
+        " On Windows use dir as fallback command.
         elseif WINDOWS()
             let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
         else
@@ -1230,16 +1246,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ },
                 \ 'fallback': s:ctrlp_fallback
             \ }
-        if HasDirectory("ctrlp-funky")
-            " CtrlP extensions
-            let g:ctrlp_extensions = ['funky']
-            " funky
-            nnoremap <C-k>f :CtrlPFunky<Cr>
-        endif
-        if HasDirectory('ctrlp-py-matcher')
-            let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-        endif
-        nnoremap <C-k>m :CtrlPMRU<CR>
     endif
     " complete_engine
     set completeopt-=menu
