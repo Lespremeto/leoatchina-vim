@@ -1330,7 +1330,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if HasDirectory('deoplete-rust')
             let g:deoplete#sources#rust#show_duplicates=0
         endif
-
         " omni completion is vim grep
         call deoplete#custom#option('omni_patterns', {
             \ 'java' :'[^. *\t]\.\w*',
