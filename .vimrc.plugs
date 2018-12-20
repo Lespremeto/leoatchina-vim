@@ -162,7 +162,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if (v:version >= 800 || has('nvim')) && HasPlug('syntax')
                 Plug 'maximbaz/lightline-ale'
             endif
-            let g:status_line = 'lightline'
         endif
         " debug tools for python c java ternjs .....
         if HasPlug('debug')
@@ -564,7 +563,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'snippet': g:complete_snippet,
             \ 'fuzzyfinder': g:fuzzy_finder,
             \ 'syntax': g:syntax_tool,
-            \ 'statusline': g:status_line,
             \ 'version' : GetVersion(),
         \ }
         echo string(s:params_dict)
