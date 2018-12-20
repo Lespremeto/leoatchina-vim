@@ -248,7 +248,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             else
                 Plug 'ctrlpvim/ctrlp.vim'
                 Plug 'tacahiroy/ctrlp-funky'
-                Plug 'fisadev/vim-ctrlp-cmdpalette'.
+                Plug 'fisadev/vim-ctrlp-cmdpalette'
                 if g:python_version
                     Plug 'FelikZ/ctrlp-py-matcher'
                 else
