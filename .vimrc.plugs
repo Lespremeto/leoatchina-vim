@@ -61,6 +61,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         elseif OSX()
             Plug 'rizzatti/dash.vim'
+        elseif LINUX() && has('gui_running')
+            Plug 'lambdalisue/vim-fullscreen'
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')

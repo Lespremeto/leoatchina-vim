@@ -651,9 +651,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endfunction
             nmap <silent><M-.> <Esc>:call SetAlpha(+10)<CR>
             nmap <silent><M-,> <Esc>:call SetAlpha(-10)<CR>
-        elseif HasDirectory('vim-fullscreen') && has('nvim')
-            let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
-            let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+        elseif HasDirectory('vim-fullscreen')
+            if has('nvim')
+                let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
+                let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
+            endif
         endif
     endif
     " voom
