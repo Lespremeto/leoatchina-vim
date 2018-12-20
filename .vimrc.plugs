@@ -312,8 +312,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " smart select engine
             if g:complete_engine == "None"
-                if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800)
+                if g:python_version == 3 && has('nvim-0.2.2')
                     let g:complete_engine = "ncm2"
+                elseif g:python_version == 3 && v:version >= 800
+                    let g:complete_engine = "deoplete"
                 elseif has('nvim') || v:version >= 800
                     let g:complete_engine = "asyncomplete"
                 elseif has('lua')
@@ -434,9 +436,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if HasPlug('go') && executable('gocode')
                 Plug 'zchee/deoplete-go', { 'do': 'make'}
             endif
+            " tabnine now not performance good in linux
             if WINDOWS()
                 Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
-            else
+            elseif OSX()
                 Plug 'tbodt/deoplete-tabnine', { 'do': 'bash ./install.sh' }
             endif
         elseif g:complete_engine == "ncm2"
