@@ -1200,7 +1200,42 @@ if has('job') || g:python_version || has('nvim') || has('lua')
        \ }
     elseif HasDirectory('denite.nvim')
         nnoremap <C-k>k :Denite
-        " Define alias
+        " KEY MAPPINGS
+        let s:insert_mode_mappings = [
+              \    ['<C-j>',   '<denite:move_to_next_line>',            'noremap'],
+              \    ['<C-k>', '<denite:move_to_previous_line>',        'noremap'],
+              \    ['<Esc>',   '<denite:enter_mode:normal>',            'noremap'],
+              \    ['<C-c>',   '<denite:enter_mode:normal>',            'noremap'],
+              \    ['<Tab>',   '<denite:assign_next_matched_text>',     'noremap'],
+              \    ['<S-Tab>',   '<denite:assign_previous_matched_text>', 'noremap'],
+              \    ['<Up>',    '<denite:assign_previous_text>',         'noremap'],
+              \    ['<Down>',  '<denite:assign_next_text>',             'noremap'],
+              \    ['<C-r>',   '<denite:redraw>',                       'noremap'],
+              \ ]
+
+        let s:normal_mode_mappings = [
+              \   ["'",     '<denite:toggle_select_down>',      'noremap'],
+              \   ['<C-j>', '<denite:jump_to_next_source>',     'noremap'],
+              \   ['<C-k>', '<denite:jump_to_previous_source>', 'noremap'],
+              \   ['gg',    '<denite:move_to_first_line>',      'noremap'],
+              \   ['tt',    '<denite:do_action:tabopen>',       'noremap'],
+              \   ['ts',    '<denite:do_action:vsplit>',        'noremap'],
+              \   ['tv',    '<denite:do_action:split>',         'noremap'],
+              \   ['q',     '<denite:quit>',                    'noremap'],
+              \   ['r',     '<denite:redraw>',                  'noremap'],
+              \ ]
+
+        for s:m in s:insert_mode_mappings
+            call denite#custom#map('insert', s:m[0], s:m[1], s:m[2])
+        endfor
+        for s:m in s:normal_mode_mappings
+            call denite#custom#map('normal', s:m[0], s:m[1], s:m[2])
+        endfor
+        unlet s:m s:insert_mode_mappings s:normal_mode_mappings
+
+        " Define
+        call denite#custom#var('file/rec', 'command', ['scantree.py'])
+
         call denite#custom#alias('source', 'file/rec/git', 'file/rec')
         call denite#custom#var('file/rec/git', 'command',
               \ ['git', 'ls-files', '-co', '--exclude-standard'])
@@ -1210,88 +1245,27 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " Change default prompt
         call denite#custom#option('default', 'prompt', '>')
         " Change ignore_globs
-        call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
-              \ [ '.git/', '.ropeproject/', '__pycache__/',
-              \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
-
-        " Change mappings.
-        call denite#custom#map(
-              \ 'insert',
-              \ '<C-j>',
-              \ '<denite:move_to_next_line>',
-              \ 'noremap'
-              \)
-        call denite#custom#map(
-              \ 'insert',
-              \ '<C-k>',
-              \ '<denite:move_to_previous_line>',
-              \ 'noremap'
-              \)
-
+        call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+            \ [ '*~', '*.o', '*.exe', '*.bak',
+            \ '.DS_Store', '*.pyc', '*.sw[po]', '*.class',
+            \ '.hg/', '.git/', '.bzr/', '.svn/',
+            \ 'node_modules/', 'bower_components/', 'tmp/', 'log/', 'vendor/ruby',
+            \ '.idea/', 'dist/',
+            \ 'tags', 'tags-*'])
         " Change matchers.
         call denite#custom#source(
             \ 'file_mru', 'matchers', ['matcher/fuzzy', 'matcher/project_files'])
 
         " Change sorters.
         call denite#custom#source(
-            \ 'file/rec', 'sorters', ['sorter/sublime'])
+            \ '_', 'sorters', ['sorter/reverse'])
         " Use fzf for file browser
         if HasDirectory('fzf.vim')
-
-        " Ag command on grep source
-        elseif executable('ag')
-            call denite#custom#var('grep', 'command', ['ag'])
-            call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
-            call denite#custom#var('grep', 'recursive_opts', [])
-            call denite#custom#var('grep', 'pattern_opt', [])
-            call denite#custom#var('grep', 'separator', ['--'])
-            call denite#custom#var('grep', 'final_opts', [])
-            " Change file/rec command.
-            call denite#custom#var('file/rec', 'command',
-                \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-        " Ack command on grep source
-        elseif executable('ack')
-            call denite#custom#var('grep', 'command', ['ack'])
-            call denite#custom#var('grep', 'default_opts',
-                    \ ['--ackrc', $HOME.'/.ackrc', '-H', '-i',
-                    \  '--nopager', '--nocolor', '--nogroup', '--column'])
-            call denite#custom#var('grep', 'recursive_opts', [])
-            call denite#custom#var('grep', 'pattern_opt', ['--match'])
-            call denite#custom#var('grep', 'separator', ['--'])
-            call denite#custom#var('grep', 'final_opts', [])
-            " Change file/rec command.
-            call denite#custom#var('file/rec', 'command',
-                \ ['ack', '--nocolor', '-f'])
-        " Ripgrep command on grep source
-        elseif executable('rg')
-            call denite#custom#var('grep', 'command', ['rg'])
-            call denite#custom#var('grep', 'default_opts',
-                    \ ['-i', '--vimgrep', '--no-heading'])
-            call denite#custom#var('grep', 'recursive_opts', [])
-            call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-            call denite#custom#var('grep', 'separator', ['--'])
-            call denite#custom#var('grep', 'final_opts', [])
-            " For ripgrep
-            " Note: It is slower than ag
-            call denite#custom#var('file/rec', 'command',
-                \ ['rg', '--files', '--glob', '!.git'])
-        " Pt command on grep source
-        elseif executable('pt')
-            call denite#custom#var('grep', 'command', ['pt'])
-            call denite#custom#var('grep', 'default_opts',
-                    \ ['-i', '--nogroup', '--nocolor', '--smart-case'])
-            call denite#custom#var('grep', 'recursive_opts', [])
-            call denite#custom#var('grep', 'pattern_opt', [])
-            call denite#custom#var('grep', 'separator', ['--'])
-            call denite#custom#var('grep', 'final_opts', [])
-            " For Pt(the platinum searcher)
-            " NOTE: It also supports windows.
-            call denite#custom#var('file/rec', 'command',
-                \ ['pt', '--follow', '--nocolor', '--nogroup',
-                \  (has('win32') ? '-g:' : '-g='), ''])
-        else
-            call denite#custom#var('file/rec', 'command', ['scantree.py'])
+            " TODO fzf and fruzzy config
         endif
+        call denite#custom#var('file/rec', 'command',
+            \ ['scantree.py', '--flag-that-tells-scan-tree-which-patterns-to-ignore=node_modules,bower_components,tmp,log,\.git\/'])
+
         " Custom action
         call denite#custom#action('file', 'test',
               \ {context -> execute('let g:foo = 1')})
