@@ -226,7 +226,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " fuzzy_finder
         if g:use_fuzzyfinder
-            if !WINDOWS() && HasPlug('fzf')
+            if !WINDOWS()
                 let g:fuzzy_finder = 'fzf '
                 Plug 'junegunn/fzf.vim'
                 if executable('fzf')
@@ -238,17 +238,16 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 let g:fuzzy_finder = ''
             endif
             if HasPlug('leaderf') && (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && executable('gcc')
-                let g:fuzzy_finder .= 'LeaderF'
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
                 else
                     Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
                 endif
                 Plug 'Yggdroot/LeaderF-marks'
+                let g:fuzzy_finder .= 'LeaderF'
             elseif HasPlug('denite') && (v:version >= 800 || has('nvim-0.3.0'))  && g:python_version == 3
-                let g:fuzzy_finder .= 'denite'
                 Plug 'Shougo/denite.nvim'
-                if g:fuzzy_finder == 'fzf'
+                if g:fuzzy_finder == 'fzf '
                     Plug 'denite_fzf_matcher'
                 else
                     Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
@@ -257,10 +256,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'neoclide/denite-git'
                 Plug 'Shougo/neomru.vim'
                 Plug 'Shougo/neoyank.vim'
+                let g:fuzzy_finder .= 'denite'
             else
-                let g:fuzzy_finder .= 'ctrlp'
                 Plug 'ctrlpvim/ctrlp.vim'
                 Plug 'tacahiroy/ctrlp-funky'
+                let g:fuzzy_finder .= 'ctrlp'
             endif
         else
             let g:fuzzy_finder = "None"

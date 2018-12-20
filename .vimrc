@@ -1174,9 +1174,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'ctrl-x': 'split',
             \ 'ctrl-v': 'vsplit'}
     endif
-    if HasDirectory('denite.nvim')
-        " TODO:config it here
-    elseif HasDirectory("LeaderF")
+    if HasDirectory("LeaderF")
         let g:Lf_ShortcutF = '<C-k>j'
         let g:Lf_ReverseOrder = 1
         let g:Lf_PythonVersion = g:python_version
@@ -1200,6 +1198,124 @@ if has('job') || g:python_version || has('nvim') || has('lua')
            \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
            \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
        \ }
+    elseif HasDirectory('denite.nvim')
+        nnoremap <C-k>k :Denite
+        " Define alias
+        call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+        call denite#custom#var('file/rec/git', 'command',
+              \ ['git', 'ls-files', '-co', '--exclude-standard'])
+        call denite#custom#alias('source', 'file/rec/py', 'file/rec')
+        call denite#custom#var('file/rec/py', 'command',['scantree.py'])
+
+        " Change default prompt
+        call denite#custom#option('default', 'prompt', '>')
+        " Change ignore_globs
+        call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+              \ [ '.git/', '.ropeproject/', '__pycache__/',
+              \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+
+        " Change mappings.
+        call denite#custom#map(
+              \ 'insert',
+              \ '<C-j>',
+              \ '<denite:move_to_next_line>',
+              \ 'noremap'
+              \)
+        call denite#custom#map(
+              \ 'insert',
+              \ '<C-k>',
+              \ '<denite:move_to_previous_line>',
+              \ 'noremap'
+              \)
+
+        " Change matchers.
+        call denite#custom#source(
+            \ 'file_mru', 'matchers', ['matcher/fuzzy', 'matcher/project_files'])
+
+        " Change sorters.
+        call denite#custom#source(
+            \ 'file/rec', 'sorters', ['sorter/sublime'])
+        " Use fzf for file browser
+        if HasDirectory('fzf.vim')
+
+        " Ag command on grep source
+        elseif executable('ag')
+            call denite#custom#var('grep', 'command', ['ag'])
+            call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', [])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
+            " Change file/rec command.
+            call denite#custom#var('file/rec', 'command',
+                \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+        " Ack command on grep source
+        elseif executable('ack')
+            call denite#custom#var('grep', 'command', ['ack'])
+            call denite#custom#var('grep', 'default_opts',
+                    \ ['--ackrc', $HOME.'/.ackrc', '-H', '-i',
+                    \  '--nopager', '--nocolor', '--nogroup', '--column'])
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', ['--match'])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
+            " Change file/rec command.
+            call denite#custom#var('file/rec', 'command',
+                \ ['ack', '--nocolor', '-f'])
+        " Ripgrep command on grep source
+        elseif executable('rg')
+            call denite#custom#var('grep', 'command', ['rg'])
+            call denite#custom#var('grep', 'default_opts',
+                    \ ['-i', '--vimgrep', '--no-heading'])
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
+            " For ripgrep
+            " Note: It is slower than ag
+            call denite#custom#var('file/rec', 'command',
+                \ ['rg', '--files', '--glob', '!.git'])
+        " Pt command on grep source
+        elseif executable('pt')
+            call denite#custom#var('grep', 'command', ['pt'])
+            call denite#custom#var('grep', 'default_opts',
+                    \ ['-i', '--nogroup', '--nocolor', '--smart-case'])
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', [])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
+            " For Pt(the platinum searcher)
+            " NOTE: It also supports windows.
+            call denite#custom#var('file/rec', 'command',
+                \ ['pt', '--follow', '--nocolor', '--nogroup',
+                \  (has('win32') ? '-g:' : '-g='), ''])
+        else
+            call denite#custom#var('file/rec', 'command', ['scantree.py'])
+        endif
+        " Custom action
+        call denite#custom#action('file', 'test',
+              \ {context -> execute('let g:foo = 1')})
+        call denite#custom#action('file', 'test2',
+              \ {context -> denite#do_action(
+              \  context, 'open', context['targets'])})
+        " Add custom menus
+        let s:menus = {}
+        let s:menus.zsh = {
+            \ 'description': 'Edit your import zsh configuration'
+            \ }
+        let s:menus.zsh.file_candidates = [
+            \ ['zshrc', '~/.zshrc'],
+            \ ]
+
+        let s:menus.my_commands = {
+            \ 'description': 'Example commands'
+            \ }
+        let s:menus.my_commands.command_candidates = [
+            \ ['Split the window', 'vnew'],
+            \ ['Open zsh menu', 'Denite menu:zsh'],
+            \ ]
+
+        call denite#custom#var('menu', 'menus', s:menus)
     elseif HasDirectory("ctrlp.vim")
         let g:ctrlp_map = '<C-k>j'
         let g:ctrlp_cmd = 'CtrlP'
@@ -1208,14 +1324,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
         if executable('ag')
-            let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
-        elseif executable('ack-grep')
-            let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
+            let s:ctrlp_fallback = 'ag %s --follow --nocolor -nogroup -g ""'
         elseif executable('ack')
             let s:ctrlp_fallback = 'ack %s --nocolor -f'
         elseif executable('rg')
             set grepprg=rg\ --color=never
-            let s:ctrlp_fallback = 'rg %s --color=never --glob ""'
+            let s:ctrlp_fallback = 'rg %s --color=never --files --glob "!.git"'
+        elseif executable('pt')
+            let s:ctrlp_fallback = 'pt %s --nocolor --nogroup '
         " On Windows use "dir" as fallback command.
         elseif WINDOWS()
             let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
