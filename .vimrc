@@ -1198,98 +1198,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
            \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
            \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
        \ }
-    elseif HasDirectory('denite.nvim')
-        nnoremap <C-k>k :Denite
-        " KEY MAPPINGS
-        let s:insert_mode_mappings = [
-              \    ['<C-j>',   '<denite:move_to_next_line>',            'noremap'],
-              \    ['<C-k>', '<denite:move_to_previous_line>',        'noremap'],
-              \    ['<Esc>',   '<denite:enter_mode:normal>',            'noremap'],
-              \    ['<C-c>',   '<denite:enter_mode:normal>',            'noremap'],
-              \    ['<Tab>',   '<denite:assign_next_matched_text>',     'noremap'],
-              \    ['<S-Tab>',   '<denite:assign_previous_matched_text>', 'noremap'],
-              \    ['<Up>',    '<denite:assign_previous_text>',         'noremap'],
-              \    ['<Down>',  '<denite:assign_next_text>',             'noremap'],
-              \    ['<C-r>',   '<denite:redraw>',                       'noremap'],
-              \ ]
-
-        let s:normal_mode_mappings = [
-              \   ["'",     '<denite:toggle_select_down>',      'noremap'],
-              \   ['<C-j>', '<denite:jump_to_next_source>',     'noremap'],
-              \   ['<C-k>', '<denite:jump_to_previous_source>', 'noremap'],
-              \   ['gg',    '<denite:move_to_first_line>',      'noremap'],
-              \   ['tt',    '<denite:do_action:tabopen>',       'noremap'],
-              \   ['ts',    '<denite:do_action:vsplit>',        'noremap'],
-              \   ['tv',    '<denite:do_action:split>',         'noremap'],
-              \   ['q',     '<denite:quit>',                    'noremap'],
-              \   ['r',     '<denite:redraw>',                  'noremap'],
-              \ ]
-
-        for s:m in s:insert_mode_mappings
-            call denite#custom#map('insert', s:m[0], s:m[1], s:m[2])
-        endfor
-        for s:m in s:normal_mode_mappings
-            call denite#custom#map('normal', s:m[0], s:m[1], s:m[2])
-        endfor
-        unlet s:m s:insert_mode_mappings s:normal_mode_mappings
-
-        " Define
-        call denite#custom#var('file/rec', 'command', ['scantree.py'])
-
-        call denite#custom#alias('source', 'file/rec/git', 'file/rec')
-        call denite#custom#var('file/rec/git', 'command',
-              \ ['git', 'ls-files', '-co', '--exclude-standard'])
-        call denite#custom#alias('source', 'file/rec/py', 'file/rec')
-        call denite#custom#var('file/rec/py', 'command',['scantree.py'])
-
-        " Change default prompt
-        call denite#custom#option('default', 'prompt', '>')
-        " Change ignore_globs
-        call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-            \ [ '*~', '*.o', '*.exe', '*.bak',
-            \ '.DS_Store', '*.pyc', '*.sw[po]', '*.class',
-            \ '.hg/', '.git/', '.bzr/', '.svn/',
-            \ 'node_modules/', 'bower_components/', 'tmp/', 'log/', 'vendor/ruby',
-            \ '.idea/', 'dist/',
-            \ 'tags', 'tags-*'])
-        " Change matchers.
-        call denite#custom#source(
-            \ 'file_mru', 'matchers', ['matcher/fuzzy', 'matcher/project_files'])
-
-        " Change sorters.
-        call denite#custom#source(
-            \ '_', 'sorters', ['sorter/reverse'])
-        " Use fzf for file browser
-        if HasDirectory('fzf.vim')
-            " TODO fzf and fruzzy config
-        endif
-        call denite#custom#var('file/rec', 'command',
-            \ ['scantree.py', '--flag-that-tells-scan-tree-which-patterns-to-ignore=node_modules,bower_components,tmp,log,\.git\/'])
-
-        " Custom action
-        call denite#custom#action('file', 'test',
-              \ {context -> execute('let g:foo = 1')})
-        call denite#custom#action('file', 'test2',
-              \ {context -> denite#do_action(
-              \  context, 'open', context['targets'])})
-        " Add custom menus
-        let s:menus = {}
-        let s:menus.zsh = {
-            \ 'description': 'Edit your import zsh configuration'
-            \ }
-        let s:menus.zsh.file_candidates = [
-            \ ['zshrc', '~/.zshrc'],
-            \ ]
-
-        let s:menus.my_commands = {
-            \ 'description': 'Example commands'
-            \ }
-        let s:menus.my_commands.command_candidates = [
-            \ ['Split the window', 'vnew'],
-            \ ['Open zsh menu', 'Denite menu:zsh'],
-            \ ]
-
-        call denite#custom#var('menu', 'menus', s:menus)
     elseif HasDirectory("ctrlp.vim")
         let g:ctrlp_map = '<C-k>j'
         let g:ctrlp_cmd = 'CtrlP'
@@ -1299,13 +1207,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
         if executable('ag')
             let s:ctrlp_fallback = 'ag %s --follow --nocolor -nogroup -g ""'
-        elseif executable('ack')
-            let s:ctrlp_fallback = 'ack %s --nocolor -f'
         elseif executable('rg')
             set grepprg=rg\ --color=never
             let s:ctrlp_fallback = 'rg %s --color=never --files --glob "!.git"'
         elseif executable('pt')
             let s:ctrlp_fallback = 'pt %s --nocolor --nogroup '
+        elseif executable('ack')
+            let s:ctrlp_fallback = 'ack %s --nocolor -f'
         " On Windows use "dir" as fallback command.
         elseif WINDOWS()
             let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
