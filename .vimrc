@@ -1183,6 +1183,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         nnoremap <C-k>m :CtrlPMRU<CR>
         nnoremap <C-k>c :CtrlPCmdPalette<CR>
+        nnoremap <C-k>b :CtrlPBuffer<CR>
         if HasDirectory('ctrlp-py-matcher')
             let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
         elseif HasDirectory('fruzzy')
