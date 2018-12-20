@@ -1146,20 +1146,28 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     if HasDirectory("LeaderF")
         let g:Lf_ShortcutF = '<C-k>j'
+        let g:Lf_ShortcutB = '<C-k>b'
         let g:Lf_ReverseOrder = 1
         let g:Lf_PythonVersion = g:python_version
         let g:Lf_CacheDirectory = expand('$HOME/.cache/leaderf')
         if !isdirectory(g:Lf_CacheDirectory)
             silent! call mkdir(g:Lf_CacheDirectory, 'p')
         endif
+        let g:Lf_WildIgnore = {
+            \ 'dir': ['.svn','.git','.hg'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \}
         nnoremap <C-k>l :LeaderfLine<cr>
         nnoremap <C-k>t :LeaderfBufTag<cr>
         nnoremap <C-k>m :LeaderfMru<cr>
         nnoremap <C-k>f :LeaderfFunction!<cr>
         nnoremap <C-k>k :Leaderf
+        nnoremap <C-k>h :LeaderfHistoryCmd<Cr>
+        nnoremap <C-k>H :LeaderfHistory
         nnoremap <C-k>F :LeaderfF
         nnoremap <C-k>M :LeaderfM
         nnoremap <C-k>B :LeaderfB
+        nnoremap <C-k>C :LeaderfColorscheme<Cr>
         let g:Lf_NormalMap = {
            \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
            \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
@@ -1173,8 +1181,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ar'
         let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+              \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+              \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
         if HasDirectory("ctrlp-funky")
             " CtrlP extensions
             let g:ctrlp_extensions = ['funky']
@@ -1183,6 +1191,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         nnoremap <C-k>m :CtrlPMRU<CR>
         nnoremap <C-k>c :CtrlPCmdPalette<CR>
+        nnoremap <C-k>b :CtrlPBuffer<CR>
         if HasDirectory('ctrlp-py-matcher')
             let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
         elseif HasDirectory('fruzzy')
