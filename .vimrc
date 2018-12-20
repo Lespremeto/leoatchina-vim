@@ -745,39 +745,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:bufferline_fixed_index =  0
     endif
     " statusline
-    if HasDirectory('vim-airline')
-        let g:airline_powerline_fonts = 0
-        let g:airline_symbols_ascii = 1
-        let g:airline_exclude_preview = 0
-        let g:airline_highlighting_cache = 1
-        let g:airline#extensions#whiteSpace#enabled = 0
-        " tab序号
-        let g:airline#extensions#tabline#tab_nr_type = 1
-        let g:airline#extensions#tabline#enabled = 1
-        " disable buffers on topright
-        let g:airline#extensions#tabline#tabs_label = ''
-        let g:airline#extensions#tabline#show_splits = 0
-        let g:airline#extensions#tabline#show_close_button = 0
-        let g:airline#extensions#tabline#buffer_nr_show = 0
-        " shw full_path of the file
-        let g:airline_section_c = "\ %F"
-        " syntastic
-        let g:airline#extensions#syntastic#enabled = 1
-        if !exists('g:airline_symbols')
-            let g:airline_symbols = {}
-            let g:airline_symbols.crypt = '🔒'
-            let g:airline_symbols.linenr = '☰'
-            let g:airline_symbols.maxlinenr = ''
-            let g:airline_symbols.branch = '⎇'
-            let g:airline_symbols.paste = 'ρ'
-            let g:airline_symbols.notexists = '∄'
-            let g:airline_symbols.whiteSpace = 'Ξ'
-            let g:airline_left_sep = '▶'
-            let g:airline_left_alt_sep = '❯'
-            let g:airline_right_sep = '◀'
-            let g:airline_right_alt_sep = '❮'
-        endif
-    elseif has('statusline')
+    if has('statusline')
         if HasDirectory("lightline.vim")
             let g:lightline = {
                 \ 'active': {
@@ -868,13 +836,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             set termguicolors
             if WINDOWS()
                 colorscheme vim-material
-                if HasDirectory('vim-airline')
-                    let g:airline_theme='material'
+                if HasDirectory('lightline.vim')
+                    let g:lightline.colorscheme = 'material'
                 endif
             else
                 colorscheme codedark
-                if HasDirectory('vim-airline')
-                    let g:airline_theme='codedark'
+                if HasDirectory('lightline.vim')
+                    let g:lightline.colorscheme = 'PaperColor'
                 endif
             endif
         else

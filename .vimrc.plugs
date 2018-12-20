@@ -156,16 +156,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " statuslines
         if has('statusline')
             Plug 'bling/vim-bufferline'
-            if (v:version >= 800 || has('nvim')) && has('gui_running')
-                Plug 'vim-airline/vim-airline'
-                let g:status_line = 'airline'
-            else
-                Plug 'itchyny/lightline.vim'
-                if (v:version >= 800 || has('nvim')) && HasPlug('syntax')
-                    Plug 'maximbaz/lightline-ale'
-                endif
-                let g:status_line = 'lightline'
+            Plug 'itchyny/lightline.vim'
+            if (v:version >= 800 || has('nvim')) && HasPlug('syntax')
+                Plug 'maximbaz/lightline-ale'
             endif
+            let g:status_line = 'lightline'
         endif
         " debug tools for python c java ternjs .....
         if HasPlug('debug')
