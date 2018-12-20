@@ -842,7 +842,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             else
                 colorscheme codedark
                 if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'PaperColor'
+                    let g:lightline.colorscheme = 'Tomorrow_Night'
                 endif
             endif
         else
