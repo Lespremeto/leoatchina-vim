@@ -264,6 +264,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             elseif v:version == 704 && has('patch1486')
                 Plug 'vim-syntastic/syntastic'
                 let g:syntax_tool = 'syntastic'
+            else
+                let g:syntax_tool = "None"
             endif
         else
             let g:syntax_tool = "None"
@@ -315,6 +317,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
             elseif HasPlug('neocomplcache')
                 let g:complete_engine = "neocomplcache"
+            else
+                let s:smart_engine_select = 1
             endif
             " smart select engine
             if s:smart_engine_select
@@ -332,7 +336,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             unlet s:smart_engine_select
         else
-            let g:complete_engine  = "None"
+            let g:complete_engine = "None"
         endif
         " enginge plus
         if g:complete_engine != "None" && g:use_snippet && (v:version >= 704 || has('nvim'))
