@@ -223,7 +223,7 @@ function! Alt_meta_map()
     endif
 endfunc
 call Alt_meta_map()
-" Swap
+" Swap two words with M-z
 xnoremap <M-z> <ESC>`.``gvp``P
 " Initialize directories
 function! InitializeDirectories()
@@ -493,9 +493,9 @@ set autoindent                  " Indent at the same level of the previous line
 set nojoinspaces                " Prevents inserting two Spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
-" 不生成back文件
+" 不生成back和swap件
 set nobackup
-"set noswapfile
+set noswapfile
 set nowritebackup
 "set noundofile
 " 关闭拼写检查
@@ -596,13 +596,13 @@ function! g:Tools_PreviousCursor(mode)
     elseif a:mode == 1
         exec "normal! \<c-d>"
     elseif a:mode == 2
-        exec "normal! \<c-y>"
-    elseif a:mode == 3
         exec "normal! \<c-e>"
+    elseif a:mode == 3
+        exec "normal! \<c-y>"
     elseif a:mode == 4
-        exec "normal! ".winheight('.')."\<c-y>"
-    elseif a:mode == 5
         exec "normal! ".winheight('.')."\<c-e>"
+    elseif a:mode == 5
+        exec "normal! ".winheight('.')."\<c-y>"
     elseif a:mode == 6
         exec "normal! k"
     elseif a:mode == 7
@@ -616,6 +616,8 @@ function! g:Tools_PreviousCursor(mode)
 endfunc
 nnoremap <silent> <M-u> :call Tools_PreviousCursor(0)<cr>
 nnoremap <silent> <M-d> :call Tools_PreviousCursor(1)<Cr>
+nnoremap <silent> <M-e> :call Tools_PreviousCursor(2)<cr>
+nnoremap <silent> <M-y> :call Tools_PreviousCursor(3)<Cr>
 " Stupid Shift key fixes
 if has("user_commands")
     command! -bang -nargs=* -complete=file E e<bang> <args>
