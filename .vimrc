@@ -1276,8 +1276,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if !has('nvim')
             let g:deoplete#enable_yarp = 1
         endif
+        if HasDirectory('deoplete-tabnine')
+            call deoplete#custom#source('tabnine', 'rank', 500)
+        endif
         if HasDirectory('ultisnips')
-            call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
+            call deoplete#custom#source('ultisnips', 'rank', 1000)
         endif
         if HasDirectory('deoplete-jedi')
             let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
