@@ -450,6 +450,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if HasPlug('gtags')
                 Plug 'ncm2/gtags'
             endif
+            if HasPlug('php')
+                Plug 'phpactor/ncm2-phpactor'
+            endif
             if HasPlug('html')
                 Plug 'ncm2/ncm2-cssomni', {'for':['css', 'css3']}
             endif
@@ -463,7 +466,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-go', {'for':'go'}
             endif
             if HasPlug('java')
-                Plug 'ObserverOfTime/ncm2-jc2/', {'for': 'java'}
+                Plug 'ObserverOfTime/ncm2-jc2', {'for': 'java'}
             endif
             " LCN
             if exists('g:LanguageClient_serverCommands') && has('nvim')
