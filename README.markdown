@@ -61,7 +61,7 @@
   * [nerdtree](#nerdtree)
   * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
   * [undotree](#undotree)
-  * [airline and lightline](#airline-and-lightline)
+  * [lightline](#lightline)
   * [fugitive](#fugitive)
   * [bioSyntax-vim](#biosyntax-vim)
   * [nerdcommenter](#nerdcommenter)
@@ -266,7 +266,7 @@ The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `
 
 And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `neovim` , `~/.mvimrc.local` for `macvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
 
-The typical variables that could be add to `g:plug_groups` are `go`,`airline`, `youcompleteme`, `fzf`, `coc`, etc.
+The typical variables that could be add to `g:plug_groups` are `go`, `youcompleteme`, `fzf`, `coc`, etc.
 
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
 
@@ -309,8 +309,8 @@ Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), ke
     let g:AutoPairsShortcutBackInsert = "<C-l>i"
 ```
 
-## Complete Engines, vim 7.4+ is required
-**6** code-completion engines:`deoplete`, `coc`, `asyncomplete`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
+## Complete Engines
+**7** code-completion engines:`ncm2`, `deoplete`, `coc`, `asyncomplete`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
 ### Smart Engines Selection
 There is variable `"smartcomplete"` in `"g:plug_groups"` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no python`, `windows` or `linux` or `mac`.
@@ -331,10 +331,12 @@ It is such a complex to make all the completion shortcuts compatible, finally I 
 I have tried `ncm2`, `completor`, `mucompletor`, `supertab` but not keep them for some different reasons.
 
 ### [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
-Needs `vim` with `+python` or `+python3`, and `g++` installed
+Needs `neovim/vim` with `+python` or `+python3`, and `g++` installed
 
 ### [coc](https://github.com/neoclide/coc.nvim)
-Needs `neovim` with `node` and `yarn` installed in system
+Needs `neovim/vim8` with `node` and `yarn` installed in system
+
+### [ncm2](https://github.com/ncm2/ncm2)
 
 ### [deoplete](https://github.com/Shougo/deoplete.nvim)
 Needs `vim8/neovim` with `+python3`
@@ -455,7 +457,6 @@ perl snippets and syntax
        \ 'jump_to_def_tabnew': '<C-w><C-\>',
        \}
 ```
-
 ### html
 ### javascript
 ### rust
@@ -471,8 +472,8 @@ need `has("ctags")`. Togglekey:`<Leader>tt`
 ## [undotree](https://github.com/mbbill/undotree)
 Just as it name. Togglekey:`<Leader>u`
 
-## [airline](https://github.com/vim-airline-themes) and [lightline](https://github.com/itchyny/lightline.vim)
-Beautifull statusline for advanced information of workspace, `airline` show more context than other statusline plugins, and more pleasing to eye. But it is heavy, so if **no** `"airline"` in `~/.vimrc.local`, `lightline` will work.
+## [lightline](https://github.com/itchyny/lightline.vim)
+Beautifull statusline for advanced information of workspace.
 
 ## [fugitive](https://github.com/tpope/vim-fugitive)
 Git plugin. `gc` for `Gcommit`, and `+` for `:Git `
@@ -484,14 +485,12 @@ As a bionformtion worker, this plug is use in view bam/sam/vcf. need add `bio` i
 Hackable plugin, the most import key is ** `<Leader>c<Space>` **|NERDComToggleComment|**
 You can get other shortcuts via the link.
 
-## Browser tools
+## fuzzy finder
 `C-k j` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
 You can install only one of them , by write the plugins name in `~/.vimrc.local`. `CtrlP` is the default one.
 
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
 fzf runs asynchronously and can be orders of magnitude faster than similar Vim plugins.
-### [denite](https://github.com/Shougo/denite.nvim)
-denite is are dark, complex but powerfully browser_tool
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
 This plugin is mainly used for locating files, buffers, mrus, tags in large project.
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
