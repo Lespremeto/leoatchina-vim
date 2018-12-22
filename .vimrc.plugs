@@ -101,11 +101,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'Yggdroot/indentLine'
         endif
         " git
-        Plug 'tpope/vim-fugitive'
-        Plug 'Xuyuanp/nerdtree-git-plugin'
         if v:version < 702
             Plug 'tpope/vim-git'
         endif
+        Plug 'tpope/vim-fugitive'
+        Plug 'sodapopcan/vim-twiggy'
+        Plug 'Xuyuanp/nerdtree-git-plugin'
         " text
         Plug 'tpope/vim-surround'
         Plug 'tpope/vim-repeat'

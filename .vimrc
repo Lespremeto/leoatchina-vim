@@ -646,6 +646,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if HasDirectory("vim-signify")
         endif
     endif
+    if HasPlug("vim-twiggy")
+        nnoremap <leader>g<Cr> ::Twiggy<Cr>
+        let g:twiggy_group_locals_by_slash = 0
+        let g:twiggy_local_branch_sort = 'mru'
+        let g:twiggy_remote_branch_sort = 'date'
+    endif
     " startify
     if HasDirectory("vim-startify")
         let g:startify_custom_header = [
