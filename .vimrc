@@ -1031,6 +1031,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-g>t :BTags<CR>
         nnoremap <C-g>C :Colors<CR>
         nnoremap <C-g>M :Maps<CR>
+        nnoremap <C-g>H :History
         " Mapping selecting mkppings
         nmap <C-g><tab> <plug>(fzf-maps-n)
         xmap <C-g><tab> <plug>(fzf-maps-x)
