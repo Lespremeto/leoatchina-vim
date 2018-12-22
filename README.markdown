@@ -159,9 +159,8 @@ OR
 # How it works
 After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to its config file `~/.config/nvim/init.vim` in Linux ) which links to the `.vimrc` file in the `leoatchina-vim` folder.
 
-
 # Main changes from spf13
-* use `vim-plug` instead of `vundle`, faster and smarter
+* use `vim-plug` instead of `vundle`, faster and smarter, two ex cmd `PlugRe` for uninstal/install plugins, `PlugNew` for uninstall/update plugins simutanously.
 * totally simplified, delete `fork`,`before` files ,delete lots of variables for feature settings
 * just as I have mentioned before, the link is from the cloned folder
 * not support **XP** any more
@@ -183,7 +182,7 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
 * `<Cr>` for bracket jump
 * `c-a` to the head of a line, `c-e` to end in visual/insert mode, compatible with linux.
 * `c-f`, `c-b`, `c-h`, `c-l`, `g` work like `Leader` key in normal mode
-* `c-f` to right `c-b` to left in insert mode
+* `c-f` to right and `c-b` to left in insert mode
 * `gf` to end of sentence, `gb` to the beginning in normal/visual mode
 * `c-e` to end of sentence, `c-a` to the beginning in insert/command mode
 * `c-k j` invoke browser tools `fzf` or `LeaderF` or `Ctrlp`
@@ -253,6 +252,12 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
     - nnoremap <Leader><Right>:vertical resize +3<CR>
     - vnoremap < <gv
     - vnoremap > >gv
+* `Alt` key remap
+    - according to [skywind3000](http://www.skywind.me/blog/archives/1846)
+    - even mapped for macvim
+    - you should `map your alt key to Esc` in you `xshell`,`securetcrt`,`mobaxterm`,`iterm2`,`terminal`, etc.
+    - `Alt` is different from `Alt+Shift`,  not like `ctrl` and `ctrl+shift`
+
 
 # Plugins and their shortcuts
 Hereafter are the plugins that I collected, if you want details for them, click it.
@@ -261,8 +266,10 @@ At first I planned to detailly introduce every plugins, however, first it is eas
 So , I simplly write something about the plugins, sometime only list the shortcut.
 
 # .local file
-The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists, the `local` file contains an import variable called `g:plug_groups` for the supporting features for vim, and you do `:PlugRe`l, the plugins will change. The default contents of `.vimrc.local` is:
-> let g:plug_groups=['leaderf', 'bio']
+The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists.
+This `local` file contains an import variable called `g:plug_groups` for the supported features for vim,  the plugins will change.
+The default contents of `.vimrc.local` is:
+> let g:plug_groups=['bio']
 
 And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `neovim` , `~/.mvimrc.local` for `macvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
 
