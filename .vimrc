@@ -1,4 +1,3 @@
-n find spf13's origin config at http://spf13.com
 set nocompatible
 if v:version < 700
     echoe 'This vimrc requires Vim 7.0 or later.'
