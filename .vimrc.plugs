@@ -105,7 +105,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'tpope/vim-git'
         endif
         Plug 'tpope/vim-fugitive'
-        Plug 'sodapopcan/vim-twiggy'
         Plug 'Xuyuanp/nerdtree-git-plugin'
         " text
         Plug 'tpope/vim-surround'
