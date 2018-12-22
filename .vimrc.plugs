@@ -66,7 +66,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " list only the plugin groups you will use
         if !exists('g:plug_groups')
-            let g:plug_groups=['leaderf', 'bio']
+            let g:plug_groups=['bio']
         endif
         function! HasDirectory(dir)
             return isdirectory(expand($PLUG_PATH."/".a:dir))

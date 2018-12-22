@@ -1,4 +1,4 @@
-" You can find spf13's origin config at http://spf13.com
+n find spf13's origin config at http://spf13.com
 set nocompatible
 if v:version < 700
     echoe 'This vimrc requires Vim 7.0 or later.'
@@ -623,7 +623,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " markdown toc
     if HasDirectory('vim-markdown-toc')
-        let g:vmt_auto_update_on_save = 0
+        let g:vmt_auto_update_on_save = 1
         let g:vmt_cycle_list_item_markers = 0
     endif
     " markdown preview
