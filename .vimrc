@@ -1633,6 +1633,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <M-/> :PreviewSignature!<Cr>
         nnoremap <M-,> :PreviewScroll -1<cr>
         nnoremap <M-.> :PreviewScroll +1<cr>
+        nnoremap <M--> :PreviewClose<Cr>
         nnoremap <M-g> :PreviewGoto<Space>
         nnoremap <M-f> :PreviewFile<Space>
         nnoremap <M-F> :PreviewQuickfix<Space>
