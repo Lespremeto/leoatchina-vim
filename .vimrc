@@ -397,6 +397,8 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
 nnoremap <Leader>WQ :wa<CR>:q<CR>
 " quit
+nnoremap ` q
+nnoremap q <Nop>
 nnoremap ~ Q
 nnoremap Q :bd!<Cr>
 nnoremap <leader>q :q!<Cr>
