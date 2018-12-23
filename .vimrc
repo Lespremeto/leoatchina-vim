@@ -267,6 +267,13 @@ endif
 " leader key
 let g:mapleader = ' '
 let g:maplocalleader = '\'
+" remap q/Q
+nnoremap ` q
+nnoremap q <Nop>
+nnoremap ~ Q
+nnoremap Q :bd!<Cr>
+nnoremap <leader>q :q!<Cr>
+nnoremap <Leader>Q :qa!
 " 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 cnoremap w!! w !sudo tee % >/dev/null
@@ -396,13 +403,6 @@ nnoremap <leader>TT :tab help<Space>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
 nnoremap <Leader>WQ :wa<CR>:q<CR>
-" quit
-nnoremap ` q
-nnoremap q <Nop>
-nnoremap ~ Q
-nnoremap Q :bd!<Cr>
-nnoremap <leader>q :q!<Cr>
-nnoremap <Leader>Q :qa!
 " 设置分割页面
 nnoremap <leader>\ :vsplit<Space>
 nnoremap <leader>= :split<Space>
