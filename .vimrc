@@ -623,7 +623,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " markdown toc
     if HasDirectory('vim-markdown-toc')
         let g:vmt_auto_update_on_save = 1
-        let g:vmt_cycle_list_item_markers = 0
+        let g:vmt_cycle_list_item_markers = 1
     endif
     " markdown preview
     if HasDirectory('markdown-preview.vim') || HasDirectory('markdown-preview.nvim')

@@ -208,13 +208,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " tags
         if  (has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')) && executable('ctags')
             Plug 'majutsushi/tagbar'
+            Plug 'skywind3000/vim-preview'
         endif
         " gtags
         if executable('gtags') && HasPlug('gtags') && (v:version >= 800 || has('nvim'))
             if exists('$GTAGSCONF')
                 Plug 'ludovicchabant/vim-gutentags'
                 Plug 'skywind3000/gutentags_plus'
-                Plug 'skywind3000/vim-preview'
                 Plug 'jsfaint/gen_tags.vim'
             else
                 echom("Please set $GTAGSCONF in your coresponding .local file, and pip install pygments.")
