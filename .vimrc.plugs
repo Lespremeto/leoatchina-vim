@@ -363,7 +363,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:complete_snippet = "None"
         endif
         if g:complete_engine == "YCM"
-            let b:ycm_install = " ./install.py --clang-completer"
+            let b:ycm_install = " ./install.py "
+            if HasPlug('javascript') && executable('node')
+                let b:ycm_install = b:ycm_install . " --ts-completer"
+            endif
+            if HasPlug('c') && executable('clang')
+                let b:ycm_install = b:ycm_install . " --clang-completer"
+            endif
             if HasPlug('go') && executable('go')
                 let b:ycm_install = b:ycm_install . " --go-completer"
             endif
@@ -372,9 +378,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             if HasPlug('java') && executable('java')
                 let b:ycm_install = b:ycm_install . " --java-completer"
-            endif
-            if HasPlug('javascript') && executable('node')
-                let b:ycm_install = b:ycm_install . " --ts-completer"
             endif
             if g:python_version == 2
                 Plug 'Valloric/YouCompleteMe',{ 'do' : 'python2' . b:ycm_install}
@@ -445,7 +448,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'ncm2/ncm2-ultisnips'
             " language
             Plug 'ncm2/ncm2-jedi', {'for':'python'}
-            Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
             Plug 'ncm2/ncm2-vim', {'for':'vim'}
             if HasPlug('gtags')
                 Plug 'ncm2/gtags'
@@ -458,6 +460,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             if HasPlug('javascript') && executable('tern')
                 Plug 'ncm2/ncm2-tern', {'for':['javascript', 'typescript']}
+            endif
+            if HasPlug('c') && executable('clang')
+                Plug 'ncm2/ncm2-pyclang', {'for':['c', 'cpp']}
             endif
             if HasPlug('rust') && executable('racer')
                 Plug 'ncm2/ncm2-racer', {'for':'rust'}
@@ -480,8 +485,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'roxma/vim-hug-neovim-rpc'
                 Plug 'roxma/nvim-yarp'
             endif
-            Plug 'zchee/deoplete-clang'
             Plug 'zchee/deoplete-jedi', {'for': 'python'}
+            if HasPlug('c') && executable('clang')
+                Plug 'zchee/deoplete-clang'
+            endif
             if HasPlug('javascript') && executable('tern')
                 Plug 'carlitux/deoplete-ternjs'
                 Plug 'mhartington/nvim-typescript'
@@ -505,12 +512,14 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'prabirshrestha/async.vim'
             Plug 'prabirshrestha/asyncomplete-file.vim'
             Plug 'prabirshrestha/asyncomplete-buffer.vim'
-            " c and omni
-            Plug 'keremc/asyncomplete-clang.vim'
             Plug 'yami-beta/asyncomplete-omni.vim'
             " vim
             Plug 'prabirshrestha/asyncomplete-necovim.vim'
             Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+            " c
+            if HasPlug('c') && executable('clang')
+                Plug 'keremc/asyncomplete-clang.vim'
+            endif
             " ctags
             if executable('ctags')
                 Plug 'prabirshrestha/asyncomplete-tags.vim'
@@ -534,7 +543,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         elseif g:complete_engine == "neocomplete"
             Plug 'Shougo/neocomplete.vim'
             Plug 'davidhalter/jedi-vim'
-            Plug 'Rip-Rip/clang_complete'
+            if HasPlug('c') && executable('clang')
+                Plug 'Rip-Rip/clang_complete'
+            endif
             if HasPlug('rust') && executable('racer')
                 Plug 'racer-rust/vim-racer'
             endif
@@ -545,7 +556,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         elseif g:complete_engine == "neocomplcache"
             Plug 'Shougo/neocomplcache.vim'
             Plug 'davidhalter/jedi-vim'
-            Plug 'Rip-Rip/clang_complete'
+            if HasPlug('c') && executable('clang')
+                Plug 'Rip-Rip/clang_complete'
+            endif
         endif
         unlet g:use_ultisnips
         unlet g:use_snippet

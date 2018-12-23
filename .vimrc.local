@@ -12,6 +12,18 @@ let g:plug_groups=['bio']
     "\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
     "\ 'python': ['/usr/local/bin/pyls'],
     "\ }
+
+" asyncomplete#clang
+"autocmd User asyncomplete_setup call asyncomplete#register_source(
+    "\ asyncomplete#sources#clang#get_source_options({
+    "\     'config': {
+    "\         'clang_path': '/opt/llvm/bin/clang',
+    "\         'clang_args': {
+    "\             'default': ['-I/opt/llvm/include'],
+    "\             'cpp': ['-std=c++11', '-I/opt/llvm/include']
+    "\         }
+    "\     }
+    "\ }))
 " if you use gvim in windows, and need python support, please check python in
 " your $PATH, and unmask the corresponse line
 "set pythonthreedll=python36.dll
