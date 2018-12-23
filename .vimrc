@@ -581,8 +581,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 endif
                 call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
             endfunction
-            nmap <silent><M-.> <Esc>:call SetAlpha(+10)<CR>
-            nmap <silent><M-,> <Esc>:call SetAlpha(-10)<CR>
+            nmap <silent><M-F12> <Esc>:call SetAlpha(+10)<CR>
+            nmap <silent><M-F11> <Esc>:call SetAlpha(-10)<CR>
         elseif HasDirectory('vim-fullscreen')
             if has('nvim')
                 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
@@ -1629,19 +1629,20 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " preview tools, you have to map meta key in term
     if HasDirectory('vim-preview')
-        nnoremap <M-t> :PreviewTag<Cr>
-        nnoremap <M-p> :PreviewScroll -1<cr>
-        nnoremap <M-n> :PreviewScroll +1<cr>
+        nnoremap <M-;> :PreviewTag<Cr>
+        nnoremap <M-/> :PreviewClose<Cr>
+        nnoremap <M-,> :PreviewScroll -1<cr>
+        nnoremap <M-.> :PreviewScroll +1<cr>
         nnoremap <M-s> :PreviewSignature!<Cr>
-        nnoremap <M-q> :PreviewQuickfix<Space>
         nnoremap <M-g> :PreviewGoto<Space>
         nnoremap <M-f> :PreviewFile<Space>
-        au FileType qf nnoremap <silent><buffer> q :PreviewQuickfix<cr>
-        au FileType qf nnoremap <silent><buffer> Q :PreviewClose<cr>
+        nnoremap <M-F> :PreviewQuickfix<Space>
+        au FileType qf nnoremap <silent><buffer> f :PreviewQuickfix<cr>
+        au FileType qf nnoremap <silent><buffer> q :PreviewClose<cr>
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
-        nnoremap <M-R> :QuickRun<Cr>
+        nnoremap <M-r> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let s:quickfix_is_open = 0
         function! ToggleQuickfix()
@@ -1657,7 +1658,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <M-Q> :ToggleQuickfix<cr>
+        nnoremap <M-q> :ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
