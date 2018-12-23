@@ -256,6 +256,10 @@ endif
 if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
     inoremap <silent> <C-[>OC <RIGHT>
 endif
+" HasDirectory define
+function! HasDirectory(dir)
+    return isdirectory(expand($PLUG_PATH."/".a:dir))
+endfunction
 " Use plugs config
 if filereadable(expand("~/.vimrc.plugs"))
     source ~/.vimrc.plugs
@@ -823,7 +827,21 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
         let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+        "let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
         let $GTAGSLABEL = 'native-pygments'
+    endif
+    " preview tools, you have to map meta key in term
+    if HasDirectory('vim-preview')
+        nnoremap <M-;> :PreviewTag<Cr>
+        nnoremap <M-/> :PreviewSignature!<Cr>
+        nnoremap <M-,> :PreviewScroll -1<cr>
+        nnoremap <M-.> :PreviewScroll +1<cr>
+        nnoremap <M--> :PreviewClose<Cr>
+        nnoremap <M-g> :PreviewGoto<Space>
+        nnoremap <M-f> :PreviewFile<Space>
+        nnoremap <M-F> :PreviewQuickfix<Space>
+        au FileType qf nnoremap <silent><buffer> f :PreviewQuickfix<cr>
+        au FileType qf nnoremap <silent><buffer> q :PreviewClose<cr>
     endif
     " indent_guides
     if HasDirectory("indentLine")
@@ -1627,19 +1645,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         au filetype java nmap <C-p> <Nop>
         au filetype java echom("please please install eclim and config it for eclipse")
     endif
-    " preview tools, you have to map meta key in term
-    if HasDirectory('vim-preview')
-        nnoremap <M-;> :PreviewTag<Cr>
-        nnoremap <M-/> :PreviewSignature!<Cr>
-        nnoremap <M-,> :PreviewScroll -1<cr>
-        nnoremap <M-.> :PreviewScroll +1<cr>
-        nnoremap <M--> :PreviewClose<Cr>
-        nnoremap <M-g> :PreviewGoto<Space>
-        nnoremap <M-f> :PreviewFile<Space>
-        nnoremap <M-F> :PreviewQuickfix<Space>
-        au FileType qf nnoremap <silent><buffer> f :PreviewQuickfix<cr>
-        au FileType qf nnoremap <silent><buffer> q :PreviewClose<cr>
-    endif
     " run_tools
     if HasDirectory("vim-quickrun")
         nnoremap <M-r> :QuickRun<Cr>
@@ -1769,4 +1774,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \	"default": "exit",
         \ }
     endif
+endif
+if filereadable(expand("~/.vimrc.after"))
+    source ~/.vimrc.after
 endif

@@ -68,9 +68,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if !exists('g:plug_groups')
             let g:plug_groups=['bio']
         endif
-        function! HasDirectory(dir)
-            return isdirectory(expand($PLUG_PATH."/".a:dir))
-        endfunction
         function! HasPlug(plug)
             return count(g:plug_groups, a:plug)
         endfunction
@@ -208,11 +205,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " tags
         if  (has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')) && executable('ctags')
             Plug 'majutsushi/tagbar'
-            Plug 'skywind3000/vim-preview'
         endif
         " gtags
         if executable('gtags') && HasPlug('gtags') && (v:version >= 800 || has('nvim'))
             if exists('$GTAGSCONF')
+                Plug 'skywind3000/vim-preview'
                 Plug 'ludovicchabant/vim-gutentags'
                 Plug 'skywind3000/gutentags_plus'
                 Plug 'jsfaint/gen_tags.vim'
