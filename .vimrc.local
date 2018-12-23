@@ -3,7 +3,7 @@ let g:plug_groups=['bio']
 "gtags settings, according to https://zhuanlan.zhihu.com/p/36279445
 "let $GTAGSCONF = '/path/to/your/gtags.conf'
 "if HasDirectory("vim-gutentags") && universary ctags installed
-    "let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+    "let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q', '--output-format=e-ctags']
 "endif
 " LCN sample
 "let g:LanguageClient_serverCommands = {

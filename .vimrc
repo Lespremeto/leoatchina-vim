@@ -824,10 +824,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         let g:gutentags_cache_dir = s:vim_tags
         " 配置 ctags 的参数
-        let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+        if !exists('g:gutentags_ctags_extra_args')
+            let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+        endif
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
         let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-        "let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
         let $GTAGSLABEL = 'native-pygments'
     endif
     " preview tools, you have to map meta key in term
