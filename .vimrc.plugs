@@ -187,19 +187,19 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
         endif
         " perl
-        if HasPlug('perl')
+        if HasPlug('perl') && executable('per')
             Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
         endif
         " erlang language
-        if HasPlug('erlang')
+        if HasPlug('erlang') && executable('erlang')
             Plug 'johnzeng/vim-erlang-omnicomplete', {'for': 'erlang'}
         endif
         " julia language
-        if HasPlug('julia') && (v:version >= 704 || has('nvim'))
+        if HasPlug('julia') && (v:version >= 704 || has('nvim')) && executable('julia')
             Plug 'JuliaEditorSupport/julia-vim', {'for': 'julia'}
         endif
         " java language
-        if HasPlug('java') && (v:version >= 704 || has('nvim'))
+        if HasPlug('java') && (v:version >= 704 || has('nvim')) && executable('java')
             Plug 'dansomething/vim-eclim'
         endif
         " tags
