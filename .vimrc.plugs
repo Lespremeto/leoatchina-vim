@@ -222,16 +222,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " fuzzy_finder
         if g:use_fuzzyfinder
-            if !WINDOWS()
-                let g:fuzzy_finder = 'fzf '
-                Plug 'junegunn/fzf.vim'
-                if executable('fzf')
-                    Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
-                else
-                    Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
-                endif
+            let g:fuzzy_finder = 'fzf '
+            Plug 'junegunn/fzf.vim'
+            if executable('fzf')
+                Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
             else
-                let g:fuzzy_finder = ''
+                Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
             endif
             if (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && !HasPlug('ctrlp')
                 if WINDOWS()
