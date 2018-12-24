@@ -57,7 +57,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'leoatchina/vim-support', {'dir':'$HOME\.vim-support'}
             let $PATH.=";".$HOME."\\.vim-support\\tools"
             let $PATH.=";".$HOME."\\.vim-support\\tools\\gtags\\bin"
-            let $PATH.=";".$HOME."\\.vim-support\\tools\\fzf\\bin"
             let $PATH.=";".$HOME."\\.vim-support\\tools\\cppcheck"
             if has('nvim')
                 Plug 'lambdalisue/vim-fullscreen'

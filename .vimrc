@@ -1042,13 +1042,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if HasDirectory("fzf.vim")
-        nnoremap <C-g>b :Buffers<CR>
         nnoremap <C-g>g :GFiles?<CR>
         nnoremap <C-g>m :Marks<CR>
         nnoremap <C-g>c :Commits<CR>
         nnoremap <C-g>f :Filetypes<CR>
         nnoremap <C-g>h :History/<CR>
         nnoremap <C-g>t :BTags<CR>
+        nnoremap <C-g>B :Buffers<CR>
+        nnoremap <C-g>F :Files<CR>
         nnoremap <C-g>C :Colors<CR>
         nnoremap <C-g>M :Maps<CR>
         nnoremap <C-g>H :History
