@@ -1042,25 +1042,25 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " browser tools
     if HasDirectory("fzf.vim")
-        nnoremap <C-g>g :GFiles?<CR>
-        nnoremap <C-g>m :Marks<CR>
-        nnoremap <C-g>c :Commits<CR>
-        nnoremap <C-g>f :Filetypes<CR>
-        nnoremap <C-g>h :History/<CR>
-        nnoremap <C-g>t :BTags<CR>
-        nnoremap <C-g>B :Buffers<CR>
-        nnoremap <C-g>F :Files<CR>
-        nnoremap <C-g>C :Colors<CR>
-        nnoremap <C-g>M :Maps<CR>
-        nnoremap <C-g>H :History
+        nnoremap <M-k>g :GFiles?<CR>
+        nnoremap <M-k>m :Marks<CR>
+        nnoremap <M-k>c :Commits<CR>
+        nnoremap <M-k>f :Filetypes<CR>
+        nnoremap <M-k>h :History/<CR>
+        nnoremap <M-k>t :BTags<CR>
+        nnoremap <M-k>B :Buffers<CR>
+        nnoremap <M-k>F :Files<CR>
+        nnoremap <M-k>C :Colors<CR>
+        nnoremap <M-k>M :Maps<CR>
+        nnoremap <M-k>H :History
         " Mapping selecting mkppings
-        nmap <C-g><tab> <plug>(fzf-maps-n)
-        xmap <C-g><tab> <plug>(fzf-maps-x)
-        omap <C-g><tab> <plug>(fzf-maps-o)
-        imap <C-g><C-w> <plug>(fzf-complete-word)
-        imap <C-g><C-p> <plug>(fzf-complete-path)
-        imap <C-g><C-f> <plug>(fzf-complete-file-ag)
-        imap <C-g><C-l> <plug>(fzf-complete-line)
+        nmap <C-k><tab> <plug>(fzf-maps-n)
+        xmap <C-k><tab> <plug>(fzf-maps-x)
+        omap <C-k><tab> <plug>(fzf-maps-o)
+        imap <C-k><C-w> <plug>(fzf-complete-word)
+        imap <C-k><C-p> <plug>(fzf-complete-path)
+        imap <C-k><C-f> <plug>(fzf-complete-file-ag)
+        imap <C-k><C-l> <plug>(fzf-complete-line)
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
         " [[B]Commits] Customize the options used by 'git log':
