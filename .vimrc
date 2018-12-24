@@ -59,7 +59,7 @@ function! Alt_meta_map()
     endif
     function! s:metacode(key)
         exec "set <M-".a:key.">=\e".a:key
-    endfunc
+    endfunction
     for i in range(26)
         call s:metacode(nr2char(char2nr('a') + i))
         call s:metacode(nr2char(char2nr('A') + i))
@@ -73,7 +73,6 @@ function! Alt_meta_map()
     endfor
     if has('gui_macvim')
         let a:letters_dict={
-            \ '\':'«',
             \ 'a':'å',
             \ 'b':'∫',
             \ 'c':'ç',
@@ -151,7 +150,7 @@ function! Alt_meta_map()
             endfor
         endfor
     endif
-endfunc
+endfunction
 call Alt_meta_map()
 " Swap two words with M-z
 xnoremap <M-z> <ESC>`.``gvp``P
@@ -549,7 +548,7 @@ function! g:Tools_PreviousCursor(mode)
         normal! G
     endif
     noautocmd silent! wincmd p
-endfunc
+endfunction
 nnoremap <silent> <M-u> :call Tools_PreviousCursor(0)<cr>
 nnoremap <silent> <M-d> :call Tools_PreviousCursor(1)<Cr>
 nnoremap <silent> <M-e> :call Tools_PreviousCursor(2)<cr>
