@@ -250,11 +250,6 @@ if has('clipboard')
         set clipboard=unnamed
     endif
 endif
-" Arrow Key Fix
-" https://github.com/spf13/spf13-vim/issues/780
-if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
-    inoremap <silent> <C-[>OC <RIGHT>
-endif
 " HasDirectory define
 function! HasDirectory(dir)
     return isdirectory(expand($PLUG_PATH."/".a:dir))
@@ -838,7 +833,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <M-/> :PreviewSignature!<Cr>
         nnoremap <M-,> :PreviewScroll -1<cr>
         nnoremap <M-.> :PreviewScroll +1<cr>
-        nnoremap <M--> :PreviewClose<Cr>
+        nnoremap <M-_> :PreviewClose<Cr>
         nnoremap <M-g> :PreviewGoto<Space>
         nnoremap <M-f> :PreviewFile<Space>
         nnoremap <M-F> :PreviewQuickfix<Space>
