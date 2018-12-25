@@ -683,23 +683,27 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if HasDirectory("lightline.vim")
             let g:lightline = {
                 \ 'active': {
-                \  'left': [ [ 'mode', 'paste' ],
-                \     [ 'gitbranch', 'readonly' ],
-                \     [ 'filefullpath', 'modified' ]],
-                \  'right': [
-                \     [ 'percent' ],
-                \     [ 'filetype', 'fileformat', 'fileencoding' , 'lineinfo']]
-                \ },
-                \ 'inactive' : {
+                \   'left': [
+                \           [ 'mode', 'paste' ],
+                \           [ 'gitbranch', 'readonly' ],
+                \           [ 'filefullpath', 'modified' ]
+                \       ],
+                \   'right':[
+                \           [ 'percent' ],
+                \           [ 'filetype', 'fileformat', 'fileencoding' , 'lineinfo']
+                \       ]
+                \   },
+                \ 'inactive': {
                 \   'left': [ [ 'mode', 'paste' ],[ 'filefullpath' ] ],
-                \   'right': [ [ 'lineinfo' ], [ 'percent' ] ] },
+                \   'right': [ [ 'lineinfo' ], [ 'percent' ] ]
+                \ },
                 \ 'component': {
-                \  'filefullpath': '%F',
-                \  'lineinfo': '%l/%L : %c',
+                \   'filefullpath': '%F',
+                \   'lineinfo': '%l/%L : %c',
                 \ },
                 \ 'component_function': {
-                \  'gitbranch': 'fugitive#head',
-                \  'readonly': 'LightlineReadonly',
+                \   'gitbranch': 'fugitive#head',
+                \   'readonly': 'LightlineReadonly',
                 \ },
             \ }
             function! LightlineReadonly()
@@ -707,20 +711,26 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endfunction
             if HasDirectory("ale")
                 let g:lightline.active.right = [
-                    \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
                     \ [ 'percent' ],
-                \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo']]
+                    \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+                    \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo'],
+                \ ]
+                let g:lightline.inactive.right = [
+                    \ [ 'percent' ],
+                    \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+                    \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo'],
+                \ ]
                 let g:lightline.component_expand =  {
                     \ 'linter_checking': 'lightline#ale#checking',
                     \ 'linter_warnings': 'lightline#ale#warnings',
                     \ 'linter_errors': 'lightline#ale#errors',
-                    \ 'linter_ok': 'lightline#ale#ok'
+                    \ 'linter_ok': 'lightline#ale#ok',
                 \ }
                 let g:lightline.component_type = {
                     \ 'linter_checking': 'right',
                     \ 'linter_warnings': 'warning',
                     \ 'linter_errors': 'error',
-                    \ 'linter_ok': 'left'
+                    \ 'linter_ok': 'left',
                 \ }
             endif
             if HasDirectory('coc.nvim')
