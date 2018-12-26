@@ -45,7 +45,6 @@ else
     endif
 endif
 " Functions
-
 " alt meta key
 function! Alt_meta_map()
     set ttimeout
@@ -829,7 +828,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         let g:gutentags_cache_dir = s:vim_tags
         " 配置 ctags 的参数
-        if !exists('g:gutentags_ctags_extra_args')
+        if WINDOWS()
+            "gtags settings, according to https://zhuanlan.zhihu.com/p/36279445
+            let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q', '--output-format=e-ctags']
+            let $GTAGSCONF = expand("~/.vim-support/tools/gtags/share/gtags.conf")
+        elseif !exists('g:gutentags_ctags_extra_args')
+            "if use universary-tags, shoud has config below in .local file
+            "let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q', '--output-format=e-ctags']
             let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
         endif
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
