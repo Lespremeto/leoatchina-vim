@@ -695,7 +695,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \   },
                 \ 'inactive': {
                 \   'left': [ [ 'mode', 'paste' ],[ 'filefullpath' ] ],
-                \   'right': [ [ 'lineinfo' ], [ 'percent' ] ]
+                \   'right':[ 'filetype', 'fileformat', 'fileencoding', 'lineinfo'],
                 \ },
                 \ 'component': {
                 \   'filefullpath': '%F',
@@ -709,7 +709,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             function! LightlineReadonly()
                 return &readonly && &filetype !=# 'help' ? 'RO' : ''
             endfunction
-            if HasDirectory("ale")
+            if HasDirectory("lightline-ale")
+                let g:lightline.component_expand =  {
+                    \ 'linter_checking': 'lightline#ale#checking',
+                    \ 'linter_warnings': 'lightline#ale#warnings',
+                    \ 'linter_errors': 'lightline#ale#errors',
+                    \ 'linter_ok': 'lightline#ale#ok',
+                \ }
                 let g:lightline.active.right = [
                     \ [ 'percent' ],
                     \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
@@ -717,15 +723,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ ]
                 let g:lightline.inactive.right = [
                     \ [ 'percent' ],
-                    \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
                     \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo'],
                 \ ]
-                let g:lightline.component_expand =  {
-                    \ 'linter_checking': 'lightline#ale#checking',
-                    \ 'linter_warnings': 'lightline#ale#warnings',
-                    \ 'linter_errors': 'lightline#ale#errors',
-                    \ 'linter_ok': 'lightline#ale#ok',
-                \ }
                 let g:lightline.component_type = {
                     \ 'linter_checking': 'right',
                     \ 'linter_warnings': 'warning',
