@@ -1,26 +1,26 @@
 <!-- vim-markdown-toc GitLab -->
 
-* [中文介绍](#中文介绍)
-* [Introduction](#introduction)
-* [Requirements](#requirements)
-* [Install](#install)
++ [中文介绍](#中文介绍)
++ [Introduction](#introduction)
++ [Requirements](#requirements)
++ [Install](#install)
   * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx)
   * [windows](#windows)
-* [Update](#update)
++ [Update](#update)
   * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-1)
   * [windows](#windows-1)
-* [Upgrade plugins](#upgrade-plugins)
++ [Upgrade plugins](#upgrade-plugins)
   * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-2)
   * [windows](#windows-2)
-* [Delete](#delete)
++ [Delete](#delete)
   * [Linux, \*nix, Mac OSX](#linux-nix-mac-osx-3)
   * [Windows](#windows-3)
-* [How it works](#how-it-works)
-* [Main changes from spf13](#main-changes-from-spf13)
-* [Some features](#some-features)
-* [Main shortcuts](#main-shortcuts)
-* [Plugins and their shortcuts](#plugins-and-their-shortcuts)
-* [.local file](#local-file)
++ [How it works](#how-it-works)
++ [Main changes from spf13](#main-changes-from-spf13)
++ [Some features](#some-features)
++ [Main shortcuts](#main-shortcuts)
++ [Plugins and their shortcuts](#plugins-and-their-shortcuts)
++ [.local file](#local-file)
   * [vim-plug](#vim-plug)
   * [ywvim中文输入法](#ywvim中文输入法)
   * [Markdown](#markdown)
@@ -28,36 +28,36 @@
   * [vim-easy-align](#vim-easy-align)
   * [auto-pairs](#auto-pairs)
   * [Complete Engines](#complete-engines)
-    * [Smart Engines Selection](#smart-engines-selection)
-    * [YouCompleteMe](#youcompleteme)
-    * [coc](#coc)
-    * [ncm2](#ncm2)
-    * [deoplete](#deoplete)
-    * [asyncomplete](#asyncomplete)
-    * [neocomplete](#neocomplete)
-    * [neocomplcache](#neocomplcache)
+    - [Smart Engines Selection](#smart-engines-selection)
+    - [YouCompleteMe](#youcompleteme)
+    - [coc](#coc)
+    - [ncm2](#ncm2)
+    - [deoplete](#deoplete)
+    - [asyncomplete](#asyncomplete)
+    - [neocomplete](#neocomplete)
+    - [neocomplcache](#neocomplcache)
   * [Complete Snippets, vim 7.4+ is also required](#complete-snippets-vim-74-is-also-required)
-    * [ultisnips](#ultisnips)
-    * [neosnippet](#neosnippet)
+    - [ultisnips](#ultisnips)
+    - [neosnippet](#neosnippet)
   * [Syntax Check](#syntax-check)
-    * [ale](#ale)
-    * [syntastic](#syntastic)
+    - [ale](#ale)
+    - [syntastic](#syntastic)
   * [Search/Replace tools](#searchreplace-tools)
-    * [FlyGrep](#flygrep)
-    * [Ctrlsf](#ctrlsf)
-    * [vim-multiple-cursors](#vim-multiple-cursors)
+    - [FlyGrep](#flygrep)
+    - [Ctrlsf](#ctrlsf)
+    - [vim-multiple-cursors](#vim-multiple-cursors)
   * [RunTools](#runtools)
-    * [vim-quickrun](#vim-quickrun)
-    * [asyncrun](#asyncrun)
+    - [vim-quickrun](#vim-quickrun)
+    - [asyncrun](#asyncrun)
   * [language support](#language-support)
-    * [java: vim-eclim](#java-vim-eclim)
-    * [perl](#perl)
-    * [php](#php)
-    * [html](#html)
-    * [javascript](#javascript)
-    * [rust](#rust)
-    * [julia](#julia)
-    * [erlang](#erlang)
+    - [java: vim-eclim](#java-vim-eclim)
+    - [perl](#perl)
+    - [php](#php)
+    - [html](#html)
+    - [javascript](#javascript)
+    - [rust](#rust)
+    - [julia](#julia)
+    - [erlang](#erlang)
   * [nerdtree](#nerdtree)
   * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
   * [undotree](#undotree)
@@ -66,9 +66,9 @@
   * [bioSyntax-vim](#biosyntax-vim)
   * [nerdcommenter](#nerdcommenter)
   * [fuzzy finder](#fuzzy-finder)
-    * [fzf.vim](#fzfvim)
-    * [LeaderF](#leaderf)
-    * [ctrlp](#ctrlp)
+    - [fzf.vim](#fzfvim)
+    - [LeaderF](#leaderf)
+    - [ctrlp](#ctrlp)
   * [surround](#surround)
   * [repeat](#repeat)
   * [vim-easy-align](#vim-easy-align-1)
@@ -236,6 +236,7 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
     - nnoremap <Leader>w :w<CR>
     - nnoremap <Leader>W :wq!<CR>
     - nnoremap <Leader>WQ :wa<CR>:q<CR>
+    - nnoremap \` q
     - nnoremap ~ Q
     - nnoremap Q :bd!<Cr>
     - nnoremap <Leader>q :q!
@@ -252,13 +253,11 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
 * `Alt` key remap
     - according to [skywind3000](http://www.skywind.me/blog/archives/1846)
     - even mapped for macvim
-    - you should `map your alt key to Esc` in you `xshell`,`securetcrt`,`mobaxterm`,`iterm2`,`terminal`, etc.
-    - `Alt` is different from `Alt+Shift`,  not like `ctrl` and `ctrl+shift`
-
+    - you should `map your alt key to Esc+` in you `xshell`,`securetcrt`,`mobaxterm`,`iterm2`,`terminal`, etc.
+    - `Alt` is different from `Alt+Shift`,  so `<M-a>` is different form `<M-A>`, not like `ctrl` and `ctrl+shift`.
 
 # Plugins and their shortcuts
 Hereafter are the plugins that I collected, if you want details for them, click it.
-
 At first I planned to detailly introduce every plugins, however, first it is easy for users to find the original repos of these plugins for details, second it is real a hard work to write work for each plugin.
 So , I simplly write something about the plugins, sometime only list the shortcut.
 
