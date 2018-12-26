@@ -1007,16 +1007,28 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         tnoremap <ESC> <C-\><C-n>
         if has('nvim')
             tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-            nmap <C-h>\ :vsplit term://bash<Cr>i
-            nmap <C-h>= :split  term://bash<Cr>i
-            nmap <C-h>t :tabe   term://bash<Cr>i
+            if WINDOWS()
+                nmap <C-h>\ :vsplit term://cmd<Cr>i
+                nmap <C-h>= :split  term://cmd<Cr>i
+                nmap <C-h>t :tabe   term://cmd<Cr>i
+            else
+                nmap <C-h>\ :vsplit term://bash<Cr>i
+                nmap <C-h>= :split  term://bash<Cr>i
+                nmap <C-h>t :tabe   term://bash<Cr>i
+            endif
             nmap <C-h>V :vsplit term://
             nmap <C-h>S :split  term://
             nmap <C-h>T :tabe   term://
         else
-            nmap <C-h>\ :vertical terminal<cr>bash<cr>
-            nmap <C-h>= :terminal<cr>bash<cr>
-            nmap <C-h>t :tab terminal<Cr>bash<Cr>
+            if WINDOWS()
+                nmap <C-h>\ :vertical terminal<cr>cmd<cr>
+                nmap <C-h>= :terminal<cr>cmd<cr>
+                nmap <C-h>t :tab terminal<Cr>cmd<Cr>
+            else
+                nmap <C-h>\ :vertical terminal<cr>bash<cr>
+                nmap <C-h>= :terminal<cr>bash<cr>
+                nmap <C-h>t :tab terminal<Cr>bash<Cr>
+            endif
             nmap <C-h>V :vertical terminal
             nmap <C-h>S :terminal
             nmap <C-h>T :tab terminal
