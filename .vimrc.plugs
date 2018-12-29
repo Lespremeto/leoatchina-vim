@@ -392,7 +392,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         \ 'coc-wxml',
                         \ 'coc-yaml',
                         \ 'coc-emmet'
-                \ ]
+                    \ ]
                 endif
                 if HasPlug('javascript')
                     let b:coc_install_plugins = b:coc_install_plugins + [
@@ -420,6 +420,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'neoclide/coc-neco'
             Plug 'neoclide/coc-sources'
             Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
+            if g:python_version
+                Plug 'neoclide/coc-jedi', {'do': 'yarn install'}
+            endif
         elseif g:complete_engine == "ncm2"
             Plug 'ncm2/ncm2'
             Plug 'roxma/nvim-yarp'
@@ -431,8 +434,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'ncm2/ncm2-path'
             Plug 'ncm2/ncm2-tmux'
             Plug 'ncm2/ncm2-tagprefix'
-            Plug 'filipekiss/ncm2-look.vim'
             Plug 'ncm2/ncm2-neoinclude'
+            Plug 'filipekiss/ncm2-look.vim'
             " only use ultisnips
             Plug 'ncm2/ncm2-ultisnips'
             " language
@@ -488,7 +491,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if HasPlug('go') && executable('gocode')
                 Plug 'zchee/deoplete-go', { 'do': 'make'}
             endif
-            " tabnine now not performance good in linux
             if WINDOWS()
                 Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
             else
