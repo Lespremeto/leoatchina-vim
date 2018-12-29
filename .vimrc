@@ -249,6 +249,11 @@ if has('clipboard')
         set clipboard=unnamed
     endif
 endif
+" HasPlug define
+let g:plug_groups=['']
+function! HasPlug(plug)
+    return count(g:plug_groups, a:plug)
+endfunction
 " HasDirectory define
 function! HasDirectory(dir)
     return isdirectory(expand($PLUG_PATH."/".a:dir))

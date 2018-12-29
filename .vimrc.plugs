@@ -67,12 +67,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'lambdalisue/vim-fullscreen'
         endif
         " list only the plugin groups you will use
-        if !exists('g:plug_groups')
-            let g:plug_groups=['bio']
-        endif
-        function! HasPlug(plug)
-            return count(g:plug_groups, a:plug)
-        endfunction
         " general
         Plug 'scrooloose/nerdtree'
         Plug 'jistr/vim-nerdtree-tabs'
