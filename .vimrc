@@ -266,12 +266,10 @@ endif
 let g:mapleader = ' '
 let g:maplocalleader = '\'
 " remap q/Q
-nnoremap ` q
-nnoremap q <Nop>
-nnoremap ~ Q
+nnoremap ` Q
 nnoremap Q :bd!<Cr>
-nnoremap <leader>q :q!<Cr>
-nnoremap <Leader>Q :qa!
+nnoremap <M-q> :q!<Cr>
+nnoremap <M-Q> :qa!
 " 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 cnoremap w!! w !sudo tee % >/dev/null
@@ -1692,7 +1690,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <M-q> :ToggleQuickfix<cr>
+        nnoremap <M-R> :ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
