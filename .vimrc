@@ -303,6 +303,8 @@ xnoremap gT <Nop>
 snoremap gt <Nop>
 snoremap gT <Nop>
 " some ctrl+ key remap
+nnoremap <C-a> <Nop>
+nnoremap <C-x> <Nop>
 nnoremap <C-p> <Nop>
 nnoremap <C-s> <Nop>
 nnoremap <C-q> <Nop>
@@ -1777,9 +1779,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! AsyncRunNow call s:ASYNC_RUN()
-        nmap <C-g>r :AsyncRunNow<CR>
-        nmap <C-g>s :AsyncStop<CR>
-        nmap <C-g>a :AsyncRun
+        nnoremap <C-a>r :AsyncRunNow<CR>
+        nnoremap <C-a>s :AsyncStop<CR>
+        nnoremap <C-a>a :AsyncRun
         au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
     endif
     " vim-repl
