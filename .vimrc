@@ -814,14 +814,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             silent! call mkdir(s:vim_tags, 'p')
         endif
         let g:gutentags_cache_dir = s:vim_tags
-        " 配置 ctags 的参数
+        " 配置 gtags 的参数
+        "gtags settings, according to https://zhuanlan.zhihu.com/p/36279445
         if WINDOWS()
-            "gtags settings, according to https://zhuanlan.zhihu.com/p/36279445
+            " gtags in WINDOWS is cloned in in 「~/.vim-windows-tools/]
             let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q', '--output-format=e-ctags']
             let $GTAGSCONF = expand("~/.vim-support/tools/gtags/share/gtags.conf")
         elseif !exists('g:gutentags_ctags_extra_args')
-            "if use universary-tags, shoud has config below in .local file
-            "let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q', '--output-format=e-ctags']
+            "if use universary-tags, shoud has config like in windows in .local file
             let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
         endif
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
