@@ -337,6 +337,7 @@ nnoremap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<C
 set tabpagemax=10 " Only show 10 tabs
 cnoremap Tabe tabe
 " compatible with xshell
+nnoremap <Leader>q       :tabclose<CR>
 nnoremap <silent><Tab>   :tabnext<CR>
 nnoremap <silent><S-Tab> :tabprevious<CR>
 nnoremap <silent>-       :tabprevious<CR>
@@ -345,9 +346,8 @@ nnoremap <leader><S-Tab> :tabm -1<CR>
 nnoremap <leader>-       :tabm -1<CR>
 nnoremap <Leader>te      :tabe<Space>
 nnoremap <Leader>tm      :tabm<Space>
-nnoremap <Leader>ts      :tab  split<CR>
+nnoremap <Leader>ts      :tab split<CR>
 nnoremap <Leader>tS      :tabs<CR>
-nnoremap gq              :tabclose<CR>
 nnoremap <M-1>           :tabn1<CR>
 nnoremap <M-2>           :tabn2<CR>
 nnoremap <M-3>           :tabn3<CR>
@@ -494,7 +494,6 @@ au BufNewFile,BufRead *.pandoc set filetype=pandoc
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
 au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
-au BufEnter *vimrc*,*.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " sepcial setting for different type of files
 au FileType python au BufWritePre <buffer> :%retab
 au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
