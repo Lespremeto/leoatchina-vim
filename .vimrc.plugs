@@ -120,8 +120,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if v:version >= 704 || has('nvim')
                 Plug 'mzlogin/vim-markdown-toc', {'for':'markdown'}
             endif
-            " voom
-            Plug 'vim-voom/VOoM'
         else
             Plug 'tpope/vim-markdown', {'for':'markdown'}
         endif
@@ -201,6 +199,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " tags
         if  (has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')) && executable('ctags')
             Plug 'majutsushi/tagbar'
+            Plug 'lvht/tagbar-markdown'
         endif
         " gtags
         if executable('gtags') && HasPlug('gtags') && (v:version >= 800 || has('nvim'))

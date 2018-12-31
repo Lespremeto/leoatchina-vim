@@ -594,24 +594,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endif
     endif
-    " voom
-    if HasDirectory('VOom')
-        let g:voom_python_versions = [3,2]
-        nnoremap <leader>tv :VoomToggle<CR>
-        nnoremap <leader>TV :VoomQuit<CR>:Voom<CR><C-w>w
-        if has('gui_running')
-            nnoremap <C-q> :VoomToggle<CR>
-        endif
-        let g:voom_tab_key = "<C-tab>"
-        let g:voom_ft_modes = {
-            \ 'markdown': 'markdown',
-            \ 'pandoc': 'pandoc',
-            \ 'c': 'fmr2',
-            \ 'cpp': 'fmr2',
-            \ 'python':'python',
-            \ 'tex': 'latex'
-        \ }
-    endif
     " markdown enhanced
     if g:python_version && HasDirectory('vim-markdown')
         let g:vim_markdown_folding_disabled = 1
