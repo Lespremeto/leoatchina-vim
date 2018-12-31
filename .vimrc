@@ -387,8 +387,6 @@ noremap <silent>j gj
 noremap <silent>k gk
 " for toggle highlight
 nnoremap <C-h><C-h> :set nohlsearch! nohlsearch?<CR>
-" show clipboard
-nnoremap <leader>tr :reg<Cr>
 " pastetoggle (sane indentation on pastes)
 nnoremap <leader>tp <ESC>:set nopaste! nopaste?<CR>
 " toggleFold
@@ -397,6 +395,8 @@ nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " for help
 nnoremap <leader>TT :tab help<Space>
+" show clipboard
+nnoremap <M-t> :reg<Cr>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
