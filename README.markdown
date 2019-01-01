@@ -20,7 +20,7 @@
 + [Some features](#some-features)
 + [Main shortcuts](#main-shortcuts)
 + [Plugins and their shortcuts](#plugins-and-their-shortcuts)
-+ [.local file](#local-file)
+  * [.local file](#local-file)
   * [vim-plug](#vim-plug)
   * [ywvim中文输入法](#ywvim中文输入法)
   * [Markdown](#markdown)
@@ -236,11 +236,10 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
     - nnoremap <Leader>w :w<CR>
     - nnoremap <Leader>W :wq!<CR>
     - nnoremap <Leader>WQ :wa<CR>:q<CR>
-    - nnoremap \` q
-    - nnoremap ~ Q
+    - nnoremap \` Q
     - nnoremap Q :bd!<Cr>
-    - nnoremap <Leader>q :q!
-    - nnoremap <Leader>Q :qa!
+    - nnoremap <M-q> :q!<Cr>
+    - nnoremap <M-Q> :qa!
     - nnoremap <Leader>\ :vsplit<Space>
     - nnoremap <Leader><Leader>\ :split<Space>
     - nnoremap <Leader>= <C-W>=
@@ -253,7 +252,7 @@ After the installation, a `.vimrc`symbol link in the `~` folder (for neovim, to 
 * `Alt` key remap
     - according to [skywind3000](http://www.skywind.me/blog/archives/1846)
     - even mapped for macvim
-    - you should `map your alt key to Esc+` in you `xshell`,`securetcrt`,`mobaxterm`,`iterm2`,`terminal`, etc.
+    - you should `map your alt key to Esc+` in you `xshell`, `securetcrt`, `mobaxterm`, `iterm2`, `terminal`, etc.
     - `Alt` is different from `Alt+Shift`,  so `<M-a>` is different form `<M-A>`, not like `ctrl` and `ctrl+shift`.
 
 # Plugins and their shortcuts
@@ -261,21 +260,14 @@ Hereafter are the plugins that I collected, if you want details for them, click 
 At first I planned to detailly introduce every plugins, however, first it is easy for users to find the original repos of these plugins for details, second it is real a hard work to write work for each plugin.
 So , I simplly write something about the plugins, sometime only list the shortcut.
 
-# .local file
+## .local file
 The `.vimrc` or `init.vim` sources `~/.vimrc.plug` for plugins definition, and `~/.vimrc.plug` sources `~/.vimrc.local` when the file exists.
 This `local` file contains an import variable called `g:plug_groups` for the supported features for vim,  the plugins will change.
 The default contents of `.vimrc.local` is:
-> let g:plug_groups=['bio']
-
+> let g:plug_groups=[]
 And you can also create `~/.gvimrc.local` for `gvim`, `~/.nvimrc.local` for `neovim` , `~/.mvimrc.local` for `macvim` to intall diffent plugins for gvim and nvim. If these two local file not exist, `.vimrc.local` works.
-
-The typical variables that could be add to `g:plug_groups` are `go`, `youcompleteme`, `fzf`, `coc`, etc.
-
+The typical variables that could be add to `g:plug_groups` are `go`, `YCM`, `c`, `coc`, `rust`, `bio`, `wubi`, etc.
 Here is a trick that I set diffent `PLUG_PATH` for `vim/gvim/neovim` , `~/.vim/plug` for `vim` , `~/.gvim/plug` for `gvim`, `~/.nvim/plug` for `neovim`.
-
-`.vimrc.clean` it is an bash file which is set to delete `~/.vimswap` & `~/.vimviews` folders. Also be linked as `~/.vimrc.clean`
-Just as I have mentioned, the `~/.vimrc.local` contains the fearutures that you need.For example, if you want syntax check, you can open it and add ``syntax`` in the list `g:plug_groups`, then rerun `install.sh` or `:PlugReinstall`, the plugins `ale` for `vim8`/`neovim` , or `syntastic` for `vim7.3+` will be installed.
-
 
 ## [vim-plug](https://github.com/junegunn/vim-plug)
 A smart and parallel plug manage plugin, instead of [vundle](https://github.com/VundleVim/Vundle.vim) which spf13 use.

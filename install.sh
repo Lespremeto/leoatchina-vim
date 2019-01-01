@@ -62,7 +62,6 @@ create_symlinks() {
     local target_path="$2"
     lnif "$source_path/.vimrc"          "$target_path/.vimrc"
     lnif "$source_path/.vimrc.plugs"    "$target_path/.vimrc.plugs"
-    lnif "$source_path/.vimrc.clean"    "$target_path/.vimrc.clean"
     lnif "$source_path/update.sh"       "$target_path/.vimrc.update"
     lnif "$source_path/README.markdown" "$target_path/.vimrc.md"
     if program_exists "nvim"; then
@@ -104,7 +103,7 @@ mkdir -p "$HOME/.cache/session"
 mkdir -p "$HOME/.cache/tags"
 update_vim_plug='0'
 ret='0'
-if [ -f $HOME/.vimrc.clean ];then
+if [ -f $HOME/.vimrc.md];then
     read -p "Do you want to update leoathina's vim config  (Y/y for Yes , any other key for No)? " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]];then
