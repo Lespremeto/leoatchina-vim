@@ -182,7 +182,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " perl
         if HasPlug('perl') && executable('perl')
-            Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'dev'}
+            Plug 'vim-perl/vim-perl', {'for': 'perl', 'branch': 'master'}
         endif
         " erlang language
         if HasPlug('erlang') && executable('erlang')
