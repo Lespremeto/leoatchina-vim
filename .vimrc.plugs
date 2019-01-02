@@ -162,6 +162,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('debug')
             Plug 'sillybun/vim-repl', {'branch': 'master'}
             Plug 'idanarye/vim-vebugger', {'branch': 'master'}
+            Plug 'vim-vdebug/vdebug', {'branch': 'master'}
         endif
         " run tools
         if v:version >= 702

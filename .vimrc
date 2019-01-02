@@ -612,8 +612,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " markdown preview
     if HasDirectory('markdown-preview.vim') || HasDirectory('markdown-preview.nvim')
+        nmap <leader>zz <Nop>
+        nmap <leader>ZZ <Nop>
         au FileType markdown nmap <leader>zz <Plug>MarkdownPreview
-        au FileType markdown nmap <leader>ee <Plug>StopMarkdownPreview
+        au FileType markdown nmap <leader>zs <Plug>StopMarkdownPreview
         if has('gui_running')
             au FileType markdown nmap <silent> <C-z> <Plug>MarkdownPreview
             au FileType markdown xmap <silent> <C-z> <Plug>MarkdownPreview
