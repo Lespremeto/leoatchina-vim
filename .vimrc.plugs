@@ -75,6 +75,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'mbbill/undotree', {'branch': 'master'}
         Plug 'mattn/webapi-vim', {'branch': 'master'}
         Plug 'tpope/vim-unimpaired', {'branch': 'master'}
+        Plug 'sheerun/vim-polyglot', {'branch': 'master'}
         if (v:version < 800 && !has('nvim')) && !WINDOWS()
             Plug 'Shougo/vimproc.vim', {'do' : 'make', 'branch': 'master'}
         endif
@@ -106,6 +107,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'jiangmiao/auto-pairs', {'branch': 'master'}
         Plug 'junegunn/vim-journal', {'branch': 'master'}
         Plug 'junegunn/vim-easy-align', {'branch': 'master'}
+        if HasPlug('text')
+            Plug 'jceb/vim-orgmode', {'branch': 'master'}
+        endif
         " markdown
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown', 'branch': 'master'}
         Plug 'hotoo/pangu.vim', {'for':'markdown', 'branch': 'master'}
