@@ -242,7 +242,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 Plug 'ctrlpvim/ctrlp.vim', {'branch': 'master'}
                 Plug 'tacahiroy/ctrlp-funky', {'branch': 'master'}
-                Plug 'raghur/fruzzy', {'branch': 'master','do': { -> fruzzy#install()}}
                 let g:fuzzy_finder = 'fzf-ctrlp'
             endif
         else

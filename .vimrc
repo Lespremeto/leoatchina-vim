@@ -1152,12 +1152,31 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 let g:ctrlp_extensions = ['funky']
                 nnoremap <C-k>f :CtrlPFunky<Cr>
             endif
-            if HasDirectory('fruzzy')
-                let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
-                let g:fruzzy#usenative = 1
-                let g:fruzzy#sortonempty = 1 " default value
-                let g:ctrlp_match_current_file = 1 " to include current file in matches
+            if executable('ag')
+                let s:ctrlp_fallback = 'ag %s --follow --nocolor -nogroup -g ""'
+            elseif executable('rg')
+                set grepprg=rg\ --color=never
+                let s:ctrlp_fallback = 'rg %s --color=never --files --glob "!.git"'
+            elseif executable('pt')
+                let s:ctrlp_fallback = 'pt %s --nocolor --nogroup '
+            elseif executable('ack')
+                let s:ctrlp_fallback = 'ack %s --nocolor -f'
+            " On Windows use dir as fallback command.
+            elseif WINDOWS()
+                let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
+            else
+                let s:ctrlp_fallback = 'find %s -type f'
             endif
+            if exists("g:ctrlp_user_command")
+                unlet g:ctrlp_user_command
+            endif
+            let g:ctrlp_user_command = {
+                    \ 'types': {
+                        \ 1: ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'],
+                        \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+                    \ },
+                    \ 'fallback': s:ctrlp_fallback
+                \ }
         endif
     endif
     " complete_engine
