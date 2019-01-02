@@ -266,11 +266,11 @@ endif
 let g:mapleader = ' '
 let g:maplocalleader = '\'
 " remap q/Q
-nnoremap ` Q
-nnoremap Q:     bd!<Cr>
-nnoremap <M-q>: q!<Cr>
-nnoremap <M-Q>: qa!
-nnoremap <Leader>q: tabclose<CR>
+nnoremap `         Q
+nnoremap Q         :bd!<Cr>
+nnoremap <M-q>     :q!<Cr>
+nnoremap <M-Q>     :qa!
+nnoremap <Leader>q :tabclose<CR>
 " 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 cnoremap w!! w !sudo tee % >/dev/null

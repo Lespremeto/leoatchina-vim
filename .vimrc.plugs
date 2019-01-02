@@ -204,7 +204,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " tags
         if  (has('patch1058') && v:version == 703 || v:version >= 704 || has('nvim')) && executable('ctags')
             Plug 'majutsushi/tagbar', {'branch': 'master'}
-            Plug 'lvht/tagbar-markdown', {'branch': 'master', 'for': 'markdown'}
+            if WINDOWS()
+                Plug 'lvht/tagbar-markdown', {'commit': '05c095cf0568b1f73f9986dcf11ab14b850824e8', 'for': 'markdown'}
+            else
+                Plug 'lvht/tagbar-markdown', {'branch': 'master', 'for': 'markdown'}
+            endif
         endif
         " gtags
         if executable('gtags') && HasPlug('gtags') && (v:version >= 800 || has('nvim'))
