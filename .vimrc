@@ -267,9 +267,10 @@ let g:mapleader = ' '
 let g:maplocalleader = '\'
 " remap q/Q
 nnoremap ` Q
-nnoremap Q :bd!<Cr>
-nnoremap <M-q> :q!<Cr>
-nnoremap <M-Q> :qa!
+nnoremap Q:     bd!<Cr>
+nnoremap <M-q>: q!<Cr>
+nnoremap <M-Q>: qa!
+nnoremap <Leader>q: tabclose<CR>
 " 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 cnoremap w!! w !sudo tee % >/dev/null
@@ -337,7 +338,6 @@ nnoremap <C-f>w [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<C
 set tabpagemax=10 " Only show 10 tabs
 cnoremap Tabe tabe
 " compatible with xshell
-nnoremap <Leader>q       :tabclose<CR>
 nnoremap <silent><Tab>   :tabnext<CR>
 nnoremap <silent><S-Tab> :tabprevious<CR>
 nnoremap <silent>-       :tabprevious<CR>
