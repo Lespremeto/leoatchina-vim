@@ -223,31 +223,27 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " fuzzy_finder
         if g:use_fuzzyfinder
-            let g:fuzzy_finder = 'fzf '
-            Plug 'junegunn/fzf.vim', {'branch': 'master'}
-            if executable('fzf')
-                Plug 'junegunn/fzf', {'branch': 'master', 'dir': '~/.fzf', 'do': './install --bin'}
-            else
-                Plug 'junegunn/fzf', {'branch': 'master', 'dir': '~/.fzf', 'do': './install --all'}
-            endif
-            if (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && !HasPlug('ctrlp')
+            " use leaderf as fuzzy_finder
+            if (v:version == 704 && has('patch330') || v:version >= 800 || has('nvim')) && g:python_version && !HasPlug('fzf')
                 if WINDOWS()
                     Plug 'Yggdroot/LeaderF', {'branch': 'master', 'do': '.\install.bat' }
                 else
                     Plug 'Yggdroot/LeaderF', {'branch': 'master', 'do': './install.sh' }
                 endif
                 Plug 'Yggdroot/LeaderF-marks', {'branch': 'master'}
-                let g:fuzzy_finder .= 'LeaderF'
+                let g:fuzzy_finder = 'LeaderF'
+            " use ctrlp+fzf
             else
+                Plug 'junegunn/fzf.vim', {'branch': 'master'}
+                if executable('fzf')
+                    Plug 'junegunn/fzf', {'branch': 'master', 'dir': '~/.fzf', 'do': './install --bin'}
+                else
+                    Plug 'junegunn/fzf', {'branch': 'master', 'dir': '~/.fzf', 'do': './install --all'}
+                endif
                 Plug 'ctrlpvim/ctrlp.vim', {'branch': 'master'}
                 Plug 'tacahiroy/ctrlp-funky', {'branch': 'master'}
-                Plug 'fisadev/vim-ctrlp-cmdpalette', {'branch': 'master'}
-                if g:python_version
-                    Plug 'FelikZ/ctrlp-py-matcher', {'branch': 'master'}
-                else
-                    Plug 'raghur/fruzzy', {'branch': 'master','do': { -> fruzzy#install()}}
-                endif
-                let g:fuzzy_finder .= 'ctrlp'
+                Plug 'raghur/fruzzy', {'branch': 'master','do': { -> fruzzy#install()}}
+                let g:fuzzy_finder = 'fzf-ctrlp'
             endif
         else
             let g:fuzzy_finder = "None"
