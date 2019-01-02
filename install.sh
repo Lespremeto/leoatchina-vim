@@ -103,7 +103,7 @@ mkdir -p "$HOME/.cache/session"
 mkdir -p "$HOME/.cache/tags"
 update_vim_plug='0'
 ret='0'
-if [ -f $HOME/.vimrc.md];then
+if [ -f $HOME/.vimrc.md ];then
     read -p "Do you want to update leoathina's vim config  (Y/y for Yes , any other key for No)? " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]];then
