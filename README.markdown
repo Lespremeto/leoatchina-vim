@@ -73,6 +73,7 @@
   * [repeat](#repeat)
   * [vim-easy-align](#vim-easy-align-1)
   * [EasyMotion](#easymotion)
++ [TODO](#todo)
 
 <!-- vim-markdown-toc -->
 
@@ -539,3 +540,7 @@ if has `surround`, use `.` to `repead`
     nmap <C-j><C-j> <Plug>(easymotion-w)
     nmap <C-k><C-k> <Plug>(easymotion-b)
 ```
+
+# TODO
+- text
+- debug
