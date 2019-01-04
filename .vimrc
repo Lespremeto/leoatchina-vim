@@ -730,45 +730,93 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set background=dark
         " 总是显示状态栏
         set laststatus=2
+        if has('gui_running')
+            set termguicolors
+        endif
         if HasPlug('monokai')
             colorscheme monokai
-        elseif HasPlug('molokai')
-            colorscheme molokai
+        elseif HasPlug('badwolf')
+            colorscheme badwolf
+        elseif HasPlug('atom')
+            if has('gui_running')
+                colorscheme atom-dark
+            else
+                colorscheme atom-dark-256
+            endif
+        elseif HasPlug('seoul256')
+            let g:seoul256_background = 234
+            colorscheme seoul256
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'seoul256'
+            endif
+        elseif HasPlug('iceberg')
+            colorscheme iceberg
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'iceberg'
+            endif
+        elseif HasPlug('tomorrow')
+            colorscheme Tomorrow-Night
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'Tomorrow-Night'
+            endif
+        elseif HasPlug('nord')
+            colorscheme nord
+            let g:nord_italic = 1
+            let g:nord_underline = 1
+            let g:nord_italic_comments = 1
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'nord'
+            endif
+        elseif HasPlug('onedark')
+            colorscheme onedark
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'onedark'
+            endif
+        elseif HasPlug('papercolor')
+            colorscheme PaperColor
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'PaperColor_dark'
+            endif
+        elseif HasPlug('neodark')
+            colorscheme neodark
+            if !has('gui_running')
+                let g:neodark#use_256color = 1
+            endif
+            let g:neodark#terminal_transparent = 1
+            let g:neodark#solid_vertsplit = 1
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'neodark'
+            endif
         elseif HasPlug('solarized')
             let g:solarized_termcolors=256
             colorscheme solarized
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'solarized'
             endif
-        elseif v:version < 800 && !has('nvim')
+        elseif HasPlug('wombat256') || v:version < 800 && !has('nvim')
             colorscheme wombat256mod
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'wombat'
             endif
-        elseif has('nvim')
-            if WINDOWS()
-                colorscheme hybrid
-                if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'seoul256'
-                endif
-            else
-                colorscheme jellybeans
-                if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'jellybeans'
-                endif
+        elseif HasPlug('hybrid') || has('nvim') && WINDOWS()
+            colorscheme hybrid
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'seoul256'
             endif
-        elseif has('gui_running')
-            set termguicolors
-            if WINDOWS()
-                colorscheme vim-material
-                if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'material'
-                endif
-            else
-                colorscheme codedark
-                if HasDirectory('lightline.vim')
-                    let g:lightline.colorscheme = 'nord'
-                endif
+        elseif HasPlug('jellybeans') || has('nvim') && !WINDOWS()
+            colorscheme jellybeans
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'jellybeans'
+            endif
+        elseif HasPlug('material') || has('gui_running') && WINDOWS()
+            colorscheme vim-material
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'material'
+            endif
+        elseif HasPlug('codedark') || has('gui_running') && !WINDOWS()
+            colorscheme codedark
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'nord'
             endif
         else
             colorscheme gruvbox

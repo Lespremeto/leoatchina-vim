@@ -599,6 +599,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'fuzzyfinder': g:fuzzy_finder,
             \ 'syntax': g:syntax_tool,
             \ 'version' : GetVersion(),
+            \ 'theme': g:colors_name
         \ }
         echo string(s:params_dict)
     endfunction
