@@ -250,9 +250,9 @@ if has('clipboard')
     endif
 endif
 " HasPlug define
-let g:plug_groups=['']
+let g:plugs_group=['']
 function! HasPlug(plug)
-    return count(g:plug_groups, a:plug)
+    return count(g:plugs_group, a:plug)
 endfunction
 " HasDirectory define
 function! HasDirectory(dir)
