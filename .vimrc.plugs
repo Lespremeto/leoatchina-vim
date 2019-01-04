@@ -527,7 +527,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if HasPlug('javascript')
                 Plug 'prabirshrestha/asyncomplete-flow.vim', {'branch': 'master'}
                 Plug 'runoshun/tscompletejob', {'branch': 'master'}
-                Plug 'prabirshrestha/asyncomplete-tscompletejob.vim, {'branch': 'master'}'
+                Plug 'prabirshrestha/asyncomplete-tscompletejob.vim', {'branch': 'master'}
             endif
             if HasPlug('go') && executable('gocode')
                 Plug 'prabirshrestha/asyncomplete-gocode.vim', {'branch': 'master'}
