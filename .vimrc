@@ -730,7 +730,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set background=dark
         " 总是显示状态栏
         set laststatus=2
-        if g:use_monokai
+        if HasPlug('monokai')
             colorscheme monokai
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'monokai'

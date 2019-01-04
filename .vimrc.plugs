@@ -39,7 +39,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         let g:use_syntax      = 1
         let g:use_ultisnips   = 1
         let g:use_fuzzyfinder = 1
-        let g:use_monokai     = 0
         " Use local config, some tested feature can be add to it
         if filereadable(expand("~/.nvimrc.local")) && has('nvim')
             source ~/.nvimrc.local
