@@ -732,9 +732,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set laststatus=2
         if HasPlug('monokai')
             colorscheme monokai
-            if HasDirectory('lightline.vim')
-                let g:lightline.colorscheme = 'monokai'
-            endif
         elseif HasPlug('solarized')
             let g:solarized_termcolors=256
             colorscheme solarized
