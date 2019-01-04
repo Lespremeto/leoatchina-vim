@@ -346,7 +346,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " install snippets
             Plug 'leoatchina/leoatchina-snippets'
-            if g:python_version && g:use_ultisnips && g:complete_engine != "neocomplcache" && (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim'))
+            if (g:python_version == 2 && g:complete_engine == "neocomplcache" || g:python_version && g:complete_engine != "neocomplcache") &&
+                    \ g:use_ultisnips &&
+                    \ (v:version == 704 && has('patch774') || v:version >= 800 || has('nvim'))
                 let g:complete_snippet = "ultisnips"
                 Plug 'SirVer/ultisnips', {'branch': 'master'}
                 Plug 'honza/vim-snippets', {'branch': 'master'}
@@ -540,12 +542,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         elseif g:complete_engine == "neocomplete"
             Plug 'Shougo/neocomplete.vim', {'branch': 'master'}
-            Plug 'davidhalter/jedi-vim', {'branch': 'master'}
+            Plug 'davidhalter/jedi-vim', {'for': 'python', 'branch': 'master'}
             if HasPlug('c') && executable('clang')
                 Plug 'Rip-Rip/clang_complete', {'branch': 'master'}
             endif
             if HasPlug('rust') && executable('racer')
-                Plug 'racer-rust/vim-racer', {'branch': 'master'}
+                Plug 'racer-rust/vim-racer', {'for': 'rust', 'branch': 'master'}
             endif
             if HasPlug('javascript') && executable('tern')
                 Plug 'ternjs/tern_for_vim', {'branch': 'master'}
@@ -553,9 +555,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
         elseif g:complete_engine == "neocomplcache"
             Plug 'Shougo/neocomplcache.vim', {'branch': 'master'}
-            Plug 'davidhalter/jedi-vim', {'branch': 'master'}
+            Plug 'davidhalter/jedi-vim', {'for': 'python', 'branch': 'master'}
             if HasPlug('c') && executable('clang')
                 Plug 'Rip-Rip/clang_complete', {'branch': 'master'}
+            endif
+            if g:complete_snippet == "ultisnips"
+                Plug 'JazzCore/neocomplcache-ultisnips', {'branch': 'master'}
             endif
         endif
         unlet g:use_ultisnips
