@@ -251,7 +251,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if g:use_syntax
             " syntax
             if v:version >= 800 || has('nvim')
-                Plug 'w0rp/ale'
+                Plug 'w0rp/ale', {'branch': 'master'}
                 let g:syntax_tool = 'ale'
             elseif v:version == 704 && has('patch1486')
                 Plug 'vim-syntastic/syntastic', {'branch': 'master'}
