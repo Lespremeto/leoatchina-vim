@@ -732,6 +732,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set laststatus=2
         if HasPlug('monokai')
             colorscheme monokai
+        elseif HasPlug('molokai')
+            colorscheme molokai
         elseif HasPlug('solarized')
             let g:solarized_termcolors=256
             colorscheme solarized
