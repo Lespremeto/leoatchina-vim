@@ -250,9 +250,9 @@ if has('clipboard')
     endif
 endif
 " HasPlug define
-let g:plug_groups=['']
+let g:plugs_group=['']
 function! HasPlug(plug)
-    return count(g:plug_groups, a:plug)
+    return count(g:plugs_group, a:plug)
 endfunction
 " HasDirectory define
 function! HasDirectory(dir)
@@ -1038,7 +1038,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " UndoTree
     if HasDirectory("undotree")
-        nnoremap <M-u> :UndotreeToggle<CR>
+        nnoremap <M-U> :UndotreeToggle<CR>
         " If undotree is opened, it is likely one wants to interact with it.
         let g:undotree_SetFocusWhenToggle = 0
         if has("persistent_undo")
