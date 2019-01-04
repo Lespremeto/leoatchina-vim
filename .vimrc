@@ -744,7 +744,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 colorscheme atom-dark-256
             endif
         elseif HasPlug('seoul256')
-            let g:seoul256_background = 234
+            let g:seoul256_background = 233
             colorscheme seoul256
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'seoul256'
