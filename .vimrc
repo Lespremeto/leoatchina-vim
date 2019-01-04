@@ -1322,7 +1322,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if executable('pyls')
             au User lsp_setup call lsp#register_server({
                 \ 'name': 'pyls',
-                \ 'whitelist': 'python',
                 \ 'cmd': {server_info->['pyls']},
                 \ 'whitelist': ['python'],
                 \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
