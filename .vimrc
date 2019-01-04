@@ -673,30 +673,30 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endfunction
             let g:lightline = {
                 \ 'component': {
-                \   'filefullpath': '%F',
-                \   'lineinfo': '%l/%L : %c'
+                \     'filefullpath': '%F',
+                \     'lineinfo': '%l/%L : %c'
                 \ },
                 \ 'component_function': {
-                \   'gitbranch': 'fugitive#head',
-                \   'readonly': 'LightlineReadonly'
+                \     'gitbranch': 'fugitive#head',
+                \     'readonly': 'LightlineReadonly'
                 \ },
                 \ 'active': {
-                \   'left': [
-                \     ['mode', 'paste'],
-                \     ['gitbranch', 'readonly'],
-                \     ['filefullpath', 'modified']
-                \   ],
-                \   'right': [
-                \     ['percent'],
-                \     ['filetype', 'fileformat', 'fileencoding' , 'lineinfo']
-                \   ]
+                \     'left': [
+                \         ['mode', 'paste'],
+                \         ['gitbranch', 'readonly'],
+                \         ['filefullpath', 'modified']
+                \     ],
+                \     'right': [
+                \         ['percent'],
+                \         ['filetype', 'fileformat', 'fileencoding' , 'lineinfo']
+                \     ]
                 \ },
                 \ 'inactive': {
-                \   'left': [
-                \     ['mode', 'paste'],
-                \     ['filefullpath']
-                \   ],
-                \   'right': ['filetype', 'fileformat', 'fileencoding', 'lineinfo']
+                \     'left': [
+                \         ['mode', 'paste'],
+                \         ['filefullpath']
+                \     ],
+                \     'right': ['filetype', 'fileformat', 'fileencoding', 'lineinfo']
                 \ }
             \ }
             if HasDirectory("lightline-ale")
@@ -713,9 +713,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     \ 'linter_ok': 'left'
                 \ }
                 let g:lightline.active.right = [
-                    \ [ 'percent' ],
-                    \ [ 'filetype', 'fileformat', 'fileencoding', 'lineinfo'],
-                    \ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]
+                    \ ['percent'],
+                    \ ['filetype', 'fileformat', 'fileencoding', 'lineinfo'],
+                    \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
                 \ ]
             endif
             if HasDirectory('coc.nvim')
@@ -725,9 +725,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     \  'cocstatus': 'coc#status'
                 \ }
                 let g:lightline.active.left = [
-                    \  ['mode', 'paste'],
+                    \  ['cocstatus', 'mode', 'paste'],
                     \  ['gitbranch', 'readonly'],
-                    \  ['filefullpath', 'modified', 'cocstatus']
+                    \  ['filefullpath', 'modified']
                 \ ]
             endif
         else
@@ -1287,8 +1287,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:coc_snippet_prev = '<C-p>'
         " Show signature help while editing
         au CursorHoldI * silent! call CocAction('showSignatureHelp')
-        " Highlight symbol under cursor on CursorHold
-        au CursorHold * silent call CocActionAsync('highlight')
         " Use `:Format` for format current buffer
         command! -nargs=0 Format :call CocAction('format')
         " Use `:Fold` for fold current buffer
