@@ -733,8 +733,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if has('gui_running')
             set termguicolors
         endif
-        if HasPlug('monokai')
-            colorscheme monokai
+        if HasPlug('molokai')
+            colorscheme molokai
         elseif HasPlug('badwolf')
             colorscheme badwolf
         elseif HasPlug('atom')
