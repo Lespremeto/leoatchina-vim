@@ -690,13 +690,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \         ['percent'],
                 \         ['filetype', 'fileformat', 'fileencoding' , 'lineinfo']
                 \     ]
-                \ },
-                \ 'inactive': {
-                \     'left': [
-                \         ['mode', 'paste'],
-                \         ['filefullpath']
-                \     ],
-                \     'right': ['filetype', 'fileformat', 'fileencoding', 'lineinfo']
                 \ }
             \ }
             if HasDirectory("lightline-ale")
