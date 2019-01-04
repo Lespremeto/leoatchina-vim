@@ -711,18 +711,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
                 \ ]
             endif
-            if HasDirectory('coc.nvim')
-                let g:lightline.component_function = {
-                    \  'gitbranch': 'fugitive#head',
-                    \  'readonly': 'LightlineReadonly',
-                    \  'cocstatus': 'coc#status'
-                \ }
-                let g:lightline.active.left = [
-                    \  ['cocstatus', 'mode', 'paste'],
-                    \  ['gitbranch', 'readonly'],
-                    \  ['filefullpath', 'modified']
-                \ ]
-            endif
         else
             set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
             set statusline+=%2*\ %F\ %*
