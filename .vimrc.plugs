@@ -263,42 +263,44 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:syntax_tool = "None"
         endif
         " complete engine
-        if g:use_complete && has('timers')
+        if g:use_complete
             let s:smart_engine_select = 0
-            if HasPlug('youcompleteme') || HasPlug('YCM')
-                if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 || has('nvim'))
-                    let g:complete_engine = "YCM"
-                else
-                    echoe "Cannot install YouCompleteMe, smart select a complete_engine."
-                    let s:smart_engine_select = 1
-                endif
-            elseif HasPlug('coc')
-                if executable('node') && executable('yarn') && (has('nvim-0.3.0') || v:version >= 801)
-                    let g:complete_engine = "coc"
-                else
-                    echoe "Cannot install coc, smart select a complete_engine."
-                    let s:smart_engine_select = 1
-                endif
-            elseif HasPlug('ncm2')
-                if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800)
-                    let g:complete_engine = "ncm2"
-                else
-                    echoe "Cannot install ncm2, smart select a complete_engine."
-                    let s:smart_engine_select = 1
-                endif
-            elseif HasPlug('deoplete')
-                if g:python_version == 3 && (has('nvim-0.3.0') || v:version >= 800)
-                    let g:complete_engine = "deoplete"
-                else
-                    echoe "Cannot install deoplete, smart select a complete_engine."
-                    let s:smart_engine_select = 1
-                endif
-            elseif HasPlug('asyncomplete')
-                if has('nvim') || v:version >= 800
-                    let g:complete_engine = "asyncomplete"
-                else
-                    echoe "Cannot install asyncomplete, smart select a complete_engine."
-                    let s:smart_engine_select = 1
+            if has('timers')
+                if HasPlug('youcompleteme') || HasPlug('YCM')
+                    if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 || has('nvim'))
+                        let g:complete_engine = "YCM"
+                    else
+                        echoe "Cannot install YouCompleteMe, smart select a complete_engine."
+                        let s:smart_engine_select = 1
+                    endif
+                elseif HasPlug('coc')
+                    if executable('node') && executable('yarn') && (has('nvim-0.3.0') || v:version >= 801)
+                        let g:complete_engine = "coc"
+                    else
+                        echoe "Cannot install coc, smart select a complete_engine."
+                        let s:smart_engine_select = 1
+                    endif
+                elseif HasPlug('ncm2')
+                    if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800)
+                        let g:complete_engine = "ncm2"
+                    else
+                        echoe "Cannot install ncm2, smart select a complete_engine."
+                        let s:smart_engine_select = 1
+                    endif
+                elseif HasPlug('deoplete')
+                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version >= 800)
+                        let g:complete_engine = "deoplete"
+                    else
+                        echoe "Cannot install deoplete, smart select a complete_engine."
+                        let s:smart_engine_select = 1
+                    endif
+                elseif HasPlug('asyncomplete')
+                    if has('nvim') || v:version >= 800
+                        let g:complete_engine = "asyncomplete"
+                    else
+                        echoe "Cannot install asyncomplete, smart select a complete_engine."
+                        let s:smart_engine_select = 1
+                    endif
                 endif
             elseif HasPlug('neocomplete')
                 if has('lua') && (v:version == 703 && has('patch885') || v:version >= 704 || has('nvim'))

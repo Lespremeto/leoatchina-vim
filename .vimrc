@@ -668,6 +668,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " statusline
     if has('statusline')
         if HasDirectory("lightline.vim")
+            function! LightlineReadonly()
+                return &readonly && &filetype !=# 'help' ? 'RO' : ''
+            endfunction
             let g:lightline = {
                 \ 'active': {
                 \   'left': [
@@ -693,9 +696,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \   'readonly': 'LightlineReadonly',
                 \ },
             \ }
-            function! LightlineReadonly()
-                return &readonly && &filetype !=# 'help' ? 'RO' : ''
-            endfunction
             if HasDirectory("lightline-ale")
                 let g:lightline.component_expand =  {
                     \ 'linter_checking': 'lightline#ale#checking',
