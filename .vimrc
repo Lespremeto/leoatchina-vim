@@ -1089,6 +1089,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             nnoremap <C-k>c :Commits<CR>
             nnoremap <C-k>h :History/<CR>
             nnoremap <C-k>t :BTags<CR>
+            nnoremap <C-k>A :Ag<CR>
+            nnoremap <C-k>R :Rg<CR>
             nnoremap <C-k>F :Filetypes<CR>
             nnoremap <C-k>C :Colors<CR>
             nnoremap <C-k>M :Maps<CR>
