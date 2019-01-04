@@ -735,6 +735,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'monokai'
             endif
+        elseif HasPlug('solarized')
+            let g:solarized_termcolors=256
+            colorscheme solarized
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'solarized'
+            endif
         elseif v:version < 800 && !has('nvim')
             colorscheme wombat256mod
             if HasDirectory('lightline.vim')
