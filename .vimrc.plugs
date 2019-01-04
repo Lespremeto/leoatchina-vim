@@ -301,6 +301,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         echoe "Cannot install asyncomplete, smart select a complete_engine."
                         let s:smart_engine_select = 1
                     endif
+                else
+                    let s:smart_engine_select = 1
                 endif
             elseif HasPlug('neocomplete')
                 if has('lua') && (v:version == 703 && has('patch885') || v:version >= 704 || has('nvim'))
