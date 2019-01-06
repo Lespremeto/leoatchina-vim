@@ -1,4 +1,5 @@
 set nocompatible
+set t_ti=
 if v:version < 700
     echoe 'This vimrc requires Vim 7.0 or later.'
     quit
@@ -53,6 +54,22 @@ function! Alt_meta_map()
     elseif &ttimeoutlen > 60 || &ttimeoutlen <= 0
         set ttimeoutlen=60
     endif
+    map ÏP <F1>
+    map ÏQ <F2>
+    map ÏR <F3>
+    map ÏS <F4>
+    inoremap ÏP <Nop>
+    inoremap ÏQ <Nop>
+    inoremap ÏR <Nop>
+    inoremap ÏS <Nop>
+    inoremap <F5> <Nop>
+    inoremap <F6> <Nop>
+    inoremap <F7> <Nop>
+    inoremap <F8> <Nop>
+    inoremap <F9> <Nop>
+    inoremap <F10> <Nop>
+    inoremap <F11> <Nop>
+    inoremap <F12> <Nop>
     if has('nvim') || has('gui_running') && !OSX()
         return
     endif
@@ -302,6 +319,8 @@ xnoremap gT <Nop>
 snoremap gt <Nop>
 snoremap gT <Nop>
 " some ctrl+ key remap
+nnoremap <M-,> <C-a>
+nnoremap <M-.> <C-x>
 nnoremap <C-a> <Nop>
 nnoremap <C-x> <Nop>
 nnoremap <C-p> <Nop>
@@ -879,8 +898,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <M-/> :PreviewSignature!<Cr>
         nnoremap <M-:> :PreviewQuickfix<Space>
         nnoremap <M-?> :PreviewClose<Cr>
-        nnoremap <M-.> :PreviewGoto<Space>
-        nnoremap <M-,> :PreviewFile<Space>
         au FileType qf nnoremap <silent><buffer> f :PreviewQuickfix<cr>
         au FileType qf nnoremap <silent><buffer> q :PreviewClose<cr>
     endif
