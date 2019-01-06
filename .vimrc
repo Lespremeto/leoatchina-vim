@@ -58,10 +58,10 @@ function! Alt_meta_map()
     map ÏQ <F2>
     map ÏR <F3>
     map ÏS <F4>
-    inoremap ÏP <Nop>
-    inoremap ÏQ <Nop>
-    inoremap ÏR <Nop>
-    inoremap ÏS <Nop>
+    inoremap <F1> <Nop>
+    inoremap <F2> <Nop>
+    inoremap <F3> <Nop>
+    inoremap <F4> <Nop>
     inoremap <F5> <Nop>
     inoremap <F6> <Nop>
     inoremap <F7> <Nop>
@@ -319,8 +319,8 @@ xnoremap gT <Nop>
 snoremap gt <Nop>
 snoremap gT <Nop>
 " some ctrl+ key remap
-nnoremap <M-,> <C-a>
-nnoremap <M-.> <C-x>
+nnoremap <M--> <C-a>
+nnoremap <M-_> <C-x>
 nnoremap <C-a> <Nop>
 nnoremap <C-x> <Nop>
 nnoremap <C-p> <Nop>
