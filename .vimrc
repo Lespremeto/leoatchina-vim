@@ -825,9 +825,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endif
     endif
-    " ctags
+    " ctags && tagbar
     if HasDirectory("tagbar")
         let g:tagbar_sort = 0
+        let g:tagbar_left = 1
         set tags=./.tags;,.tags
         " Make tags placed in .git/tags file available in all levels of a repository
         let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
@@ -935,46 +936,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " neoformat
     if HasDirectory('neoformat')
         nnoremap <leader>nf :Neoformat!<Space>
-    endif
-    " NerdTree
-    if HasDirectory("nerdtree")
-        nmap <leader>nn :NERDTreeTabsToggle<CR>
-        nmap <leader>nt :NERDTreeFind<CR>
-        let g:NERDShutUp                            = 1
-        let s:has_nerdtree                          = 1
-        let g:nerdtree_tabs_open_on_gui_startup     = 0
-        let g:nerdtree_tabs_open_on_console_startup = 0
-        let g:nerdtree_tabs_smart_startup_focus     = 2
-        let g:nerdtree_tabs_focus_on_files          = 1
-        let g:NERDTreeWinSize                       = 30
-        let g:NERDTreeShowBookmarks                 = 1
-        let g:nerdtree_tabs_smart_startup_focus     = 0
-        let g:NERDTreeIgnore = ['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-        let g:NERDTreeChDirMode                 =0
-        let g:NERDTreeQuitOnOpen                =1
-        let g:NERDTreeMouseMode                 =2
-        let g:NERDTreeShowHidden                =1
-        let g:NERDTreeKeepTreeInNewTab          =1
-        let g:nerdtree_tabs_focus_on_files      = 1
-        let g:nerdtree_tabs_open_on_gui_startup = 0
-        let g:NERDTreeWinPos                    =0
-        let g:NERDTreeDirArrowExpandable        = '▸'
-        let g:NERDTreeDirArrowCollapsible       = '▾'
-        au BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-        " nerdtree-git
-        if HasDirectory("nerdtree-git-plugin")
-            let g:NERDTreeIndicatorMapCustom = {
-                \ "Modified"  : "*",
-                \ "Staged"    : "+",
-                \ "Untracked" : "★",
-                \ "Renamed"   : "→ ",
-                \ "Unmerged"  : "=",
-                \ "Deleted"   : "X",
-                \ "Dirty"     : "●",
-                \ "Clean"     : "√",
-                \ "Unknown"   : "?"
-            \ }
-        endif
     endif
     " ywvim,vim里的中文输入法
     if HasDirectory("ywvim")
@@ -1223,6 +1184,83 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     \ 'fallback': s:ctrlp_fallback
                 \ }
         endif
+    endif
+    " javascript language
+    if HasDirectory('vim-javascript')
+        let g:javascript_plugin_jsdoc = 1
+        let g:javascript_plugin_ngdoc = 1
+        let g:javascript_plugin_flow = 1
+        au  FileType Javascript setlocal conceallevel=1
+        let g:javascript_conceal_function             = "ƒ"
+        let g:javascript_conceal_null                 = "ø"
+        let g:javascript_conceal_this                 = "@"
+        let g:javascript_conceal_return               = "⇚"
+        let g:javascript_conceal_undefined            = "¿"
+        let g:javascript_conceal_NaN                  = "ℕ"
+        let g:javascript_conceal_prototype            = "¶"
+        let g:javascript_conceal_static               = "•"
+        let g:javascript_conceal_super                = "Ω"
+        let g:javascript_conceal_arrow_function       = "⇒"
+        let g:javascript_conceal_noarg_arrow_function = "🞅"
+        let g:javascript_conceal_underscore_arrow_function = "🞅"
+    endif
+    if HasDirectory('vim-jsdoc')
+        au FileType javascript nmap <C-p>j <Plug>(jsdoc)
+    endif
+    " php language
+    if HasDirectory('phpcomplete.vim')
+        let g:phpcomplete_mappings = {
+           \ 'jump_to_def_split':  '<C-]>',
+           \ 'jump_to_def_vsplit': '<C-\>',
+           \ 'jump_to_def':        '<C-w><C-]>',
+           \ 'jump_to_def_tabnew': '<C-w><C-\>',
+           \}
+    endif
+    " html/css language
+    if HasDirectory('emmet-vim')
+        let g:user_emmet_leader_key='<C-p>'
+    endif
+    " java
+    if HasDirectory("vim-eclim")
+        let g:EclimCompletionMethod = 'omnifunc'
+        let s:project_tree_is_open = 0
+        function! ProjectTreeToggle()
+            if s:project_tree_is_open
+                call eclim#project#tree#ProjectTreeClose()
+                let s:project_tree_is_open = 0
+            else
+                let s:winpos = winnr() + 1
+                call eclim#project#tree#ProjectTree()
+                let s:project_tree_is_open = 1
+                execute s:winpos . "wincmd w"
+            endif
+        endfunction
+        command! Pjt call ProjectTreeToggle()
+        let b:eclim_available = filereadable(WINDOWS() ?
+            \ '$HOME/.eclim/.eclimd_instances' :
+            \ expand('~/.eclim/.eclimd_instances')
+        \)
+        if b:eclim_available
+            au filetype java nnoremap <C-p>t :Pjt<Cr>
+            au filetype java nnoremap <C-p>l :ProjectList<Cr>
+            au filetype java nnoremap <C-p>b :ProjectBuild<Cr>
+            au filetype java nnoremap <C-p>f :ProjectRefresh<Cr>
+            au filetype java nnoremap <C-p>c :ProjectCD<Space>
+            au filetype java nnoremap <C-p>d :ProjectLCD<Space>
+            au filetype java nnoremap <C-p>n :ProjectCreate<Space>
+            au filetype java nnoremap <C-p>m :ProjectMove<Space>
+            au filetype java nnoremap <C-p>i :ProjectImport<Space>
+            au filetype java nnoremap <C-p>o :ProjectOpen<Space>
+            au filetype java nnoremap <C-p>r :ProjectRun
+            au filetype java nnoremap <C-p>j :Project
+            au filetype java nnoremap <C-p>I :ProjectInfo<Cr>
+        else
+            au filetype java nmap <C-p> <Nop>
+            au filetype java echom("please start eclimd for java")
+        endif
+    else
+        au filetype java nmap <C-p> <Nop>
+        au filetype java echom("please please install eclim and config it for eclipse")
     endif
     " complete_engine
     set completeopt-=menu
@@ -1611,83 +1649,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
     else
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?"()\<left>":";"
-    endif
-    " javascript language
-    if HasDirectory('vim-javascript')
-        let g:javascript_plugin_jsdoc = 1
-        let g:javascript_plugin_ngdoc = 1
-        let g:javascript_plugin_flow = 1
-        au  FileType Javascript setlocal conceallevel=1
-        let g:javascript_conceal_function             = "ƒ"
-        let g:javascript_conceal_null                 = "ø"
-        let g:javascript_conceal_this                 = "@"
-        let g:javascript_conceal_return               = "⇚"
-        let g:javascript_conceal_undefined            = "¿"
-        let g:javascript_conceal_NaN                  = "ℕ"
-        let g:javascript_conceal_prototype            = "¶"
-        let g:javascript_conceal_static               = "•"
-        let g:javascript_conceal_super                = "Ω"
-        let g:javascript_conceal_arrow_function       = "⇒"
-        let g:javascript_conceal_noarg_arrow_function = "🞅"
-        let g:javascript_conceal_underscore_arrow_function = "🞅"
-    endif
-    if HasDirectory('vim-jsdoc')
-        au FileType javascript nmap <C-p>j <Plug>(jsdoc)
-    endif
-    " php language
-    if HasDirectory('phpcomplete.vim')
-        let g:phpcomplete_mappings = {
-           \ 'jump_to_def_split':  '<C-]>',
-           \ 'jump_to_def_vsplit': '<C-\>',
-           \ 'jump_to_def':        '<C-w><C-]>',
-           \ 'jump_to_def_tabnew': '<C-w><C-\>',
-           \}
-    endif
-    " html/css language
-    if HasDirectory('emmet-vim')
-        let g:user_emmet_leader_key='<C-p>'
-    endif
-    " java
-    if HasDirectory("vim-eclim")
-        let g:EclimCompletionMethod = 'omnifunc'
-        let s:project_tree_is_open = 0
-        function! ProjectTreeToggle()
-            if s:project_tree_is_open
-                call eclim#project#tree#ProjectTreeClose()
-                let s:project_tree_is_open = 0
-            else
-                let s:winpos = winnr() + 1
-                call eclim#project#tree#ProjectTree()
-                let s:project_tree_is_open = 1
-                execute s:winpos . "wincmd w"
-            endif
-        endfunction
-        command! Pjt call ProjectTreeToggle()
-        let b:eclim_available = filereadable(WINDOWS() ?
-            \ '$HOME/.eclim/.eclimd_instances' :
-            \ expand('~/.eclim/.eclimd_instances')
-        \)
-        if b:eclim_available
-            au filetype java nnoremap <C-p>t :Pjt<Cr>
-            au filetype java nnoremap <C-p>l :ProjectList<Cr>
-            au filetype java nnoremap <C-p>b :ProjectBuild<Cr>
-            au filetype java nnoremap <C-p>f :ProjectRefresh<Cr>
-            au filetype java nnoremap <C-p>c :ProjectCD<Space>
-            au filetype java nnoremap <C-p>d :ProjectLCD<Space>
-            au filetype java nnoremap <C-p>n :ProjectCreate<Space>
-            au filetype java nnoremap <C-p>m :ProjectMove<Space>
-            au filetype java nnoremap <C-p>i :ProjectImport<Space>
-            au filetype java nnoremap <C-p>o :ProjectOpen<Space>
-            au filetype java nnoremap <C-p>r :ProjectRun
-            au filetype java nnoremap <C-p>j :Project
-            au filetype java nnoremap <C-p>I :ProjectInfo<Cr>
-        else
-            au filetype java nmap <C-p> <Nop>
-            au filetype java echom("please start eclimd for java")
-        endif
-    else
-        au filetype java nmap <C-p> <Nop>
-        au filetype java echom("please please install eclim and config it for eclipse")
     endif
     " run_tools
     if HasDirectory("vim-quickrun")

@@ -68,8 +68,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " list only the plugin groups you will use
         " general
-        Plug 'scrooloose/nerdtree', {'branch': 'master'}
-        Plug 'jistr/vim-nerdtree-tabs', {'branch': 'master'}
         Plug 'mhinz/vim-startify', {'branch': 'master'}
         Plug 'scrooloose/nerdcommenter', {'branch': 'master'}
         Plug 'mbbill/undotree', {'branch': 'master'}

@@ -542,5 +542,4 @@ if has `surround`, use `.` to `repead`
 ```
 
 # TODO
-- text
 - debug
