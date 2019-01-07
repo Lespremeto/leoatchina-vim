@@ -58,10 +58,10 @@ function! Alt_meta_map()
     map ÏQ <F2>
     map ÏR <F3>
     map ÏS <F4>
-    inoremap <F1> <Nop>
-    inoremap <F2> <Nop>
-    inoremap <F3> <Nop>
-    inoremap <F4> <Nop>
+    inoremap ÏP <Nop>
+    inoremap ÏQ <Nop>
+    inoremap ÏR <Nop>
+    inoremap ÏS <Nop>
     inoremap <F5> <Nop>
     inoremap <F6> <Nop>
     inoremap <F7> <Nop>
