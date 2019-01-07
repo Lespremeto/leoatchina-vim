@@ -77,6 +77,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if (v:version < 800 && !has('nvim')) && !WINDOWS()
             Plug 'Shougo/vimproc.vim', {'do' : 'make', 'branch': 'master'}
         endif
+        " dir
+        Plug 'justinmk/vim-dirvish', {'branch': 'master'}
+        Plug 'kristijanhusak/vim-dirvish-git', {'branch': 'master'}
+        Plug 'bounceme/remote-viewer', {'branch': 'master'}
         " input method
         if HasPlug('wubi') || HasPlug('pinyin')
             Plug 'leoatchina/ywvim', {'branch': 'master'}

@@ -743,6 +743,24 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             hi User5 cterm=None ctermfg=250 ctermbg=238
         endif
     endif
+    if HasDirectory('vim-dirvish')
+        nnoremap <M-D> :Dirvish<CR>
+        nnoremap <C-k>d :Dirvish<Space>
+        if HasDirectory('vim-dirvish')
+            autocmd FileType dirvish nmap <silent><buffer><C-n> <Plug>(dirvish_git_next_file)
+            autocmd FileType dirvish nmap <silent><buffer><C-p> <Plug>(dirvish_git_prev_file)
+            let g:dirvish_git_show_ignored = 1
+            let g:dirvish_git_indicators = {
+                \ 'Modified'  : '✹',
+                \ 'Staged'    : '✚',
+                \ 'Untracked' : '✭',
+                \ 'Renamed'   : '➜',
+                \ 'Unmerged'  : '═',
+                \ 'Ignored'   : '☒',
+                \ 'Unknown'   : '?'
+            \ }
+        endif
+    endif
     " themes
     if HasDirectory("/vim-colorschemes-collections")
         " dark theme
