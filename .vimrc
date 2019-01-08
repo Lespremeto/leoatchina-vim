@@ -1120,107 +1120,67 @@ if has('job') || g:python_version || has('nvim') || has('lua')
            \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
            \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
        \ }
-    else
-        if HasDirectory("fzf.vim")
-            nnoremap <C-k>j :Files<CR>
-            nnoremap <C-k>l :Lines<CR>
-            nnoremap <C-k>b :Buffers<CR>
-            nnoremap <C-k>m :Marks<CR>
-            nnoremap <C-k>g :GFiles?<CR>
-            nnoremap <C-k>c :Commits<CR>
-            nnoremap <C-k>h :History/<CR>
-            nnoremap <C-k>t :BTags<CR>
-            nnoremap <C-k>A :Ag<CR>
-            nnoremap <C-k>R :Rg<CR>
-            nnoremap <C-k>F :Filetypes<CR>
-            nnoremap <C-k>C :Colors<CR>
-            nnoremap <C-k>M :Maps<CR>
-            nnoremap <C-k>H :History
-            " Mapping selecting mkppings
-            nmap <C-k><tab> <plug>(fzf-maps-n)
-            xmap <C-k><tab> <plug>(fzf-maps-x)
-            omap <C-k><tab> <plug>(fzf-maps-o)
-            imap <C-k><C-w> <plug>(fzf-complete-word)
-            imap <C-k><C-p> <plug>(fzf-complete-path)
-            imap <C-k><C-f> <plug>(fzf-complete-file-ag)
-            imap <C-k><C-l> <plug>(fzf-complete-line)
-            " [Buffers] Jump to the existing window if possible
-            let g:fzf_buffers_jump = 1
-            " [[B]Commits] Customize the options used by 'git log':
-            let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-            " [Tags] Command to generate tags fil
-            let g:fzf_tags_command = 'ctags -R'
-            " [Commands] --expect expression for directly executing the command
-            let g:fzf_commands_expect = 'alt-enter,ctrl-x'
-            let g:fzf_colors =
-                \ { 'fg':      ['fg', 'Normal'],
-                  \ 'bg':      ['bg', 'Normal'],
-                  \ 'hl':      ['fg', 'Comment'],
-                  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-                  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-                  \ 'hl+':     ['fg', 'Statement'],
-                  \ 'info':    ['fg', 'PreProc'],
-                  \ 'border':  ['fg', 'Ignore'],
-                  \ 'prompt':  ['fg', 'Conditional'],
-                  \ 'pointer': ['fg', 'Exception'],
-                  \ 'marker':  ['fg', 'Keyword'],
-                  \ 'spinner': ['fg', 'Label'],
-                  \ 'header':  ['fg', 'Comment'] }
-            if has('nvim')
-                let g:fzf_layout = { 'window': '10split enew' }
-            else
-                let g:fzf_layout = { 'down': '~40%' }
-            endif
-            function! s:build_quickfix_list(lines)
-                call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-                copen
-                cc
-            endfunction
-            let g:fzf_action = {
-                    \ 'ctrl-q': function('s:build_quickfix_list'),
-                    \ 'ctrl-t': 'tab split',
-                    \ 'ctrl-x': 'split',
-                    \ 'ctrl-v': 'vsplit'
-                \ }
+    elseif HasDirectory("fzf.vim")
+        nnoremap <C-k>j :Files<CR>
+        nnoremap <C-k>l :Lines<CR>
+        nnoremap <C-k>b :Buffers<CR>
+        nnoremap <C-k>m :Marks<CR>
+        nnoremap <C-k>g :GFiles?<CR>
+        nnoremap <C-k>c :Commits<CR>
+        nnoremap <C-k>h :History/<CR>
+        nnoremap <C-k>t :BTags<CR>
+        nnoremap <C-k>A :Ag<CR>
+        nnoremap <C-k>R :Rg<CR>
+        nnoremap <C-k>F :Filetypes<CR>
+        nnoremap <C-k>C :Colors<CR>
+        nnoremap <C-k>M :Maps<CR>
+        nnoremap <C-k>H :History
+        " Mapping selecting mkppings
+        nmap <C-k><tab> <plug>(fzf-maps-n)
+        xmap <C-k><tab> <plug>(fzf-maps-x)
+        omap <C-k><tab> <plug>(fzf-maps-o)
+        imap <C-k><C-w> <plug>(fzf-complete-word)
+        imap <C-k><C-p> <plug>(fzf-complete-path)
+        imap <C-k><C-f> <plug>(fzf-complete-file-ag)
+        imap <C-k><C-l> <plug>(fzf-complete-line)
+        " [Buffers] Jump to the existing window if possible
+        let g:fzf_buffers_jump = 1
+        " [[B]Commits] Customize the options used by 'git log':
+        let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+        " [Tags] Command to generate tags fil
+        let g:fzf_tags_command = 'ctags -R'
+        " [Commands] --expect expression for directly executing the command
+        let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+        let g:fzf_colors =
+            \ { 'fg':      ['fg', 'Normal'],
+              \ 'bg':      ['bg', 'Normal'],
+              \ 'hl':      ['fg', 'Comment'],
+              \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+              \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+              \ 'hl+':     ['fg', 'Statement'],
+              \ 'info':    ['fg', 'PreProc'],
+              \ 'border':  ['fg', 'Ignore'],
+              \ 'prompt':  ['fg', 'Conditional'],
+              \ 'pointer': ['fg', 'Exception'],
+              \ 'marker':  ['fg', 'Keyword'],
+              \ 'spinner': ['fg', 'Label'],
+              \ 'header':  ['fg', 'Comment'] }
+        if has('nvim')
+            let g:fzf_layout = { 'window': '10split enew' }
+        else
+            let g:fzf_layout = { 'down': '~40%' }
         endif
-        if HasDirectory("ctrlp.vim")
-            let g:ctrlp_cmd = 'CtrlP'
-            nnoremap <C-k>J :CtrlP<Cr>
-            let g:ctrlp_working_path_mode = 'ar'
-            let g:ctrlp_custom_ignore = {
-                    \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-                    \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$'
-                \ }
-            if HasDirectory("ctrlp-funky")
-                let g:ctrlp_extensions = ['funky']
-                nnoremap <C-k>f :CtrlPFunky<Cr>
-            endif
-            if executable('ag')
-                let s:ctrlp_fallback = 'ag %s --follow --nocolor -nogroup -g ""'
-            elseif executable('rg')
-                set grepprg=rg\ --color=never
-                let s:ctrlp_fallback = 'rg %s --color=never --files --glob "!.git"'
-            elseif executable('pt')
-                let s:ctrlp_fallback = 'pt %s --nocolor --nogroup '
-            elseif executable('ack')
-                let s:ctrlp_fallback = 'ack %s --nocolor -f'
-            " On Windows use dir as fallback command.
-            elseif WINDOWS()
-                let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
-            else
-                let s:ctrlp_fallback = 'find %s -type f'
-            endif
-            if exists("g:ctrlp_user_command")
-                unlet g:ctrlp_user_command
-            endif
-            let g:ctrlp_user_command = {
-                    \ 'types': {
-                        \ 1: ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'],
-                        \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-                    \ },
-                    \ 'fallback': s:ctrlp_fallback
-                \ }
-        endif
+        function! s:build_quickfix_list(lines)
+            call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+            copen
+            cc
+        endfunction
+        let g:fzf_action = {
+                \ 'ctrl-q': function('s:build_quickfix_list'),
+                \ 'ctrl-t': 'tab split',
+                \ 'ctrl-x': 'split',
+                \ 'ctrl-v': 'vsplit'
+            \ }
     endif
     " javascript language
     if HasDirectory('vim-javascript')

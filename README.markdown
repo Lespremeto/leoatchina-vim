@@ -58,7 +58,6 @@
     - [rust](#rust)
     - [julia](#julia)
     - [erlang](#erlang)
-  * [nerdtree](#nerdtree)
   * [tagbar and vim-gutentags](#tagbar-and-vim-gutentags)
   * [undotree](#undotree)
   * [lightline](#lightline)
@@ -66,9 +65,8 @@
   * [bioSyntax-vim](#biosyntax-vim)
   * [nerdcommenter](#nerdcommenter)
   * [fuzzy finder](#fuzzy-finder)
-    - [fzf.vim](#fzfvim)
     - [LeaderF](#leaderf)
-    - [ctrlp](#ctrlp)
+    - [fzf.vim](#fzfvim)
   * [surround](#surround)
   * [repeat](#repeat)
   * [vim-easy-align](#vim-easy-align-1)
@@ -459,20 +457,18 @@ perl snippets and syntax
 ### julia
 ### erlang
 
-## [nerdtree](https://github.com/scrooloose/nerdtree)
-Togglekey:`<Leader>nn`, and key `<Leader>nt`
 
 ## [tagbar](https://github.com/majutsushi/tagbar) and [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
 need `has("ctags")`. Togglekey:`<Leader>tt`
 
 ## [undotree](https://github.com/mbbill/undotree)
-Just as it name. Togglekey:`<Leader>u`
+Just as it name. Togglekey:`<M-U>`
 
 ## [lightline](https://github.com/itchyny/lightline.vim)
 Beautifull statusline for advanced information of workspace.
 
 ## [fugitive](https://github.com/tpope/vim-fugitive)
-Git plugin. `gc` for `Gcommit`, and `+` for `:Git `
+Git plugin. `gc` for `Gcommit`, and `<leader><CR>` for `:Git `
 
 ## [bioSyntax-vim](https://github.com/bioSyntax/bioSyntax-vim.git)
 As a bionformtion worker, this plug is use in view bam/sam/vcf. need add `bio` in `~/.vimrc.local`
@@ -483,14 +479,13 @@ You can get other shortcuts via the link.
 
 ## fuzzy finder
 `C-k j` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
-You can install only one of them , by write the plugins name in `~/.vimrc.local`. `CtrlP` is the default one.
 
-### [fzf.vim](https://github.com/junegunn/fzf.vim)
-fzf runs asynchronously and can be orders of magnitude faster than similar Vim plugins.
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
 This plugin is mainly used for locating files, buffers, mrus, tags in large project.
-### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
-Full path fuzzy file, buffer, mru, tag, ... finder for Vim. No need of python
+default one
+### [fzf.vim](https://github.com/junegunn/fzf.vim)
+fzf runs asynchronously and can be orders of magnitude faster than similar Vim plugins.
+works if no `python` or `python3` support
 
 
 ## [surround](https://github.com/tpope/vim-surround)

@@ -234,7 +234,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 endif
                 Plug 'Yggdroot/LeaderF-marks', {'branch': 'master'}
                 let g:fuzzy_finder = 'LeaderF'
-            " use ctrlp+fzf
+            " use fzf
             else
                 Plug 'junegunn/fzf.vim', {'branch': 'master'}
                 if executable('fzf')
@@ -242,9 +242,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 else
                     Plug 'junegunn/fzf', {'branch': 'master', 'dir': '~/.fzf', 'do': './install --all'}
                 endif
-                Plug 'ctrlpvim/ctrlp.vim', {'branch': 'master'}
-                Plug 'tacahiroy/ctrlp-funky', {'branch': 'master'}
-                let g:fuzzy_finder = 'fzf-ctrlp'
+                let g:fuzzy_finder = 'fzf'
             endif
         else
             let g:fuzzy_finder = "None"
