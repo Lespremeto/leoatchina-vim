@@ -381,6 +381,7 @@ nnoremap <M-0>           :tablast<CR>
 nnoremap <localleader><BS> :ball<CR>
 nnoremap <localleader>[ :bp<CR>
 nnoremap <localleader>] :bn<CR>
+nnoremap <localleader><Space> :Sex<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
 xnoremap <leader>y  "+y
 nnoremap <leader>y  "+y
@@ -746,6 +747,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory('vim-dirvish')
         nnoremap <M-D> :Dirvish<CR>
         nnoremap <C-k>d :Dirvish<Space>
+        nnoremap <M-S> :Shdo!<Space>
         if HasDirectory('vim-dirvish')
             autocmd FileType dirvish nmap <silent><buffer><C-n> <Plug>(dirvish_git_next_file)
             autocmd FileType dirvish nmap <silent><buffer><C-p> <Plug>(dirvish_git_prev_file)
@@ -1146,7 +1148,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let g:fzf_buffers_jump = 1
             " [[B]Commits] Customize the options used by 'git log':
             let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-            " [Tags] Command to generate tags file
+            " [Tags] Command to generate tags fil
             let g:fzf_tags_command = 'ctags -R'
             " [Commands] --expect expression for directly executing the command
             let g:fzf_commands_expect = 'alt-enter,ctrl-x'
