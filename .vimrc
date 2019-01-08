@@ -1657,10 +1657,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     if HasDirectory("CompleteParameter.vim")
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):";"
         inoremap <silent><expr> ( pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?complete_parameter#pre_complete("()"):"()\<left>"
-        smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-        imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-        smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-        imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+        let g:complete_parameter_use_ultisnips_mapping = 1
     else
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?"()\<left>":";"
     endif

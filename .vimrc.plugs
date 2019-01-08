@@ -340,10 +340,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'Shougo/neoinclude.vim', {'branch': 'master'}
             Plug 'Shougo/neco-vim', {'branch': 'master'}
             Plug 'Shougo/neco-syntax', {'branch': 'master'}
-            let s:engines = ['YCM', 'deoplete', 'neocomplete']
-            if index(s:engines, g:complete_engine) >= 0
-                Plug 'tenfyzhong/CompleteParameter.vim', {'branch': 'master'}
-            endif
             " install snippets
             Plug 'leoatchina/leoatchina-snippets'
             if (g:python_version == 2 && g:complete_engine == "neocomplcache" || g:python_version && g:complete_engine != "neocomplcache") &&
@@ -356,6 +352,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 let g:complete_snippet = "neosnippet"
                 Plug 'Shougo/neosnippet', {'branch': 'master'}
                 Plug 'Shougo/neosnippet-snippets', {'branch': 'master'}
+            endif
+            let s:engines = ['YCM', 'deoplete', 'neocomplete']
+            if index(s:engines, g:complete_engine) >= 0 && g:complete_engine == 'ultisnips'
+               Plug 'tenfyzhong/CompleteParameter.vim', {'branch': 'master'}
             endif
         else
             let g:complete_snippet = "None"
