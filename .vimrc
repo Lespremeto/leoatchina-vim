@@ -382,21 +382,25 @@ nnoremap <localleader><BS> :ball<CR>
 nnoremap <localleader>[ :bp<CR>
 nnoremap <localleader>] :bn<CR>
 nnoremap <localleader><Space> :Sex<CR>
-" 设置快捷键将选中文本块复制至系统剪贴板
-xnoremap <leader>y  "+y
-nnoremap <leader>y  "+y
-nnoremap <leader>yy "+yy
-nnoremap <leader>Y  "*y
-xnoremap <leader>Y  "*y
-nnoremap Y y$
-xnoremap Y *y$
-" p and P for paste
-nnoremap <leader>p "+p
-nnoremap <leader>P "*P
-xnoremap <leader>p "+p
-xnoremap <leader>P "*P
-inoremap <S-Insert> <C-R>*
-cnoremap <S-Insert> <C-R>*
+" 设置键
+nnoremap Y "*y$
+nnoremap <leader>Y "+y$
+nnoremap <leader>yy "*yy
+nnoremap <localleader> "+yy
+nnoremap <M-c> "*y
+nnoremap <M-C> "+y
+xnoremap <M-c> "*y
+xnoremap <M-C> "+y
+nnoremap <M-x> "*x
+nnoremap <M-X> "+x
+xnoremap <M-x> "*x
+xnoremap <M-X> "+x
+nnoremap <M-v> "*P
+nnoremap <M-V> "+P
+xnoremap <M-v> "*P
+xnoremap <M-V> "+P
+cnoremap <M-v> <C-r>*
+cnoremap <M-V> <C-r>+
 " Easier horizontal scrolling
 noremap zl zL
 noremap zh zH
@@ -416,7 +420,7 @@ nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " for help
 nnoremap <leader>TT :tab help<Space>
 " show clipboard
-nnoremap <M-t> :reg<Cr>
+nnoremap <M-T> :reg<Cr>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
@@ -816,6 +820,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'PaperColor_dark'
             endif
+        elseif HasPlug('papercolor-light')
+            set background=light
+            colorscheme PaperColor
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'PaperColor_light'
+            endif
         elseif HasPlug('neodark')
             colorscheme neodark
             if !has('gui_running')
@@ -827,6 +837,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 let g:lightline.colorscheme = 'neodark'
             endif
         elseif HasPlug('solarized')
+            let g:solarized_termcolors=256
+            colorscheme solarized
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'solarized'
+            endif
+        elseif HasPlug('solarized-light')
+            set background=light
             let g:solarized_termcolors=256
             colorscheme solarized
             if HasDirectory('lightline.vim')
