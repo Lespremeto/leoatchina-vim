@@ -386,7 +386,7 @@ nnoremap <localleader><Space> :Sex<CR>
 nnoremap Y "*y$
 nnoremap <leader>Y "+y$
 nnoremap <leader>yy "*yy
-nnoremap <localleader> "+yy
+nnoremap <localleader>yy "+yy
 nnoremap <M-c> "*y
 nnoremap <M-C> "+y
 xnoremap <M-c> "*y
