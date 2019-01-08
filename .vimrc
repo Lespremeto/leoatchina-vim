@@ -382,7 +382,7 @@ nnoremap <localleader><BS> :ball<CR>
 nnoremap <localleader>[ :bp<CR>
 nnoremap <localleader>] :bn<CR>
 nnoremap <localleader><Space> :Sex<CR>
-" 设置键
+" 设置copy paste键
 nnoremap Y "*y$
 nnoremap <leader>Y "+y$
 nnoremap <leader>yy "*yy
