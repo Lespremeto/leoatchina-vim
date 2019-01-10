@@ -374,9 +374,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if HasPlug('rust') && executable('rust')
                 let b:ycm_install = b:ycm_install . " --rust-completer"
             endif
-            if HasPlug('java') && executable('java')
-                let b:ycm_install = b:ycm_install . " --java-completer"
-            endif
             if g:python_version == 2
                 Plug 'Valloric/YouCompleteMe',{'branch': 'master', 'do' : 'python2' . b:ycm_install}
             elseif g:python_version == 3
