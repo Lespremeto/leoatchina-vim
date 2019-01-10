@@ -267,7 +267,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let s:smart_engine_select = 0
             if has('timers')
                 if HasPlug('youcompleteme') || HasPlug('YCM')
-                    if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 || has('nvim'))
+                    if executable('cmake') && executable('g++') && g:python_version && (has('patch1578') && v:version == 704 || v:version >= 800 ) && !has('nvim')
                         let g:complete_engine = "YCM"
                     else
                         echoe "Cannot install YouCompleteMe, smart select a complete_engine."

@@ -521,6 +521,7 @@ au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
 " sepcial setting for different type of files
 au FileType python au BufWritePre <buffer> :%retab
 au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
+au BufNewFile,BufRead *.py,*.vim,*.vimrc.* setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
@@ -1292,11 +1293,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         let g:ycm_key_invoke_completion = ['<C-Space>', '<C-k>;']
         " add_preview
-        let g:ycm_add_preview_to_completeopt = 0
+        let g:ycm_add_preview_to_completeopt = 1
         "  补全后close窗口
-        let g:ycm_autoclose_preview_window_after_completion = 1
+        let g:ycm_autoclose_preview_window_after_completion = 0
         "  插入后close窗口
-        let g:ycm_autoclose_preview_window_after_insertion = 1
+        let g:ycm_autoclose_preview_window_after_insertion = 0
         " enable completion from tags
         let g:ycm_collect_identifiers_from_tags_files = 1
         let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
