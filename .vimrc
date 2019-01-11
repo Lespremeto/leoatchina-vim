@@ -404,7 +404,6 @@ xnoremap <M-z> <ESC>`.``gvp``P
 " Easier horizontal scrolling
 noremap zl zL
 noremap zh zH
-nnoremap zpr :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>:set foldmethod=manual<CR><CR>
 nnoremap ZR zR
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap <silent>j gj
