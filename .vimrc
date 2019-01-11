@@ -168,8 +168,6 @@ function! Alt_meta_map()
     endif
 endfunction
 call Alt_meta_map()
-" Swap two words with M-z
-xnoremap <M-z> <ESC>`.``gvp``P
 " Initialize directories
 function! InitializeDirectories()
     let parent = $HOME
@@ -401,6 +399,8 @@ xnoremap <M-v> "*P
 xnoremap <M-V> "+P
 cnoremap <M-v> <C-r>*
 cnoremap <M-V> <C-r>+
+" Swap two words with M-z
+xnoremap <M-z> <ESC>`.``gvp``P
 " Easier horizontal scrolling
 noremap zl zL
 noremap zh zH
