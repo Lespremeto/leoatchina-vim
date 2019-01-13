@@ -383,10 +383,9 @@ nnoremap <localleader>[ :bp<CR>
 nnoremap <localleader>] :bn<CR>
 nnoremap <localleader><Space> :Sex<CR>
 " 设置copy paste键
-nnoremap Y "*y$
-nnoremap <leader>Y "+y$
+nnoremap Y y$
+nnoremap <leader>Y "*y$
 nnoremap <leader>yy "*yy
-nnoremap <localleader>yy "+yy
 nnoremap <M-c> "*y
 nnoremap <M-C> "+y
 xnoremap <M-c> "*y
