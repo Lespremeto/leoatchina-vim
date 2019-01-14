@@ -109,9 +109,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'jiangmiao/auto-pairs', {'branch': 'master'}
         Plug 'junegunn/vim-journal', {'branch': 'master'}
         Plug 'junegunn/vim-easy-align', {'branch': 'master'}
-        if HasPlug('text')
-            Plug 'jceb/vim-orgmode', {'branch': 'master'}
-        endif
         " markdown
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown', 'branch': 'master'}
         Plug 'hotoo/pangu.vim', {'for':'markdown', 'branch': 'master'}
