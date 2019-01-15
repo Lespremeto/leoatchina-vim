@@ -418,7 +418,7 @@ nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " for help
 nnoremap <leader>TT :tab help<Space>
 " show clipboard
-nnoremap <M-T> :reg<Cr>
+nnoremap <M-R> :reg<Cr>
 " 定义快捷键保存
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :wq!<CR>
@@ -1696,7 +1696,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <M-R> :ToggleQuickfix<cr>
+        nnoremap <M-s> :ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
