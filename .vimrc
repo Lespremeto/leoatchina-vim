@@ -416,7 +416,7 @@ nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " for help
-nnoremap <leader>tt :tab help<Space>
+nmap <leader>tt :tab help<Space>
 " show clipboard
 nnoremap <M-T> :reg<Cr>
 " 定义快捷键保存
