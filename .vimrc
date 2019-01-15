@@ -416,7 +416,7 @@ nnoremap <leader>tf :set nofoldenable! nofoldenable?<CR>
 " toggleWrap
 nnoremap <leader>tw :set nowrap! nowrap?<CR>
 " for help
-nnoremap <leader>TT :tab help<Space>
+nnoremap <leader>tt :tab help<Space>
 " show clipboard
 nnoremap <M-T> :reg<Cr>
 " 定义快捷键保存
@@ -909,7 +909,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let &tags = &tags . ',' . gitroot . '/.git/tags'
         endif
         nnoremap <silent><M-t> :TagbarToggle<CR>
-        nnoremap <silent><leader>tt :TagbarOpen j<CR>
+        nnoremap <silent><leader>TT :TagbarOpen j<CR>
         " show in split
         nnoremap <C-]> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
         " show in vsplit
@@ -919,7 +919,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " show in tab
         nnoremap <C-w><C-\> <C-w><C-]><C-w>T
     else
-        nnoremap <silent><leader>tt <Nop>
+        nnoremap <silent><leader>TT <Nop>
     endif
     " gtags
     if HasDirectory("vim-gutentags")
