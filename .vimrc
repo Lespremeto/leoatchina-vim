@@ -918,6 +918,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-w><C-]> <C-]>
         " show in tab
         nnoremap <C-w><C-\> <C-w><C-]><C-w>T
+    else
+        nnoremap <silent><leader>tt <Nop>
+        nnoremap <silent><leader>tj <Nop>
     endif
     " gtags
     if HasDirectory("vim-gutentags")
