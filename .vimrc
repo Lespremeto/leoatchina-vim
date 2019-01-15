@@ -908,8 +908,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         if gitroot != ''
             let &tags = &tags . ',' . gitroot . '/.git/tags'
         endif
-        nnoremap <silent><leader>tt :TagbarToggle<CR>
-        nnoremap <silent><leader>tj :TagbarOpen j<CR>
+        nnoremap <silent><M-t> :TagbarToggle<CR>
+        nnoremap <silent><leader>tt :TagbarOpen j<CR>
         " show in split
         nnoremap <C-]> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
         " show in vsplit
@@ -920,7 +920,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-w><C-\> <C-w><C-]><C-w>T
     else
         nnoremap <silent><leader>tt <Nop>
-        nnoremap <silent><leader>tj <Nop>
     endif
     " gtags
     if HasDirectory("vim-gutentags")
