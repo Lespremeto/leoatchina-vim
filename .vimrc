@@ -911,7 +911,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             let &tags = &tags . ',' . gitroot . '/.git/tags'
         endif
         nnoremap <silent><M-t> :TagbarToggle<CR>
-        nnoremap <silent><leader>tj :TagbarOpen j<CR>
+        nnoremap <silent><leader>tg :TagbarToggle<CR>
         " show in split
         nnoremap <C-]> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
         " show in vsplit
