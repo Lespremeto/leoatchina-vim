@@ -522,7 +522,7 @@ au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
 " sepcial setting for different type of files
 au FileType python au BufWritePre <buffer> :%retab
 au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
-au BufNewFile,BufRead *.py,*.vim,*.vimrc.* setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
+au BufNewFile,BufRead,BufWrite,SourcePre *.py,*.vim,*.vimrc* setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
 " Workaround broken colour highlighting in Haskell
@@ -959,12 +959,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         au FileType qf nnoremap <silent><buffer> q :PreviewClose<cr>
     endif
     " indent_guides
-    if HasDirectory("indentLine")
-        let g:indentLine_setColors = 0
-        let g:indentLine_concealcursor = 'inc'
-        let g:indentLine_conceallevel = 2
-        let g:indentLine_enabled = 1
-        nnoremap <leader>ti :IndentLinesToggle<Cr>
+    if HasDirectory("vim-indent-guides")
+        let g:indent_guides_enable_on_vim_startup = 0
+        nnoremap <leader>ti :IndentGuidesToggle<Cr>
     endif
     " conflict-marker
     if HasDirectory("conflict-marker.vim")

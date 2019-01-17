@@ -92,12 +92,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'rhysd/conflict-marker.vim', {'branch': 'master'}
             Plug 'mhinz/vim-signify', {'branch': 'master'}
         endif
-        " indent
-        if v:version >= 703 && has('conceal')
-            Plug 'Yggdroot/indentLine', {'branch': 'master'}
-        endif
-        " git
-        if v:version < 702
+        " indent and git
+        if v:version >= 702
+            Plug 'nathanaelkane/vim-indent-guides', {'branch': 'master'}
+        else
             Plug 'tpope/vim-git', {'branch': 'master'}
         endif
         Plug 'tpope/vim-fugitive', {'branch': 'master'}
@@ -105,10 +103,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " text
         Plug 'tpope/vim-surround', {'branch': 'master'}
         Plug 'tpope/vim-repeat', {'branch': 'master'}
-        Plug 'tenfyzhong/typecast.vim', {'branch': 'master'}
         Plug 'jiangmiao/auto-pairs', {'branch': 'master'}
         Plug 'junegunn/vim-journal', {'branch': 'master'}
         Plug 'junegunn/vim-easy-align', {'branch': 'master'}
+        Plug 'tenfyzhong/typecast.vim', {'branch': 'master'}
         Plug 'dhruvasagar/vim-table-mode', {'branch': 'master'}
         " markdown
         Plug 'joker1007/vim-markdown-quote-syntax', {'for':'markdown', 'branch': 'master'}
