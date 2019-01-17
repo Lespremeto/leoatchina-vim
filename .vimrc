@@ -522,11 +522,9 @@ au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
 " sepcial setting for different type of files
 au FileType python au BufWritePre <buffer> :%retab
 au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
-au BufNewFile,BufRead,BufWrite,SourcePre *.py,*.vim,*.vimrc* setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
+au FileType python,vim au SourcePre *.vimrc,*.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
-" Workaround broken colour highlighting in Haskell
-au FileType haskell,rust setlocal nospell
 " Remove trailing whiteSpaces and ^M chars
 au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,eperl,sql au BufWritePre <buffer> call StripTrailingWhiteSpace()
 " Map g* keys in Normal, Operator-pending, and Visual+select
