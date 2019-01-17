@@ -282,8 +282,8 @@ let g:mapleader = ' '
 let g:maplocalleader = '\'
 " remap q/Q
 nnoremap `         Q
-nnoremap Q         :bd!<Cr>
-nnoremap <M-q>     :q!<Cr>
+nnoremap Q         :q!<Cr>
+nnoremap <M-q>     :bd!<Cr>
 nnoremap <M-Q>     :qa!
 nnoremap <Leader>q :tabclose<CR>
 " 定义快捷键使用
@@ -292,6 +292,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 " Key reMappings
 nnoremap <Cr> %
+xnoremap <Cr> %
 nnoremap * *``
 nnoremap ! :!
 xnoremap / y/<C-r>0
@@ -1102,7 +1103,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " easy-align
     if HasDirectory("vim-easy-align")
         nmap <localleader><Cr> <Plug>(EasyAlign)
-        xmap <Cr> <Plug>(EasyAlign)
+        xmap <localleader><Cr> <Plug>(EasyAlign)
         if !exists('g:easy_align_delimiters')
             let g:easy_align_delimiters = {}
         endif
