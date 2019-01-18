@@ -431,10 +431,15 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " only use ultisnips
             if g:complete_snippet == 'ultisnips'
                 Plug 'ncm2/ncm2-ultisnips', {'branch': 'master'}
+            elseif g:complete_snippet == 'neosnippet'
+                Plug 'ncm2/ncm2-neosnippet', {'branch': 'master'}
             endif
             " language
             Plug 'ncm2/ncm2-jedi', {'branch': 'master', 'for':'python'}
             Plug 'ncm2/ncm2-vim', {'branch': 'master', 'for':'vim'}
+            if HasPlug('gtags')
+                Plug 'ncm2/ncm2-gtags'
+            endif
             if HasPlug('php')
                 Plug 'phpactor/ncm2-phpactor', {'branch': 'master', 'for': 'php'}
             endif
