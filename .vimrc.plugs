@@ -283,13 +283,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         echoe "Cannot install ncm2, smart select a complete_engine."
                         let s:smart_engine_select = 1
                     endif
-                elseif HasPlug('deoplete')
-                    if g:python_version == 3 && (has('nvim-0.3.0') || v:version >= 800)
-                        let g:complete_engine = "deoplete"
-                    else
-                        echoe "Cannot install deoplete, smart select a complete_engine."
-                        let s:smart_engine_select = 1
-                    endif
                 elseif HasPlug('asyncomplete')
                     if has('nvim') || v:version >= 800
                         let g:complete_engine = "asyncomplete"
@@ -314,10 +307,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " smart select engine
             if s:smart_engine_select
-                if g:python_version == 3 && has('nvim-0.2.2') && has('timers')
+                if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800) && has('timers')
                     let g:complete_engine = "ncm2"
-                elseif g:python_version == 3 && v:version >= 800 && has('timers')
-                    let g:complete_engine = "deoplete"
                 elseif has('nvim') || v:version >= 800 && has('timers')
                     let g:complete_engine = "asyncomplete"
                 elseif has('lua') && (v:version == 703 && has('patch885') || v:version >= 704 || has('nvim'))
@@ -349,8 +340,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'Shougo/neosnippet', {'branch': 'master'}
                 Plug 'Shougo/neosnippet-snippets', {'branch': 'master'}
             endif
-            let s:engines = ['YCM', 'deoplete', 'neocomplete']
-            if index(s:engines, g:complete_engine) >= 0 && g:complete_engine == 'ultisnips'
+            if (g:complete_engine == 'YCM' || g:complete_engine == 'neocomplete') && g:complete_engine == 'ultisnips'
                Plug 'tenfyzhong/CompleteParameter.vim', {'branch': 'master'}
             endif
         else
@@ -439,13 +429,12 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'ncm2/ncm2-neoinclude', {'branch': 'master'}
             Plug 'filipekiss/ncm2-look.vim', {'branch': 'master'}
             " only use ultisnips
-            Plug 'ncm2/ncm2-ultisnips', {'branch': 'master'}
+            if g:complete_snippet == 'ultisnips'
+                Plug 'ncm2/ncm2-ultisnips', {'branch': 'master'}
+            endif
             " language
             Plug 'ncm2/ncm2-jedi', {'branch': 'master', 'for':'python'}
             Plug 'ncm2/ncm2-vim', {'branch': 'master', 'for':'vim'}
-            if HasPlug('gtags')
-                Plug 'ncm2/gtags', {'branch': 'master'}
-            endif
             if HasPlug('php')
                 Plug 'phpactor/ncm2-phpactor', {'branch': 'master', 'for': 'php'}
             endif
@@ -470,33 +459,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             " LCN
             if exists('g:LanguageClient_serverCommands') && has('nvim')
                 Plug 'autozimu/LanguageClient-neovim'
-            endif
-        elseif g:complete_engine == "deoplete"
-            if has('nvim')
-                Plug 'Shougo/deoplete.nvim', {'branch': 'master', 'do': ':UpdateRemotePlugins'}
-            else
-                Plug 'Shougo/deoplete.nvim', {'branch': 'master'}
-                Plug 'roxma/vim-hug-neovim-rpc', {'branch': 'master'}
-                Plug 'roxma/nvim-yarp', {'branch': 'master'}
-            endif
-            Plug 'zchee/deoplete-jedi', {'for': 'python'}
-            if HasPlug('c') && executable('clang')
-                Plug 'zchee/deoplete-clang', {'branch': 'master'}
-            endif
-            if HasPlug('javascript') && executable('tern')
-                Plug 'carlitux/deoplete-ternjs', {'branch': 'master'}
-                Plug 'mhartington/nvim-typescript', {'branch': 'master'}
-            endif
-            if HasPlug('rust') && executable('racer')
-                Plug 'sebastianmarkow/deoplete-rust', {'branch': 'master'}
-            endif
-            if HasPlug('go') && executable('gocode')
-                Plug 'zchee/deoplete-go', {'branch': 'master', 'do': 'make'}
-            endif
-            if WINDOWS()
-                Plug 'tbodt/deoplete-tabnine', {'branch': 'master', 'do': 'powershell.exe .\install.ps1' }
-            else
-                Plug 'tbodt/deoplete-tabnine', {'branch': 'master', 'do': 'bash ./install.sh'}
             endif
         elseif g:complete_engine == "asyncomplete"
             Plug 'prabirshrestha/vim-lsp', {'branch': 'master'}

@@ -1344,8 +1344,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         " 跳转到定义处
         nnoremap <silent>gyd :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory('ncm2')
+        au BufEnter * call ncm2#enable_for_buffer()
         set completeopt+=noinsert,noselect
-        autocmd BufEnter * call ncm2#enable_for_buffer()
         if HasPlug('html')
             au User Ncm2Plugin call ncm2#register_source({
                 \ 'name' : 'css',
@@ -1397,44 +1397,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         command! -nargs=0 Format :call CocAction('format')
         " Use `:Fold` for fold current buffer
         command! -nargs=? Fold :call CocAction('fold', <f-args>)
-    elseif HasDirectory("deoplete.nvim")
-        set completeopt+=noinsert,noselect
-        let g:deoplete#enable_at_startup = 1
-        let g:deoplete#enable_camel_case = 1
-        " <BS>: close popup and delete backword char.
-        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
-        if !has('nvim')
-            let g:deoplete#enable_yarp = 1
-        endif
-        if HasDirectory('deoplete-tabnine')
-            call deoplete#custom#source('tabnine', 'rank', 500)
-        endif
-        if HasDirectory('ultisnips')
-            call deoplete#custom#source('ultisnips', 'rank', 1000)
-        endif
-        if HasDirectory('deoplete-jedi')
-            let g:deoplete#sources#jedi#python_path = expand(exepath('python3'))
-        endif
-        if HasDirectory('deoplete-go')
-            let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-        endif
-        if HasDirectory('deoplete-rust')
-            let g:deoplete#sources#rust#show_duplicates=0
-        endif
-        " omni completion is vim grep
-        call deoplete#custom#option('omni_patterns', {
-            \ 'java' :'[^. *\t]\.\w*',
-            \ 'php'  :'[^. \t]->\h\w*\|\h\w*::',
-            \ 'perl' :'\h\w*->\h\w*\|\h\w*::',
-            \ 'c'    :'[^.[:digit:] *\t]\%(\.\|->\)',
-            \ 'cpp'  :'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::',
-        \})
-        " keyword_patterns is python grep
-        call deoplete#custom#option('keyword_patterns', {
-            \ '_'    :'[a-zA-Z_]\k*',
-            \ 'tex'  :'\\?[a-zA-Z_]\w*',
-            \ 'ruby' :'[a-zA-Z_]\w*[!?]?',
-        \})
     elseif HasDirectory("asyncomplete.vim")
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
