@@ -766,6 +766,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             hi User5 cterm=None ctermfg=250 ctermbg=238
         endif
     endif
+    " dir manager
     if HasDirectory('vim-dirvish')
         nnoremap <M-D> :Dirvish<CR>
         nnoremap <C-k>d :Dirvish<Space>
@@ -785,6 +786,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ }
         endif
     endif
+    nnoremap <M-E> :Sex<CR>
+    vnoremap <M-E> <ESC>:Sex<CR>
+    snoremap <M-E> <ESC>:Sex<CR>
     " themes
     if HasDirectory("/vim-colorschemes-collections")
         " dark theme
