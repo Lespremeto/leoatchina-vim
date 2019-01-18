@@ -32,7 +32,6 @@
     - [YouCompleteMe](#youcompleteme)
     - [coc](#coc)
     - [ncm2](#ncm2)
-    - [deoplete](#deoplete)
     - [asyncomplete](#asyncomplete)
     - [neocomplete](#neocomplete)
     - [neocomplcache](#neocomplcache)
@@ -304,13 +303,13 @@ Forked from [rafi's colorschemes collections](rafi/awesome-vim-colorschemes), ke
 ```
 
 ## Complete Engines
-**7** code-completion engines:`ncm2`, `deoplete`, `coc`, `asyncomplete`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
+**6** code-completion engines:`ncm2`, `coc`, `asyncomplete`, `neocomplete`, `neocomplcache` and `YouCompleteMe`.
 
 ### Smart Engines Selection
 There is variable `"smartcomplete"` in `"g:plug_groups"` contained in `.vimrc.local`, it means .vimrc will choose the completion engine according to the vim enviroment if `vim8/neovim` or `old version`, `python2/3` or `no python`, `windows` or `linux` or `mac`.
 I strongly advice you updete to vim8.0+ or neovim for advanced engine with better performance.
 
-By default, with '+python3' support, `deoplete` will be installed,  otherwise `asyncomplete`.
+By default, with '+python3' support, `ncm` will be installed,  otherwise `asyncomplete`.
 
 These engines have their semantic complete fuction with the help from other plugins relatively, which will be also installed, and will change with `g:plug_groups`.
 
@@ -331,11 +330,7 @@ Needs `neovim/vim` with `+python` or `+python3`, and `g++` installed
 Needs `neovim/vim8` with `node` and `yarn` installed in system
 
 ### [ncm2](https://github.com/ncm2/ncm2)
-
-### [deoplete](https://github.com/Shougo/deoplete.nvim)
-Needs `vim8/neovim` with `+python3`
-And, if you add `deoplete-tabnine` in g:plug_groups, [deoplete-tabnine](https://github.com/tbodt/deoplete-tabnine) will be installed, it is a small complete tools for vim, only 10m+, and it is saied as all complete tools.
-If add `deoplete-lcn`,  deoplete will use  [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim), you should config `g:LanguageClient_serverCommands` in your .local file.
+Needs `vim8/neovim`,  `+python3` is needed
 
 ### [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim)
 Needs `vim8/neovim`, no `python support` is needed
@@ -347,7 +342,6 @@ Needs `vim/neovim` with `+lua`
 The last complete enginge
 
 ## Complete Snippets, vim 7.4+ is also required
-If complete_engine is `neocomplete` or `neocomplcache`, snippets `ultisnips` or  `neosnippet` will be intalled automatically. Otherwise need `snippet` in `~/.vimrc.local`. `C-f` for snips jump forward in snippets, and only `ultisnips` use `c-b` for jump back
 
 ### [ultisnips](https://github.com/SirVer/ultisnips)
 Works if with python support.
@@ -405,7 +399,7 @@ Needs `ag` or `rg` or `ack` or
 
 ## RunTools
 ### [vim-quickrun](https://github.com/thinca/vim-quickrun)
-Use `F5` to run scripts. `S-F5` to toggle quickrun window
+Use `M-r` to run scripts. `M-s` to toggle quickrun window
 
 ### [asyncrun](https://github.com/skywind3000/asyncrun.vim)
 A async run plugin for vim8/nvim
@@ -459,7 +453,7 @@ perl snippets and syntax
 
 
 ## [tagbar](https://github.com/majutsushi/tagbar) and [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
-need `has("ctags")`. Togglekey:`<Leader>tt`
+need `has("ctags")`. Togglekey:`<M-t>`
 
 ## [undotree](https://github.com/mbbill/undotree)
 Just as it name. Togglekey:`<M-U>`
@@ -478,11 +472,10 @@ Hackable plugin, the most import key is ** `<Leader>c<Space>` **|NERDComToggleCo
 You can get other shortcuts via the link.
 
 ## fuzzy finder
-`C-k j` to invoke one of the following plugs, major keys are `<Leader>lf`, `<Leader>lm`, please see `.vimrc` for details
+`C-k j` to invoke one of the following plugs, major keys are `<C-k>l`, `<C-k>m`, please see `.vimrc` for details
 
 ### [LeaderF](https://github.com/Yggdroot/LeaderF)
-This plugin is mainly used for locating files, buffers, mrus, tags in large project.
-default one
+This plugin is mainly used for locating files, buffers, mrus, tags in large project. Needs `+python3`
 ### [fzf.vim](https://github.com/junegunn/fzf.vim)
 fzf runs asynchronously and can be orders of magnitude faster than similar Vim plugins.
 works if no `python` or `python3` support
