@@ -330,6 +330,9 @@ nnoremap <C-g> <Nop>
 nnoremap <C-f> <Nop>
 xnoremap <C-f> <Nop>
 snoremap <C-f> <Nop>
+nnoremap <C-b> <Nop>
+xnoremap <C-b> <Nop>
+snoremap <C-b> <Nop>
 inoremap <C-f> <right>
 cnoremap <C-f> <right>
 inoremap <C-b> <Left>
