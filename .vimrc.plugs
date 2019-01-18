@@ -459,11 +459,20 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                 Plug 'ncm2/ncm2-go', {'branch': 'master', 'for':'go'}
             endif
             if HasPlug('java')
-                Plug 'ObserverOfTime/ncm2-jc2', {'branch': 'master', 'for': 'java'}
+                Plug 'ObserverOfTime/ncm2-jc2', {'branch': 'master', 'for': ['java', 'jsp']}
+                Plug 'artur-shaik/vim-javacomplete2', {'branch': 'master', 'for': ['java', 'jsp']}
+            endif
+            if executable('R')
+                Plug 'jalvesaq/Nvim-R', {'branch': 'master', 'for': 'R'}
+                Plug 'gaalcaras/ncm-R' , {'branch': 'master', 'for': 'R'}
             endif
             " LCN
             if exists('g:LanguageClient_serverCommands') && has('nvim')
-                Plug 'autozimu/LanguageClient-neovim'
+                if WINDOWS()
+                    Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': './install.ps1'}
+                else
+                    Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': './install.sh'}
+                endif
             endif
         elseif g:complete_engine == "asyncomplete"
             Plug 'prabirshrestha/vim-lsp', {'branch': 'master'}
