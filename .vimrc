@@ -1154,6 +1154,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-k>M :LeaderfM
         nnoremap <C-k>B :LeaderfB
         nnoremap <C-k>C :LeaderfColorscheme<Cr>
+        nnoremap <C-k>F :set syntax=
         let g:Lf_NormalMap = {
            \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
            \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
