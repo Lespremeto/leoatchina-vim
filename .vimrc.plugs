@@ -7,6 +7,15 @@ if has('python3') && executable('python3')
     if v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')
         let g:python3_host_prog = expand(exepath('python3'))
     endif
+py3 << pythonEOF
+import vim
+try:
+    import neovim
+except Exception as e:
+    vim.command('let g:neovim_import = 0')
+else:
+    vim.command('let g:neovim_import = 1')
+pythonEOF
 elseif has('python') && executable('python2')
     let g:python_version = 2
     if !WINDOWS()
@@ -15,8 +24,10 @@ elseif has('python') && executable('python2')
     if v:version == 704 && has('patch774') || v:version >= 800 || has('nvim')
         let g:python_host_prog = expand(exepath('python2'))
     endif
+    let g:neovim_import = 0
 else
     let g:python_version = 0
+    let g:neovim_import = 0
 endif
 " use vim-plug to install plugs
 if (has('job') || g:python_version || has('nvim') || has('lua'))
@@ -277,8 +288,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         let s:smart_engine_select = 1
                     endif
                 elseif HasPlug('ncm2')
-                    if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800)
-                        let g:complete_engine = "ncm2"
+                    if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800) && g:neovim_import
                     else
                         echoe "Cannot install ncm2, smart select a complete_engine."
                         let s:smart_engine_select = 1
@@ -307,7 +317,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " smart select engine
             if s:smart_engine_select
-                if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800) && has('timers')
+                if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800) && has('timers') && g:neovim_import
                     let g:complete_engine = "ncm2"
                 elseif has('nvim') || v:version >= 800 && has('timers')
                     let g:complete_engine = "asyncomplete"
@@ -568,6 +578,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'fuzzyfinder': g:fuzzy_finder,
             \ 'syntax': g:syntax_tool,
             \ 'version' : GetVersion(),
+            \ 'neovim_import' : g:neovim_import,
             \ 'theme': g:colors_name
         \ }
         echo string(s:params_dict)
