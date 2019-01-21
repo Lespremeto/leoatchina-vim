@@ -390,9 +390,6 @@ nnoremap <leader>Y "*y$
 nnoremap <leader>yy "*yy
 nnoremap <localleader>Y "+y$
 nnoremap <localleader>yy "+yy
-nnoremap <M-Y> v^y
-nnoremap <leader><M-Y> v^"*y
-nnoremap <localleader><M-Y> v^"+y
 nnoremap <M-c> "*y
 nnoremap <M-C> "+y
 xnoremap <M-c> "*y
