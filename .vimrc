@@ -20,7 +20,6 @@ set omnifunc=syntaxcomplete#Complete
 syntax on
 filetype on                 " 开启文件类型侦测
 filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
-filetype indent on
 " Identify platform
 silent function! OSX()
     return has('macunix')
@@ -449,7 +448,6 @@ aug WINDOWClose
     au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
 " Formatting
-set noai nosi noci
 set nojoinspaces                " Prevents inserting two Spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
@@ -527,6 +525,9 @@ au FileType python,vim,sh au SourcePre *.vimrc,*.vim setlocal expandtab shiftwid
 au FileType haskell setlocal commentstring=--\ %s
 " Remove trailing whiteSpaces and ^M chars
 au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,eperl,sql au BufWritePre <buffer> call StripTrailingWhiteSpace()
+" indent
+set smartindent
+filetype indent on
 " Map g* keys in Normal, Operator-pending, and Visual+select
 noremap $ :call WrapRelativeMotion("$")<CR>
 noremap 0 :call WrapRelativeMotion("0")<CR>
@@ -1224,22 +1225,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:javascript_plugin_jsdoc = 1
         let g:javascript_plugin_ngdoc = 1
         let g:javascript_plugin_flow = 1
-        au  FileType Javascript setlocal conceallevel=1
-        let g:javascript_conceal_function             = "ƒ"
-        let g:javascript_conceal_null                 = "ø"
-        let g:javascript_conceal_this                 = "@"
-        let g:javascript_conceal_return               = "⇚"
-        let g:javascript_conceal_undefined            = "¿"
-        let g:javascript_conceal_NaN                  = "ℕ"
-        let g:javascript_conceal_prototype            = "¶"
-        let g:javascript_conceal_static               = "•"
-        let g:javascript_conceal_super                = "Ω"
-        let g:javascript_conceal_arrow_function       = "⇒"
-        let g:javascript_conceal_noarg_arrow_function = "🞅"
-        let g:javascript_conceal_underscore_arrow_function = "🞅"
     endif
     if HasDirectory('vim-jsdoc')
-        au FileType javascript nmap <C-p>j <Plug>(jsdoc)
+        au FileType javascript nmap <C-g>j <Plug>(jsdoc)
     endif
     " php language
     if HasDirectory('phpcomplete.vim')
@@ -1252,8 +1240,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " html/css language
     if HasDirectory('emmet-vim')
-        let g:user_emmet_leader_key='<C-y>'
-        let g:user_emmet_mode='in'
+        let g:user_emmet_leader_key='<C-g>'
+        let g:user_emmet_mode='a'
         let g:user_emmet_install_global = 0
         autocmd FileType html,css,vue,haml EmmetInstall
     endif
