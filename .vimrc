@@ -527,7 +527,7 @@ au BufNewFile,BufRead *.ts,*.vue set filetype=typescript
 au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
 " sepcial setting for different type of files
 au FileType python au BufWritePre <buffer> :%retab
-au FileType python,vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
+au FileType python,vim,sh setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 au FileType python,vim au SourcePre *.vimrc,*.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
@@ -1154,6 +1154,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-k>M :LeaderfM
         nnoremap <C-k>B :LeaderfB
         nnoremap <C-k>C :LeaderfColorscheme<Cr>
+        nnoremap <C-k>F :set syntax=
         let g:Lf_NormalMap = {
            \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
            \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
