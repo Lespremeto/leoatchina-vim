@@ -159,7 +159,7 @@ function! Alt_meta_map()
             \ '7':'¶',
             \ '8':'•',
             \ '9':'ª'
-        \ }
+            \ }
         for c in keys(a:letters_dict)
             for m in ['nmap', 'xmap', 'smap', 'tmap']
                 exec m." ".a:letters_dict[c]." <M-".c.">"
@@ -690,18 +690,18 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:startify_files_number = 10
         let g:startify_session_number = 10
         let g:startify_list_order = [
-                \ ['   最近项目:'],
-                \ 'sessions',
-                \ ['   最近文件:'],
-                \ 'files',
-                \ ['   快捷命令:'],
-                \ 'commands',
-                \ ['   常用书签:'],
-                \ 'bookmarks',
+            \ ['   最近项目:'],
+            \ 'sessions',
+            \ ['   最近文件:'],
+            \ 'files',
+            \ ['   快捷命令:'],
+            \ 'commands',
+            \ ['   常用书签:'],
+            \ 'bookmarks',
             \ ]
         let g:startify_commands = [
-                \ {'h': ['帮助', 'help howto']},
-                \ {'v': ['版本', 'version']}
+            \ {'h': ['帮助', 'help howto']},
+            \ {'v': ['版本', 'version']}
             \ ]
     endif
     " bufferline
@@ -717,14 +717,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 return &readonly && &filetype !=# 'help' ? 'RO' : ''
             endfunction
             let g:lightline = {
-                \ 'component': {
+                \   'component': {
                 \     'filefullpath': '%F',
                 \     'lineinfo': '%l/%L : %c'
-                \ },
+                \   },
                 \ 'component_function': {
                 \     'gitbranch': 'fugitive#head',
                 \     'readonly': 'LightlineReadonly'
-                \ },
+                \   },
                 \ 'active': {
                 \     'left': [
                 \         ['mode', 'paste'],
@@ -735,26 +735,26 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \         ['percent'],
                 \         ['filetype', 'fileformat', 'fileencoding' , 'lineinfo']
                 \     ]
+                \   }
                 \ }
-            \ }
             if HasDirectory("lightline-ale")
                 let g:lightline.component_expand =  {
                     \ 'linter_checking': 'lightline#ale#checking',
                     \ 'linter_warnings': 'lightline#ale#warnings',
                     \ 'linter_errors': 'lightline#ale#errors',
                     \ 'linter_ok': 'lightline#ale#ok'
-                \ }
+                    \ }
                 let g:lightline.component_type = {
                     \ 'linter_checking': 'right',
                     \ 'linter_warnings': 'warning',
                     \ 'linter_errors': 'error',
                     \ 'linter_ok': 'left'
-                \ }
+                    \ }
                 let g:lightline.active.right = [
                     \ ['percent'],
                     \ ['filetype', 'fileformat', 'fileencoding', 'lineinfo'],
                     \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
-                \ ]
+                    \ ]
             endif
         else
             set statusline=%1*%{exists('g:loaded_fugitive')?fugitive#statusline():''}%*
@@ -786,7 +786,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'Unmerged'  : '═',
                 \ 'Ignored'   : '☒',
                 \ 'Unknown'   : '?'
-            \ }
+                \ }
         endif
     endif
     nnoremap <M-E> :Sex<CR>
@@ -1018,9 +1018,9 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set showmode
         if HasPlug('pinyun')
             let g:ywvim_ims=[
-                    \['py', '拼音', 'pinyin.ywvim'],
-                    \['wb', '五笔', 'wubi.ywvim'],
-                \]
+                \ ['py', '拼音', 'pinyin.ywvim'],
+                \ ['wb', '五笔', 'wubi.ywvim'],
+                \ ]
         elseif HasPlug('wubi')
             let g:ywvim_ims=[
                     \['wb', '五笔', 'wubi.ywvim'],
@@ -1255,7 +1255,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " html/css language
     if HasDirectory('emmet-vim')
-        let g:user_emmet_leader_key='<C-p>'
+        let g:user_emmet_leader_key='<C-y>'
+        let g:user_emmet_mode='in'
+        let g:user_emmet_install_global = 0
+        autocmd FileType html,css,vue,haml EmmetInstall
     endif
     " java
     if HasDirectory("vim-eclim")
@@ -1276,7 +1279,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let b:eclim_available = filereadable(WINDOWS() ?
             \ '$HOME/.eclim/.eclimd_instances' :
             \ expand('~/.eclim/.eclimd_instances')
-        \)
+            \)
         if b:eclim_available
             au filetype java nnoremap <C-p>t :Pjt<Cr>
             au filetype java nnoremap <C-p>l :ProjectList<Cr>

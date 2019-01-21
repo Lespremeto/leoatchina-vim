@@ -183,8 +183,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         endif
         " HTML
         if HasPlug('html')
-            Plug 'mattn/emmet-vim', {'branch': 'master', 'for':['css','htm', 'html', 'xml', 'css3']}
-            Plug 'hail2u/vim-css3-syntax', {'branch': 'master', 'for':['css','htm', 'html', 'xml', 'css3']}
+            Plug 'mattn/emmet-vim', {'branch': 'master', 'for':['css', 'htm', 'html', 'xml', 'css3']}
+            Plug 'hail2u/vim-css3-syntax', {'branch': 'master', 'for':['css', 'htm', 'html', 'xml', 'css3']}
         endif
         " PHP
         if HasPlug('php')
@@ -388,7 +388,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                     \ 'coc-tslint',
                     \ 'coc-stylelint',
                     \ 'coc-eslint'
-                \ ]
+                    \ ]
                 if HasPlug('php') || HasPlug('html')
                     let b:coc_install_plugins = b:coc_install_plugins + [
                         \ 'coc-html',
@@ -396,13 +396,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         \ 'coc-wxml',
                         \ 'coc-yaml',
                         \ 'coc-emmet'
-                    \ ]
+                        \ ]
                 endif
                 if HasPlug('javascript')
                     let b:coc_install_plugins = b:coc_install_plugins + [
                         \ 'coc-tsserver',
                         \ 'coc-vetur'
-                    \ ]
+                        \ ]
                 endif
                 if HasPlug('go')
                     execute 'CocInstall coc-gocode'
@@ -582,7 +582,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             \ 'version' : GetVersion(),
             \ 'library_import' : g:library_import,
             \ 'theme': g:colors_name
-        \ }
+            \ }
         echo string(s:params_dict)
     endfunction
     command! ShowParams call ShowParams()
