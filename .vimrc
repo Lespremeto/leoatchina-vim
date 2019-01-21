@@ -526,7 +526,6 @@ au FileType haskell setlocal commentstring=--\ %s
 " Remove trailing whiteSpaces and ^M chars
 au FileType markdown,vim,c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,eperl,sql au BufWritePre <buffer> call StripTrailingWhiteSpace()
 " indent
-set smartindent
 filetype indent on
 " Map g* keys in Normal, Operator-pending, and Visual+select
 noremap $ :call WrapRelativeMotion("$")<CR>
