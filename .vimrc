@@ -16,13 +16,11 @@ set noimdisable
 set timeout
 set conceallevel=0
 " 不同文件类型加载不同插件
-filetype plugin indent on   " Automatically detect file types.
 set omnifunc=syntaxcomplete#Complete
+syntax on
 filetype on                 " 开启文件类型侦测
 filetype plugin on          " 根据侦测到的不同类型:加载对应的插件
-syntax on
-" set english input method when insert
-set noimdisable
+filetype indent on
 " Identify platform
 silent function! OSX()
     return has('macunix')
@@ -295,9 +293,9 @@ nnoremap <Cr> %
 xnoremap <Cr> %
 nnoremap * *``
 nnoremap ! :!
-xnoremap / y/<C-r>0
-xnoremap ; y:%s/<C-r>0
-xnoremap . :normal .<CR>
+xnoremap g/ y/<C-r>0
+xnoremap g; y:%s/<C-r>0
+xnoremap g. :normal .<CR>
 " to nop
 nnoremap go <Nop>
 xnoremap go <Nop>
@@ -451,7 +449,7 @@ aug WINDOWClose
     au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
 " Formatting
-set autoindent                  " Indent at the same level of the previous line
+set noai nosi noci
 set nojoinspaces                " Prevents inserting two Spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
@@ -502,7 +500,6 @@ set shiftwidth=2                " Use indents of 2 Spaces
 set tabstop=2                   " An indentation every
 set softtabstop=2               " Let backSpace delete indent
 set expandtab                   " Tabs are Spaces, not tabs
-set autoindent
 setlocal textwidth=0
 " 没有滚动条
 set guioptions-=l
@@ -525,7 +522,7 @@ au BufNewFile,BufRead *vimrc*,*.vim set filetype=vim
 " sepcial setting for different type of files
 au FileType python au BufWritePre <buffer> :%retab
 au FileType python,vim,sh setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
-au FileType python,vim au SourcePre *.vimrc,*.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
+au FileType python,vim,sh au SourcePre *.vimrc,*.vim setlocal expandtab shiftwidth=4 softtabstop=4 tabstop=4
 " Workaround vim-commentary for Haskell
 au FileType haskell setlocal commentstring=--\ %s
 " Remove trailing whiteSpaces and ^M chars

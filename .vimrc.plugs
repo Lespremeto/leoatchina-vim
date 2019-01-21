@@ -194,6 +194,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if HasPlug('javascript')
             Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
             Plug 'heavenshell/vim-jsdoc', {'branch': 'master','for': 'javascript'}
+            Plug 'posva/vim-vue', {'branch': 'master', 'for': ['javascript', 'vue']}
         endif
         " perl
         if HasPlug('perl') && executable('perl')
