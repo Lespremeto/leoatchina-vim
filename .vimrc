@@ -1101,8 +1101,8 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " easy-align
     if HasDirectory("vim-easy-align")
-        nmap <localleader><Cr> <Plug>(EasyAlign)
-        xmap <localleader><Cr> <Plug>(EasyAlign)
+        nmap <M-T> <Plug>(EasyAlign)
+        xmap <M-T> <Plug>(EasyAlign)
         if !exists('g:easy_align_delimiters')
             let g:easy_align_delimiters = {}
         endif
