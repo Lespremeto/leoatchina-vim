@@ -320,9 +320,9 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             endif
             " smart select engine
             if s:smart_engine_select
-                if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800) && has('timers') && g:library_import
+                if g:python_version == 3 && has('nvim-0.2.2') && has('timers')
                     let g:complete_engine = "ncm2"
-                elseif has('nvim') || v:version >= 800 && has('timers')
+                elseif (has('nvim') || v:version >= 800) && has('timers')
                     let g:complete_engine = "asyncomplete"
                 elseif has('lua') && (v:version == 703 && has('patch885') || v:version >= 704 || has('nvim'))
                     let g:complete_engine = "neocomplete"
