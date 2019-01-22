@@ -1225,8 +1225,17 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:javascript_plugin_ngdoc = 1
         let g:javascript_plugin_flow = 1
     endif
-    if HasDirectory('vim-jsdoc')
-        au FileType javascript nmap <C-g>j <Plug>(jsdoc)
+    if HasDirectory('vim-jsbeautify')
+        " js
+        autocmd FileType javascript noremap <buffer>  <C-g>\ :call JsBeautify()<cr>
+        " for json
+        autocmd FileType json noremap <buffer> <C-g>\ :call JsonBeautify()<cr>
+        " for jsx
+        autocmd FileType jsx noremap <buffer> <C-g>\ :call JsxBeautify()<cr>
+        " for html
+        autocmd FileType html noremap <buffer> <C-g>\ :call HtmlBeautify()<cr>
+        " for css or scss
+        autocmd FileType css noremap <buffer> <C-g>\ :call CSSBeautify()<cr>
     endif
     " php language
     if HasDirectory('phpcomplete.vim')

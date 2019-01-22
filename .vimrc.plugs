@@ -86,6 +86,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         Plug 'mattn/webapi-vim', {'branch': 'master'}
         Plug 'tpope/vim-unimpaired', {'branch': 'master'}
         Plug 'sheerun/vim-polyglot', {'branch': 'master'}
+        Plug 'leshill/vim-json', {'branch': 'master'}
         if (v:version < 800 && !has('nvim')) && !WINDOWS()
             Plug 'Shougo/vimproc.vim', {'do' : 'make', 'branch': 'master'}
         endif
@@ -193,7 +194,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " javascript
         if HasPlug('javascript')
             Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
-            Plug 'heavenshell/vim-jsdoc', {'branch': 'master','for': 'javascript'}
+            Plug 'maksimr/vim-jsbeautify', {'branch': 'master', 'for': 'javascript'}
             Plug 'posva/vim-vue', {'branch': 'master', 'for': ['javascript', 'vue']}
         endif
         " perl
