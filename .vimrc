@@ -283,6 +283,8 @@ nnoremap Q         :q!<Cr>
 nnoremap <M-q>     :bd!<Cr>
 nnoremap <M-Q>     :qa!
 nnoremap <Leader>q :tabclose<CR>
+xnoremap <M-q>     <ESC>:bd!<Cr>
+xnoremap <M-Q>     <ESC>:qa!
 " 定义快捷键使用
 nnoremap <leader><Cr> :source ~/.vimrc<CR>
 cnoremap w!! w !sudo tee % >/dev/null
