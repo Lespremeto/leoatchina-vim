@@ -1152,13 +1152,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <C-k>C :LeaderfColorscheme<Cr>
         nnoremap <C-k>F :set syntax=
         let g:Lf_NormalMap = {
-           \ "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
-           \ "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
-           \ "Mru":         [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
-           \ "Tag":         [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
-           \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
-           \ "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
-       \ }
+           \    "File":        [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+           \    "Buffer":      [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+           \    "Mru":         [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+           \    "Tag":         [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+           \    "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+           \    "Colorscheme": [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+           \ }
     elseif HasDirectory("fzf.vim")
         nnoremap <C-k>j :Files<CR>
         nnoremap <C-k>l :Lines<CR>
@@ -1215,11 +1215,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             cc
         endfunction
         let g:fzf_action = {
-                \ 'ctrl-q': function('s:build_quickfix_list'),
-                \ 'ctrl-t': 'tab split',
-                \ 'ctrl-x': 'split',
-                \ 'ctrl-v': 'vsplit'
-            \ }
+                \   'ctrl-q': function('s:build_quickfix_list'),
+                \   'ctrl-t': 'tab split',
+                \   'ctrl-x': 'split',
+                \   'ctrl-v': 'vsplit'
+                \ }
     endif
     " javascript language
     if HasDirectory('vim-javascript')
@@ -1323,21 +1323,21 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
         let g:ycm_key_list_previous_completion = ['<C-p', '<Up>']
         let g:ycm_filetype_blacklist = {
-            \ 'tagbar' : 1,
-            \ 'nerdtree' : 1,
-        \}
+            \   'tagbar' : 1,
+            \   'nerdtree' : 1,
+            \ }
         let g:ycm_semantic_triggers =  {
-            \ 'c' : ['->', '.'],
-            \ 'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s', 're!\[.*\]\s'],
-            \ 'ocaml' : ['.', '#'],
-            \ 'cpp,cuda,objcpp' : ['->', '.', '::'],
-            \ 'perl' : ['->'],
-            \ 'php' : ['->', '::'],
-            \ 'cs,java,javascript,typescript,python,perl6,scala,vb,elixir,go' : ['.'],
-            \ 'ruby' : ['.', '::'],
-            \ 'lua' : ['.', ':'],
-            \ 'erlang' : [':'],
-        \ }
+            \   'c' : ['->', '.'],
+            \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s', 're!\[.*\]\s'],
+            \   'ocaml' : ['.', '#'],
+            \   'cpp,cuda,objcpp' : ['->', '.', '::'],
+            \   'perl' : ['->'],
+            \   'php' : ['->', '::'],
+            \   'cs,java,javascript,typescript,python,perl6,scala,vb,elixir,go' : ['.'],
+            \   'ruby' : ['.', '::'],
+            \   'lua' : ['.', ':'],
+            \   'erlang' : [':'],
+            \ }
         let g:ycm_confirm_extra_conf = 1 "加载.ycm_extra_conf.py提示
         let g:ycm_global_ycm_extra_conf = $PLUG_PATH."/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
         let g:ycm_key_invoke_completion = ''
@@ -1354,40 +1354,40 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set completeopt+=noinsert,noselect
         if HasPlug('html')
             au User Ncm2Plugin call ncm2#register_source({
-                \ 'name' : 'css',
-                \ 'enable' : 1,
-                \ 'priority': 9,
-                \ 'subscope_enable': 1,
-                \ 'scope': ['css','scss'],
-                \ 'mark': 'css',
-                \ 'word_pattern': '[\w\-]+',
-                \ 'complete_pattern': ':\s*',
-                \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
-            \ })
+                \   'name' : 'css',
+                \   'enable' : 1,
+                \   'priority': 9,
+                \   'subscope_enable': 1,
+                \   'scope': ['css','scss'],
+                \   'mark': 'css',
+                \   'word_pattern': '[\w\-]+',
+                \   'complete_pattern': ':\s*',
+                \   'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
+                \ })
             au User Ncm2Plugin call ncm2#register_source({
-                \ 'name' : 'html',
-                \ 'enable' : 1,
-                \ 'priority': 9,
-                \ 'subscope_enable': 1,
-                \ 'scope': ['htm','html', 'markdown'],
-                \ 'mark': 'html',
-                \ 'word_pattern': '[\w\-]+',
-                \ 'complete_pattern': ':\s*',
-                \ 'on_complete': ['ncm2#on_complete#omni', 'htmlcomplete#CompleteTags']
-            \ })
+                \   'name' : 'html',
+                \   'enable' : 1,
+                \   'priority': 9,
+                \   'subscope_enable': 1,
+                \   'scope': ['htm','html', 'markdown'],
+                \   'mark': 'html',
+                \   'word_pattern': '[\w\-]+',
+                \   'complete_pattern': ':\s*',
+                \   'on_complete': ['ncm2#on_complete#omni', 'htmlcomplete#CompleteTags']
+                \ })
         endif
         if HasPlug('java')
             au User Ncm2Plugin call ncm2#register_source({
-                \ 'name' : 'java',
-                \ 'enable' : 1,
-                \ 'priority': 9,
-                \ 'subscope_enable': 1,
-                \ 'scope': ['java','class'],
-                \ 'mark': 'java',
-                \ 'word_pattern': '[\w\-]+',
-                \ 'complete_pattern': '.\s*',
-                \ 'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
-            \ })
+                \   'name' : 'java',
+                \   'enable' : 1,
+                \   'priority': 9,
+                \   'subscope_enable': 1,
+                \   'scope': ['java','class'],
+                \   'mark': 'java',
+                \   'word_pattern': '[\w\-]+',
+                \   'complete_pattern': '.\s*',
+                \   'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
+                \ })
         endif
     elseif HasDirectory("coc.nvim")
         set completeopt+=noinsert,noselect
@@ -1760,7 +1760,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:sendtorepl_invoke_key = "<C-a><Cr>"
         let g:repl_program = {
             \	"default": "bash",
-        \ }
+            \ }
         if g:python_version == 2
             let g:repl_program.python = "python2"
         elseif g:python_version == 3
@@ -1771,7 +1771,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \	"bash": "exit",
             \	"zsh": "exit",
             \	"default": "exit",
-        \ }
+            \ }
     endif
 endif
 if filereadable(expand("~/.vimrc.after"))
