@@ -171,8 +171,8 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " debug tools for python c java ternjs .....
         if HasPlug('debug')
             Plug 'sillybun/vim-repl', {'branch': 'master'}
-            Plug 'idanarye/vim-vebugger', {'branch': 'master'}
             Plug 'vim-vdebug/vdebug', {'branch': 'master'}
+            Plug 'idanarye/vim-vebugger', {'branch': 'master'}
         endif
         " run tools
         if v:version >= 702
@@ -474,10 +474,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             if HasPlug('java')
                 Plug 'ObserverOfTime/ncm2-jc2', {'branch': 'master', 'for': ['java', 'jsp']}
                 Plug 'artur-shaik/vim-javacomplete2', {'branch': 'master', 'for': ['java', 'jsp']}
-            endif
-            if executable('R')
-                Plug 'jalvesaq/Nvim-R', {'branch': 'master', 'for': 'R'}
-                Plug 'gaalcaras/ncm-R' , {'branch': 'master', 'for': 'R'}
             endif
             " LCN
             if exists('g:LanguageClient_serverCommands') && has('nvim')
