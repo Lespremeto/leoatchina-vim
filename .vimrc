@@ -1646,7 +1646,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " run_tools
     if HasDirectory("vim-quickrun")
-        nnoremap <M-r> :QuickRun<Cr>
+        nnoremap <M-b> :QuickRun<Cr>
         let g:quickrun_config={"_":{"outputter":"message"}}
         let s:quickfix_is_open = 0
         function! ToggleQuickfix()
@@ -1662,7 +1662,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             endif
         endfunction
         command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <M-s> :ToggleQuickfix<cr>
+        nnoremap <C-b> :ToggleQuickfix<cr>
     endif
     " syntax check
     if HasDirectory("ale")
@@ -1756,13 +1756,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " vim-repl
     if HasDirectory('vim-repl')
-        nnoremap <C-b>o :REPLToggle<Cr>
-        let g:sendtorepl_invoke_key = "<C-b>w"
+        nnoremap <C-a>t :REPLToggle<Cr>
+        let g:sendtorepl_invoke_key = "<C-a><Cr>"
         let g:repl_program = {
             \	"default": "bash",
         \ }
         if g:python_version == 2
-            let g:repl_program.python = "python"
+            let g:repl_program.python = "python2"
         elseif g:python_version == 3
             let g:repl_program.python = "python3"
         endif
