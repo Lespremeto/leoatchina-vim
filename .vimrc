@@ -336,6 +336,7 @@ inoremap <C-f> <right>
 cnoremap <C-f> <right>
 inoremap <C-b> <Left>
 cnoremap <C-b> <Left>
+inoremap <C-v> <Nop>
 inoremap <C-k><C-u> <C-x><C-u>
 inoremap <C-k><C-o> <C-x><C-o>
 inoremap <C-k><C-v> <C-x><C-v>
