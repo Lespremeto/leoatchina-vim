@@ -1230,15 +1230,15 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     if HasDirectory('vim-jsbeautify')
         " js
-        autocmd FileType javascript noremap <buffer>  <C-g>\ :call JsBeautify()<cr>
+        autocmd FileType javascript noremap <buffer>  <C-k>\ :call JsBeautify()<cr>
         " for json
-        autocmd FileType json noremap <buffer> <C-g>\ :call JsonBeautify()<cr>
+        autocmd FileType json noremap <buffer> <C-k>\ :call JsonBeautify()<cr>
         " for jsx
-        autocmd FileType jsx noremap <buffer> <C-g>\ :call JsxBeautify()<cr>
+        autocmd FileType jsx noremap <buffer> <C-k>\ :call JsxBeautify()<cr>
         " for html
-        autocmd FileType html noremap <buffer> <C-g>\ :call HtmlBeautify()<cr>
+        autocmd FileType html noremap <buffer> <C-k>\ :call HtmlBeautify()<cr>
         " for css or scss
-        autocmd FileType css noremap <buffer> <C-g>\ :call CSSBeautify()<cr>
+        autocmd FileType css noremap <buffer> <C-k>\ :call CSSBeautify()<cr>
     endif
     " php language
     if HasDirectory('phpcomplete.vim')
@@ -1251,7 +1251,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     endif
     " html/css language
     if HasDirectory('emmet-vim')
-        let g:user_emmet_leader_key='<C-g>'
+        let g:user_emmet_leader_key='<C-k>'
         let g:user_emmet_mode='a'
         let g:user_emmet_install_global = 0
         autocmd FileType html,css,vue,haml EmmetInstall
@@ -1568,7 +1568,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:UltiSnipsNoPythonWarning = 0
         let g:UltiSnipsRemoveSelectModeMappings = 0
         let g:UltiSnipsExpandTrigger = "<Nop>"
-        let g:UltiSnipsListSnippets = "<C-g>l"
+        let g:UltiSnipsListSnippets = "<C-l><C-l>"
         let g:UltiSnipsJumpForwardTrigger = "<Tab>"
         let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
         " Ulti python version
