@@ -1567,7 +1567,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:UltiSnipsNoPythonWarning = 0
         let g:UltiSnipsRemoveSelectModeMappings = 0
         let g:UltiSnipsExpandTrigger = "<Nop>"
-        let g:UltiSnipsListSnippets = "<C-l><C-l>"
+        let g:UltiSnipsListSnippets = "<C-g>l"
         let g:UltiSnipsJumpForwardTrigger = "<Tab>"
         let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
         " Ulti python version
