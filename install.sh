@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ############################  SETUP PARAMETERS
 app_name='leoatchina-vim'
 [ -z "$APP_PATH" ] && APP_PATH="$PWD"
