@@ -730,12 +730,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ '%-G%.%#',
             \ }
         let g:neomake_python_enabled_makers = ['flake8']
-        let g:neomake_python_enabled_makers = ['flake8']
-        nnoremap <silent> <C-l><C-l> :Neomake<cr>
-        nnoremap <silent> <C-l><C-k> :Neomake
+        nnoremap <C-l><C-k> :Neomake
+        nnoremap <silent> <C-l><C-l> :Neomake!<cr>
         nnoremap <silent> <C-l><C-i> :NeomakeInfo<cr>
-        nnoremap <silent> <C-l><C-p> :cprev<cr>
-        nnoremap <silent> <C-l><C-n> :cnext<cr>
+        nnoremap <silent> <C-l><C-p> :lprev<cr>
+        nnoremap <silent> <C-l><C-n> :lnext<cr>
     endif
     " bufferline
     if HasDirectory("vim-bufferline")
