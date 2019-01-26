@@ -254,18 +254,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             let g:fuzzy_finder = "None"
         endif
         " syntax_tools
-        if g:use_syntax
-            " syntax
-            if v:version == 800 && has('patch27') || v:version >= 801 || has('nvim')
-                Plug 'neomake/neomake', {'branch': 'master'}
-                Plug 'sinetoami/lightline-neomake', {'branch': 'master'}
-                let g:syntax_tool = 'neomake'
-            elseif v:version == 704 && has('patch1486')
-                Plug 'vim-syntastic/syntastic', {'branch': 'master'}
-                let g:syntax_tool = 'syntastic'
-            else
-                let g:syntax_tool = "None"
-            endif
+        if g:use_syntax && (v:version == 704 && has('patch503') || v:version >= 800 || has('nvim'))
+            Plug 'neomake/neomake', {'branch': 'master'}
+            Plug 'sinetoami/lightline-neomake', {'branch': 'master'}
+            let g:syntax_tool = 'neomake'
         else
             let g:syntax_tool = "None"
         endif

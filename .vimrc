@@ -736,29 +736,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         nnoremap <silent> <C-l><C-i> :NeomakeInfo<cr>
         nnoremap <silent> <C-l><C-p> :cprev<cr>
         nnoremap <silent> <C-l><C-n> :cnext<cr>
-    elseif HasDirectory("syntastic")
-        let g:syntastic_error_symbol             = 'E'
-        let g:syntastic_warning_symbol           = 'W'
-        let g:syntastic_check_on_open            = 0
-        let g:syntastic_check_on_wq              = -1
-        let g:syntastic_python_checkers          = ['flake8']
-        let g:syntastic_javascript_checkers      = ['jsl', 'jshint']
-        let g:syntastic_html_checkers            = ['tidy', 'jshint']
-        let g:syntastic_enable_highlighting      = 0
-        " to see error location list
-        let g:syntastic_always_populate_loc_list = 0
-        let g:syntastic_auto_loc_list            = 0
-        let g:syntastic_loc_list_height          = 5
-        function! ToggleErrors()
-            let old_last_winnr = winnr('$')
-            lclose
-            if old_last_winnr == winnr('$')
-                Errors
-            endif
-        endfunction
-        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nnoremap <silent> <C-l><C-p> :cprev<cr>
-        nnoremap <silent> <C-l><C-n> :cnext<cr>
     endif
     " bufferline
     if HasDirectory("vim-bufferline")
@@ -807,17 +784,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     \   ['filetype', 'fileformat', 'fileencoding', 'lineinfo'],
                     \   ['linter_infos', 'linter_errors', 'linter_warnings', 'linter_ok']
                     \ ]
-            elseif HasDirectory('syntastic')
-                let g:lightline.component_expand =  {
-                    \   'error': 'SyntasticErrorSign',
-                    \   'warning': 'SyntasticWarningSign',
-                    \ }
-                let g:lightline.active.right = [
-                    \   ['percent'],
-                    \   ['filetype', 'fileformat', 'fileencoding', 'lineinfo'],
-                    \   ['error', 'warning']
-                    \ ]
-            else " not syntax tools
+            else
                 let g:lightline.active.right = [
                     \   ['percent'],
                     \   ['filetype', 'fileformat', 'fileencoding', 'lineinfo']
