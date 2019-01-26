@@ -809,12 +809,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                     \ ]
             elseif HasDirectory('syntastic')
                 let g:lightline.component_expand =  {
-                    \   'syntastic': 'SyntasticStatuslineFlag'
+                    \   'error': 'SyntasticErrorSign',
+                    \   'warning': 'SyntasticWarningSign',
                     \ }
                 let g:lightline.active.right = [
                     \   ['percent'],
                     \   ['filetype', 'fileformat', 'fileencoding', 'lineinfo'],
-                    \   ['syntastic']
+                    \   ['error', 'warning']
                     \ ]
             else " not syntax tools
                 let g:lightline.active.right = [
