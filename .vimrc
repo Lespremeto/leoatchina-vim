@@ -337,7 +337,6 @@ cnoremap <C-f> <right>
 inoremap <C-b> <Left>
 cnoremap <C-b> <Left>
 inoremap <C-v> <Nop>
-inoremap <C-i> <Nop>
 inoremap <C-k><C-u> <C-x><C-u>
 inoremap <C-k><C-o> <C-x><C-o>
 inoremap <C-k><C-v> <C-x><C-v>
@@ -387,24 +386,16 @@ nnoremap <localleader>] :bn<CR>
 nnoremap <localleader><Space> :Sex<CR>
 " 设置copy paste键
 nnoremap Y y$
+xnoremap Y "*y
 nnoremap <leader>Y "*y$
 nnoremap <leader>yy "*yy
-nnoremap <localleader>Y "+y$
-nnoremap <localleader>yy "+yy
 nnoremap <M-c> "*y
-nnoremap <M-C> "+y
 xnoremap <M-c> "*y
-xnoremap <M-C> "+y
 nnoremap <M-x> "*x
-nnoremap <M-X> "+x
 xnoremap <M-x> "*x
-xnoremap <M-X> "+x
 nnoremap <M-v> "*P
-nnoremap <M-V> "+P
 xnoremap <M-v> "*P
-xnoremap <M-V> "+P
 cnoremap <M-v> <C-r>*
-cnoremap <M-V> <C-r>+
 " Swap two words with M-z
 xnoremap <M-z> <ESC>`.``gvp``P
 " Easier horizontal scrolling
@@ -681,29 +672,93 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     " startify
     if HasDirectory("vim-startify")
         let g:startify_custom_header = [
-            \ '+---------------------------------------------------------+',
-            \ '|  Welcome to use leoatchina vim config forked from spf13 |',
-            \ '|                                                         |',
-            \ '|  https://github.com/leoatchina/leoatchina-vim           |',
-            \ '+---------------------------------------------------------+',
+            \   '+---------------------------------------------------------+',
+            \   '|  Welcome to use leoatchina vim config forked from spf13 |',
+            \   '|                                                         |',
+            \   '|  https://github.com/leoatchina/leoatchina-vim           |',
+            \   '+---------------------------------------------------------+',
             \ ]
         let g:startify_session_dir = expand("$HOME/.cache/session")
         let g:startify_files_number = 10
         let g:startify_session_number = 10
         let g:startify_list_order = [
-            \ ['   最近项目:'],
-            \ 'sessions',
-            \ ['   最近文件:'],
-            \ 'files',
-            \ ['   快捷命令:'],
-            \ 'commands',
-            \ ['   常用书签:'],
-            \ 'bookmarks',
+            \   ['   最近项目:'],
+            \   'sessions',
+            \   ['   最近文件:'],
+            \   'files',
+            \   ['   快捷命令:'],
+            \   'commands',
+            \   ['   常用书签:'],
+            \   'bookmarks',
             \ ]
         let g:startify_commands = [
-            \ {'h': ['帮助', 'help howto']},
-            \ {'v': ['版本', 'version']}
+            \   {'h': ['帮助', 'help howto']},
+            \   {'v': ['版本', 'version']}
             \ ]
+    endif
+    " run_tools
+    if HasDirectory("vim-quickrun")
+        nnoremap <M-r> :QuickRun<Cr>
+        let g:quickrun_config={"_":{"outputter":"message"}}
+        let s:quickfix_is_open = 0
+        function! ToggleQuickfix()
+            if s:quickfix_is_open
+                cclose
+                cclose
+                let s:quickfix_is_open = 0
+                execute s:quickfix_return_to_window . "wincmd w"
+            else
+                let s:quickfix_return_to_window = winnr()
+                copen
+                let s:quickfix_is_open = 1
+            endif
+        endfunction
+        command! ToggleQuickfix call ToggleQuickfix()
+        nnoremap <M-s> :ToggleQuickfix<cr>
+    endif
+    " syntax check
+    if HasDirectory('neomake')
+        call neomake#configure#automake('rw', 500)
+        let g:neomakemp_exclude_files=['*.jpg', '*.png', '*.min.js', '*.swp', '*.pyc','*.out','*.o']
+        let g:neomakemp_exclude_dirs=['.git', 'bin', 'log', 'build', 'node_modules', '.bundle', '.tmp','.svn']
+        let g:neomake_python_flake8_maker = {
+            \ 'args': ['--ignore=E501,E251,E226,E221',  '--format=default'],
+            \ 'errorformat':
+                \ '%E%f:%l: could not compile,%-Z%p^,' .
+                \ '%A%f:%l:%c: %t%n %m,' .
+                \ '%A%f:%l: %t%n %m,' .
+                \ '%-G%.%#',
+            \ }
+        let g:neomake_python_enabled_makers = ['flake8']
+        let g:neomake_python_enabled_makers = ['flake8']
+        nnoremap <silent> <C-l><C-l> :Neomake<cr>
+        nnoremap <silent> <C-l><C-k> :Neomake
+        nnoremap <silent> <C-l><C-i> :NeomakeInfo<cr>
+        nnoremap <silent> <C-l><C-p> :cprev<cr>
+        nnoremap <silent> <C-l><C-n> :cnext<cr>
+    elseif HasDirectory("syntastic")
+        let g:syntastic_error_symbol             = 'E'
+        let g:syntastic_warning_symbol           = 'W'
+        let g:syntastic_check_on_open            = 0
+        let g:syntastic_check_on_wq              = -1
+        let g:syntastic_python_checkers          = ['flake8']
+        let g:syntastic_javascript_checkers      = ['jsl', 'jshint']
+        let g:syntastic_html_checkers            = ['tidy', 'jshint']
+        let g:syntastic_enable_highlighting      = 0
+        " to see error location list
+        let g:syntastic_always_populate_loc_list = 0
+        let g:syntastic_auto_loc_list            = 0
+        let g:syntastic_loc_list_height          = 5
+        function! ToggleErrors()
+            let old_last_winnr = winnr('$')
+            lclose
+            if old_last_winnr == winnr('$')
+                Errors
+            endif
+        endfunction
+        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
+        nnoremap <silent> <C-l><C-p> :cprev<cr>
+        nnoremap <silent> <C-l><C-n> :cnext<cr>
     endif
     " bufferline
     if HasDirectory("vim-bufferline")
@@ -718,7 +773,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 return &readonly && &filetype !=# 'help' ? 'RO' : ''
             endfunction
             let g:lightline = {
-                \   'component': {
+                \ 'component': {
                 \     'filefullpath': '%F',
                 \     'lineinfo': '%l/%L : %c'
                 \   },
@@ -731,30 +786,40 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \         ['mode', 'paste'],
                 \         ['gitbranch', 'readonly'],
                 \         ['filefullpath', 'modified']
-                \     ],
-                \     'right': [
-                \         ['percent'],
-                \         ['filetype', 'fileformat', 'fileencoding' , 'lineinfo']
                 \     ]
                 \   }
                 \ }
-            if HasDirectory("lightline-ale")
+            if HasDirectory("lightline-neomake") && HasDirectory('neomake')
                 let g:lightline.component_expand =  {
-                    \ 'linter_checking': 'lightline#ale#checking',
-                    \ 'linter_warnings': 'lightline#ale#warnings',
-                    \ 'linter_errors': 'lightline#ale#errors',
-                    \ 'linter_ok': 'lightline#ale#ok'
+                    \   'linter_infos': 'lightline#neomake#checking',
+                    \   'linter_warnings': 'lightline#neomake#warnings',
+                    \   'linter_errors': 'lightline#neomake#errors',
+                    \   'linter_ok': 'lightline#neomake#ok'
                     \ }
                 let g:lightline.component_type = {
-                    \ 'linter_checking': 'right',
-                    \ 'linter_warnings': 'warning',
-                    \ 'linter_errors': 'error',
-                    \ 'linter_ok': 'left'
+                    \   'linter_checking': 'right',
+                    \   'linter_warnings': 'warning',
+                    \   'linter_errors': 'error',
+                    \   'linter_ok': 'left'
                     \ }
                 let g:lightline.active.right = [
-                    \ ['percent'],
-                    \ ['filetype', 'fileformat', 'fileencoding', 'lineinfo'],
-                    \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
+                    \   ['percent'],
+                    \   ['filetype', 'fileformat', 'fileencoding', 'lineinfo'],
+                    \   ['linter_infos', 'linter_errors', 'linter_warnings', 'linter_ok']
+                    \ ]
+            elseif HasDirectory('syntastic')
+                let g:lightline.component_expand =  {
+                    \   'syntastic': 'SyntasticStatuslineFlag'
+                    \ }
+                let g:lightline.active.right = [
+                    \   ['percent'],
+                    \   ['filetype', 'fileformat', 'fileencoding', 'lineinfo'],
+                    \   ['syntastic']
+                    \ ]
+            else " not syntax tools
+                let g:lightline.active.right = [
+                    \   ['percent'],
+                    \   ['filetype', 'fileformat', 'fileencoding', 'lineinfo']
                     \ ]
             endif
         else
@@ -1645,116 +1710,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:complete_parameter_use_ultisnips_mapping = 1
     else
         inoremap <silent><expr> ; pumvisible() && exists('v:completed_item') && !empty(v:completed_item) ?"()\<left>":";"
-    endif
-    " run_tools
-    if HasDirectory("vim-quickrun")
-        nnoremap <M-b> :QuickRun<Cr>
-        let g:quickrun_config={"_":{"outputter":"message"}}
-        let s:quickfix_is_open = 0
-        function! ToggleQuickfix()
-            if s:quickfix_is_open
-                cclose
-                cclose
-                let s:quickfix_is_open = 0
-                execute s:quickfix_return_to_window . "wincmd w"
-            else
-                let s:quickfix_return_to_window = winnr()
-                copen
-                let s:quickfix_is_open = 1
-            endif
-        endfunction
-        command! ToggleQuickfix call ToggleQuickfix()
-        nnoremap <C-b> :ToggleQuickfix<cr>
-    endif
-    " syntax check
-    if HasDirectory("ale")
-        let g:ale_completion_enabled   = 0
-        let g:ale_lint_on_enter        = 1
-        let g:ale_lint_on_text_changed = 'always'
-        " signs
-        let g:ale_sign_column_always   = 1
-        let g:ale_set_signs            = 1
-        let g:ale_set_highlights       = 0
-        let g:ale_sign_error           = 'E'
-        let g:ale_sign_warning         = 'W'
-        " message format
-        let g:ale_echo_msg_error_str   = 'E'
-        let g:ale_echo_msg_warning_str = 'W'
-        let g:ale_echo_msg_format      = '[%linter%] %s [%code%]'
-        let g:ale_fix_on_save          = 0
-        let g:ale_set_loclist          = 0
-        let g:ale_set_quickfix         = 0
-        let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
-        let g:ale_python_flake8_options = " --ignore=E501,E251,E226,E221 "
-        " 特定后缀指定lint方式
-        let g:ale_pattern_options_enabled = 1
-        let b:ale_warn_about_trailing_whiteSpace = 0
-        nnoremap <silent> <C-l><C-l> :ALELint<CR>
-        nmap     <silent> <C-l><C-p> <Plug>(ale_previous_wrap)
-        nmap     <silent> <C-l><C-n> <Plug>(ale_next_wrap)
-        nnoremap <silent> gad        :ALEGoToDefinition<CR>
-        nnoremap <silent> gat        :ALEGoToDefinitionInTab<CR>
-        nnoremap <silent> gar        :ALEFindReferences<CR>
-    elseif HasDirectory("syntastic")
-        let g:syntastic_error_symbol             = 'E'
-        let g:syntastic_warning_symbol           = 'W'
-        let g:syntastic_check_on_open            = 0
-        let g:syntastic_check_on_wq              = -1
-        let g:syntastic_python_checkers          = ['flake8']
-        let g:syntastic_javascript_checkers      = ['jsl', 'jshint']
-        let g:syntastic_html_checkers            = ['tidy', 'jshint']
-        let g:syntastic_enable_highlighting      = 0
-        " to see error location list
-        let g:syntastic_always_populate_loc_list = 0
-        let g:syntastic_auto_loc_list            = 0
-        let g:syntastic_loc_list_height          = 5
-        function! ToggleErrors()
-            let old_last_winnr = winnr('$')
-            lclose
-            if old_last_winnr == winnr('$')
-                Errors
-            endif
-        endfunction
-        nnoremap <silent> <C-l><C-l> :call ToggleErrors()<cr>
-        nnoremap <silent> <C-l><C-p> :lprevious<cr>
-        nnoremap <silent> <C-l><C-n> :lnext<cr>
-    endif
-    " asyncrun
-    if HasDirectory("asyncrun.vim")
-        let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-        function! s:ASYNC_RUN()
-            exec "w"
-            call asyncrun#quickfix_toggle(8,1)
-            if &filetype == 'c'
-                exec ":AsyncRun g++ % -o %<"
-                exec ":AsyncRun -raw=1 ./%<"
-            elseif &filetype == 'cpp'
-                exec ":AsyncRun g++ % -o %<"
-                exec ":AsyncRun -raw=1 ./%<"
-            elseif &filetype == 'java'
-                exec ":AsyncRun -raw=1 javac %"
-                exec ":AsyncRun -raw=1 java %<"
-            elseif &filetype == 'sh'
-                exec ":AsyncRun -raw=1 bash %"
-            elseif &filetype == 'python'
-                if g:python_version == 3
-                    exec ":AsyncRun -raw=1 python3 %"
-                if g:python_version == 2
-                    exec ":AsyncRun -raw=1 python %"
-                else
-                    echo "Cannot run without python support"
-                endif
-            elseif &filetype == 'perl'
-                exec ":AsyncRun -raw=1 perl %"
-            elseif &filetype == 'go'
-                exec ":AsyncRun -raw=1 go run %"
-            endif
-        endfunction
-        command! AsyncRunNow call s:ASYNC_RUN()
-        nnoremap <C-a>r :AsyncRunNow<CR>
-        nnoremap <C-a>s :AsyncStop<CR>
-        nnoremap <C-a>a :AsyncRun
-        au bufenter * if (winnr("$") == 1 && exists("AsyncRun!")) | q | endif
     endif
     " vim-repl
     if HasDirectory('vim-repl')

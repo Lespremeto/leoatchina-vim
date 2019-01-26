@@ -178,9 +178,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         if v:version >= 702
             Plug 'thinca/vim-quickrun', {'branch': 'master'}
         endif
-        if v:version >= 800 || has('nvim')
-            Plug 'skywind3000/asyncrun.vim', {'branch': 'master'}
-        endif
         " HTML
         if HasPlug('html')
             Plug 'mattn/emmet-vim', {'branch': 'master', 'for':['css', 'htm', 'html', 'xml', 'css3']}
@@ -259,9 +256,10 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
         " syntax_tools
         if g:use_syntax
             " syntax
-            if v:version >= 800 || has('nvim')
-                Plug 'w0rp/ale', {'branch': 'master'}
-                let g:syntax_tool = 'ale'
+            if v:version == 800 && has('patch27') || v:version >= 801 || has('nvim')
+                Plug 'neomake/neomake', {'branch': 'master'}
+                Plug 'sinetoami/lightline-neomake', {'branch': 'master'}
+                let g:syntax_tool = 'neomake'
             elseif v:version == 704 && has('patch1486')
                 Plug 'vim-syntastic/syntastic', {'branch': 'master'}
                 let g:syntax_tool = 'syntastic'
