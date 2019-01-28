@@ -1382,7 +1382,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_complete_in_strings = 1
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
-        nnoremap <silent>gyd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        nnoremap <silent><leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
     elseif HasDirectory('ncm2')
         au BufEnter * call ncm2#enable_for_buffer()
         set completeopt+=noinsert,noselect
@@ -1425,10 +1425,10 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
     elseif HasDirectory("coc.nvim")
         set completeopt+=noinsert,noselect
-        nmap <silent>god <Plug>(coc-definition)
-        nmap <silent>goy <Plug>(coc-type-definition)
-        nmap <silent>gom <Plug>(coc-implementation)
-        nmap <silent>gor <Plug>(coc-references)
+        nmap <silent><leader>gd <Plug>(coc-definition)
+        nmap <silent><leader>gy <Plug>(coc-type-definition)
+        nmap <silent><leader>gi <Plug>(coc-implementation)
+        nmap <silent><leader>gr <Plug>(coc-references)
         let g:coc_snippetknext = '<C-n>'
         let g:coc_snippet_prev = '<C-p>'
         " Show signature help while editing
