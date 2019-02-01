@@ -757,14 +757,26 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \     'gitbranch': 'fugitive#head',
                 \     'readonly': 'LightlineReadonly'
                 \   },
-                \ 'active': {
+                \ }
+            if HasDirectory('tagbar')
+                let g:lightline.component.tagbar = '%{tagbar#currenttag("%s", "", "f")}'
+                let g:lightline.active = {
+                \     'left': [
+                \         ['mode', 'paste'],
+                \         ['gitbranch', 'readonly'],
+                \         ['filefullpath', 'modified'],
+                \         ['tagbar'],
+                \     ]
+                \   }
+            else
+                let g:lightline.active = {
                 \     'left': [
                 \         ['mode', 'paste'],
                 \         ['gitbranch', 'readonly'],
                 \         ['filefullpath', 'modified']
                 \     ]
                 \   }
-                \ }
+            endif
             if HasDirectory("lightline-neomake") && HasDirectory('neomake')
                 let g:lightline.component_expand =  {
                     \   'linter_infos': 'lightline#neomake#checking',
