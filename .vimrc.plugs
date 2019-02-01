@@ -111,7 +111,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'tpope/vim-git', {'branch': 'master'}
         endif
         Plug 'tpope/vim-fugitive', {'branch': 'master'}
-        Plug 'Xuyuanp/nerdtree-git-plugin', {'branch': 'master'}
         " text
         Plug 'tpope/vim-surround', {'branch': 'master'}
         Plug 'tpope/vim-repeat', {'branch': 'master'}
