@@ -153,10 +153,6 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
             Plug 'brooth/far.vim', {'branch': 'master'}
         endif
-        " biosyntax
-        if HasPlug('bio')
-            Plug 'bioSyntax/bioSyntax-vim', {'branch': 'master'}
-        endif
         " themes
         Plug 'leoatchina/vim-colorschemes-collections', {'branch': 'master'}
         " statuslines
