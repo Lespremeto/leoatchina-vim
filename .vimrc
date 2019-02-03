@@ -647,11 +647,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:vmt_auto_update_on_save = 1
         let g:vmt_cycle_list_item_markers = 1
     endif
-    " markdown preview
-    if HasDirectory('markdown-preview.vim') || HasDirectory('markdown-preview.nvim')
-        au FileType markdown nmap <M-p> <Plug>MarkdownPreview
-        au FileType markdown nmap <M-P> <Plug>StopMarkdownPreview
-    endif
     " fugitive
     if HasDirectory("vim-fugitive")
         nnoremap gc    :Gcommit -a -v<CR>
@@ -1671,6 +1666,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         au BufEnter * exec "inoremap <silent> <C-j> <C-R>=g:NeoSnippet_Tab(0)<cr>"
         " Use honza's snippets.
         let g:neosnippet#snippets_directory=$PLUG_PATH.'/vim-snippets/snippets'
+    endif
+    " markdown preview
+    if HasDirectory('markdown-preview.vim') || HasDirectory('markdown-preview.nvim')
+        au FileType markdown nmap <M-r> <Plug>MarkdownPreview
+        au FileType markdown nmap <M-s> <Plug>StopMarkdownPreview
     endif
     " complete_parameter
     if HasDirectory("CompleteParameter.vim")
