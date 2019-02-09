@@ -891,6 +891,12 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             if HasDirectory('lightline.vim')
                 let g:lightline.colorscheme = 'neodark'
             endif
+        elseif HasPlug('hbuilder')
+            set background=light
+            colorscheme hbuilder
+            if HasDirectory('lightline.vim')
+                let g:lightline.colorscheme = 'PaperColor_light'
+            endif
         elseif HasPlug('solarized')
             let g:solarized_termcolors=256
             colorscheme solarized
