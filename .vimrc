@@ -833,8 +833,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         endif
         if HasPlug('molokai')
             colorscheme molokai
-        elseif HasPlug('badwolf')
-            colorscheme badwolf
         elseif HasPlug('atom')
             if has('gui_running')
                 colorscheme atom-dark
@@ -895,7 +893,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             set background=light
             colorscheme hbuilder
             if HasDirectory('lightline.vim')
-                let g:lightline.colorscheme = 'PaperColor_light'
+                let g:lightline.colorscheme = 'PaperColor_dark'
             endif
         elseif HasPlug('solarized')
             let g:solarized_termcolors=256
