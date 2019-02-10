@@ -1062,7 +1062,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \]
         endif
         let g:ywvim_py               = { 'helpim':'wb', 'gb':0 }
-        let g:ywvim_zhpunc           = 0
+        let g:ywvim_zhpunc           = 1
         let g:ywvim_listmax          = 8
         let g:ywvim_esc_autoff       = 1
         let g:ywvim_autoinput        = 2
@@ -1074,11 +1074,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ywvim_preconv          = 'g2b'
         let g:ywvim_conv             = ''
         let g:ywvim_lockb            = 1
-        imap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
-        cmap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
+        imap <silent><C-\> <C-R>=Ywvim_toggle()<CR>
+        cmap <silent><C-\> <C-R>=Ywvim_toggle()<CR>
     else
-        inoremap <C-\> <Nop>
-        cnoremap <C-\> <Nop>
+        imap <C-\> <Nop>
+        cmap <C-\> <Nop>
     endif
     " search tools
     if HasDirectory('FlyGrep.vim')
