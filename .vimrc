@@ -1052,13 +1052,13 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         set showmode
         if HasPlug('pinyun')
             let g:ywvim_ims=[
-                \ ['py', '拼音', 'pinyin.ywvim'],
-                \ ['wb', '五笔', 'wubi.ywvim'],
+                    \ ['py', '拼音', 'pinyin.ywvim'],
+                    \ ['wb', '五笔', 'wubi.ywvim'],
                 \ ]
         elseif HasPlug('wubi')
             let g:ywvim_ims=[
-                    \['wb', '五笔', 'wubi.ywvim'],
-                    \['py', '拼音', 'pinyin.ywvim'],
+                    \ ['wb', '五笔', 'wubi.ywvim'],
+                    \ ['py', '拼音', 'pinyin.ywvim'],
                 \]
         endif
         let g:ywvim_py               = { 'helpim':'wb', 'gb':0 }
@@ -1071,11 +1071,11 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ywvim_matchexact       = 0
         let g:ywvim_chinesecode      = 1
         let g:ywvim_gb               = 0
+        let g:ywvim_lockb            = 1
         let g:ywvim_preconv          = 'g2b'
         let g:ywvim_conv             = ''
-        let g:ywvim_lockb            = 1
-        imap <silent><C-\> <C-R>=Ywvim_toggle()<CR>
-        cmap <silent><C-\> <C-R>=Ywvim_toggle()<CR>
+        imap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
+        cmap <silent> <C-\> <C-R>=Ywvim_toggle()<CR>
     else
         imap <C-\> <Nop>
         cmap <C-\> <Nop>
