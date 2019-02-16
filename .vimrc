@@ -1384,46 +1384,6 @@ if has('job') || g:python_version || has('nvim') || has('lua')
         let g:ycm_collect_identifiers_from_comments_and_strings = 0
         " 跳转到定义处
         nnoremap <silent><leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    elseif HasDirectory('ncm2')
-        au BufEnter * call ncm2#enable_for_buffer()
-        set completeopt+=noinsert,noselect
-        if HasPlug('html')
-            au User Ncm2Plugin call ncm2#register_source({
-                \   'name' : 'css',
-                \   'enable' : 1,
-                \   'priority': 9,
-                \   'subscope_enable': 1,
-                \   'scope': ['css','scss'],
-                \   'mark': 'css',
-                \   'word_pattern': '[\w\-]+',
-                \   'complete_pattern': ':\s*',
-                \   'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
-                \ })
-            au User Ncm2Plugin call ncm2#register_source({
-                \   'name' : 'html',
-                \   'enable' : 1,
-                \   'priority': 9,
-                \   'subscope_enable': 1,
-                \   'scope': ['htm','html', 'markdown'],
-                \   'mark': 'html',
-                \   'word_pattern': '[\w\-]+',
-                \   'complete_pattern': ':\s*',
-                \   'on_complete': ['ncm2#on_complete#omni', 'htmlcomplete#CompleteTags']
-                \ })
-        endif
-        if HasPlug('java')
-            au User Ncm2Plugin call ncm2#register_source({
-                \   'name' : 'java',
-                \   'enable' : 1,
-                \   'priority': 9,
-                \   'subscope_enable': 1,
-                \   'scope': ['java','class'],
-                \   'mark': 'java',
-                \   'word_pattern': '[\w\-]+',
-                \   'complete_pattern': '.\s*',
-                \   'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
-                \ })
-        endif
     elseif HasDirectory("coc.nvim")
         set completeopt+=noinsert,noselect
         nmap <silent><leader>gd <Plug>(coc-definition)
@@ -1441,20 +1401,7 @@ if has('job') || g:python_version || has('nvim') || has('lua')
     elseif HasDirectory("asyncomplete.vim")
         set completeopt+=noinsert,noselect
         let g:asyncomplete_auto_popup = 1
-        if v:version >= 800
-            if has('nvim') || has('lua')
-                let g:asyncomplete_smart_completion = 1
-            endif
-        endif
-        " python first
-        if executable('pyls')
-            au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
-            \ })
-        endif
+        let g:asyncomplete_smart_completion = 1
         au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
             \ 'name': 'buffer',
             \ 'whitelist': ['*'],
@@ -1483,6 +1430,14 @@ if has('job') || g:python_version || has('nvim') || has('lua')
             \ 'whitelist': ['vim'],
             \ 'completor': function('asyncomplete#sources#necovim#completor'),
         \ }))
+        if executable('pyls')
+            au User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
+            \ })
+        endif
         if HasDirectory('asyncomplete-tags.vim')
             au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
                 \ 'name': 'tags',
@@ -1522,6 +1477,46 @@ if has('job') || g:python_version || has('nvim') || has('lua')
                 \ 'whitelist': ['*'],
                 \ 'completor': function('asyncomplete#sources#neosnippet#completor')
             \ }))
+        endif
+    elseif HasDirectory('ncm2')
+        au BufEnter * call ncm2#enable_for_buffer()
+        set completeopt+=noinsert,noselect
+        if HasPlug('html')
+            au User Ncm2Plugin call ncm2#register_source({
+                \   'name' : 'css',
+                \   'enable' : 1,
+                \   'priority': 9,
+                \   'subscope_enable': 1,
+                \   'scope': ['css','scss'],
+                \   'mark': 'css',
+                \   'word_pattern': '[\w\-]+',
+                \   'complete_pattern': ':\s*',
+                \   'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS']
+                \ })
+            au User Ncm2Plugin call ncm2#register_source({
+                \   'name' : 'html',
+                \   'enable' : 1,
+                \   'priority': 9,
+                \   'subscope_enable': 1,
+                \   'scope': ['htm','html', 'markdown'],
+                \   'mark': 'html',
+                \   'word_pattern': '[\w\-]+',
+                \   'complete_pattern': ':\s*',
+                \   'on_complete': ['ncm2#on_complete#omni', 'htmlcomplete#CompleteTags']
+                \ })
+        endif
+        if HasPlug('java')
+            au User Ncm2Plugin call ncm2#register_source({
+                \   'name' : 'java',
+                \   'enable' : 1,
+                \   'priority': 9,
+                \   'subscope_enable': 1,
+                \   'scope': ['java','class'],
+                \   'mark': 'java',
+                \   'word_pattern': '[\w\-]+',
+                \   'complete_pattern': '.\s*',
+                \   'on_complete': ['ncm2#on_complete#omni', 'javacomplete#Complete']
+                \ })
         endif
     elseif HasDirectory("neocomplete.vim")
         " ominifuc
