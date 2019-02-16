@@ -272,6 +272,13 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
                         echoe "Cannot install coc, smart select a complete_engine."
                         let s:smart_engine_select = 1
                     endif
+                elseif HasPlug('COC')
+                    if has('nvim-0.3.0') || v:version >= 801
+                        let g:complete_engine = "COC"
+                    else
+                        echoe "Cannot install coc, smart select a complete_engine."
+                        let s:smart_engine_select = 1
+                    endif
                 elseif HasPlug('ncm2')
                     if g:python_version == 3 && (has('nvim-0.2.2') || v:version >= 800) && g:neovim_import
                         let g:complete_engine = 'ncm2'
@@ -361,8 +368,7 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             elseif g:python_version == 3
                 Plug 'Valloric/YouCompleteMe',{'branch': 'master', 'do' : 'python3' . b:ycm_install}
             endif
-        elseif g:complete_engine == "coc"
-            " coc not complete python
+        elseif g:complete_engine == "coc" || g:complete_engine == "COC"
             function! CocInit()
                 let b:coc_install_plugins = [
                     \ 'coc-omni',
@@ -407,7 +413,11 @@ if (has('job') || g:python_version || has('nvim') || has('lua'))
             command! -nargs=0 -bang CocInit call CocInit()
             Plug 'neoclide/coc-neco', {'branch': 'master'}
             Plug 'neoclide/coc-sources', {'branch': 'master'}
-            Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install'}
+            if g:complete_engine == "coc"
+                Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install'}
+            else
+                Plug 'neoclide/coc.nvim', {'branch': 'master', 'do':  { -> coc#util#install()}}
+            endif
             if g:python_version
                 Plug 'neoclide/coc-jedi', {'for': 'python', 'branch': 'master', 'do': 'yarn install'}
             endif
